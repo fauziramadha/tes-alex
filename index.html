@@ -44,24 +44,24 @@
         .app-wrapper { width: 100%; max-width: 1440px; margin: 0 auto; position: relative; }
 
         /* ANIMASI KLIK (TACTILE FEEDBACK) */
-        button:active, a.btn-primary:active, a.btn-secondary:active, a.btn-outline:active, a.btn-fill:active, a.btn-glass-ad:active, .news-tab-btn:active, .btn-glass-service:active {
+        button:active, a.btn-primary:active, a.btn-secondary:active, a.btn-outline:active, a.btn-fill:active, a.btn-glass-ad:active, .news-tab-btn:active, .btn-glass-service:active, .social-link-icon:active, .btn-luxury-outline:active {
             transform: scale(0.95) !important;
             transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* =========================================
-           PRELOADER MITSUBISHI MEWAH
+           PRELOADER MITSUBISHI MEWAH (1 DETIK)
            ========================================= */
         #preloader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background: #050505; z-index: 9999;
             display: flex; justify-content: center; align-items: center;
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
         }
         #preloader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
         .loader-logo {
             width: 140px; height: auto;
-            animation: pulseGlow 1.5s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+            animation: pulseGlow 1s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
             filter: drop-shadow(0 0 25px rgba(230,0,0,0.6));
         }
         @keyframes pulseGlow { 
@@ -115,96 +115,37 @@
             font-weight: 600; font-size: 0.9rem; text-transform: uppercase; 
             letter-spacing: 1px; transition: var(--transition-smooth); text-align: center; 
         }
-        .btn-primary { 
-            background: var(--color-accent); color: var(--color-primary) !important; 
-            border: 1px solid var(--color-accent); 
-        }
-        .btn-primary:hover { 
-            background: transparent; color: var(--color-accent) !important; 
-        }
-        .btn-secondary { 
-            background: transparent; color: var(--color-primary); 
-            border: 1px solid var(--color-primary); 
-        }
-        .btn-secondary:hover { 
-            background: var(--color-primary); color: var(--color-secondary); 
-        }
+        .btn-primary { background: var(--color-accent); color: var(--color-primary) !important; border: 1px solid var(--color-accent); }
+        .btn-primary:hover { background: transparent; color: var(--color-accent) !important; }
+        .btn-secondary { background: transparent; color: var(--color-primary); border: 1px solid var(--color-primary); }
+        .btn-secondary:hover { background: var(--color-primary); color: var(--color-secondary); }
 
         /* =========================================
            HERO SECTION
            ========================================= */
-        .hero { 
-            position: relative; height: 100vh; min-height: 600px; width: 100%; 
-            display: flex; align-items: center; justify-content: center; overflow: hidden; 
-        }
-        .hero-bg { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            z-index: 1; background-color: var(--color-secondary); 
-        }
-        .hero-img { 
-            width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); 
-            animation: slowZoom 30s infinite alternate cubic-bezier(0.25, 0.1, 0.25, 1); 
-        }
+        .hero { position: relative; height: 100vh; min-height: 600px; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background-color: var(--color-secondary); }
+        .hero-img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); animation: slowZoom 30s infinite alternate cubic-bezier(0.25, 0.1, 0.25, 1); }
         @keyframes slowZoom { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
-        .hero-overlay { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 60%, var(--color-primary) 100%); 
-        }
-        .hero-content { 
-            position: relative; z-index: 2; text-align: center; 
-            padding: 0 24px; max-width: 900px; color: var(--color-primary); 
-        }
-        .hero-title { 
-            font-size: clamp(2.5rem, 8vw, 5.5rem); text-transform: uppercase; 
-            letter-spacing: -1px; margin-bottom: 20px; opacity: 0; 
-            animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
-        }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 60%, var(--color-primary) 100%); }
+        .hero-content { position: relative; z-index: 2; text-align: center; padding: 0 24px; max-width: 900px; color: var(--color-primary); }
+        .hero-title { font-size: clamp(2.5rem, 8vw, 5.5rem); text-transform: uppercase; letter-spacing: -1px; margin-bottom: 20px; opacity: 0; animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .text-accent { color: var(--color-accent); }
-        .hero-subtitle { 
-            font-size: clamp(1rem, 2.5vw, 1.2rem); font-weight: 300; line-height: 1.8; 
-            margin-bottom: 48px; opacity: 0; 
-            animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; 
-            max-width: 600px; margin-left: auto; margin-right: auto; 
-        }
-        .hero-buttons { 
-            display: flex; gap: 16px; justify-content: center; opacity: 0; 
-            animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; 
-        }
-        @keyframes fadeUp { 
-            from { opacity: 0; transform: translateY(60px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
+        .hero-subtitle { font-size: clamp(1rem, 2.5vw, 1.2rem); font-weight: 300; line-height: 1.8; margin-bottom: 48px; opacity: 0; animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .hero-buttons { display: flex; gap: 16px; justify-content: center; opacity: 0; animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: translateY(0); } }
 
         /* =========================================
            UX MOBILE MENU & OVERLAY
            ========================================= */
-        .menu-toggle { 
-            display: flex; flex-direction: column; gap: 6px; z-index: 1001; padding: 4px; 
-        }
-        .menu-toggle span { 
-            display: block; width: 28px; height: 2px; background: var(--color-primary); 
-            transition: var(--transition-smooth); 
-        }
+        .menu-toggle { display: flex; flex-direction: column; gap: 6px; z-index: 1001; padding: 4px; }
+        .menu-toggle span { display: block; width: 28px; height: 2px; background: var(--color-primary); transition: var(--transition-smooth); }
         .navbar.scrolled .menu-toggle span { background: var(--color-secondary); }
-        .menu-overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
-            background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); 
-            z-index: 999; opacity: 0; visibility: hidden; 
-            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); 
-        }
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
         .menu-overlay.active { opacity: 1; visibility: visible; }
-        .mobile-menu { 
-            position: fixed; top: 0; right: 0; width: 85%; max-width: 380px; 
-            height: 100vh; background: var(--color-primary); z-index: 1000; 
-            padding: 40px 32px 100px; display: flex; flex-direction: column; 
-            transform: translateX(100%); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
-            box-shadow: -10px 0 40px rgba(0,0,0,0.15); overflow-y: auto; 
-        }
+        .mobile-menu { position: fixed; top: 0; right: 0; width: 85%; max-width: 380px; height: 100vh; background: var(--color-primary); z-index: 1000; padding: 40px 32px 100px; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: -10px 0 40px rgba(0,0,0,0.15); overflow-y: auto; }
         .mobile-menu.active { transform: translateX(0); }
-        .mobile-menu > * { 
-            opacity: 0; transform: translateY(20px); 
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
-        }
+        .mobile-menu > * { opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         .mobile-menu.active > * { opacity: 1; transform: translateY(0); }
         .mobile-menu.active .sidebar-header { transition-delay: 0.1s; }
         .mobile-menu.active .menu-item-1 { transition-delay: 0.15s; }
@@ -213,161 +154,84 @@
         .mobile-menu.active .menu-item-3 { transition-delay: 0.3s; }
         .mobile-menu.active .menu-item-4 { transition-delay: 0.35s; }
         .mobile-menu.active .menu-item-5 { transition-delay: 0.4s; }
-        .mobile-menu.active .btn-primary { transition-delay: 0.45s; }
+        /* Tambahan menu baru */
+        .mobile-menu.active .menu-item-6 { transition-delay: 0.45s; }
+        .mobile-menu.active .menu-item-7 { transition-delay: 0.5s; }
+        .mobile-menu.active .menu-item-8 { transition-delay: 0.55s; }
+        .mobile-menu.active .btn-primary { transition-delay: 0.6s; }
         
-        .sidebar-header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--color-border); 
-        }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--color-border); }
         .sidebar-title { font-family: var(--font-heading); font-weight: 800; font-size: 1.2rem; }
-        .btn-close-menu { 
-            font-size: 2rem; color: var(--color-secondary); line-height: 1; 
-            transition: var(--transition-smooth); 
-        }
+        .btn-close-menu { font-size: 2rem; color: var(--color-secondary); line-height: 1; transition: var(--transition-smooth); }
         .btn-close-menu:hover { color: var(--color-accent); transform: scale(1.1); }
-        .menu-item { 
-            display: block; color: var(--color-secondary); font-weight: 600; 
-            font-size: 1.2rem; font-family: var(--font-heading); letter-spacing: 1px; 
-            padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.05); 
-        }
+        .menu-item { display: block; color: var(--color-secondary); font-weight: 600; font-size: 1.2rem; font-family: var(--font-heading); letter-spacing: 1px; padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
 
         /* AKORDION SIDEBAR */
-        .accordion-btn { 
-            width: 100%; display: flex; justify-content: space-between; align-items: center; 
-            color: var(--color-secondary); font-weight: 600; font-size: 1.2rem; 
-            font-family: var(--font-heading); letter-spacing: 1px; 
-            padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.05); 
-        }
+        .accordion-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; color: var(--color-secondary); font-weight: 600; font-size: 1.2rem; font-family: var(--font-heading); letter-spacing: 1px; padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
         .accordion-icon { font-size: 0.8rem; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.6s; }
         .accordion-content { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         .accordion-inner { overflow: hidden; padding-left: 16px; }
         .accordion-active .accordion-content { grid-template-rows: 1fr; }
         .accordion-active .accordion-icon { transform: rotate(180deg); color: var(--color-accent); }
-        .sub-menu-item { 
-            display: block; padding: 12px 0; font-size: 0.95rem; 
-            font-weight: 500; color: #555; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
-        }
+        .sub-menu-item { display: block; padding: 12px 0; font-size: 0.95rem; font-weight: 500; color: #555; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         .sub-menu-item:hover { color: var(--color-accent); padding-left: 8px; }
 
         /* =========================================
            BIODATA SALES
            ========================================= */
-        .sales-bio { 
-            background-color: var(--color-primary); padding: 40px 24px 80px; 
-            display: flex; justify-content: center; position: relative; z-index: 2; 
-        }
+        .sales-bio { background-color: var(--color-primary); padding: 40px 24px 80px; display: flex; justify-content: center; position: relative; z-index: 2; }
         .bio-card-wrapper { width: 100%; max-width: 950px; will-change: transform; }
-        .bio-card { 
-            background: var(--color-primary); width: 100%; border-radius: 8px; 
-            padding: 48px; box-shadow: var(--shadow-premium); display: flex; 
-            align-items: center; gap: 48px; border: 1px solid var(--color-border); 
-            border-top: 3px solid var(--color-accent); position: relative; 
-            overflow: hidden; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
-        }
+        .bio-card { background: var(--color-primary); width: 100%; border-radius: 8px; padding: 48px; box-shadow: var(--shadow-premium); display: flex; align-items: center; gap: 48px; border: 1px solid var(--color-border); border-top: 3px solid var(--color-accent); position: relative; overflow: hidden; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .bio-card:hover { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.1); }
         .bio-img-wrapper { flex-shrink: 0; width: 260px; height: 360px; border-radius: 4px; overflow: hidden; position: relative; }
         .bio-img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
         .bio-card:hover .bio-img { transform: scale(1.05); }
         .bio-info { display: flex; flex-direction: column; gap: 16px; color: var(--color-secondary); }
-        .bio-role { 
-            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 4px; 
-            color: var(--color-accent); font-weight: 700; font-family: var(--font-heading); 
-            display: flex; align-items: center; gap: 12px; 
-        }
+        .bio-role { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 4px; color: var(--color-accent); font-weight: 700; font-family: var(--font-heading); display: flex; align-items: center; gap: 12px; }
         .bio-role::before { content: ''; display: block; width: 40px; height: 1px; background: var(--color-accent); }
         .bio-name { font-size: 3rem; color: var(--color-secondary); line-height: 1.1; margin-bottom: 8px; letter-spacing: -1px; }
         .bio-motto { font-style: normal; color: #555; line-height: 1.8; font-size: 1.1rem; font-weight: 400; }
         .bio-socials { display: flex; gap: 16px; margin-top: 24px; }
-        .social-btn { 
-            width: 44px; height: 44px; border-radius: 50%; background: var(--color-surface); 
-            display: flex; justify-content: center; align-items: center; 
-            color: var(--color-secondary); transition: var(--transition-smooth); 
-            border: 1px solid var(--color-border); 
-        }
+        .social-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--color-surface); display: flex; justify-content: center; align-items: center; color: var(--color-secondary); transition: var(--transition-smooth); border: 1px solid var(--color-border); }
         .social-btn svg { width: 18px; height: 18px; fill: currentColor; transition: var(--transition-smooth); }
         .social-btn:hover { background: var(--color-accent); color: var(--color-primary); transform: translateY(-4px); border-color: var(--color-accent); }
 
         /* =========================================
            DEALER INFO SECTION
            ========================================= */
-        .dealer-info {
-            padding: 20px 24px 160px; 
-            background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary) 50%, #050505 100%);
-            text-align: center; position: relative; z-index: 2;
-        }
+        .dealer-info { padding: 20px 24px 160px; background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary) 50%, #050505 100%); text-align: center; position: relative; z-index: 2; }
         .dealer-title { font-size: clamp(1.8rem, 5vw, 2.5rem); color: var(--color-secondary); letter-spacing: -0.5px; margin-bottom: 16px; text-transform: uppercase; }
         .dealer-desc { max-width: 700px; margin: 0 auto; color: #555; font-size: 1.1rem; line-height: 1.8; }
 
         /* =========================================
            PROMO SECTION
            ========================================= */
-        .promo-section {
-            background-color: #050505; padding: 0 0 100px 0; position: relative; 
-            overflow: hidden; color: var(--color-primary);
-        }
-        .promo-section::before {
-            content: ''; position: absolute; top: 10%; left: -10%; width: 50vw; height: 50vw;
-            background: radial-gradient(circle, rgba(230,0,0,0.15) 0%, transparent 60%);
-            filter: blur(80px); z-index: 0; pointer-events: none;
-        }
+        .promo-section { background-color: #050505; padding: 0 0 100px 0; position: relative; overflow: hidden; color: var(--color-primary); }
+        .promo-section::before { content: ''; position: absolute; top: 10%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(230,0,0,0.15) 0%, transparent 60%); filter: blur(80px); z-index: 0; pointer-events: none; }
         .promo-header { text-align: center; position: relative; z-index: 1; margin-bottom: 60px; padding: 0 24px; }
         .promo-header h2 { font-size: clamp(2.2rem, 6vw, 3.5rem); letter-spacing: 1px; text-transform: uppercase; }
         .promo-header p { color: #aaa; margin-top: 12px; font-size: 1.1rem; }
         .promo-slider-wrapper { position: relative; width: 100%; max-width: 1440px; margin: 0 auto; }
         
-        .slider-btn-nav {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            width: 54px; height: 54px; border-radius: 50%;
-            background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(10px); 
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15); color: white;
-            display: none; align-items: center; justify-content: center; z-index: 10;
-            cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-        }
+        .slider-btn-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 54px; height: 54px; border-radius: 50%; background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.15); color: white; display: none; align-items: center; justify-content: center; z-index: 10; cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
         .slider-btn-nav:hover { background: var(--color-accent); border-color: var(--color-accent); transform: translateY(-50%) scale(1.1); box-shadow: 0 15px 30px rgba(230,0,0,0.4); }
         .slider-btn-nav svg { width: 20px; height: 20px; fill: currentColor; }
         .slider-btn-nav.prev { left: 32px; }
         .slider-btn-nav.next { right: 32px; }
 
-        .promo-slider {
-            display: flex; gap: 24px; overflow-x: auto; padding: 20px 24px 80px;
-            scroll-snap-type: x mandatory; scroll-behavior: smooth; position: relative; z-index: 1;
-            -ms-overflow-style: none; scrollbar-width: none;
-        }
+        /* JS Smooth class controls behavior */
+        .promo-slider { display: flex; gap: 24px; overflow-x: auto; padding: 20px 24px 80px; scroll-snap-type: x mandatory; position: relative; z-index: 1; -ms-overflow-style: none; scrollbar-width: none; }
+        .promo-slider.smooth-scroll { scroll-behavior: smooth; }
         .promo-slider::-webkit-scrollbar { display: none; }
-
-        .promo-card {
-            flex: 0 0 75%; max-width: 360px; height: 480px;
-            scroll-snap-align: center; border-radius: 20px;
-            position: relative; overflow: visible; 
-            cursor: pointer; transform: translateZ(0); 
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .promo-card-inner {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            border-radius: 20px; overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1); background: #111;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        
+        .promo-card { flex: 0 0 75%; max-width: 360px; height: 480px; scroll-snap-align: center; border-radius: 20px; position: relative; overflow: visible; cursor: pointer; transform: translateZ(0); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .promo-card-inner { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); background: #111; box-shadow: 0 20px 40px rgba(0,0,0,0.5); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         .promo-card.is-active { transform: translateY(-12px); }
         .promo-card.is-active .promo-card-inner { box-shadow: 0 0 60px rgba(230,0,0,0.4); border: 1px solid rgba(230,0,0,0.5); }
         .promo-card.is-active .promo-card-bg { filter: brightness(1); transform: scale(1.05); }
         .promo-card.is-active .promo-card-content { transform: translateY(0); }
-
-        .promo-card-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            object-fit: cover; filter: brightness(0.7); transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s;
-        }
-        .promo-card-content {
-            position: absolute; bottom: 0; left: 0; width: 100%;
-            padding: 24px; display: flex; flex-direction: column; align-items: flex-start;
-            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.95) 100%);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            transform: translateY(10px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            border-top: 1px solid rgba(255,255,255,0.08); min-height: 35%; 
-        }
-
+        .promo-card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7); transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s; }
+        .promo-card-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 24px; display: flex; flex-direction: column; align-items: flex-start; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.95) 100%); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); transform: translateY(10px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); border-top: 1px solid rgba(255,255,255,0.08); min-height: 35%; }
         .promo-badge { background: var(--color-accent); color: white; padding: 4px 12px; border-radius: 30px; font-size: 0.65rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
         .promo-card-content h3 { font-size: 1.5rem; line-height: 1.2; margin-bottom: 8px; }
         .promo-card-content p { color: rgba(255,255,255,0.7); font-size: 0.85rem; line-height: 1.5; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -376,20 +240,13 @@
         /* ADS GRID */
         .ads-grid-container { padding: 0 24px; position: relative; z-index: 1; margin-top: 20px; }
         .ads-grid { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 1200px; margin: 0 auto; }
-        .luxury-ad-space {
-            width: 100%; height: 420px; border-radius: 24px; overflow: hidden; position: relative; 
-            border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 30px 60px rgba(0,0,0,0.6); transform: translateZ(0);
-        }
+        .luxury-ad-space { width: 100%; height: 420px; border-radius: 24px; overflow: hidden; position: relative; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 30px 60px rgba(0,0,0,0.6); transform: translateZ(0); }
         .luxury-ad-space::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%); pointer-events: none; z-index: 1; }
         .luxury-media { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); transition: var(--transition-smooth); }
         .ad-content { position: absolute; bottom: 32px; left: 32px; text-align: left; max-width: 80%; z-index: 2; }
         .ad-content h3 { font-size: clamp(1.4rem, 4vw, 2.2rem); text-transform: uppercase; text-shadow: 0 4px 20px rgba(0,0,0,0.8); margin-bottom: 12px; }
         .ad-content p { font-size: 1rem; color: rgba(255,255,255,0.9); margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
-        .btn-glass-ad { 
-            pointer-events: auto; display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; border-radius: 30px;
-            background: rgba(10, 10, 10, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.15); color: white; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition-smooth);
-        }
+        .btn-glass-ad { pointer-events: auto; display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; border-radius: 30px; background: rgba(10, 10, 10, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.15); color: white; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition-smooth); }
         .btn-glass-ad svg { width: 18px; height: 18px; fill: currentColor; }
         .btn-glass-ad:hover { background: rgba(10, 10, 10, 0.7); border-color: var(--color-accent); transform: translateY(-4px); }
 
@@ -401,33 +258,15 @@
         .katalog-title { font-size: clamp(2rem, 5vw, 3rem); text-transform: uppercase; color: var(--color-secondary); letter-spacing: -0.5px; }
         .katalog-subtitle { color: #666; margin-top: 12px; font-size: 1.1rem; }
         .katalog-filters { display: flex; justify-content: center; gap: 16px; margin-bottom: 48px; flex-wrap: wrap; }
-        .filter-btn { 
-            padding: 10px 24px; border-radius: 30px; border: 1px solid var(--color-border); 
-            background: var(--color-primary); color: var(--color-secondary); font-weight: 600; 
-            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition-smooth); 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02); cursor: pointer; 
-        }
+        .filter-btn { padding: 10px 24px; border-radius: 30px; border: 1px solid var(--color-border); background: var(--color-primary); color: var(--color-secondary); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition-smooth); box-shadow: 0 4px 10px rgba(0,0,0,0.02); cursor: pointer; }
         .filter-btn.active, .filter-btn:hover { background: var(--color-secondary); color: var(--color-primary); border-color: var(--color-secondary); transform: translateY(-2px); }
-        
         .katalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 32px; max-width: 1200px; margin: 0 auto; }
-        .car-card { 
-            background: var(--color-primary); border-radius: 16px; overflow: hidden; 
-            border: 1px solid var(--color-border); box-shadow: 0 10px 30px rgba(0,0,0,0.03); 
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s, opacity 0.4s; 
-            display: flex; flex-direction: column; 
-        }
+        .car-card { background: var(--color-primary); border-radius: 16px; overflow: hidden; border: 1px solid var(--color-border); box-shadow: 0 10px 30px rgba(0,0,0,0.03); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s, opacity 0.4s; display: flex; flex-direction: column; }
         .car-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.08); }
-        .car-img-wrapper { 
-            width: 100%; height: 220px; background: #EFEFEF; position: relative; 
-            overflow: hidden; display: flex; justify-content: center; align-items: center; padding: 20px; 
-        }
+        .car-img-wrapper { width: 100%; height: 220px; background: #EFEFEF; position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center; padding: 20px; }
         .car-img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15)); }
         .car-card:hover .car-img { transform: scale(1.08); }
-        .car-badge { 
-            position: absolute; top: 16px; left: 16px; background: var(--color-accent); color: white; 
-            padding: 4px 12px; font-size: 0.65rem; font-weight: 800; border-radius: 20px; 
-            text-transform: uppercase; letter-spacing: 1px; z-index: 2; 
-        }
+        .car-badge { position: absolute; top: 16px; left: 16px; background: var(--color-accent); color: white; padding: 4px 12px; font-size: 0.65rem; font-weight: 800; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; z-index: 2; }
         .car-info { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; }
         .car-name { font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; color: var(--color-secondary); text-transform: uppercase; letter-spacing: -0.5px; }
         .car-price { color: var(--color-accent); font-weight: 700; font-size: 1.1rem; margin-bottom: 16px; font-family: var(--font-heading); }
@@ -445,163 +284,118 @@
         .news-header { text-align: center; margin-bottom: 40px; }
         .news-title { font-size: clamp(2rem, 5vw, 3rem); text-transform: uppercase; color: var(--color-secondary); letter-spacing: -0.5px; }
         .news-subtitle { color: #666; margin-top: 12px; font-size: 1.1rem; }
-
-        .news-nav { 
-            display: flex; gap: 24px; overflow-x: auto; padding-bottom: 16px; margin-bottom: 40px; 
-            justify-content: flex-start; scrollbar-width: none; border-bottom: 1px solid var(--color-border); 
-            max-width: 1200px; margin-left: auto; margin-right: auto;
-        }
+        .news-nav { display: flex; gap: 24px; overflow-x: auto; padding-bottom: 16px; margin-bottom: 40px; justify-content: flex-start; scrollbar-width: none; border-bottom: 1px solid var(--color-border); max-width: 1200px; margin-left: auto; margin-right: auto; }
         .news-nav::-webkit-scrollbar { display: none; }
-        
-        .news-tab-btn { 
-            font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #888; 
-            background: none; padding-bottom: 8px; border-bottom: 2px solid transparent; 
-            white-space: nowrap; transition: var(--transition-smooth); cursor: pointer; 
-        }
+        .news-tab-btn { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #888; background: none; padding-bottom: 8px; border-bottom: 2px solid transparent; white-space: nowrap; transition: var(--transition-smooth); cursor: pointer; }
         .news-tab-btn.active, .news-tab-btn:hover { color: var(--color-secondary); border-color: var(--color-accent); }
-
         .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 32px; max-width: 1200px; margin: 0 auto; }
-        .news-card { 
-            background: var(--color-primary); border-radius: 12px; overflow: hidden; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s; 
-            border: 1px solid var(--color-border); display: flex; flex-direction: column; cursor: pointer; 
-        }
+        .news-card { background: var(--color-primary); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.04); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s; border: 1px solid var(--color-border); display: flex; flex-direction: column; cursor: pointer; }
         .news-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        
         .news-img-wrapper { width: 100%; height: 220px; overflow: hidden; position: relative; }
         .news-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); filter: brightness(0.9); }
         .news-card:hover .news-img { transform: scale(1.08); filter: brightness(1); }
         .news-category-badge { position: absolute; top: 16px; left: 16px; background: rgba(10,10,10,0.8); backdrop-filter: blur(4px); color: white; padding: 4px 12px; font-size: 0.65rem; font-weight: 800; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; z-index: 2; border: 1px solid rgba(255,255,255,0.2); }
-        
         .news-content { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; }
         .news-date { color: var(--color-accent); font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; margin-bottom: 12px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
         .news-date::before { content: ''; display: block; width: 24px; height: 1px; background: var(--color-accent); }
         .news-card-title { font-size: 1.3rem; font-weight: 700; color: var(--color-secondary); line-height: 1.4; margin-bottom: 12px; font-family: var(--font-heading); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .news-snippet { color: #666; font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px; flex-grow: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        
         .btn-news-read { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--color-secondary); display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--color-secondary); padding-bottom: 2px; align-self: flex-start; transition: var(--transition-smooth); }
         .btn-news-read:hover { color: var(--color-accent); border-color: var(--color-accent); gap: 12px; }
 
         /* =========================================
            LOCATION & MAP SECTION (LUXURY)
            ========================================= */
-        .location-section {
-            padding: 120px 24px 0 24px; /* Hapus padding bottom agar gradasi menyatu sempurna */
-            background: var(--color-surface);
-            position: relative; z-index: 2; border-top: 1px solid var(--color-border);
-        }
+        .location-section { padding: 120px 24px 0 24px; background: var(--color-surface); position: relative; z-index: 2; border-top: 1px solid var(--color-border); }
         .location-header { text-align: center; margin-bottom: 60px; }
-        
-        .map-container-wrapper {
-            max-width: 1200px; margin: 0 auto; position: relative;
-            border-radius: 32px 32px 0 0; /* Ubah border agar bawahnya lurus menyatu ke seksi berikutnya */
-            overflow: hidden;
-            box-shadow: 0 -20px 60px rgba(0,0,0,0.05);
-            border: 1px solid var(--color-border);
-            border-bottom: none;
-            height: 550px;
-        }
-
-        .google-map-iframe {
-            width: 100%; height: 100%; border: 0; filter: grayscale(0.2) contrast(1.1);
-        }
-
-        .map-info-card {
-            position: absolute; top: 40px; left: 40px;
-            width: 340px; background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 24px;
-            padding: 32px; z-index: 5;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-            transition: var(--transition-smooth);
-        }
+        .map-container-wrapper { max-width: 1200px; margin: 0 auto; position: relative; border-radius: 32px 32px 0 0; overflow: hidden; box-shadow: 0 -20px 60px rgba(0,0,0,0.05); border: 1px solid var(--color-border); border-bottom: none; height: 550px; }
+        .google-map-iframe { width: 100%; height: 100%; border: 0; filter: grayscale(0.2) contrast(1.1); }
+        .map-info-card { position: absolute; top: 40px; left: 40px; width: 340px; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 24px; padding: 32px; z-index: 5; box-shadow: 0 20px 50px rgba(0,0,0,0.1); transition: var(--transition-smooth); }
         .map-info-card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.85); }
-        
         .map-info-title { font-size: 1.4rem; font-weight: 800; color: var(--color-secondary); margin-bottom: 16px; text-transform: uppercase; letter-spacing: -0.5px; }
         .map-detail-item { display: flex; gap: 16px; margin-bottom: 20px; }
         .map-icon-circle { width: 36px; height: 36px; border-radius: 50%; background: var(--color-accent); color: white; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .map-icon-circle svg { width: 18px; height: 18px; fill: currentColor; }
         .map-text h4 { font-size: 0.7rem; text-transform: uppercase; color: #888; letter-spacing: 1px; margin-bottom: 4px; }
         .map-text p { font-size: 0.95rem; color: var(--color-secondary); font-weight: 500; line-height: 1.5; }
-
-        .btn-map-nav {
-            margin-top: 12px; width: 100%; padding: 16px;
-            background: var(--color-secondary); color: white;
-            border-radius: 12px; font-weight: 700; text-transform: uppercase;
-            font-size: 0.8rem; letter-spacing: 1.5px; display: flex;
-            align-items: center; justify-content: center; gap: 12px;
-            transition: var(--transition-smooth);
-        }
+        .btn-map-nav { margin-top: 12px; width: 100%; padding: 16px; background: var(--color-secondary); color: white; border-radius: 12px; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1.5px; display: flex; align-items: center; justify-content: center; gap: 12px; transition: var(--transition-smooth); }
         .btn-map-nav:hover { background: var(--color-accent); box-shadow: 0 10px 20px rgba(230,0,0,0.3); }
 
         /* =========================================
-           [UPDATE] LAYANAN PURNA JUAL SECTION (SEAMLESS BLEND)
+           [UPDATE] TESTIMONIAL GALLERY SECTION
            ========================================= */
-        .service-section {
-            position: relative; padding: 160px 24px 120px; background: #050505; color: var(--color-primary);
-            overflow: hidden; text-align: center; display: flex; align-items: center; justify-content: center;
-        }
+        .testimonial-section { padding: 80px 24px 120px; background: var(--color-surface); position: relative; z-index: 2; border-bottom: none; }
+        .testi-header { text-align: center; margin-bottom: 60px; }
+        .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; max-width: 1200px; margin: 0 auto 56px; }
+        .testi-card { background: var(--color-primary); padding: 0; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); border: 1px solid var(--color-border); transition: var(--transition-smooth); position: relative; overflow: hidden; display: flex; flex-direction: column; }
+        .testi-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0,0,0,0.08); border-color: var(--color-accent); }
+        /* Foto Besar Testimoni */
+        .testi-img-main { width: 100%; height: 240px; object-fit: cover; border-bottom: 3px solid var(--color-accent); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .testi-card:hover .testi-img-main { transform: scale(1.05); }
+        .testi-content { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; background: var(--color-primary); position: relative; z-index: 2; }
+        .testi-info { display: flex; flex-direction: column; margin-bottom: 12px; }
+        .testi-name { font-weight: 800; font-family: var(--font-heading); color: var(--color-secondary); font-size: 1.2rem; }
+        .testi-role { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        .testi-stars { color: #FFD700; margin-bottom: 16px; font-size: 1.1rem; letter-spacing: 2px; }
+        .testi-text { font-style: italic; color: #555; line-height: 1.7; font-size: 0.95rem; flex-grow: 1; }
         
-        /* Masking Gradasi Menyatu dari Maps (Warna Terang) ke Background Gelap Layanan */
-        .service-section::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 180px;
-            background: linear-gradient(to bottom, var(--color-surface) 0%, transparent 100%);
-            z-index: 2; pointer-events: none;
-        }
+        /* Tombol Outline Luxury Universal (Bisa dipakai di Testimoni & Berita) */
+        .btn-luxury-outline { display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 16px 40px; border-radius: 50px; background: transparent; border: 1px solid var(--color-secondary); color: var(--color-secondary); font-weight: 700; font-family: var(--font-heading); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; transition: var(--transition-smooth); position: relative; overflow: hidden; z-index: 1; cursor: pointer; }
+        .btn-luxury-outline::before { content: ''; position: absolute; top: 0; left: 0; width: 0%; height: 100%; background: var(--color-secondary); transition: var(--transition-smooth); z-index: -1; }
+        .btn-luxury-outline:hover { color: var(--color-primary); border-color: var(--color-secondary); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .btn-luxury-outline:hover::before { width: 100%; }
+        .btn-luxury-outline svg { width: 18px; height: 18px; fill: currentColor; transition: transform 0.4s; }
+        .btn-luxury-outline:hover svg { transform: translateX(5px); }
 
-        .service-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; filter: brightness(0.4) grayscale(0.2);
-            transition: transform 10s ease; z-index: 0;
-        }
+        .news-more-btn-wrapper { text-align: center; margin-top: 56px; }
+
+        /* =========================================
+           LAYANAN PURNA JUAL SECTION (SEAMLESS BLEND)
+           ========================================= */
+        .service-section { position: relative; padding: 160px 24px 120px; background: #050505; color: var(--color-primary); overflow: hidden; text-align: center; display: flex; align-items: center; justify-content: center; }
+        .service-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 180px; background: linear-gradient(to bottom, var(--color-surface) 0%, transparent 100%); z-index: 2; pointer-events: none; }
+        .service-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4) grayscale(0.2); transition: transform 10s ease; z-index: 0; }
         .service-section:hover .service-bg { transform: scale(1.05); }
-        .service-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, rgba(5,5,5,0.95) 100%);
-            z-index: 1;
-        }
-        .service-content {
-            position: relative; z-index: 3; max-width: 800px; margin: 0 auto;
-        }
-        .service-tagline {
-            font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 3px;
-            color: var(--color-accent); margin-bottom: 16px; display: block;
-        }
-        .service-title {
-            font-size: clamp(2.5rem, 6vw, 4rem); text-transform: uppercase;
-            letter-spacing: -1px; margin-bottom: 24px; text-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .service-desc {
-            font-size: 1.15rem; line-height: 1.8; color: #ccc; margin-bottom: 48px;
-        }
+        .service-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, rgba(5,5,5,0.95) 100%); z-index: 1; }
+        .service-content { position: relative; z-index: 3; max-width: 800px; margin: 0 auto; }
+        .service-tagline { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; color: var(--color-accent); margin-bottom: 16px; display: block; }
+        .service-title { font-size: clamp(2.5rem, 6vw, 4rem); text-transform: uppercase; letter-spacing: -1px; margin-bottom: 24px; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .service-desc { font-size: 1.15rem; line-height: 1.8; color: #ccc; margin-bottom: 48px; }
 
-        /* Tombol Luxury "Lihat Selengkapnya" */
-        .btn-glass-service {
-            display: inline-flex; align-items: center; gap: 12px; padding: 18px 48px;
-            border-radius: 50px; background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2); color: var(--color-primary);
-            font-family: var(--font-heading); font-weight: 700; font-size: 0.95rem; text-transform: uppercase;
-            letter-spacing: 2px; transition: all 0.5s ease; position: relative; overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        /* Efek Animasi Kilap Cahaya (Shine Sweep) */
-        .btn-glass-service::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
-            transform: skewX(-25deg); animation: shineSweep 4s infinite;
-        }
-        @keyframes shineSweep {
-            0% { left: -100%; }
-            20% { left: 200%; }
-            100% { left: 200%; }
-        }
-        .btn-glass-service:hover {
-            background: rgba(230,0,0,0.8); border-color: var(--color-accent);
-            transform: translateY(-5px); box-shadow: 0 15px 40px rgba(230,0,0,0.5);
-        }
+        .btn-glass-service { display: inline-flex; align-items: center; gap: 12px; padding: 18px 48px; border-radius: 50px; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.2); color: var(--color-primary); font-family: var(--font-heading); font-weight: 700; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 2px; transition: all 0.5s ease; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .btn-glass-service::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent); transform: skewX(-25deg); animation: shineSweep 4s infinite; }
+        @keyframes shineSweep { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
+        .btn-glass-service:hover { background: rgba(230,0,0,0.8); border-color: var(--color-accent); transform: translateY(-5px); box-shadow: 0 15px 40px rgba(230,0,0,0.5); }
         .btn-glass-service svg { width: 20px; height: 20px; fill: currentColor; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         .btn-glass-service:hover svg { transform: translateX(8px); }
+
+        /* =========================================
+           [UPDATE] MEGA FOOTER LUXURY
+           ========================================= */
+        .footer { background: #050505; color: var(--color-primary); padding: 100px 24px 40px; position: relative; z-index: 2; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-container { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; max-width: 1200px; margin: 0 auto; padding-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        
+        .footer-brand .footer-logo { height: 50px; filter: brightness(0) invert(1); margin-bottom: 24px; }
+        .footer-brand p { color: #888; font-size: 0.95rem; line-height: 1.8; max-width: 300px; margin-bottom: 32px; }
+        .footer-socials { display: flex; gap: 16px; }
+        .social-link-icon { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; color: white; transition: var(--transition-smooth); cursor: pointer; }
+        .social-link-icon:hover { background: var(--color-accent); border-color: var(--color-accent); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(230,0,0,0.3); }
+        .social-link-icon svg { width: 18px; height: 18px; fill: currentColor; }
+
+        .footer-col h4 { color: white; margin-bottom: 24px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; font-family: var(--font-heading); }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 16px; }
+        .footer-col a { color: #888; transition: var(--transition-smooth); font-size: 0.9rem; font-weight: 500; display: inline-block; position: relative; }
+        .footer-col a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--color-accent); transition: var(--transition-smooth); }
+        .footer-col a:hover { color: white; }
+        .footer-col a:hover::after { width: 100%; }
+        
+        .footer-contact p { color: #888; font-size: 0.9rem; line-height: 1.8; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px; }
+        .footer-contact p svg { width: 18px; height: 18px; fill: var(--color-accent); flex-shrink: 0; margin-top: 4px; }
+
+        .footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .footer-copy { font-size: 0.85rem; color: #666; font-weight: 500; letter-spacing: 1px; }
+        .footer-dev { font-size: 0.75rem; color: #555; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 2px; }
 
         /* =========================================
            ANIMASI REVEAL
@@ -626,6 +420,7 @@
             .map-info-card { position: relative; top: 0; left: 0; width: 100%; border-radius: 0; background: var(--color-primary); } 
             .map-container-wrapper { height: auto; display: flex; flex-direction: column; } 
             .google-map-iframe { height: 350px; }
+            .footer-container { grid-template-columns: 1fr 1fr; }
         }
         @media (min-width: 768px) { 
             .slider-btn-nav { display: flex; } 
@@ -660,6 +455,24 @@
             .service-title { font-size: 2.5rem; }
             .service-desc { font-size: 1rem; }
             .btn-glass-service { padding: 16px 32px; font-size: 0.85rem; }
+            
+            /* Mobile Grid untuk Testimoni menjadi 2 Kolom */
+            .testimonial-section { padding: 60px 16px 80px; }
+            .testi-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .testi-img-main { height: 140px; border-bottom: 2px solid var(--color-accent); }
+            .testi-content { padding: 16px; }
+            .testi-name { font-size: 0.95rem; }
+            .testi-text { font-size: 0.75rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+            .testi-stars { font-size: 0.85rem; margin-bottom: 8px; }
+
+            /* Mobile Footer */
+            .footer { padding: 80px 20px 30px; }
+            .footer-container { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+            .footer-brand .footer-logo { margin: 0 auto 24px; }
+            .footer-brand p { margin: 0 auto 32px; }
+            .footer-socials { justify-content: center; }
+            .footer-contact p { justify-content: center; text-align: left; max-width: 280px; margin: 0 auto 16px; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
         }
     </style>
 </head>
@@ -680,7 +493,7 @@
                     <a href="#home">Beranda</a>
                     <a href="#katalog">Model</a>
                     <a href="#berita">Berita</a>
-                    <a href="#layanan">Layanan</a>
+                    <a href="#testimoni">Testimoni</a>
                 </nav>
 
                 <div class="nav-actions">
@@ -731,6 +544,10 @@
                 <a href="#berita" class="menu-item menu-item-3">Berita & Acara</a>
                 <a href="#layanan" class="menu-item menu-item-4">Layanan Purna Jual</a>
                 <a href="#lokasi" class="menu-item menu-item-5">Lokasi Dealer</a>
+                
+                <a href="#testimoni" class="menu-item menu-item-6">Testimonial Gallery</a>
+                <a href="#kredit" class="menu-item menu-item-7">Simulasi Kredit</a>
+                <a href="#kontak" class="menu-item menu-item-8">Kontak</a>
 
                 <a href="#katalog" class="btn-primary" style="margin-top: auto; text-align: center; width: 100%;">Pesan Sekarang</a>
             </div>
@@ -789,7 +606,7 @@
             <div class="promo-slider-wrapper reveal-up delay-2">
                 <div class="slider-btn-nav prev" id="promo-prev" aria-label="Geser Kiri"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></div>
                 
-                <div class="promo-slider" id="promo-slider">
+                <div class="promo-slider smooth-scroll" id="promo-slider">
                     <div class="promo-card">
                         <div class="promo-card-inner">
                             <img src="https://images.unsplash.com/photo-1605810730836-474be6843477?q=80&w=800&auto=format&fit=crop" alt="Promo XFORCE" class="promo-card-bg">
@@ -801,7 +618,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="promo-card">
                         <div class="promo-card-inner">
                             <img src="https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=800&auto=format&fit=crop" alt="Promo Pajero" class="promo-card-bg">
@@ -813,7 +629,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="promo-card">
                         <div class="promo-card-inner">
                             <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?q=80&w=800&auto=format&fit=crop" alt="Promo Xpander" class="promo-card-bg">
@@ -868,95 +683,51 @@
 
             <div class="katalog-grid reveal-up delay-2" id="katalog-grid-container">
                 <div class="car-card" data-category="passenger">
-                    <div class="car-img-wrapper">
-                        <span class="car-badge">NEW</span>
-                        <img src="https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?q=80&w=600&auto=format&fit=crop" alt="XFORCE" class="car-img">
-                    </div>
+                    <div class="car-img-wrapper"><span class="car-badge">NEW</span><img src="https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?q=80&w=600&auto=format&fit=crop" alt="XFORCE" class="car-img"></div>
                     <div class="car-info">
-                        <h3 class="car-name">XFORCE</h3>
-                        <div class="car-price">Mulai Rp 379.9 Juta</div>
+                        <h3 class="car-name">XFORCE</h3><div class="car-price">Mulai Rp 379.9 Juta</div>
                         <p class="car-desc">Compact SUV 5-seater dengan desain futuristik dan mode berkendara adaptif.</p>
-                        <div class="car-actions">
-                            <a href="#" class="btn-outline">Spesifikasi</a>
-                            <a href="#kontak" class="btn-fill">Pesan</a>
-                        </div>
+                        <div class="car-actions"><a href="#" class="btn-outline">Spesifikasi</a><a href="#kontak" class="btn-fill">Pesan</a></div>
                     </div>
                 </div>
-
                 <div class="car-card" data-category="passenger">
-                    <div class="car-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=600&auto=format&fit=crop" alt="Pajero Sport" class="car-img">
-                    </div>
+                    <div class="car-img-wrapper"><img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=600&auto=format&fit=crop" alt="Pajero Sport" class="car-img"></div>
                     <div class="car-info">
-                        <h3 class="car-name">Pajero Sport</h3>
-                        <div class="car-price">Mulai Rp 552.1 Juta</div>
+                        <h3 class="car-name">Pajero Sport</h3><div class="car-price">Mulai Rp 552.1 Juta</div>
                         <p class="car-desc">SUV tangguh dengan performa buas dan kemewahan di setiap perjalanan.</p>
-                        <div class="car-actions">
-                            <a href="#" class="btn-outline">Spesifikasi</a>
-                            <a href="#kontak" class="btn-fill">Pesan</a>
-                        </div>
+                        <div class="car-actions"><a href="#" class="btn-outline">Spesifikasi</a><a href="#kontak" class="btn-fill">Pesan</a></div>
                     </div>
                 </div>
-
                 <div class="car-card" data-category="passenger">
-                    <div class="car-img-wrapper">
-                        <span class="car-badge">FAVORIT</span>
-                        <img src="https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=600&auto=format&fit=crop" alt="Xpander" class="car-img">
-                    </div>
+                    <div class="car-img-wrapper"><span class="car-badge">FAVORIT</span><img src="https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=600&auto=format&fit=crop" alt="Xpander" class="car-img"></div>
                     <div class="car-info">
-                        <h3 class="car-name">New Xpander</h3>
-                        <div class="car-price">Mulai Rp 261.2 Juta</div>
+                        <h3 class="car-name">New Xpander</h3><div class="car-price">Mulai Rp 261.2 Juta</div>
                         <p class="car-desc">MPV keluarga yang mengedepankan kenyamanan ekstra dan suspensi canggih.</p>
-                        <div class="car-actions">
-                            <a href="#" class="btn-outline">Spesifikasi</a>
-                            <a href="#kontak" class="btn-fill">Pesan</a>
-                        </div>
+                        <div class="car-actions"><a href="#" class="btn-outline">Spesifikasi</a><a href="#kontak" class="btn-fill">Pesan</a></div>
                     </div>
                 </div>
-
                 <div class="car-card" data-category="passenger">
-                    <div class="car-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?q=80&w=600&auto=format&fit=crop" alt="Xpander Cross" class="car-img">
-                    </div>
+                    <div class="car-img-wrapper"><img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?q=80&w=600&auto=format&fit=crop" alt="Xpander Cross" class="car-img"></div>
                     <div class="car-info">
-                        <h3 class="car-name">Xpander Cross</h3>
-                        <div class="car-price">Mulai Rp 319.7 Juta</div>
+                        <h3 class="car-name">Xpander Cross</h3><div class="car-price">Mulai Rp 319.7 Juta</div>
                         <p class="car-desc">Perpaduan gaya SUV yang kokoh dengan kenyamanan kabin MPV keluarga.</p>
-                        <div class="car-actions">
-                            <a href="#" class="btn-outline">Spesifikasi</a>
-                            <a href="#kontak" class="btn-fill">Pesan</a>
-                        </div>
+                        <div class="car-actions"><a href="#" class="btn-outline">Spesifikasi</a><a href="#kontak" class="btn-fill">Pesan</a></div>
                     </div>
                 </div>
-
                 <div class="car-card" data-category="commercial">
-                    <div class="car-img-wrapper">
-                        <span class="car-badge" style="background:#0A0A0A;">LEGEND</span>
-                        <img src="https://images.unsplash.com/photo-1609521263047-f8f205293f24?q=80&w=600&auto=format&fit=crop" alt="L300" class="car-img">
-                    </div>
+                    <div class="car-img-wrapper"><span class="car-badge" style="background:#0A0A0A;">LEGEND</span><img src="https://images.unsplash.com/photo-1609521263047-f8f205293f24?q=80&w=600&auto=format&fit=crop" alt="L300" class="car-img"></div>
                     <div class="car-info">
-                        <h3 class="car-name">Colt L300</h3>
-                        <div class="car-price">Mulai Rp 224.1 Juta</div>
+                        <h3 class="car-name">Colt L300</h3><div class="car-price">Mulai Rp 224.1 Juta</div>
                         <p class="car-desc">Legenda bisnis andalan Indonesia dengan mesin Euro 4 yang tangguh dan irit.</p>
-                        <div class="car-actions">
-                            <a href="#" class="btn-outline">Spesifikasi</a>
-                            <a href="#kontak" class="btn-fill">Pesan</a>
-                        </div>
+                        <div class="car-actions"><a href="#" class="btn-outline">Spesifikasi</a><a href="#kontak" class="btn-fill">Pesan</a></div>
                     </div>
                 </div>
-
                 <div class="car-card" data-category="commercial">
-                    <div class="car-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=600&auto=format&fit=crop" alt="Triton" class="car-img">
-                    </div>
+                    <div class="car-img-wrapper"><img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=600&auto=format&fit=crop" alt="Triton" class="car-img"></div>
                     <div class="car-info">
-                        <h3 class="car-name">All New Triton</h3>
-                        <div class="car-price">Mulai Rp 290.5 Juta</div>
+                        <h3 class="car-name">All New Triton</h3><div class="car-price">Mulai Rp 290.5 Juta</div>
                         <p class="car-desc">Pick-up double cabin andalan di medan berat, siap diajak kerja keras.</p>
-                        <div class="car-actions">
-                            <a href="#" class="btn-outline">Spesifikasi</a>
-                            <a href="#kontak" class="btn-fill">Pesan</a>
-                        </div>
+                        <div class="car-actions"><a href="#" class="btn-outline">Spesifikasi</a><a href="#kontak" class="btn-fill">Pesan</a></div>
                     </div>
                 </div>
             </div>
@@ -984,43 +755,36 @@
 
             <div class="news-grid reveal-up delay-2" id="news-grid-container">
                 <div class="news-card" data-category="berita">
-                    <div class="news-img-wrapper">
-                        <span class="news-category-badge">Berita</span>
-                        <img src="https://images.unsplash.com/photo-1517524206127-48bbd363f3d7?q=80&w=800&auto=format&fit=crop" alt="Performa Kendaraan" class="news-img">
-                    </div>
+                    <div class="news-img-wrapper"><span class="news-category-badge">Berita</span><img src="https://images.unsplash.com/photo-1517524206127-48bbd363f3d7?q=80&w=800&auto=format&fit=crop" alt="Performa Kendaraan" class="news-img"></div>
                     <div class="news-content">
-                        <div class="news-date">21 Apr 2026</div>
-                        <h3 class="news-card-title">Mitsubishi Tembus Rekor Penjualan XFORCE Nasional Tahun Ini</h3>
+                        <div class="news-date">21 Apr 2026</div><h3 class="news-card-title">Mitsubishi Tembus Rekor Penjualan XFORCE Nasional Tahun Ini</h3>
                         <p class="news-snippet">Antusiasme masyarakat yang tinggi terhadap desain futuristik dan fitur premium dari Mitsubishi XFORCE berhasil mencatatkan rekor penjualan tertinggi pada kuartal pertama tahun ini di Indonesia...</p>
                         <a href="berita.html" class="btn-news-read">Klik Selengkapnya <span>→</span></a>
                     </div>
                 </div>
-
                 <div class="news-card" data-category="exhibition">
-                    <div class="news-img-wrapper">
-                        <span class="news-category-badge" style="background:var(--color-accent);">Exhibition</span>
-                        <img src="https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?q=80&w=800&auto=format&fit=crop" alt="Pameran Otomotif" class="news-img">
-                    </div>
+                    <div class="news-img-wrapper"><span class="news-category-badge" style="background:var(--color-accent);">Exhibition</span><img src="https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?q=80&w=800&auto=format&fit=crop" alt="Pameran Otomotif" class="news-img"></div>
                     <div class="news-content">
-                        <div class="news-date">18 Apr 2026</div>
-                        <h3 class="news-card-title">Auto Show 2026: Sambut Peluncuran Varian Baru SUV Premium</h3>
+                        <div class="news-date">18 Apr 2026</div><h3 class="news-card-title">Auto Show 2026: Sambut Peluncuran Varian Baru SUV Premium</h3>
                         <p class="news-snippet">Kunjungi pameran eksklusif kami akhir pekan ini. Rasakan langsung kemewahan kabin dan uji coba langsung ketangguhan varian terbaru SUV yang dirancang khusus untuk memacu adrenalin Anda...</p>
                         <a href="berita.html" class="btn-news-read">Klik Selengkapnya <span>→</span></a>
                     </div>
                 </div>
-
                 <div class="news-card" data-category="lifestyle">
-                    <div class="news-img-wrapper">
-                        <span class="news-category-badge" style="background:#0A0A0A;">Lifestyle</span>
-                        <img src="https://images.unsplash.com/photo-1616423641405-824ecf55d7ad?q=80&w=800&auto=format&fit=crop" alt="Gaya Hidup Eksklusif" class="news-img">
-                    </div>
+                    <div class="news-img-wrapper"><span class="news-category-badge" style="background:#0A0A0A;">Lifestyle</span><img src="https://images.unsplash.com/photo-1616423641405-824ecf55d7ad?q=80&w=800&auto=format&fit=crop" alt="Gaya Hidup Eksklusif" class="news-img"></div>
                     <div class="news-content">
-                        <div class="news-date">10 Apr 2026</div>
-                        <h3 class="news-card-title">Eksklusivitas Berkendara: Paduan Desain Editorial dan Kecepatan</h3>
+                        <div class="news-date">10 Apr 2026</div><h3 class="news-card-title">Eksklusivitas Berkendara: Paduan Desain Editorial dan Kecepatan</h3>
                         <p class="news-snippet">Menggabungkan estetika mewah dengan performa buas. Pelajari bagaimana desain eksterior terbaru kami terinspirasi dari gaya hidup masyarakat urban kelas atas yang mengutamakan privilese dan gaya...</p>
                         <a href="berita.html" class="btn-news-read">Klik Selengkapnya <span>→</span></a>
                     </div>
                 </div>
+            </div>
+
+            <div class="news-more-btn-wrapper reveal-up delay-2">
+                <button class="btn-luxury-outline" onclick="window.location.href='berita.html'">
+                    Lihat Semua Berita
+                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
             </div>
         </section>
 
@@ -1033,34 +797,83 @@
             <div class="map-container-wrapper reveal-up delay-2">
                 <div class="map-info-card">
                     <h3 class="map-info-title">Mitsubishi Batam</h3>
-                    
                     <div class="map-detail-item">
-                        <div class="map-icon-circle">
-                            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                        </div>
-                        <div class="map-text">
-                            <h4>Alamat</h4>
-                            <p>Jl. Raden Patah, Lubuk Baja, Kota Batam, Kepulauan Riau</p>
-                        </div>
+                        <div class="map-icon-circle"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+                        <div class="map-text"><h4>Alamat</h4><p>Jl. Raden Patah, Lubuk Baja, Kota Batam</p></div>
                     </div>
-
                     <div class="map-detail-item">
-                        <div class="map-icon-circle">
-                            <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-                        </div>
-                        <div class="map-text">
-                            <h4>Jam Operasional</h4>
-                            <p>Senin - Minggu<br>08:00 - 17:00 WIB</p>
-                        </div>
+                        <div class="map-icon-circle"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></div>
+                        <div class="map-text"><h4>Jam Operasional</h4><p>Senin - Minggu<br>08:00 - 17:00 WIB</p></div>
                     </div>
-
                     <a href="https://maps.google.com" target="_blank" class="btn-map-nav">
-                        Mulai Navigasi
-                        <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:white;"><path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z"/></svg>
+                        Mulai Navigasi <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:white;"><path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z"/></svg>
                     </a>
                 </div>
-
                 <iframe class="google-map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127641.52382542488!2d103.95738870129759!3d1.0827292211606368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d98d75a133464b%3A0x280e5513813af814!2sBatam%2C%20Batam%20City%2C%20Riau%20Islands!5e0!3m2!1sen!2sid!4v1708684784746!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </section>
+
+        <section class="testimonial-section reveal-up delay-1" id="testimoni">
+            <div class="testi-header">
+                <h2 class="news-title">Testimoni Pelanggan</h2>
+                <p class="news-subtitle">Kepercayaan dan kepuasan Anda adalah prioritas utama layanan kelas dunia kami.</p>
+            </div>
+            
+            <div class="testi-grid reveal-up delay-2">
+                <div class="testi-card">
+                    <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=600&auto=format&fit=crop" alt="Penyerahan Unit" class="testi-img-main">
+                    <div class="testi-content">
+                        <div class="testi-info">
+                            <span class="testi-name">Bpk. Hendra Gunawan</span>
+                            <span class="testi-role">Pengusaha</span>
+                        </div>
+                        <div class="testi-stars">★★★★★</div>
+                        <p class="testi-text">"Pelayanan Mas Budi sangat luar biasa! Proses pembelian Pajero Sport saya dibantu sampai tuntas dengan sangat transparan dan cepat. Unit diterima dalam kondisi prima, sangat merekomendasikan dealer ini."</p>
+                    </div>
+                </div>
+
+                <div class="testi-card">
+                    <img src="https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?q=80&w=600&auto=format&fit=crop" alt="Penyerahan Unit" class="testi-img-main">
+                    <div class="testi-content">
+                        <div class="testi-info">
+                            <span class="testi-name">Ibu Siska Amalia</span>
+                            <span class="testi-role">Eksekutif Muda</span>
+                        </div>
+                        <div class="testi-stars">★★★★★</div>
+                        <p class="testi-text">"XFORCE impian saya tiba tepat waktu! Detail penjelasannya sangat mudah dipahami, bonusnya melimpah. Pengalaman beli mobil yang paling VVIP dan menyenangkan yang pernah saya rasakan."</p>
+                    </div>
+                </div>
+
+                <div class="testi-card">
+                    <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=600&auto=format&fit=crop" alt="Penyerahan Unit" class="testi-img-main">
+                    <div class="testi-content">
+                        <div class="testi-info">
+                            <span class="testi-name">PT. Multi Konstruksi</span>
+                            <span class="testi-role">Corporate / Fleet</span>
+                        </div>
+                        <div class="testi-stars">★★★★★</div>
+                        <p class="testi-text">"Kami ambil 5 unit Triton untuk operasional pertambangan. Penawaran fleet-nya sangat menarik, dan layanan purna jual 24 jam menjamin operasional bisnis kami tidak terhambat sama sekali."</p>
+                    </div>
+                </div>
+
+                <div class="testi-card">
+                    <img src="https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=600&auto=format&fit=crop" alt="Penyerahan Unit" class="testi-img-main">
+                    <div class="testi-content">
+                        <div class="testi-info">
+                            <span class="testi-name">Keluarga Bpk. Rizal</span>
+                            <span class="testi-role">Keluarga</span>
+                        </div>
+                        <div class="testi-stars">★★★★★</div>
+                        <p class="testi-text">"Beli Xpander untuk kendaraan keluarga. Kabin luas, suspensi empuk, dan hadiah langsungnya banyak sekali! Terima kasih atas layanan prioritasnya Mas Budi. Sangat memuaskan."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testi-btn-wrapper reveal-up delay-2">
+                <button class="btn-luxury-outline">
+                    Lihat Galeri Testimoni
+                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
             </div>
         </section>
 
@@ -1080,6 +893,66 @@
             </div>
         </section>
 
+        <footer class="footer" id="kontak">
+            <div class="footer-container reveal-up delay-1">
+                <div class="footer-brand">
+                    <img src="https://i.ibb.co.com/84Ss5Bjy/IMG-3284.png" alt="Mitsubishi Motors" class="footer-logo">
+                    <p>Dealer Resmi Mitsubishi Batam. Menghadirkan layanan premium dan pengalaman berkendara kelas dunia untuk Anda dan keluarga.</p>
+                    <div class="footer-socials">
+                        <a href="https://facebook.com" target="_blank" class="social-link-icon" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" class="social-link-icon" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                        <a href="https://wa.me/628123456789" target="_blank" class="social-link-icon" aria-label="WhatsApp">
+                            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        </a>
+                        <a href="mailto:info@mitsubishi.com" class="social-link-icon" aria-label="Email">
+                            <svg viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Pintasan</h4>
+                    <ul>
+                        <li><a href="#katalog">Katalog Model</a></li>
+                        <li><a href="#promo">Promo Terbaru</a></li>
+                        <li><a href="#testimoni">Testimoni Pelanggan</a></li>
+                        <li><a href="#berita">Berita & Acara</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Layanan</h4>
+                    <ul>
+                        <li><a href="#layanan">Purna Jual</a></li>
+                        <li><a href="#kredit">Simulasi Kredit</a></li>
+                        <li><a href="#test-drive">Test Drive</a></li>
+                        <li><a href="#lokasi">Lokasi Dealer</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-contact">
+                    <h4>Kontak Kami</h4>
+                    <p>
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> 
+                        Jl. Raden Patah, Lubuk Baja, Kota Batam, Kepulauan Riau
+                    </p>
+                    <p>
+                        <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> 
+                        +62 812-3456-7890
+                    </p>
+                </div>
+            </div>
+
+            <div class="footer-bottom reveal-up delay-2">
+                <div class="footer-copy">©2026. Official Mitsubishi motors Batam Aldiansyah Sales</div>
+                <div class="footer-dev">Developed by @zee_radhan</div>
+            </div>
+        </footer>
+
     </main>
 
     <div id="toast-container"></div>
@@ -1088,64 +961,46 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
     <script>
-        // --- 0. LOGIKA PRELOADER & NAVIGASI SELENGKAPNYA ---
+        // --- 0. LOGIKA PRELOADER (1 Detik Sesuai Permintaan) ---
         const preloader = document.getElementById('preloader');
-        window.addEventListener('load', () => {
-            setTimeout(() => { preloader.classList.add('hide'); }, 1200);
+        window.addEventListener('load', () => { 
+            setTimeout(() => { preloader.classList.add('hide'); }, 1000); 
         });
-
-        const btnLoadMore = document.getElementById('btn-load-more');
-        if(btnLoadMore) {
-            btnLoadMore.addEventListener('click', (e) => {
-                e.preventDefault();
-                preloader.classList.remove('hide');
-                setTimeout(() => { window.location.href = 'katalog.html'; }, 1500); 
-            });
-        }
 
         // --- 1. KONFIGURASI API ---
         const firebaseConfig = { apiKey: "dummy_api", authDomain: "dummy", projectId: "dummy" };
-        firebase.initializeApp(firebaseConfig);
+        firebase.initializeApp(firebaseConfig); 
         const db = firebase.firestore();
 
-        // --- 2. LOGIKA NAVBAR SCROLL ---
+        // --- 2. NAVBAR SCROLL ---
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) navbar.classList.add('scrolled');
             else navbar.classList.remove('scrolled');
         });
 
-        // --- 3. LOGIKA UX SIDEBAR ---
+        // --- 3. UX SIDEBAR MENU ---
         const menuBtn = document.getElementById('mobile-menu-btn');
         const closeMenuBtn = document.getElementById('close-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuOverlay = document.getElementById('menu-overlay');
         let isMenuOpen = false;
-
         function toggleMenu() {
             isMenuOpen = !isMenuOpen;
-            if (isMenuOpen) {
-                mobileMenu.classList.add('active');
-                menuOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden'; 
-            } else {
-                mobileMenu.classList.remove('active');
-                menuOverlay.classList.remove('active');
-                document.body.style.overflow = 'auto'; 
-            }
+            if (isMenuOpen) { mobileMenu.classList.add('active'); menuOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; } 
+            else { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); document.body.style.overflow = 'auto'; }
         }
         menuBtn.addEventListener('click', toggleMenu);
         closeMenuBtn.addEventListener('click', toggleMenu);
         menuOverlay.addEventListener('click', toggleMenu);
 
-        // --- 4. LOGIKA AKORDION MENU ---
         const accordionBtn = document.querySelector('.accordion-btn');
         const accordionItem = document.getElementById('accordion-model');
         accordionBtn.addEventListener('click', () => accordionItem.classList.toggle('accordion-active'));
         const normalLinks = document.querySelectorAll('.mobile-menu .menu-item, .mobile-menu .sub-menu-item');
         normalLinks.forEach(link => { link.addEventListener('click', () => { if(isMenuOpen) toggleMenu(); }); });
 
-        // --- 5. LOGIKA REAL-TIME SCROLL PARALLAX ---
+        // --- 4. PARALLAX SCROLL BIO ---
         const parallaxCard = document.getElementById('parallax-card');
         let ticking = false;
         window.addEventListener('scroll', () => {
@@ -1167,35 +1022,70 @@
             }
         });
 
-        // --- 6. LOGIKA GLOWING ORB & SWIPE NAVIGASI ---
+        // --- 5. LOGIKA SLIDER PROMO (INFINITE AUTO LOOP) ---
         const promoSlider = document.getElementById('promo-slider');
-        const promoCards = document.querySelectorAll('.promo-card');
         const btnPrev = document.getElementById('promo-prev');
         const btnNext = document.getElementById('promo-next');
+        let sliderLoopInterval;
 
-        function updateCenterCard() {
-            if (!promoSlider) return;
-            const sliderCenter = promoSlider.scrollLeft + (promoSlider.clientWidth / 2);
-            let closestCard = null;
-            let closestDistance = Infinity;
-            promoCards.forEach(card => {
-                const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
-                const distance = Math.abs(sliderCenter - cardCenter);
-                if (distance < closestDistance) { closestDistance = distance; closestCard = card; }
-            });
-            promoCards.forEach(card => card.classList.remove('is-active'));
-            if (closestCard) closestCard.classList.add('is-active');
-        }
         if (promoSlider) {
+            const promoCards = Array.from(document.querySelectorAll('.promo-card'));
+            
+            // Logika untuk menambahkan efek aktif pada kartu di tengah
+            function updateCenterCard() {
+                const sliderCenter = promoSlider.scrollLeft + (promoSlider.clientWidth / 2);
+                let closestCard = null; let closestDistance = Infinity;
+                document.querySelectorAll('.promo-card').forEach(card => {
+                    const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+                    const distance = Math.abs(sliderCenter - cardCenter);
+                    if (distance < closestDistance) { closestDistance = distance; closestCard = card; }
+                });
+                document.querySelectorAll('.promo-card').forEach(card => card.classList.remove('is-active'));
+                if (closestCard) closestCard.classList.add('is-active');
+            }
+
+            // Logika Otomatis Auto Loop (Tanpa Ujung)
+            function startSliderLoop() {
+                stopSliderLoop(); // Pastikan tidak ada double interval
+                sliderLoopInterval = setInterval(() => {
+                    const maxScroll = promoSlider.scrollWidth - promoSlider.clientWidth;
+                    // Jika sudah mencapai ujung kanan, reset seketika ke paling kiri lalu jalan lagi
+                    if (promoSlider.scrollLeft >= maxScroll - 10) {
+                        promoSlider.scrollTo({ left: 0, behavior: 'smooth' });
+                    } else {
+                        const cardWidth = document.querySelector('.promo-card').offsetWidth;
+                        promoSlider.scrollBy({ left: cardWidth + 24, behavior: 'smooth' });
+                    }
+                }, 3500); // 3.5 Detik per geser
+            }
+            
+            function stopSliderLoop() { clearInterval(sliderLoopInterval); }
+
             promoSlider.addEventListener('scroll', () => window.requestAnimationFrame(updateCenterCard));
             updateCenterCard();
-            if (btnPrev && btnNext) {
-                btnNext.addEventListener('click', () => promoSlider.scrollBy({ left: promoCards[0].offsetWidth + 24, behavior: 'smooth' }));
-                btnPrev.addEventListener('click', () => promoSlider.scrollBy({ left: -(promoCards[0].offsetWidth + 24), behavior: 'smooth' }));
+
+            if (btnNext && btnPrev) {
+                const cardW = promoCards[0].offsetWidth;
+                btnNext.addEventListener('click', () => { 
+                    const maxScroll = promoSlider.scrollWidth - promoSlider.clientWidth;
+                    if(promoSlider.scrollLeft >= maxScroll - 10) promoSlider.scrollTo({ left: 0, behavior: 'smooth' });
+                    else promoSlider.scrollBy({ left: cardW + 24, behavior: 'smooth' }); 
+                });
+                btnPrev.addEventListener('click', () => { 
+                    if(promoSlider.scrollLeft <= 10) promoSlider.scrollTo({ left: promoSlider.scrollWidth, behavior: 'smooth' });
+                    else promoSlider.scrollBy({ left: -(cardW + 24), behavior: 'smooth' }); 
+                });
             }
+
+            // Hentikan auto-loop saat user sedang berinteraksi
+            startSliderLoop();
+            promoSlider.addEventListener('mouseenter', stopSliderLoop);
+            promoSlider.addEventListener('mouseleave', startSliderLoop);
+            promoSlider.addEventListener('touchstart', stopSliderLoop);
+            promoSlider.addEventListener('touchend', startSliderLoop);
         }
 
-        // --- 7. LOGIKA REVEAL UP (Animasi Cepat & Snappy) ---
+        // --- 6. LOGIKA REVEAL UP (Animasi Muncul) ---
         const revealElements = document.querySelectorAll('.reveal-up');
         const revealOptions = { threshold: 0.05, rootMargin: "0px 0px 50px 0px" };
         const revealOnScroll = new IntersectionObserver(function(entries, observer) {
@@ -1208,17 +1098,15 @@
         }, revealOptions);
         revealElements.forEach(el => revealOnScroll.observe(el));
 
-        // --- 8. LOGIKA FILTER KATALOG PRODUK ---
+        // --- 7. LOGIKA FILTER KATALOG PRODUK ---
         const filterBtns = document.querySelectorAll('.filter-btn');
         const carCards = document.querySelectorAll('.car-card');
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+                filterBtns.forEach(b => b.classList.remove('active')); btn.classList.add('active');
                 const filterValue = btn.getAttribute('data-filter');
                 carCards.forEach(card => {
-                    card.style.transform = 'scale(0.95)';
-                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.95)'; card.style.opacity = '0';
                     setTimeout(() => {
                         if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
                             card.style.display = 'flex';
@@ -1229,18 +1117,15 @@
             });
         });
 
-        // --- 9. LOGIKA FILTER BERITA & ACARA ---
+        // --- 8. LOGIKA FILTER BERITA & ACARA ---
         const newsTabs = document.querySelectorAll('.news-tab-btn');
         const newsCards = document.querySelectorAll('.news-card');
-
         newsTabs.forEach(tab => {
             tab.addEventListener('click', () => {
-                newsTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
+                newsTabs.forEach(t => t.classList.remove('active')); tab.classList.add('active');
                 const newsFilterValue = tab.getAttribute('data-news');
                 newsCards.forEach(card => {
-                    card.style.transform = 'translateY(20px)';
-                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)'; card.style.opacity = '0';
                     setTimeout(() => {
                         if (newsFilterValue === 'semua' || card.getAttribute('data-category') === newsFilterValue) {
                             card.style.display = 'flex';
@@ -1251,7 +1136,7 @@
             });
         });
 
-        // Trigger awal
+        // Trigger awal animasi
         window.dispatchEvent(new Event('scroll'));
     </script>
 </body>
