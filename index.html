@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mitsubishi Motors | Drive Your Ambition</title>
+    <meta name="description" content="Eksplorasi jajaran mobil premium dari Mitsubishi Motors.">
+    <meta property="og:title" content="Mitsubishi Motors | Drive Your Ambition">
+    <meta property="og:image" content="https://i.ibb.co.com/84Ss5Bjy/IMG-3284.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS VARIABLES */
+        :root {
+            --color-primary: #FFFFFF;
+            --color-secondary: #0A0A0A;
+            --color-accent: #E60000;
+            --color-surface: #F8F8F8;
+            --color-border: #EAEAEA;
+            --font-heading: 'Syne', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --transition-smooth: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-premium: 0 16px 40px rgba(0, 0, 0, 0.06);
+        }
+
+        /* GLOBAL STYLES */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { background-color: var(--color-primary); color: var(--color-secondary); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; }
+        h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); font-weight: 700; line-height: 1.1; }
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        button { cursor: pointer; background: none; border: none; font-family: inherit; }
+        .app-wrapper { width: 100%; max-width: 1440px; margin: 0 auto; position: relative; }
+
+        /* NAVBAR & LOGO IMAGE */
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 24px 0; z-index: 1000; transition: var(--transition-smooth); background: rgba(255, 255, 255, 0); }
+        .navbar.scrolled { padding: 16px 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: var(--shadow-premium); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { display: flex; align-items: center; transition: var(--transition-smooth); }
+        .brand-logo-img { height: 44px; width: auto; object-fit: contain; transition: var(--transition-smooth); filter: brightness(0) invert(1); }
+        .navbar.scrolled .brand-logo-img { filter: none; }
+        .nav-links { display: none; gap: 40px; }
+        .nav-links a { font-weight: 500; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--color-primary); position: relative; transition: var(--transition-smooth); }
+        .navbar.scrolled .nav-links a { color: var(--color-secondary); }
+        .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: var(--color-accent); transition: var(--transition-smooth); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* BUTTONS */
+        .btn-primary, .btn-secondary { display: inline-block; padding: 14px 32px; border-radius: 4px; font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition-smooth); text-align: center; }
+        .btn-primary { background: var(--color-accent); color: var(--color-primary) !important; border: 1px solid var(--color-accent); }
+        .btn-primary:hover { background: transparent; color: var(--color-accent) !important; }
+        .btn-secondary { background: transparent; color: var(--color-primary); border: 1px solid var(--color-primary); }
+        .btn-secondary:hover { background: var(--color-primary); color: var(--color-secondary); }
+
+        /* HERO SECTION */
+        .hero { position: relative; height: 100vh; min-height: 600px; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background-color: var(--color-secondary); }
+        .hero-img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); animation: slowZoom 30s infinite alternate cubic-bezier(0.25, 0.1, 0.25, 1); }
+        @keyframes slowZoom { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 60%, var(--color-primary) 100%); }
+        .hero-content { position: relative; z-index: 2; text-align: center; padding: 0 24px; max-width: 900px; color: var(--color-primary); }
+        .hero-title { font-size: clamp(2.5rem, 8vw, 5.5rem); text-transform: uppercase; letter-spacing: -1px; margin-bottom: 20px; opacity: 0; animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .text-accent { color: var(--color-accent); }
+        .hero-subtitle { font-size: clamp(1rem, 2.5vw, 1.2rem); font-weight: 300; line-height: 1.8; margin-bottom: 48px; opacity: 0; animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .hero-buttons { display: flex; gap: 16px; justify-content: center; opacity: 0; animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* UX MOBILE MENU & OVERLAY */
+        .menu-toggle { display: flex; flex-direction: column; gap: 6px; z-index: 1001; padding: 4px; }
+        .menu-toggle span { display: block; width: 28px; height: 2px; background: var(--color-primary); transition: var(--transition-smooth); }
+        .navbar.scrolled .menu-toggle span { background: var(--color-secondary); }
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+        .menu-overlay.active { opacity: 1; visibility: visible; }
+        .mobile-menu { position: fixed; top: 0; right: 0; width: 85%; max-width: 380px; height: 100vh; background: var(--color-primary); z-index: 1000; padding: 40px 32px 100px; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: -10px 0 40px rgba(0,0,0,0.15); overflow-y: auto; }
+        .mobile-menu.active { transform: translateX(0); }
+        .mobile-menu > * { opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .mobile-menu.active > * { opacity: 1; transform: translateY(0); }
+        .mobile-menu.active .sidebar-header { transition-delay: 0.1s; }
+        .mobile-menu.active .menu-item-1 { transition-delay: 0.15s; }
+        .mobile-menu.active .accordion-item { transition-delay: 0.2s; }
+        .mobile-menu.active .menu-item-2 { transition-delay: 0.25s; }
+        .mobile-menu.active .menu-item-3 { transition-delay: 0.3s; }
+        .mobile-menu.active .menu-item-4 { transition-delay: 0.35s; }
+        .mobile-menu.active .menu-item-5 { transition-delay: 0.4s; }
+        .mobile-menu.active .btn-primary { transition-delay: 0.45s; }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--color-border); }
+        .sidebar-title { font-family: var(--font-heading); font-weight: 800; font-size: 1.2rem; }
+        .btn-close-menu { font-size: 2rem; color: var(--color-secondary); line-height: 1; transition: var(--transition-smooth); }
+        .btn-close-menu:hover { color: var(--color-accent); transform: scale(1.1); }
+        .menu-item { display: block; color: var(--color-secondary); font-weight: 600; font-size: 1.2rem; font-family: var(--font-heading); letter-spacing: 1px; padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+
+        /* AKORDION */
+        .accordion-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; color: var(--color-secondary); font-weight: 600; font-size: 1.2rem; font-family: var(--font-heading); letter-spacing: 1px; padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .accordion-icon { font-size: 0.8rem; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.6s; }
+        .accordion-content { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .accordion-inner { overflow: hidden; padding-left: 16px; }
+        .accordion-active .accordion-content { grid-template-rows: 1fr; }
+        .accordion-active .accordion-icon { transform: rotate(180deg); color: var(--color-accent); }
+        .sub-menu-item { display: block; padding: 12px 0; font-size: 0.95rem; font-weight: 500; color: #555; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .sub-menu-item:hover { color: var(--color-accent); padding-left: 8px; }
+
+        /* BIODATA SALES (WHITE LUXURY CARD) */
+        .sales-bio { background-color: var(--color-primary); padding: 40px 24px 80px; display: flex; justify-content: center; position: relative; z-index: 2; }
+        .bio-card-wrapper { width: 100%; max-width: 950px; will-change: transform; }
+        .bio-card { background: var(--color-primary); width: 100%; border-radius: 8px; padding: 48px; box-shadow: var(--shadow-premium); display: flex; align-items: center; gap: 48px; border: 1px solid var(--color-border); border-top: 3px solid var(--color-accent); position: relative; overflow: hidden; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .bio-card:hover { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.1); }
+        .bio-img-wrapper { flex-shrink: 0; width: 260px; height: 360px; border-radius: 4px; overflow: hidden; position: relative; }
+        .bio-img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .bio-card:hover .bio-img { transform: scale(1.05); }
+        .bio-info { display: flex; flex-direction: column; gap: 16px; color: var(--color-secondary); }
+        .bio-role { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 4px; color: var(--color-accent); font-weight: 700; font-family: var(--font-heading); display: flex; align-items: center; gap: 12px; }
+        .bio-role::before { content: ''; display: block; width: 40px; height: 1px; background: var(--color-accent); }
+        .bio-name { font-size: 3rem; color: var(--color-secondary); line-height: 1.1; margin-bottom: 8px; letter-spacing: -1px; }
+        .bio-motto { font-style: normal; color: #555; line-height: 1.8; font-size: 1.1rem; font-weight: 400; }
+        .bio-socials { display: flex; gap: 16px; margin-top: 24px; }
+        .social-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--color-surface); display: flex; justify-content: center; align-items: center; color: var(--color-secondary); transition: var(--transition-smooth); border: 1px solid var(--color-border); }
+        .social-btn svg { width: 18px; height: 18px; fill: currentColor; transition: var(--transition-smooth); }
+        .social-btn:hover { background: var(--color-accent); color: var(--color-primary); transform: translateY(-4px); border-color: var(--color-accent); }
+
+        /* =========================================
+           [FIX] DEALER INFO SECTION (SEAMLESS BLEND GRADIENT)
+           ========================================= */
+        .dealer-info {
+            /* Padding bawah dibesarkan tajam untuk area transisi gradasi */
+            padding: 20px 24px 160px; 
+            /* Gradasi mulus dari Putih (Primary) lalu perlahan melebur menjadi Hitam Pekat (#050505) */
+            background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary) 50%, #050505 100%);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .dealer-title {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            color: var(--color-secondary);
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+        .dealer-desc {
+            max-width: 700px;
+            margin: 0 auto;
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* =========================================
+           [UPGRADE] PROMO SECTION (IMMERSIVE DARK EXPERIENCE)
+           ========================================= */
+        .promo-section {
+            background-color: #050505; 
+            /* Hilangkan padding atas agar menyambung sempurna dengan hitam dari gradient Dealer Info */
+            padding: 0 0 100px 0; 
+            position: relative;
+            overflow: hidden;
+            color: var(--color-primary);
+        }
+        
+        /* Efek Cahaya Bias Merah & Putih di Background */
+        .promo-section::before {
+            content: ''; position: absolute; top: -10%; left: -10%; width: 50vw; height: 50vw;
+            background: radial-gradient(circle, rgba(230,0,0,0.15) 0%, transparent 60%);
+            filter: blur(80px); z-index: 0; pointer-events: none;
+        }
+        .promo-section::after {
+            content: ''; position: absolute; bottom: -10%; right: -10%; width: 50vw; height: 50vw;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+            filter: blur(60px); z-index: 0; pointer-events: none;
+        }
+
+        .promo-header {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 60px;
+            padding: 0 24px;
+        }
+        .promo-header h2 { font-size: clamp(2.2rem, 6vw, 3.5rem); letter-spacing: 1px; text-transform: uppercase; }
+        .promo-header p { color: #aaa; margin-top: 12px; font-size: 1.1rem; }
+
+        /* [UPGRADE] Slider Kartu Super Halus */
+        .promo-slider {
+            display: flex; gap: 24px; overflow-x: auto; padding: 0 24px 60px;
+            scroll-snap-type: x mandatory; scroll-behavior: smooth; position: relative; z-index: 1;
+            -ms-overflow-style: none; scrollbar-width: none;
+        }
+        .promo-slider::-webkit-scrollbar { display: none; }
+
+        /* [UPGRADE] Ultra-Luxury Glassmorphism Promo Card */
+        .promo-card {
+            flex: 0 0 85%; max-width: 420px; height: 540px;
+            scroll-snap-align: center; border-radius: 20px;
+            position: relative; overflow: hidden;
+            /* Border tipis transparan elegan layaknya kaca */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            cursor: pointer; transform: translateZ(0); 
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1), border 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .promo-card:hover, .promo-card:active { 
+            transform: translateY(-10px) scale(1.02); 
+            box-shadow: 0 40px 80px rgba(230,0,0,0.2);
+            border: 1px solid rgba(230,0,0,0.4);
+        }
+
+        .promo-card-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; filter: brightness(0.85);
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), filter 1.5s;
+        }
+        .promo-card:hover .promo-card-bg, .promo-card:active .promo-card-bg { 
+            transform: scale(1.1); filter: brightness(1); 
+        }
+
+        /* [UPGRADE] Blur Kaca Nyata (Backdrop Filter) untuk area Teks */
+        .promo-card-content {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            padding: 40px 32px; display: flex; flex-direction: column; align-items: flex-start;
+            /* Gradasi background untuk memperkuat efek blur */
+            background: linear-gradient(180deg, rgba(0,0,0,0.01) 0%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,0.95) 100%);
+            /* Efek embun kaca (blur) pada tulisan */
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            transform: translateY(20px); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .promo-card:hover .promo-card-content, .promo-card:active .promo-card-content { 
+            transform: translateY(0); 
+        }
+
+        .promo-badge { background: var(--color-accent); color: white; padding: 6px 16px; border-radius: 30px; font-size: 0.7rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+        .promo-card-content h3 { font-size: 1.8rem; line-height: 1.2; margin-bottom: 12px; }
+        .promo-card-content p { color: rgba(255,255,255,0.7); font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        .btn-text-promo { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: white; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--color-accent); padding-bottom: 4px; transition: var(--transition-smooth); }
+        .promo-card:hover .btn-text-promo, .promo-card:active .btn-text-promo { gap: 16px; color: var(--color-accent); }
+
+        /* =========================================
+           [NEW] CINEMATIC VIDEO AD SPACE
+           ========================================= */
+        .luxury-ad-wrapper {
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+            margin-top: 20px;
+        }
+        .luxury-ad-space {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 450px; /* Lebar dan tinggi bak layar bioskop */
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+            transform: translateZ(0);
+        }
+        /* Video Dummy dari sumber terbuka berkelas */
+        .luxury-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.65) contrast(1.1); /* Agak diredupkan agar teks menonjol */
+            transition: var(--transition-smooth);
+        }
+        .luxury-ad-space:hover .luxury-video { filter: brightness(0.85) contrast(1.1); transform: scale(1.03); }
+        
+        .ad-content {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 90%;
+            pointer-events: none;
+        }
+        .ad-content h3 { font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 10px 30px rgba(0,0,0,0.8); margin-bottom: 16px; }
+        .ad-content p { font-size: 1.1rem; color: rgba(255,255,255,0.9); margin-bottom: 32px; font-weight: 300; }
+        .btn-play-ad { 
+            pointer-events: auto;
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 60px; height: 60px; border-radius: 50%;
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3); color: white;
+            transition: var(--transition-smooth); cursor: pointer;
+        }
+        .btn-play-ad svg { width: 24px; height: 24px; fill: currentColor; margin-left: 4px; }
+        .btn-play-ad:hover { background: var(--color-accent); border-color: var(--color-accent); transform: scale(1.1); }
+
+        /* SCROLL ANIMATION CLASSES */
+        .reveal-up { opacity: 0; transform: translateY(80px); transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-up.active { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.2s; }
+        .delay-2 { transition-delay: 0.4s; }
+
+        /* PERBAIKAN RESPONSIVE MEDIA QUERIES */
+        @media (min-width: 992px) { .nav-links { display: flex; } .menu-toggle { display: none; } }
+        @media (max-width: 991px) { .nav-links { display: none; } .nav-actions .btn-primary { display: none; } .hero-buttons { flex-direction: column; width: 100%; max-width: 300px; margin: 0 auto; } .hero-buttons .btn-primary, .hero-buttons .btn-secondary { width: 100%; } }
+        @media (max-width: 768px) { .bio-card { flex-direction: column; text-align: left; padding: 40px 24px; gap: 32px; } .bio-img-wrapper { width: 100%; height: 400px; } .bio-name { font-size: 2.2rem; } .promo-card { flex: 0 0 90%; } .luxury-ad-space { height: 500px; } }
+    </style>
+</head>
+<body>
+
+    <main class="app-wrapper">
+        <header class="navbar" id="navbar">
+            <div class="nav-container">
+                <a href="#" class="nav-logo">
+                    <img src="https://i.ibb.co.com/84Ss5Bjy/IMG-3284.png" alt="Mitsubishi Motors" class="brand-logo-img">
+                </a>
+                
+                <nav class="nav-links">
+                    <a href="#home">Beranda</a>
+                    <a href="#katalog">Model</a>
+                    <a href="#pricelist">Pricelist</a>
+                </nav>
+
+                <div class="nav-actions">
+                    <a href="#katalog" class="btn-primary">Pesan Sekarang</a>
+                    <button class="menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="menu-overlay" id="menu-overlay"></div>
+
+            <div class="mobile-menu" id="mobile-menu">
+                <div class="sidebar-header">
+                    <span class="sidebar-title">Menu Navigasi</span>
+                    <button class="btn-close-menu" id="close-menu-btn">&times;</button>
+                </div>
+                
+                <a href="#home" class="menu-item menu-item-1">Home</a>
+                
+                <div class="accordion-item" id="accordion-model">
+                    <button class="accordion-btn">
+                        Model
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div style="margin-bottom: 16px; margin-top: 8px;">
+                                <span style="font-size: 0.75rem; color: var(--color-accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Passenger</span>
+                                <a href="#xforce" class="sub-menu-item">XFORCE</a>
+                                <a href="#pajero" class="sub-menu-item">NEW PAJERO SPORT</a>
+                                <a href="#xpander" class="sub-menu-item">NEW XPANDER</a>
+                                <a href="#xpandercross" class="sub-menu-item">NEW XPANDER CROSS</a>
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <span style="font-size: 0.75rem; color: var(--color-accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Commercial</span>
+                                <a href="#canter" class="sub-menu-item">FUSO CANTER</a>
+                                <a href="#ecanter" class="sub-menu-item">FUSO ECANTER</a>
+                                <a href="#l300" class="sub-menu-item">NEW COLT L300</a>
+                                <a href="#triton" class="sub-menu-item">ALL NEW TRITON</a>
+                                <a href="#l100" class="sub-menu-item">L100 EV</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#pricelist" class="menu-item menu-item-2">Pricelist</a>
+                <a href="#promo" class="menu-item menu-item-3">Promo & Artikel</a>
+                <a href="#galeri" class="menu-item menu-item-4">Galeri</a>
+                <a href="#kontak" class="menu-item menu-item-5">Kontak</a>
+
+                <a href="#katalog" class="btn-primary" style="margin-top: auto; text-align: center; width: 100%;">Pesan Sekarang</a>
+            </div>
+        </header>
+
+        <section class="hero" id="home">
+            <div class="hero-bg">
+                <img src="https://images.unsplash.com/photo-1617531653332-bd46c24f2068?q=80&w=2000&auto=format&fit=crop" alt="Mitsubishi Motors Hero" class="hero-img">
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="hero-content">
+                <h1 class="hero-title">DRIVE YOUR <span class="text-accent">AMBITION</span></h1>
+                <p class="hero-subtitle">Rasakan harmoni sempurna antara performa mesin kelas dunia dan desain elegan masa depan. Mulai perjalanan Anda hari ini.</p>
+                <div class="hero-buttons">
+                    <a href="#katalog" class="btn-primary">Eksplorasi Model</a>
+                    <a href="#test-drive" class="btn-secondary">Test Drive</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="sales-bio" id="sales-profile">
+            <div class="bio-card-wrapper" id="parallax-card">
+                <div class="bio-card">
+                    <div class="bio-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=600&auto=format&fit=crop" alt="Sales Representative" class="bio-img">
+                    </div>
+                    
+                    <div class="bio-info">
+                        <span class="bio-role">Sales Executive Mitsubishi</span>
+                        <h2 class="bio-name">Budi Santoso</h2>
+                        <p class="bio-motto">"Kepuasan Anda adalah prioritas utama saya. Mari wujudkan kendaraan impian Anda dengan layanan profesional, transparan, dan sepenuh hati dari Mitsubishi Motors."</p>
+                        
+                        <div class="bio-socials">
+                            <a href="#" class="social-btn" aria-label="Instagram">
+                                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                            </a>
+                            <a href="#" class="social-btn" aria-label="Facebook">
+                                <svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+                            </a>
+                            <a href="#" class="social-btn" aria-label="X">
+                                <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            </a>
+                            <a href="#" class="social-btn" aria-label="WhatsApp">
+                                <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.347-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.876 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="dealer-info reveal-up delay-1">
+            <h2 class="dealer-title">Dealer Resmi Mitsubishi Batam</h2>
+            <p class="dealer-desc">Melayani penjualan, servis berkala, dan suku cadang asli dengan standar kualitas global. Temukan kendaraan Mitsubishi impian Anda bersama kami, dengan penawaran terbaik di kota Batam.</p>
+        </section>
+
+        <section class="promo-section" id="promo">
+            <div class="promo-header reveal-up delay-1">
+                <h2>Eksklusif Untuk Anda</h2>
+                <p>Rasakan kemewahan penawaran terbatas bulan ini.</p>
+            </div>
+            
+            <div class="promo-slider reveal-up delay-2">
+                <div class="promo-card">
+                    <img src="https://images.unsplash.com/photo-1605810730836-474be6843477?q=80&w=800&auto=format&fit=crop" alt="Promo XFORCE" class="promo-card-bg">
+                    <div class="promo-card-content">
+                        <span class="promo-badge">HOT PROMO</span>
+                        <h3>Bunga 0% XFORCE</h3>
+                        <p>Bawa pulang Mitsubishi XFORCE dengan DP ringan dan nikmati bunga 0% hingga 2 tahun. Penawaran eksklusif hanya di bulan ini.</p>
+                        <a href="#kontak" class="btn-text-promo">Klaim Sekarang <span>→</span></a>
+                    </div>
+                </div>
+
+                <div class="promo-card">
+                    <img src="https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=800&auto=format&fit=crop" alt="Promo Pajero" class="promo-card-bg">
+                    <div class="promo-card-content">
+                        <span class="promo-badge">CASHBACK</span>
+                        <h3>Pajero Sport Special</h3>
+                        <p>Tingkatkan adrenalin Anda dengan New Pajero Sport. Dapatkan cashback puluhan juta rupiah dan free asuransi 1 tahun.</p>
+                        <a href="#kontak" class="btn-text-promo">Lihat Detail <span>→</span></a>
+                    </div>
+                </div>
+
+                <div class="promo-card">
+                    <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?q=80&w=800&auto=format&fit=crop" alt="Promo Xpander" class="promo-card-bg">
+                    <div class="promo-card-content">
+                        <span class="promo-badge">PAKET SMART</span>
+                        <h3>Xpander Family</h3>
+                        <p>Gratis biaya jasa & suku cadang hingga 50.000 KM atau 4 Tahun. Ketenangan keluarga Anda dimulai dari sini.</p>
+                        <a href="#kontak" class="btn-text-promo">Pesan Sekarang <span>→</span></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="luxury-ad-wrapper reveal-up delay-1">
+                <div class="luxury-ad-space">
+                    <video class="luxury-video" autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200&auto=format&fit=crop">
+                        <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" type="video/mp4">
+                        Maaf, browser Anda tidak mendukung pemutaran video.
+                    </video>
+                    
+                    <div class="ad-content">
+                        <h3>Drive Your Ambition</h3>
+                        <p>Saksikan harmoni mesin, desain aerodinamis, dan kemewahan dalam satu tarikan napas.</p>
+                        <button class="btn-play-ad" aria-label="Play Full Video">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="toast-container"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        // --- 1. KONFIGURASI API ---
+        const firebaseConfig = { apiKey: "dummy_api_key_123", authDomain: "dummy-app.firebaseapp.com", projectId: "dummy-app", storageBucket: "dummy-app.appspot.com", messagingSenderId: "123456789", appId: "1:123456:web:abcde123" };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // --- 2. LOGIKA NAVBAR SCROLL ---
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // --- 3. LOGIKA UX SIDEBAR ---
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.add('active');
+                menuOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden'; 
+            } else {
+                mobileMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto'; 
+            }
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+
+        // --- 4. LOGIKA AKORDION MENU (MODEL) ---
+        const accordionBtn = document.querySelector('.accordion-btn');
+        const accordionItem = document.getElementById('accordion-model');
+        
+        accordionBtn.addEventListener('click', () => {
+            accordionItem.classList.toggle('accordion-active');
+        });
+
+        const normalLinks = document.querySelectorAll('.mobile-menu .menu-item, .mobile-menu .sub-menu-item');
+        normalLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if(isMenuOpen) toggleMenu();
+            });
+        });
+
+        // --- 5. LOGIKA REAL-TIME SCROLL PARALLAX (Hanya untuk Biodata Card) ---
+        const parallaxCard = document.getElementById('parallax-card');
+        let ticking = false;
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    if(parallaxCard) {
+                        const rect = parallaxCard.getBoundingClientRect();
+                        const windowHeight = window.innerHeight;
+                        
+                        if (rect.top < windowHeight && rect.bottom > 0) {
+                            let movePercent = (windowHeight - rect.top) / (windowHeight / 1.5);
+                            movePercent = Math.max(0, Math.min(1, movePercent));
+                            
+                            const translateY = 150 * (1 - movePercent);
+                            const opacity = movePercent;
+                            
+                            parallaxCard.style.transform = `translateY(${translateY}px)`;
+                            parallaxCard.style.opacity = opacity;
+                        }
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+        window.dispatchEvent(new Event('scroll'));
+
+        // --- 6. LOGIKA REVEAL UP (Animasi Muncul Halus) ---
+        const revealElements = document.querySelectorAll('.reveal-up');
+        const revealOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, revealOptions);
+
+        revealElements.forEach(el => {
+            revealOnScroll.observe(el);
+        });
+    </script>
+</body>
+</html>
