@@ -238,24 +238,30 @@
         .btn-glass-ad svg { width: 18px; height: 18px; fill: currentColor; }
         .btn-glass-ad:hover { background: rgba(10, 10, 10, 0.7); border-color: var(--color-accent); transform: translateY(-4px); }
 
-        /* SCROLL ANIMATION CLASSES */
-        .reveal-up { opacity: 0; transform: translateY(80px); transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal-up.active { opacity: 1; transform: translateY(0); }
-        .delay-1 { transition-delay: 0.2s; }
-        .delay-2 { transition-delay: 0.4s; }
-
         /* =========================================
-           [FIX] PERBAIKAN RESPONSIVE UTAMA YANG HILANG
+           [FIX] ANIMASI REVEAL LEBIH CEPAT & RESPONSIP
            ========================================= */
+        .reveal-up { 
+            opacity: 0; 
+            transform: translateY(40px); /* Jarak pantul dipangkas agar lebih cepat sampai */
+            transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); 
+        }
+        .reveal-up.active { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+        /* Delay dipangkas drastis agar tidak ada jeda tunggu yang terasa */
+        .delay-1 { transition-delay: 0.05s; }
+        .delay-2 { transition-delay: 0.1s; }
+
+        /* RESPONSIVE UTAMA */
         @media (min-width: 992px) { 
             .nav-links { display: flex; } 
             .menu-toggle { display: none; } 
         }
         @media (max-width: 991px) { 
             .nav-links { display: none; } 
-            /* Fix: Tombol Pesan Sekarang di header sembunyi di HP */
             .nav-actions .btn-primary { display: none; } 
-            /* Fix: Hero Button menumpuk rapi di HP */
             .hero-buttons { flex-direction: column; width: 100%; max-width: 300px; margin: 0 auto; } 
             .hero-buttons .btn-primary, .hero-buttons .btn-secondary { width: 100%; } 
         }
@@ -267,7 +273,6 @@
             .bio-card { flex-direction: column; text-align: left; padding: 40px 24px; gap: 32px; } 
             .bio-img-wrapper { width: 100%; height: 400px; } 
             .bio-name { font-size: 2.2rem; } 
-            /* Ukuran Mobile Promo Slider & Iklan */
             .promo-card { flex: 0 0 80%; max-width: 300px; height: 420px; } 
             .luxury-ad-space { height: 320px; } 
             .ad-content { bottom: 20px; left: 20px; max-width: 90%; }
@@ -608,9 +613,14 @@
             }
         }
 
-        // --- 7. LOGIKA REVEAL UP (Animasi Muncul) ---
+        // --- 7. LOGIKA REVEAL UP (Animasi Cepat & Snappy) ---
         const revealElements = document.querySelectorAll('.reveal-up');
-        const revealOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+        // [FIX] Threshold diperkecil dan rootMargin dilebarkan ke bawah 
+        // agar merespon lebih awal, langsung saat disentuh jempol saat scroll ke bawah
+        const revealOptions = { 
+            threshold: 0.05, 
+            rootMargin: "0px 0px 50px 0px" 
+        };
         const revealOnScroll = new IntersectionObserver(function(entries, observer) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -622,7 +632,7 @@
 
         revealElements.forEach(el => { revealOnScroll.observe(el); });
 
-        // Trigger scroll once
+        // Pancing 1x saat load
         window.dispatchEvent(new Event('scroll'));
     </script>
 </body>
