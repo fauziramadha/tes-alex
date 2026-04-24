@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Katalog Model & Daftar Harga | Mitsubishi Motors Batam</title>
+    <meta name="description" content="Eksplorasi jajaran mobil premium dan daftar harga resmi dari Mitsubishi Motors Batam.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           CSS VARIABLES & GLOBALS
+           ========================================= */
+        :root {
+            --color-primary: #FFFFFF;
+            --color-secondary: #0A0A0A;
+            --color-accent: #E60000;
+            --color-surface: #F8F8F8;
+            --color-border: #EAEAEA;
+            --font-heading: 'Syne', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --transition-smooth: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-premium: 0 16px 40px rgba(0, 0, 0, 0.06);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { 
+            background-color: var(--color-surface); 
+            color: var(--color-secondary); 
+            font-family: var(--font-body); 
+            line-height: 1.6; 
+            overflow-x: hidden; 
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); font-weight: 700; line-height: 1.1; }
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        button { cursor: pointer; background: none; border: none; font-family: inherit; }
+        .app-wrapper { width: 100%; max-width: 1440px; margin: 0 auto; position: relative; }
+
+        /* TACTILE FEEDBACK (Efek Tekan) */
+        button:active, a.btn-primary:active, a.btn-secondary:active, a.btn-outline:active, a.btn-fill:active, .filter-btn:active, .social-link-icon:active, .bottom-nav-item:active, .btn-download:active { 
+            transform: scale(0.95) !important; 
+            transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+
+        /* =========================================
+           PRELOADER MITSUBISHI MEWAH
+           ========================================= */
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #050505; z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s; }
+        #preloader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loader-logo { width: 140px; height: auto; animation: pulseGlow 1s infinite alternate cubic-bezier(0.4, 0, 0.2, 1); filter: drop-shadow(0 0 25px rgba(230,0,0,0.6)); }
+        @keyframes pulseGlow { 0% { transform: scale(0.95); opacity: 0.8; filter: drop-shadow(0 0 15px rgba(230,0,0,0.4)); } 100% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 35px rgba(230,0,0,0.8)); } }
+
+        /* =========================================
+           NAVBAR (ADAPTED FOR INNER PAGE)
+           ========================================= */
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 16px 0; z-index: 1000; transition: var(--transition-smooth); background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: var(--shadow-premium); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+        .brand-logo-img { height: 44px; width: auto; object-fit: contain; }
+        
+        .nav-links { display: none; gap: 40px; }
+        .nav-links a { font-weight: 500; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--color-secondary); position: relative; transition: var(--transition-smooth); }
+        .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: var(--color-accent); transition: var(--transition-smooth); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-links a.active { color: var(--color-accent); font-weight: 700; }
+
+        .btn-primary { display: inline-block; padding: 14px 32px; border-radius: 4px; font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition-smooth); text-align: center; background: var(--color-accent); color: var(--color-primary) !important; border: 1px solid var(--color-accent); }
+        .btn-primary:hover { background: transparent; color: var(--color-accent) !important; }
+
+        /* MOBILE MENU & OVERLAY */
+        .menu-toggle { display: flex; flex-direction: column; gap: 6px; z-index: 1001; padding: 4px; }
+        .menu-toggle span { display: block; width: 28px; height: 2px; background: var(--color-secondary); transition: var(--transition-smooth); }
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.7s ease; }
+        .menu-overlay.active { opacity: 1; visibility: visible; }
+        .mobile-menu { position: fixed; top: 0; right: 0; width: 85%; max-width: 380px; height: 100vh; background: var(--color-primary); z-index: 1000; padding: 40px 32px 100px; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: -10px 0 40px rgba(0,0,0,0.15); overflow-y: auto; }
+        .mobile-menu.active { transform: translateX(0); }
+        .mobile-menu > * { opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .mobile-menu.active > * { opacity: 1; transform: translateY(0); }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--color-border); }
+        .sidebar-title { font-family: var(--font-heading); font-weight: 800; font-size: 1.2rem; }
+        .btn-close-menu { font-size: 2rem; color: var(--color-secondary); line-height: 1; transition: var(--transition-smooth); }
+        .btn-close-menu:hover { color: var(--color-accent); transform: scale(1.1); }
+        .menu-item { display: block; color: var(--color-secondary); font-weight: 600; font-size: 1.2rem; font-family: var(--font-heading); padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+
+        /* =========================================
+           INNER PAGE HEADER
+           ========================================= */
+        .inner-header { position: relative; padding: 160px 24px 80px; background: #050505; color: var(--color-primary); text-align: center; overflow: hidden; }
+        .inner-header-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; filter: grayscale(0.5); }
+        .inner-header-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
+        .inner-title { font-size: clamp(2.5rem, 6vw, 4rem); text-transform: uppercase; letter-spacing: -1px; margin-bottom: 16px; font-family: var(--font-heading); }
+        .inner-subtitle { font-size: 1.1rem; color: #ccc; font-weight: 300; }
+
+        /* =========================================
+           SEARCH BAR & FILTERS
+           ========================================= */
+        .katalog-page-section { padding: 60px 24px 80px; position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; }
+        
+        .search-wrapper { max-width: 600px; margin: 0 auto 40px; position: relative; display: flex; align-items: center; }
+        .search-input { width: 100%; padding: 16px 24px 16px 56px; border-radius: 50px; border: 1px solid var(--color-border); background: var(--color-primary); font-family: var(--font-body); font-size: 1rem; color: var(--color-secondary); box-shadow: 0 10px 25px rgba(0,0,0,0.03); transition: var(--transition-smooth); outline: none; }
+        .search-input:focus { border-color: var(--color-accent); box-shadow: 0 10px 30px rgba(230,0,0,0.1); }
+        .search-icon { position: absolute; left: 20px; width: 22px; height: 22px; fill: #888; transition: var(--transition-smooth); }
+        .search-input:focus + .search-icon { fill: var(--color-accent); }
+
+        .katalog-filters { display: flex; justify-content: center; gap: 16px; margin-bottom: 40px; flex-wrap: wrap; }
+        .filter-btn { padding: 12px 32px; border-radius: 30px; border: 1px solid var(--color-border); background: var(--color-primary); color: var(--color-secondary); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition-smooth); box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
+        .filter-btn.active, .filter-btn:hover { background: var(--color-accent); color: var(--color-primary); border-color: var(--color-accent); transform: translateY(-3px); box-shadow: 0 15px 30px rgba(230,0,0,0.2); }
+        
+        /* Hint Geser khusus Mobile (Disembunyikan di PC) */
+        .scroll-hint { display: none; } 
+
+        /* =========================================
+           KATALOG GRID & CARDS
+           ========================================= */
+        .katalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 40px; }
+        .car-card { background: var(--color-primary); border-radius: 24px; overflow: hidden; border: 1px solid var(--color-border); box-shadow: 0 20px 40px rgba(0,0,0,0.04); transition: var(--transition-smooth); display: flex; flex-direction: column; }
+        .car-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.1); border-color: rgba(230,0,0,0.2); }
+        
+        .car-img-wrapper { width: 100%; height: 240px; background: linear-gradient(180deg, #FFFFFF 0%, #F0F0F0 100%); position: relative; padding: 20px; display: flex; align-items: center; justify-content: center; }
+        .car-img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.8s ease; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); }
+        .car-card:hover .car-img { transform: scale(1.08); }
+        .car-badge { position: absolute; top: 20px; left: 20px; background: var(--color-accent); color: white; padding: 6px 14px; font-size: 0.7rem; font-weight: 800; border-radius: 30px; text-transform: uppercase; letter-spacing: 1.5px; z-index: 2; box-shadow: 0 5px 15px rgba(230,0,0,0.3); }
+        
+        .car-info { padding: 32px; display: flex; flex-direction: column; flex-grow: 1; }
+        .car-name-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+        .car-name { font-size: 1.6rem; font-weight: 800; color: var(--color-secondary); text-transform: uppercase; letter-spacing: -0.5px; line-height: 1.2; }
+        .car-price { color: var(--color-accent); font-weight: 800; font-size: 1.2rem; font-family: var(--font-heading); margin-bottom: 24px; display: inline-block; padding: 4px 0; border-bottom: 2px solid var(--color-border); }
+        
+        /* Specs List in Catalog */
+        .car-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+        .spec-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: #666; font-weight: 500; }
+        .spec-icon { width: 20px; height: 20px; fill: var(--color-secondary); opacity: 0.7; }
+        
+        .car-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: auto; }
+        .btn-outline { padding: 14px 0; text-align: center; border: 1px solid var(--color-secondary); color: var(--color-secondary); border-radius: 6px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; transition: var(--transition-smooth); display: block; }
+        .btn-outline:hover { background: var(--color-secondary); color: var(--color-primary); }
+        .btn-fill { padding: 14px 0; text-align: center; background: var(--color-accent); border: 1px solid var(--color-accent); color: var(--color-primary); border-radius: 6px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; transition: var(--transition-smooth); box-shadow: 0 10px 20px rgba(230,0,0,0.2); display: block; }
+        .btn-fill:hover { background: transparent; color: var(--color-accent); box-shadow: none; }
+
+        /* =========================================
+           DOWNLOAD BROCHURE BANNER
+           ========================================= */
+        .brochure-banner { background: #050505; border-radius: 24px; padding: 60px 40px; margin: 80px 24px; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; max-width: 1200px; }
+        .brochure-banner::before { content: ''; position: absolute; right: -10%; top: -50%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(230,0,0,0.2) 0%, transparent 70%); z-index: 1; }
+        .brochure-content { position: relative; z-index: 2; max-width: 600px; }
+        .brochure-content h3 { color: white; font-size: 2.2rem; text-transform: uppercase; margin-bottom: 16px; }
+        .brochure-content p { color: #aaa; font-size: 1.1rem; }
+        .btn-download { position: relative; z-index: 2; padding: 18px 40px; background: white; color: var(--color-secondary); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; border-radius: 50px; display: flex; align-items: center; gap: 12px; transition: var(--transition-smooth); }
+        .btn-download:hover { background: var(--color-accent); color: white; transform: translateY(-5px); box-shadow: 0 15px 30px rgba(230,0,0,0.4); }
+        .btn-download svg { width: 20px; height: 20px; fill: currentColor; }
+
+        /* =========================================
+           MEGA FOOTER LUXURY (FIXED LAYOUT)
+           ========================================= */
+        .footer { background: #050505; color: var(--color-primary); padding: 100px 24px 40px; position: relative; z-index: 2; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-container { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; max-width: 1200px; margin: 0 auto; padding-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        
+        .footer-brand .footer-logo { height: 50px; filter: brightness(0) invert(1); margin-bottom: 24px; }
+        .footer-brand p { color: #888; font-size: 0.95rem; line-height: 1.8; max-width: 300px; margin-bottom: 32px; }
+        .footer-socials { display: flex; gap: 16px; flex-wrap: wrap; }
+        .social-link-icon { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; color: white; transition: var(--transition-smooth); cursor: pointer; }
+        .social-link-icon:hover { background: var(--color-accent); border-color: var(--color-accent); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(230,0,0,0.3); }
+        .social-link-icon svg { width: 18px; height: 18px; fill: currentColor; }
+
+        .footer-col h4 { color: white; margin-bottom: 24px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; font-family: var(--font-heading); }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 16px; }
+        .footer-col a { color: #888; transition: var(--transition-smooth); font-size: 0.9rem; font-weight: 500; display: inline-block; position: relative; }
+        .footer-col a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--color-accent); transition: var(--transition-smooth); }
+        .footer-col a:hover { color: white; }
+        .footer-col a:hover::after { width: 100%; }
+        
+        .footer-contact p { color: #888; font-size: 0.9rem; line-height: 1.8; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px; }
+        .footer-contact p svg { width: 18px; height: 18px; fill: var(--color-accent); flex-shrink: 0; margin-top: 4px; }
+
+        .footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .footer-copy { font-size: 0.85rem; color: #666; font-weight: 500; letter-spacing: 1px; }
+        .footer-dev { font-size: 0.75rem; color: #555; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 2px; }
+
+        /* =========================================
+           [NEW] MOBILE BOTTOM NAV (LUXURY)
+           ========================================= */
+        .mobile-bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-top: 1px solid rgba(255, 255, 255, 0.1); display: none; justify-content: space-around; align-items: center; padding: 12px 16px; z-index: 1000; box-shadow: 0 -10px 40px rgba(0,0,0,0.4); padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; gap: 6px; color: #888; transition: var(--transition-smooth); text-decoration: none; width: 30%; cursor: pointer; }
+        .bottom-nav-icon { width: 24px; height: 24px; fill: currentColor; transition: var(--transition-smooth); }
+        .bottom-nav-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-heading); }
+        .bottom-nav-item:hover, .bottom-nav-item:active { color: var(--color-primary); }
+        .bottom-nav-item:hover .bottom-nav-icon, .bottom-nav-item:active .bottom-nav-icon { transform: translateY(-4px); fill: var(--color-accent); filter: drop-shadow(0 4px 10px rgba(230,0,0,0.5)); }
+
+        /* =========================================
+           ANIMASI REVEAL
+           ========================================= */
+        .reveal-up { opacity: 0; transform: translateY(40px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .reveal-up.active { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+
+        /* =========================================
+           RESPONSIVE UTAMA (MEDIA QUERIES)
+           ========================================= */
+        @media (min-width: 992px) { 
+            .nav-links { display: flex; } 
+            .menu-toggle { display: none; } 
+            .brochure-banner { margin: 80px auto; } 
+        }
+        @media (max-width: 991px) { 
+            .nav-links, .nav-actions .btn-primary { display: none; } 
+            .footer-container { grid-template-columns: 1fr 1fr; }
+            .mobile-bottom-nav { display: flex; }
+            .footer { padding-bottom: 120px; }
+            .brochure-banner { flex-direction: column; text-align: center; gap: 32px; padding: 40px 24px; margin: 40px 24px; }
+        }
+        @media (max-width: 767px) { 
+            .inner-title { font-size: 2rem; }
+            .katalog-page-section { padding: 24px 16px 80px; }
+            .search-wrapper { margin-bottom: 24px; }
+            
+            /* FILTER MENJADI 1 BARIS BISA DIGESER (SWIPEABLE) */
+            .katalog-filters { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 8px; margin-bottom: 16px; scroll-snap-type: x mandatory; }
+            .katalog-filters::-webkit-scrollbar { display: none; }
+            .filter-btn { flex: 0 0 auto; scroll-snap-align: start; font-size: 0.75rem; padding: 10px 20px; }
+            .scroll-hint { display: block; text-align: center; font-size: 0.7rem; color: #888; margin-bottom: 24px; animation: slideHint 2s infinite ease-in-out; letter-spacing: 1px; }
+            @keyframes slideHint { 0%, 100% { transform: translateX(0); opacity: 0.6; } 50% { transform: translateX(5px); opacity: 1; } }
+
+            /* KATALOG GRID 2 KOLOM KIRI-KANAN (MOBILE) */
+            .katalog-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .car-card { border-radius: 12px; }
+            .car-img-wrapper { height: 110px; padding: 10px; }
+            .car-badge { top: 8px; left: 8px; font-size: 0.55rem; padding: 3px 8px; }
+            .car-info { padding: 12px; }
+            .car-name-row { margin-bottom: 4px; }
+            .car-name { font-size: 1rem; }
+            .car-price { font-size: 0.8rem; margin-bottom: 12px; border-width: 1px; padding-bottom: 2px; }
+            .car-specs { grid-template-columns: 1fr; gap: 4px; margin-bottom: 12px; }
+            .spec-item { font-size: 0.65rem; }
+            .spec-icon { width: 12px; height: 12px; }
+            
+            /* Button di dalam Card Mobile (Ditumpuk) */
+            .car-actions { grid-template-columns: 1fr; gap: 6px; }
+            .btn-outline, .btn-fill { font-size: 0.7rem; padding: 8px 0; border-radius: 4px; }
+
+            /* FIX FOOTER MOBILE SEPERTI INDEX */
+            .footer { padding: 80px 20px 120px; }
+            .footer-container { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+            .footer-brand .footer-logo { margin: 0 auto 24px; }
+            .footer-brand p { margin: 0 auto 32px; }
+            .footer-socials { justify-content: center; }
+            .footer-contact p { justify-content: center; text-align: left; max-width: 280px; margin: 0 auto 16px; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="preloader">
+        <img src="https://i.ibb.co.com/nM5YjdVM/pngwing-com-2.png" alt="Loading..." class="loader-logo">
+    </div>
+
+    <main class="app-wrapper">
+        <header class="navbar" id="navbar">
+            <div class="nav-container">
+                <a href="index.html" class="nav-logo">
+                    <img src="https://i.ibb.co.com/84Ss5Bjy/IMG-3284.png" alt="Mitsubishi Motors" class="brand-logo-img" style="filter: none;">
+                </a>
+                
+                <nav class="nav-links">
+                    <a href="index.html">Beranda</a>
+                    <a href="katalog.html" class="active">Daftar Harga</a>
+                    <a href="index.html#berita">Berita</a>
+                    <a href="index.html#testimoni">Testimoni</a>
+                </nav>
+
+                <div class="nav-actions">
+                    <a href="https://wa.me/628123456789" target="_blank" class="btn-primary">Pesan Sekarang</a>
+                    <button class="menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu">
+                        <span style="background: var(--color-secondary);"></span>
+                        <span style="background: var(--color-secondary);"></span>
+                        <span style="background: var(--color-secondary);"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="menu-overlay" id="menu-overlay"></div>
+
+            <div class="mobile-menu" id="mobile-menu">
+                <div class="sidebar-header">
+                    <span class="sidebar-title">Menu Navigasi</span>
+                    <button class="btn-close-menu" id="close-menu-btn">×</button>
+                </div>
+                
+                <a href="index.html" class="menu-item">Home</a>
+                <a href="katalog.html" class="menu-item" style="color: var(--color-accent);">Daftar Harga</a>
+                <a href="index.html#promo" class="menu-item">Promo Terbaru</a>
+                <a href="index.html#testimoni" class="menu-item">Testimonial Gallery</a>
+                <a href="index.html#berita" class="menu-item">Berita & Acara</a>
+                <a href="index.html#layanan" class="menu-item">Layanan Purna Jual</a>
+                <a href="index.html#lokasi" class="menu-item">Lokasi Dealer</a>
+                <a href="#kontak" class="menu-item">Kontak</a>
+
+                <a href="https://wa.me/628123456789" target="_blank" class="btn-primary" style="margin-top: auto; text-align: center; width: 100%;">Hubungi Sales</a>
+            </div>
+        </header>
+
+        <section class="inner-header">
+            <img src="https://images.unsplash.com/photo-1616423641405-824ecf55d7ad?q=80&w=2000&auto=format&fit=crop" alt="Katalog Background" class="inner-header-bg">
+            <div class="inner-header-content reveal-up">
+                <h1 class="inner-title">Katalog & Daftar Harga</h1>
+                <p class="inner-subtitle">Eksplorasi mahakarya Mitsubishi Motors. Temukan kendaraan yang mendefinisikan ulang standar performa, kenyamanan, dan gaya hidup Anda.</p>
+            </div>
+        </section>
+
+        <section class="katalog-page-section">
+            
+            <div class="search-wrapper reveal-up delay-1">
+                <input type="text" id="search-input" class="search-input" placeholder="Cari nama mobil, tipe, atau harga...">
+                <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            </div>
+
+            <div class="katalog-filters reveal-up delay-1">
+                <button class="filter-btn active" data-filter="all">Semua Model</button>
+                <button class="filter-btn" data-filter="passenger">Passenger Car</button>
+                <button class="filter-btn" data-filter="commercial">Commercial Vehicle</button>
+            </div>
+            
+            <div class="scroll-hint reveal-up delay-1">← Geser untuk kategori lainnya →</div>
+
+            <div class="katalog-grid reveal-up delay-2" id="katalog-grid-container">
+                
+                <div class="car-card" data-category="passenger">
+                    <div class="car-img-wrapper">
+                        <span class="car-badge">NEW SUV</span>
+                        <img src="https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?q=80&w=800&auto=format&fit=crop" alt="XFORCE" class="car-img">
+                    </div>
+                    <div class="car-info">
+                        <div class="car-name-row">
+                            <h3 class="car-name">Mitsubishi<br>XFORCE</h3>
+                        </div>
+                        <div class="car-price">Mulai Rp 379.900.000</div>
+                        
+                        <div class="car-specs">
+                            <div class="spec-item">
+                                <svg class="spec-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                1.499 cc
+                            </div>
+                            <div class="spec-item">
+                                <svg class="spec-icon" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                                5 Penumpang
+                            </div>
+                            <div class="spec-item">
+                                <svg class="spec-icon" viewBox="0 0 24 24"><path d="M19.77 7.23l.01-.01-3.72-3.72L15 4.56l2.11 2.11C16.17 7 15.5 7.93 15.5 9a3 3 0 003 3c1.07 0 2-.67 2.33-1.61l2.11 2.11 1.06-1.06-3.72-3.72c-.01-.01-.01-.02-.01-.03v.03zM16.5 10c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zM14 5H3v14h11v-4h4v-7h-4V5zm-2 12H5V7h7v10z"/></svg>
+                                CVT
+                            </div>
+                            <div class="spec-item">
+                                <svg class="spec-icon" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
+                                FWD
+                            </div>
+                        </div>
+
+                        <div class="car-actions">
+                            <a href="#" class="btn-outline">Spesifikasi</a>
+                            <a href="https://wa.me/628123456789" target="_blank" class="btn-fill">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card" data-category="passenger">
+                    <div class="car-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=800&auto=format&fit=crop" alt="Pajero Sport" class="car-img">
+                    </div>
+                    <div class="car-info">
+                        <div class="car-name-row">
+                            <h3 class="car-name">New Pajero<br>Sport</h3>
+                        </div>
+                        <div class="car-price">Mulai Rp 552.100.000</div>
+                        
+                        <div class="car-specs">
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><circle cx="12" cy="12" r="3"/></svg> 2.442 cc</div>
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg> 7 Penumpang</div>
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M19.77 7.23l.01-.01-3.72-3.72L15 4.56l2.11 2.11C16.17 7 15.5 7.93 15.5 9a3 3 0 003 3c1.07 0 2-.67 2.33-1.61l2.11 2.11 1.06-1.06-3.72-3.72c-.01-.01-.01-.02-.01-.03v.03zM16.5 10c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zM14 5H3v14h11v-4h4v-7h-4V5zm-2 12H5V7h7v10z"/></svg> 8 AT / MT</div>
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg> 4x2 & 4x4</div>
+                        </div>
+
+                        <div class="car-actions">
+                            <a href="#" class="btn-outline">Spesifikasi</a>
+                            <a href="https://wa.me/628123456789" target="_blank" class="btn-fill">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card" data-category="passenger">
+                    <div class="car-img-wrapper">
+                        <span class="car-badge" style="background: #0A0A0A;">FAVORIT</span>
+                        <img src="https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=800&auto=format&fit=crop" alt="Xpander" class="car-img">
+                    </div>
+                    <div class="car-info">
+                        <div class="car-name-row">
+                            <h3 class="car-name">New<br>Xpander</h3>
+                        </div>
+                        <div class="car-price">Mulai Rp 261.200.000</div>
+                        
+                        <div class="car-specs">
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><circle cx="12" cy="12" r="3"/></svg> 1.499 cc</div>
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg> 7 Penumpang</div>
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M19.77 7.23l.01-.01-3.72-3.72L15 4.56l2.11 2.11C16.17 7 15.5 7.93 15.5 9a3 3 0 003 3c1.07 0 2-.67 2.33-1.61l2.11 2.11 1.06-1.06-3.72-3.72c-.01-.01-.01-.02-.01-.03v.03zM16.5 10c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zM14 5H3v14h11v-4h4v-7h-4V5zm-2 12H5V7h7v10z"/></svg> CVT / MT</div>
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg> FWD</div>
+                        </div>
+
+                        <div class="car-actions">
+                            <a href="#" class="btn-outline">Spesifikasi</a>
+                            <a href="https://wa.me/628123456789" target="_blank" class="btn-fill">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card" data-category="passenger">
+                    <div class="car-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?q=80&w=800&auto=format&fit=crop" alt="Xpander Cross" class="car-img">
+                    </div>
+                    <div class="car-info">
+                        <div class="car-name-row">
+                            <h3 class="car-name">Xpander<br>Cross</h3>
+                        </div>
+                        <div class="car-price">Mulai Rp 319.700.000</div>
+                        
+                        <div class="car-specs">
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><circle cx="12" cy="12" r="3"/></svg> 1.499 cc</div>
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg> 7 Penumpang</div>
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M19.77 7.23l.01-.01-3.72-3.72L15 4.56l2.11 2.11C16.17 7 15.5 7.93 15.5 9a3 3 0 003 3c1.07 0 2-.67 2.33-1.61l2.11 2.11 1.06-1.06-3.72-3.72c-.01-.01-.01-.02-.01-.03v.03zM16.5 10c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zM14 5H3v14h11v-4h4v-7h-4V5zm-2 12H5V7h7v10z"/></svg> CVT / MT</div>
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg> FWD</div>
+                        </div>
+
+                        <div class="car-actions">
+                            <a href="#" class="btn-outline">Spesifikasi</a>
+                            <a href="https://wa.me/628123456789" target="_blank" class="btn-fill">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card" data-category="commercial">
+                    <div class="car-img-wrapper">
+                        <span class="car-badge" style="background:#0A0A0A;">LEGEND</span>
+                        <img src="https://images.unsplash.com/photo-1609521263047-f8f205293f24?q=80&w=800&auto=format&fit=crop" alt="L300" class="car-img">
+                    </div>
+                    <div class="car-info">
+                        <div class="car-name-row">
+                            <h3 class="car-name">New Colt<br>L300</h3>
+                        </div>
+                        <div class="car-price">Mulai Rp 224.150.000</div>
+                        
+                        <div class="car-specs">
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><circle cx="12" cy="12" r="3"/></svg> 2.268 cc (Euro 4)</div>
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg> 3 Penumpang</div>
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M19.77 7.23l.01-.01-3.72-3.72L15 4.56l2.11 2.11C16.17 7 15.5 7.93 15.5 9a3 3 0 003 3c1.07 0 2-.67 2.33-1.61l2.11 2.11 1.06-1.06-3.72-3.72c-.01-.01-.01-.02-.01-.03v.03zM16.5 10c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zM14 5H3v14h11v-4h4v-7h-4V5zm-2 12H5V7h7v10z"/></svg> 5 MT</div>
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg> Pick-up</div>
+                        </div>
+
+                        <div class="car-actions">
+                            <a href="#" class="btn-outline">Spesifikasi</a>
+                            <a href="https://wa.me/628123456789" target="_blank" class="btn-fill">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card" data-category="commercial">
+                    <div class="car-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800&auto=format&fit=crop" alt="Triton" class="car-img">
+                    </div>
+                    <div class="car-info">
+                        <div class="car-name-row">
+                            <h3 class="car-name">All New<br>Triton</h3>
+                        </div>
+                        <div class="car-price">Mulai Rp 290.500.000</div>
+                        
+                        <div class="car-specs">
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><circle cx="12" cy="12" r="3"/></svg> 2.442 cc</div>
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg> Single/Double Cab</div>
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M19.77 7.23l.01-.01-3.72-3.72L15 4.56l2.11 2.11C16.17 7 15.5 7.93 15.5 9a3 3 0 003 3c1.07 0 2-.67 2.33-1.61l2.11 2.11 1.06-1.06-3.72-3.72c-.01-.01-.01-.02-.01-.03v.03zM16.5 10c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zM14 5H3v14h11v-4h4v-7h-4V5zm-2 12H5V7h7v10z"/></svg> MT / AT</div>
+                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg> 4x4 / 4x2</div>
+                        </div>
+
+                        <div class="car-actions">
+                            <a href="#" class="btn-outline">Spesifikasi</a>
+                            <a href="https://wa.me/628123456789" target="_blank" class="btn-fill">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="reveal-up delay-2">
+            <div class="brochure-banner">
+                <div class="brochure-content">
+                    <h3>Unduh E-Brosur Lengkap</h3>
+                    <p>Dapatkan informasi terperinci mengenai spesifikasi, fitur keselamatan, warna, dan detail eksterior/interior dari seluruh lini kendaraan Mitsubishi Motors.</p>
+                </div>
+                <button class="btn-download" aria-label="Download Brosur">
+                    <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                    Download PDF
+                </button>
+            </div>
+        </section>
+
+        <footer class="footer" id="kontak">
+            <div class="footer-container reveal-up delay-1">
+                <div class="footer-brand">
+                    <img src="https://i.ibb.co.com/84Ss5Bjy/IMG-3284.png" alt="Mitsubishi Motors" class="footer-logo">
+                    <p>Dealer Resmi Mitsubishi Batam. Menghadirkan layanan premium dan pengalaman berkendara kelas dunia untuk Anda dan keluarga.</p>
+                    <div class="footer-socials">
+                        <a href="https://facebook.com" target="_blank" class="social-link-icon" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" class="social-link-icon" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                        <a href="https://wa.me/628123456789" target="_blank" class="social-link-icon" aria-label="WhatsApp">
+                            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        </a>
+                        <a href="mailto:info@mitsubishi.com" class="social-link-icon" aria-label="Email">
+                            <svg viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Pintasan</h4>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="index.html#promo">Promo Terbaru</a></li>
+                        <li><a href="index.html#testimoni">Testimoni Pelanggan</a></li>
+                        <li><a href="index.html#berita">Berita & Acara</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Layanan</h4>
+                    <ul>
+                        <li><a href="index.html#layanan">Purna Jual</a></li>
+                        <li><a href="katalog.html">Daftar Harga</a></li>
+                        <li><a href="index.html#test-drive">Test Drive</a></li>
+                        <li><a href="index.html#lokasi">Lokasi Dealer</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-contact">
+                    <h4>Kontak Kami</h4>
+                    <p>
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> 
+                        Jl. Raden Patah, Lubuk Baja, Kota Batam, Kepulauan Riau
+                    </p>
+                    <p>
+                        <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> 
+                        +62 812-3456-7890
+                    </p>
+                </div>
+            </div>
+
+            <div class="footer-bottom reveal-up delay-2">
+                <div class="footer-copy">©2026. Official Mitsubishi motors Batam Aldiansyah Sales</div>
+                <div class="footer-dev">Developed by @zee_radhan</div>
+            </div>
+        </footer>
+
+        <nav class="mobile-bottom-nav">
+            <a href="katalog.html" class="bottom-nav-item" aria-label="Daftar Harga" style="color: var(--color-primary);">
+                <svg class="bottom-nav-icon" viewBox="0 0 24 24" style="fill: var(--color-accent);"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.41l9 9c.36.36.86.59 1.41.59s1.05-.22 1.41-.59l7-7c.36-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+                <span class="bottom-nav-label">Harga</span>
+            </a>
+            
+            <a href="tel:+6281234567890" class="bottom-nav-item" aria-label="Telepon Sales">
+                <svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                <span class="bottom-nav-label">Telepon</span>
+            </a>
+            
+            <a href="https://wa.me/628123456789" target="_blank" class="bottom-nav-item" aria-label="Chat WhatsApp">
+                <svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                <span class="bottom-nav-label">WhatsApp</span>
+            </a>
+        </nav>
+
+    </main>
+
+    <script>
+        // 1. Preloader
+        const preloader = document.getElementById('preloader');
+        window.addEventListener('load', () => { setTimeout(() => { preloader.classList.add('hide'); }, 1000); });
+
+        // 2. Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+
+        // 3. Mobile Menu Toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+        let isMenuOpen = false;
+        
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) { 
+                mobileMenu.classList.add('active'); 
+                menuOverlay.classList.add('active'); 
+                document.body.style.overflow = 'hidden'; 
+            } else { 
+                mobileMenu.classList.remove('active'); 
+                menuOverlay.classList.remove('active'); 
+                document.body.style.overflow = 'auto'; 
+            }
+        }
+        menuBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+
+        // Sidebar Links Close Menu
+        document.querySelectorAll('.mobile-menu .menu-item').forEach(link => { 
+            link.addEventListener('click', () => { if(isMenuOpen) toggleMenu(); }); 
+        });
+
+        // 4. Logika Pencarian (Search Bar Real-Time)
+        const searchInput = document.getElementById('search-input');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const carCards = document.querySelectorAll('.car-card');
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            // Auto reset filter ke "Semua Model" saat mengetik
+            if(searchTerm.length > 0) {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                document.querySelector('[data-filter="all"]').classList.add('active');
+            }
+
+            carCards.forEach(card => {
+                // Ambil semua teks dalam card (Nama, harga, spesifikasi)
+                const cardText = card.innerText.toLowerCase();
+                
+                if(cardText.includes(searchTerm)) {
+                    card.style.display = 'flex';
+                    setTimeout(() => { card.style.transform = 'scale(1)'; card.style.opacity = '1'; }, 50);
+                } else {
+                    card.style.display = 'none';
+                    card.style.transform = 'scale(0.95)'; card.style.opacity = '0';
+                }
+            });
+        });
+
+        // 5. Filter Katalog Tombol Kategori
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Hapus teks pencarian jika menggunakan tombol filter
+                searchInput.value = ''; 
+
+                filterBtns.forEach(b => b.classList.remove('active')); 
+                btn.classList.add('active');
+                const filterValue = btn.getAttribute('data-filter');
+                
+                carCards.forEach(card => {
+                    card.style.transform = 'scale(0.95)'; 
+                    card.style.opacity = '0';
+                    setTimeout(() => {
+                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                            card.style.display = 'flex';
+                            setTimeout(() => { card.style.transform = 'scale(1)'; card.style.opacity = '1'; }, 50);
+                        } else { 
+                            card.style.display = 'none'; 
+                        }
+                    }, 300); 
+                });
+            });
+        });
+
+        // 6. Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal-up');
+        const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, revealOptions);
+        revealElements.forEach(el => revealOnScroll.observe(el));
+
+        // Trigger Reveal on load
+        window.dispatchEvent(new Event('scroll'));
+    </script>
+</body>
+</html>
