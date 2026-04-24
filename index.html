@@ -43,8 +43,8 @@
         button { cursor: pointer; background: none; border: none; font-family: inherit; }
         .app-wrapper { width: 100%; max-width: 1440px; margin: 0 auto; position: relative; }
 
-        /* [UPDATE] ANIMASI KLIK (TACTILE FEEDBACK) - Ditambah untuk Promo Button & Sales Social */
-        button:active, a.btn-primary:active, a.btn-secondary:active, a.btn-outline:active, a.btn-fill:active, a.btn-glass-ad:active, .news-tab-btn:active, .btn-glass-service:active, .social-link-icon:active, .btn-luxury-outline:active, .social-btn:active, .btn-text-promo:active, .btn-map-nav:active, .btn-news-read:active {
+        /* [UPDATE] ANIMASI KLIK (TACTILE FEEDBACK) - Termasuk Bottom Nav Item */
+        button:active, a.btn-primary:active, a.btn-secondary:active, a.btn-outline:active, a.btn-fill:active, a.btn-glass-ad:active, .news-tab-btn:active, .btn-glass-service:active, .social-link-icon:active, .btn-luxury-outline:active, .social-btn:active, .btn-text-promo:active, .btn-map-nav:active, .btn-news-read:active, .bottom-nav-item:active {
             transform: scale(0.95) !important;
             transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -226,7 +226,6 @@
         .promo-card { flex: 0 0 75%; max-width: 360px; height: 480px; scroll-snap-align: center; border-radius: 20px; position: relative; overflow: visible; transform: translateZ(0); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         .promo-card-inner { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); background: #111; box-shadow: 0 20px 40px rgba(0,0,0,0.5); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         
-        /* Efek Aktif (Glowing Red) */
         .promo-card.is-active { transform: translateY(-12px); }
         .promo-card.is-active .promo-card-inner { box-shadow: 0 0 60px rgba(230,0,0,0.4); border: 1px solid rgba(230,0,0,0.5); }
         .promo-card.is-active .promo-card-bg { filter: brightness(1); transform: scale(1.05); }
@@ -239,12 +238,7 @@
         .promo-card-content h3 { font-size: 1.5rem; line-height: 1.2; margin-bottom: 8px; }
         .promo-card-content p { color: rgba(255,255,255,0.7); font-size: 0.85rem; line-height: 1.5; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         
-        /* [UPDATE] Animasi Tombol Promo di Dalam Kartu */
-        .btn-text-promo { 
-            font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: white; 
-            display: inline-flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--color-accent); 
-            padding-bottom: 4px; transition: var(--transition-smooth); cursor: pointer; 
-        }
+        .btn-text-promo { font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: white; display: inline-flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--color-accent); padding-bottom: 4px; transition: var(--transition-smooth); cursor: pointer; }
         .btn-text-promo:hover { color: var(--color-accent); gap: 14px; border-bottom-color: white; }
 
         /* ADS GRID */
@@ -406,6 +400,39 @@
         .footer-dev { font-size: 0.75rem; color: #555; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 2px; }
 
         /* =========================================
+           [NEW] MOBILE BOTTOM NAV (LUXURY)
+           ========================================= */
+        .mobile-bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(5, 5, 5, 0.85); /* Tembus pandang gelap elegan */
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: none; /* Disembunyikan di layar Desktop/PC */
+            justify-content: space-around; align-items: center;
+            padding: 12px 16px; z-index: 1000;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.4);
+            padding-bottom: calc(12px + env(safe-area-inset-bottom)); /* Dukungan poni iPhone */
+        }
+        .bottom-nav-item {
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+            color: #888; transition: var(--transition-smooth);
+            text-decoration: none; width: 30%; cursor: pointer;
+        }
+        .bottom-nav-icon {
+            width: 24px; height: 24px; fill: currentColor;
+            transition: var(--transition-smooth);
+        }
+        .bottom-nav-label {
+            font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; font-family: var(--font-heading);
+        }
+        .bottom-nav-item:hover, .bottom-nav-item:active { color: var(--color-primary); }
+        .bottom-nav-item:hover .bottom-nav-icon, .bottom-nav-item:active .bottom-nav-icon {
+            transform: translateY(-4px); fill: var(--color-accent);
+            filter: drop-shadow(0 4px 10px rgba(230,0,0,0.5)); /* Pendar merah khas Mitsubishi */
+        }
+
+        /* =========================================
            ANIMASI REVEAL
            ========================================= */
         .reveal-up { opacity: 0; transform: translateY(40px); transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
@@ -429,6 +456,10 @@
             .map-container-wrapper { height: auto; display: flex; flex-direction: column; } 
             .google-map-iframe { height: 350px; }
             .footer-container { grid-template-columns: 1fr 1fr; }
+            
+            /* Tampilkan Mobile Bottom Nav dan beri jarak aman ke Footer */
+            .mobile-bottom-nav { display: flex; }
+            .footer { padding-bottom: 120px; } 
         }
         @media (min-width: 768px) { 
             .slider-btn-nav { display: flex; } 
@@ -464,7 +495,6 @@
             .service-desc { font-size: 1rem; }
             .btn-glass-service { padding: 16px 32px; font-size: 0.85rem; }
             
-            /* Mobile Grid untuk Testimoni menjadi 2 Kolom */
             .testimonial-section { padding: 60px 16px 80px; }
             .testi-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
             .testi-img-main { height: 140px; border-bottom: 2px solid var(--color-accent); }
@@ -473,8 +503,7 @@
             .testi-text { font-size: 0.75rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
             .testi-stars { font-size: 0.85rem; margin-bottom: 8px; }
 
-            /* Mobile Footer */
-            .footer { padding: 80px 20px 30px; }
+            .footer { padding: 80px 20px 120px; } /* Jarak aman ke Mobile Bottom Nav */
             .footer-container { grid-template-columns: 1fr; gap: 40px; text-align: center; }
             .footer-brand .footer-logo { margin: 0 auto 24px; }
             .footer-brand p { margin: 0 auto 32px; }
@@ -554,7 +583,7 @@
                 <a href="#lokasi" class="menu-item menu-item-5">Lokasi Dealer</a>
                 
                 <a href="#testimoni" class="menu-item menu-item-6">Testimonial Gallery</a>
-                <a href="#kredit" class="menu-item menu-item-7">Simulasi Kredit</a>
+                <a href="#katalog" class="menu-item menu-item-7">Daftar Harga</a>
                 <a href="#kontak" class="menu-item menu-item-8">Kontak</a>
 
                 <a href="#katalog" class="btn-primary" style="margin-top: auto; text-align: center; width: 100%;">Pesan Sekarang</a>
@@ -977,7 +1006,7 @@
                     <h4>Layanan</h4>
                     <ul>
                         <li><a href="#layanan">Purna Jual</a></li>
-                        <li><a href="#kredit">Simulasi Kredit</a></li>
+                        <li><a href="#katalog">Daftar Harga</a></li>
                         <li><a href="#test-drive">Test Drive</a></li>
                         <li><a href="#lokasi">Lokasi Dealer</a></li>
                     </ul>
@@ -1001,6 +1030,23 @@
                 <div class="footer-dev">Developed by @zee_radhan</div>
             </div>
         </footer>
+
+        <nav class="mobile-bottom-nav">
+            <a href="#katalog" class="bottom-nav-item" aria-label="Daftar Harga">
+                <svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.41l9 9c.36.36.86.59 1.41.59s1.05-.22 1.41-.59l7-7c.36-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+                <span class="bottom-nav-label">Daftar Harga</span>
+            </a>
+            
+            <a href="tel:+6281234567890" class="bottom-nav-item" aria-label="Telepon Sales">
+                <svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                <span class="bottom-nav-label">Telepon</span>
+            </a>
+            
+            <a href="https://wa.me/628123456789" target="_blank" class="bottom-nav-item" aria-label="Chat WhatsApp">
+                <svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                <span class="bottom-nav-label">WhatsApp</span>
+            </a>
+        </nav>
 
     </main>
 
@@ -1202,4 +1248,3 @@
     </script>
 </body>
 </html>
-
