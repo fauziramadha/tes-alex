@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Daftar Harga Mitsubishi Terbaru | Mitsubishi Motors Batam</title>
+    <meta name="description" content="Pembaruan daftar harga terbaru mobil Mitsubishi Motors di Batam. Temukan varian Xpander, Pajero Sport, XForce, dan lainnya.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           CSS VARIABLES & GLOBALS
+           ========================================= */
+        :root {
+            --color-primary: #FFFFFF;
+            --color-secondary: #0A0A0A;
+            --color-accent: #E60000;
+            --color-surface: #F8F8F8;
+            --color-border: #EAEAEA;
+            --font-heading: 'Syne', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-premium: 0 15px 35px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 25px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { 
+            background-color: var(--color-surface); 
+            color: var(--color-secondary); 
+            font-family: var(--font-body); 
+            line-height: 1.6; 
+            overflow-x: hidden; 
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); font-weight: 700; line-height: 1.1; }
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        button { cursor: pointer; background: none; border: none; font-family: inherit; }
+        .app-wrapper { width: 100%; max-width: 1440px; margin: 0 auto; position: relative; }
+
+        /* EFEK KLIK TERISOLASI AGAR TIDAK MERUSAK FOOTER */
+        button:active, .btn-primary:active, .btn-outline:active, .btn-fill:active, .btn-card:active { 
+            transform: scale(0.95) !important; 
+            transition: transform 0.1s ease !important; 
+        }
+
+        /* =========================================
+           PRELOADER MITSUBISHI
+           ========================================= */
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #050505; z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.4s ease, visibility 0.4s; }
+        #preloader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loader-logo { width: 120px; height: auto; animation: pulseGlow 1s infinite alternate ease-in-out; filter: drop-shadow(0 0 20px rgba(230,0,0,0.5)); }
+        @keyframes pulseGlow { 0% { transform: scale(0.95); opacity: 0.8; } 100% { transform: scale(1.05); opacity: 1; } }
+
+        /* =========================================
+           NAVBAR (IDENTIK INDEX)
+           ========================================= */
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 24px 0; z-index: 1000; transition: var(--transition-smooth); background: transparent; }
+        .navbar.scrolled { padding: 16px 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+        
+        .brand-logo-img { height: 40px; width: auto; object-fit: contain; filter: brightness(0) invert(1); transition: var(--transition-smooth); }
+        .navbar.scrolled .brand-logo-img { filter: none; }
+        
+        .nav-links { display: none; gap: 32px; }
+        .nav-links a { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--color-primary); position: relative; transition: var(--transition-smooth); }
+        .navbar.scrolled .nav-links a { color: var(--color-secondary); }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--color-accent); transition: var(--transition-smooth); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        
+        .nav-actions { display: flex; align-items: center; gap: 16px; }
+        .btn-primary { display: inline-block; padding: 12px 28px; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition-smooth); text-align: center; background: var(--color-accent); color: var(--color-primary) !important; border: 1px solid var(--color-accent); }
+        .btn-primary:hover { background: transparent; color: var(--color-accent) !important; }
+
+        /* =========================================
+           MOBILE MENU & OVERLAY (IDENTIK INDEX)
+           ========================================= */
+        .menu-toggle { display: flex; flex-direction: column; gap: 5px; z-index: 1001; padding: 4px; }
+        .menu-toggle span { display: block; width: 28px; height: 2px; background: var(--color-primary); transition: var(--transition-smooth); }
+        .navbar.scrolled .menu-toggle span { background: var(--color-secondary); }
+        
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 1004; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; }
+        .menu-overlay.active { opacity: 1; visibility: visible; }
+        
+        .mobile-menu { position: fixed; top: 0; right: 0; width: 85%; max-width: 380px; height: 100vh; background: var(--color-primary); z-index: 1005; padding: 40px 32px 100px; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: -10px 0 40px rgba(0,0,0,0.3); overflow-y: auto; }
+        .mobile-menu.active { transform: translateX(0); }
+        
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--color-border); }
+        .sidebar-title { font-family: var(--font-heading); font-weight: 800; font-size: 1.1rem; color: var(--color-secondary); text-transform: uppercase; letter-spacing: 1px; }
+        .btn-close-menu { font-size: 2.2rem; color: var(--color-secondary); line-height: 1; transition: var(--transition-smooth); font-weight: 300; }
+        .btn-close-menu:hover { color: var(--color-accent); transform: rotate(90deg); }
+        .menu-item { display: block; color: var(--color-secondary); font-weight: 600; font-size: 1.1rem; font-family: var(--font-heading); padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.05); transition: var(--transition-smooth); }
+        .menu-item:hover { color: var(--color-accent); padding-left: 8px; }
+
+        /* BUTTON NAVIGASI BAWAH GLOBALS */
+        .btn-outline { padding: 14px 0; text-align: center; border: 1px solid var(--color-secondary); color: var(--color-secondary); background: transparent; border-radius: 6px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; transition: var(--transition-smooth); display: flex; justify-content: center; align-items: center; }
+        .btn-outline:hover { background: var(--color-secondary); color: var(--color-primary); }
+        .btn-fill { padding: 14px 0; text-align: center; background: var(--color-accent); border: 1px solid var(--color-accent); color: var(--color-primary); border-radius: 6px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; transition: var(--transition-smooth); box-shadow: 0 10px 20px rgba(230,0,0,0.2); display: flex; justify-content: center; align-items: center; }
+        .btn-fill:hover { background: transparent; color: var(--color-accent); box-shadow: none; }
+
+        /* =========================================
+           HERO HARGA 
+           ========================================= */
+        .price-hero { position: relative; width: 100%; height: 40vh; min-height: 320px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #000; text-align: center; padding-top: 60px; }
+        .price-hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
+        .price-hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, var(--color-surface), transparent); }
+        .price-hero-content { position: relative; z-index: 5; padding: 0 24px; width: 100%; }
+        
+        .price-hero-title { font-size: clamp(1.8rem, 4vw, 3.5rem); font-family: var(--font-heading); font-weight: 800; color: #FFF; text-transform: uppercase; letter-spacing: 1px; line-height: 1.2; margin-bottom: 10px; }
+        .price-hero-subtitle { font-size: 0.85rem; color: var(--color-accent); font-weight: 800; text-transform: uppercase; letter-spacing: 3px; display: block; margin-bottom: 12px; }
+
+        /* =========================================
+           DAFTAR HARGA GRID & CARDS 
+           ========================================= */
+        .price-main { padding: 60px 24px 100px; background: var(--color-surface); position: relative; z-index: 10; }
+        .price-container { max-width: 1200px; margin: 0 auto; }
+        
+        .price-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 40px; }
+        
+        .price-card { background: var(--color-primary); border-radius: 20px; border: 1px solid var(--color-border); box-shadow: var(--shadow-premium); overflow: hidden; transition: var(--transition-smooth); display: flex; flex-direction: column; }
+        .price-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); border-color: rgba(230,0,0,0.15); }
+        
+        .price-img-wrapper { width: 100%; height: 220px; padding: 24px; background: #F8F9FA; display: flex; justify-content: center; align-items: center; border-bottom: 1px solid var(--color-border); }
+        .price-img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .price-card:hover .price-img { transform: scale(1.08); }
+
+        .price-body { padding: 32px 28px; display: flex; flex-direction: column; flex-grow: 1; }
+        .price-car-name { font-size: 1.6rem; font-family: var(--font-heading); font-weight: 800; color: var(--color-secondary); margin-bottom: 24px; text-transform: uppercase; text-align: center; letter-spacing: 1px; }
+
+        .price-list { list-style: none; margin-bottom: 32px; flex-grow: 1; }
+        .price-list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--color-border); }
+        .price-list-item:last-child { border-bottom: none; }
+        .variant-name { font-size: 0.9rem; color: #555; font-weight: 500; }
+        .variant-price { font-size: 1rem; font-weight: 800; color: var(--color-secondary); font-family: var(--font-heading); }
+
+        .card-actions { display: flex; flex-direction: column; gap: 12px; margin-top: auto; }
+        .btn-card { display: block; width: 100%; padding: 14px 16px; border-radius: 8px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; text-align: center; letter-spacing: 0.5px; transition: var(--transition-smooth); cursor: pointer; }
+        
+        .btn-card-full { background: #F5F5F5; color: #333; border: 1px solid var(--color-border); }
+        .btn-card-full:hover { background: var(--color-border); color: var(--color-secondary); }
+        
+        .btn-card-outline { background: transparent; color: var(--color-secondary); border: 1px solid var(--color-secondary); }
+        .btn-card-outline:hover { background: var(--color-secondary); color: var(--color-primary); }
+        
+        .btn-card-primary { background: var(--color-accent); color: var(--color-primary); border: 1px solid var(--color-accent); box-shadow: 0 8px 20px rgba(230,0,0,0.15); }
+        .btn-card-primary:hover { background: transparent; color: var(--color-accent); box-shadow: none; }
+
+        .bottom-nav-action-wrapper { max-width: 800px; margin: 60px auto 20px; display: flex; justify-content: space-between; gap: 20px; border-top: 1px solid var(--color-border); padding-top: 40px; }
+        .bottom-nav-action-wrapper > * { flex: 1; max-width: 350px; padding: 16px 20px; font-size: 0.85rem; }
+
+        .reveal-up { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-up.active { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+
+        /* =========================================
+           FOOTER (DIKEMBALIKAN 100% SEPERTI INDEX.HTML)
+           ========================================= */
+        .footer { background: #0A0A0A; color: var(--color-primary); padding: 80px 24px 40px; position: relative; z-index: 2; }
+        .footer-container { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; max-width: 1200px; margin: 0 auto; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        
+        .footer-brand .footer-logo { height: 44px; filter: brightness(0) invert(1); margin-bottom: 20px; }
+        .footer-brand p { color: #888; font-size: 0.9rem; line-height: 1.7; max-width: 300px; margin-bottom: 24px; }
+        .footer-socials { display: flex; gap: 12px; flex-wrap: wrap; }
+        .social-link-icon { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; color: white; transition: var(--transition-smooth); cursor: pointer; }
+        .social-link-icon:hover { background: var(--color-accent); border-color: var(--color-accent); transform: translateY(-3px); }
+        .social-link-icon svg { width: 16px; height: 16px; fill: currentColor; }
+
+        .footer-col h4 { color: white; margin-bottom: 20px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col a { color: #888; transition: var(--transition-smooth); font-size: 0.9rem; font-weight: 500; }
+        .footer-col a:hover { color: white; }
+        
+        .footer-contact p { color: #888; font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 10px; }
+        .footer-contact p svg { width: 18px; height: 18px; fill: var(--color-accent); flex-shrink: 0; margin-top: 2px; }
+
+        .footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .footer-copy { font-size: 0.85rem; color: #666; font-weight: 500; }
+        .footer-dev { font-size: 0.75rem; color: #555; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* MOBILE BOTTOM NAV (SAMA PERSIS DENGAN INDEX.HTML) */
+        .mobile-bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-top: 1px solid rgba(255, 255, 255, 0.1); display: none; justify-content: space-around; align-items: center; padding: 12px 16px; z-index: 1000; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #888; transition: var(--transition-smooth); text-decoration: none; width: 30%; cursor: pointer; }
+        .bottom-nav-icon { width: 22px; height: 22px; fill: currentColor; transition: var(--transition-smooth); }
+        .bottom-nav-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; font-family: var(--font-heading); letter-spacing: 0.5px; }
+        .bottom-nav-item:hover, .bottom-nav-item.active { color: var(--color-primary); }
+        .bottom-nav-item:hover .bottom-nav-icon, .bottom-nav-item.active .bottom-nav-icon { transform: translateY(-3px); fill: var(--color-accent); }
+
+        /* =========================================
+           RESPONSIVE UTAMA (MEDIA QUERIES)
+           ========================================= */
+        @media (min-width: 992px) { .menu-toggle { display: none; } .nav-links { display: flex; } }
+        @media (max-width: 991px) { 
+            .nav-links, .nav-actions .btn-primary { display: none; } 
+            .footer-container { grid-template-columns: 1fr 1fr; }
+            .mobile-bottom-nav { display: flex; }
+            .footer { padding-bottom: 120px; }
+            .price-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+        }
+        @media (max-width: 767px) { 
+            .price-hero { min-height: 250px; padding-top: 60px; }
+            .price-hero-title { font-size: 1.6rem; margin-bottom: 8px; letter-spacing: 0px; }
+            .price-hero-subtitle { font-size: 0.75rem; letter-spacing: 2px; }
+            
+            .price-main { padding: 40px 16px 80px; }
+            .price-grid { grid-template-columns: 1fr; gap: 24px; }
+            
+            .price-img-wrapper { height: 180px; padding: 16px; }
+            .price-body { padding: 24px 20px; }
+            .price-car-name { font-size: 1.4rem; margin-bottom: 16px; }
+            
+            .price-list-item { padding: 10px 0; }
+            .variant-name { font-size: 0.8rem; }
+            .variant-price { font-size: 0.95rem; }
+            
+            .card-actions { gap: 10px; }
+            .btn-card { padding: 12px 10px; font-size: 0.7rem; border-radius: 6px; }
+
+            .bottom-nav-action-wrapper { flex-direction: column; gap: 12px; align-items: stretch; margin-top: 40px; }
+            .bottom-nav-action-wrapper > * { max-width: 100%; padding: 14px 0; }
+            
+            /* FOOTER MOBILE (DIKEMBALIKAN 100% SEPERTI INDEX.HTML) */
+            .footer { padding: 60px 20px 100px; }
+            .footer-container { grid-template-columns: 1fr; gap: 32px; text-align: center; } 
+            .footer-brand .footer-logo { margin: 0 auto 16px; display: block; }
+            .footer-brand p { margin: 0 auto 24px; }
+            .footer-socials { justify-content: center; }
+            .footer-contact p { justify-content: center; text-align: center; max-width: 100%; margin-bottom: 12px; }
+            .footer-bottom { flex-direction: column; gap: 12px; text-align: center; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="preloader">
+        <img src="https://i.ibb.co.com/nM5YjdVM/pngwing-com-2.png" alt="Loading..." class="loader-logo">
+    </div>
+
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="https://i.ibb.co.com/84Ss5Bjy/IMG-3284.png" alt="Mitsubishi Motors" class="brand-logo-img">
+            </a>
+            
+            <nav class="nav-links">
+                <a href="index.html">Beranda</a>
+                <a href="harga.html" class="active">Daftar Harga</a>
+                <a href="berita.html">Berita</a>
+                <a href="testimoni.html">Testimoni</a>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="https://wa.me/628123456789" target="_blank" class="btn-primary">Pesan Sekarang</a>
+                <button class="menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menu-overlay"></div>
+
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="sidebar-header">
+            <span class="sidebar-title">Menu Navigasi</span>
+            <button class="btn-close-menu" id="close-menu-btn">×</button>
+        </div>
+        
+        <a href="index.html" class="menu-item">Beranda</a>
+        <a href="harga.html" class="menu-item active">Daftar Harga</a>
+        <a href="index.html#promo" class="menu-item">Promo Terbaru</a>
+        <a href="testimoni.html" class="menu-item">Testimonial Gallery</a>
+        <a href="berita.html" class="menu-item">Berita & Acara</a>
+        <a href="layanan.html" class="menu-item">Layanan Purna Jual</a>
+        <a href="index.html#lokasi" class="menu-item">Lokasi Dealer</a>
+
+        <a href="https://wa.me/628123456789" target="_blank" class="btn-primary" style="margin-top: auto; text-align: center; width: 100%;">Hubungi Sales</a>
+    </div>
+
+    <main class="app-wrapper">
+
+        <section class="price-hero">
+            <img src="https://i.ibb.co.com/7d3vCpYk/IMG-3322.jpg" alt="Mitsubishi Price List" class="price-hero-bg">
+            <div class="price-hero-overlay"></div>
+            
+            <div class="price-hero-content reveal-up">
+                <span class="price-hero-subtitle">Update Terbaru 2026</span>
+                <h1 class="price-hero-title">Daftar Harga</h1>
+            </div>
+        </section>
+
+        <section class="price-main">
+            <div class="price-container">
+                
+                <div class="price-grid">
+                    
+                    <div class="price-card reveal-up delay-1">
+                        <div class="price-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1632823471565-3cefedebef26?q=80&w=800&auto=format&fit=crop" alt="Xpander" class="price-img">
+                        </div>
+                        <div class="price-body">
+                            <h2 class="price-car-name">Xpander</h2>
+                            
+                            <ul class="price-list">
+                                <li class="price-list-item">
+                                    <span class="variant-name">Ultimate CVT</span>
+                                    <span class="variant-price">Rp 315.900.000</span>
+                                </li>
+                                <li class="price-list-item">
+                                    <span class="variant-name">Sport CVT</span>
+                                    <span class="variant-price">Rp 309.500.000</span>
+                                </li>
+                                <li class="price-list-item">
+                                    <span class="variant-name">Exceed CVT</span>
+                                    <span class="variant-price">Rp 280.700.000</span>
+                                </li>
+                            </ul>
+
+                            <div class="card-actions">
+                                <a href="detail.html" class="btn-card btn-card-full">Spesifikasi Selengkapnya</a>
+                                <a href="katalog.html" class="btn-card btn-card-outline">Katalog Mobil Lainnya</a>
+                                <a href="https://wa.me/628123456789?text=Halo%20kak%2C%20saya%20tertarik%20dengan%20mobil%20Xpander%20tolong%20infonya%20lebih%20lanjut" target="_blank" class="btn-card btn-card-primary">Pesan Sekarang</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="price-card reveal-up delay-2">
+                        <div class="price-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=800&auto=format&fit=crop" alt="Pajero Sport" class="price-img">
+                        </div>
+                        <div class="price-body">
+                            <h2 class="price-car-name">Pajero Sport</h2>
+                            
+                            <ul class="price-list">
+                                <li class="price-list-item">
+                                    <span class="variant-name">Dakar Ultimate 4x4 AT</span>
+                                    <span class="variant-price">Rp 740.600.000</span>
+                                </li>
+                                <li class="price-list-item">
+                                    <span class="variant-name">Dakar Ultimate 4x2 AT</span>
+                                    <span class="variant-price">Rp 680.600.000</span>
+                                </li>
+                                <li class="price-list-item">
+                                    <span class="variant-name">Dakar 4x2 AT</span>
+                                    <span class="variant-price">Rp 630.900.000</span>
+                                </li>
+                            </ul>
+
+                            <div class="card-actions">
+                                <a href="detail.html" class="btn-card btn-card-full">Spesifikasi Selengkapnya</a>
+                                <a href="katalog.html" class="btn-card btn-card-outline">Katalog Mobil Lainnya</a>
+                                <a href="https://wa.me/628123456789?text=Halo%20kak%2C%20saya%20tertarik%20dengan%20mobil%20Pajero%20Sport%20tolong%20infonya%20lebih%20lanjut" target="_blank" class="btn-card btn-card-primary">Pesan Sekarang</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="price-card reveal-up delay-1">
+                        <div class="price-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1563720360172-67b8f3dce741?q=80&w=800&auto=format&fit=crop" alt="XForce" class="price-img">
+                        </div>
+                        <div class="price-body">
+                            <h2 class="price-car-name">XForce</h2>
+                            
+                            <ul class="price-list">
+                                <li class="price-list-item">
+                                    <span class="variant-name">Ultimate CVT</span>
+                                    <span class="variant-price">Rp 419.100.000</span>
+                                </li>
+                                <li class="price-list-item">
+                                    <span class="variant-name">Exceed CVT</span>
+                                    <span class="variant-price">Rp 382.500.000</span>
+                                </li>
+                            </ul>
+
+                            <div class="card-actions">
+                                <a href="detail.html" class="btn-card btn-card-full">Spesifikasi Selengkapnya</a>
+                                <a href="katalog.html" class="btn-card btn-card-outline">Katalog Mobil Lainnya</a>
+                                <a href="https://wa.me/628123456789?text=Halo%20kak%2C%20saya%20tertarik%20dengan%20mobil%20XForce%20tolong%20infonya%20lebih%20lanjut" target="_blank" class="btn-card btn-card-primary">Pesan Sekarang</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="price-card reveal-up delay-2">
+                        <div class="price-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?q=80&w=800&auto=format&fit=crop" alt="Xpander Cross" class="price-img">
+                        </div>
+                        <div class="price-body">
+                            <h2 class="price-car-name">Xpander Cross</h2>
+                            
+                            <ul class="price-list">
+                                <li class="price-list-item">
+                                    <span class="variant-name">Premium CVT</span>
+                                    <span class="variant-price">Rp 342.650.000</span>
+                                </li>
+                                <li class="price-list-item">
+                                    <span class="variant-name">MT</span>
+                                    <span class="variant-price">Rp 316.750.000</span>
+                                </li>
+                            </ul>
+
+                            <div class="card-actions">
+                                <a href="detail.html" class="btn-card btn-card-full">Spesifikasi Selengkapnya</a>
+                                <a href="katalog.html" class="btn-card btn-card-outline">Katalog Mobil Lainnya</a>
+                                <a href="https://wa.me/628123456789?text=Halo%20kak%2C%20saya%20tertarik%20dengan%20mobil%20Xpander%20Cross%20tolong%20infonya%20lebih%20lanjut" target="_blank" class="btn-card btn-card-primary">Pesan Sekarang</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> <div class="bottom-nav-action-wrapper reveal-up delay-1">
+                    <a href="index.html" class="btn-outline">Kembali</a>
+                    <a href="katalog.html" class="btn-fill">Lihat Menu Mobil</a>
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="footer" id="kontak">
+            <div class="footer-container reveal-up delay-1">
+                <div class="footer-brand">
+                    <img src="https://i.ibb.co.com/84Ss5Bjy/IMG-3284.png" alt="Mitsubishi Motors" class="footer-logo">
+                    <p>Dealer Resmi Mitsubishi Batam. Menghadirkan layanan premium dan pengalaman berkendara kelas dunia untuk Anda dan keluarga.</p>
+                    <div class="footer-socials">
+                        <a href="https://facebook.com" target="_blank" class="social-link-icon" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
+                        <a href="https://instagram.com" target="_blank" class="social-link-icon" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                        <a href="https://wa.me/628123456789" target="_blank" class="social-link-icon" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+                        <a href="mailto:info@mitsubishi.com" class="social-link-icon" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Pintasan</h4>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="index.html#promo">Promo Terbaru</a></li>
+                        <li><a href="katalog.html">Daftar Harga</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Layanan</h4>
+                    <ul>
+                        <li><a href="layanan.html">Purna Jual</a></li>
+                        <li><a href="https://wa.me/628123456789">Test Drive</a></li>
+                        <li><a href="index.html#lokasi">Lokasi Dealer</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Kontak Kami</h4>
+                    <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Jl. Raden Patah, Lubuk Baja, Kota Batam, Kepulauan Riau</p>
+                    <p><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> +62 812-3456-7890</p>
+                </div>
+            </div>
+            <div class="footer-bottom reveal-up delay-2">
+                <div class="footer-copy">©2026. Official Mitsubishi motors Batam Aldiansyah Sales</div>
+                <div class="footer-dev">Developed by @zee_radhan</div>
+            </div>
+        </footer>
+
+        <nav class="mobile-bottom-nav">
+            <a href="katalog.html" class="bottom-nav-item active" aria-label="Daftar Harga"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.41l9 9c.36.36.86.59 1.41.59s1.05-.22 1.41-.59l7-7c.36-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg><span class="bottom-nav-label">Harga</span></a>
+            <a href="tel:+6281234567890" class="bottom-nav-item" aria-label="Telepon Sales"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span class="bottom-nav-label">Telepon</span></a>
+            <a href="https://wa.me/628123456789" target="_blank" class="bottom-nav-item" aria-label="Chat WhatsApp"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span class="bottom-nav-label">WhatsApp</span></a>
+        </nav>
+
+    </main>
+
+    <script>
+        // --- PRELOADER & NAVBAR SCROLL ---
+        window.addEventListener('load', () => setTimeout(() => document.getElementById('preloader').classList.add('hide'), 1000));
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+
+        // --- UX MENU MOBILE (SIDEBAR & OVERLAY) ---
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+        
+        function toggleMenu() {
+            const isOpen = mobileMenu.classList.contains('active');
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            // Kunci scroll layar utama saat menu terbuka
+            document.body.style.overflow = isOpen ? 'auto' : 'hidden'; 
+        }
+        
+        menuBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+
+        // --- REVEAL ANIMASI (SCROLL TRIGGER) ---
+        const revealElements = document.querySelectorAll('.reveal-up');
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+        revealElements.forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>
