@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Berita & Acara Eksklusif | Mitsubishi Motors Batam</title>
+    <meta name="description" content="Informasi terbaru, promo eksklusif, dan acara spesial dari Mitsubishi Motors.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           CSS VARIABLES & GLOBALS
+           ========================================= */
+        :root {
+            --color-primary: #FFFFFF;
+            --color-secondary: #0A0A0A;
+            --color-accent: #E60000;
+            --color-surface: #F8F8F8;
+            --color-border: #EAEAEA;
+            --font-heading: 'Syne', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-premium: 0 20px 50px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 30px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { 
+            background-color: var(--color-surface); 
+            color: var(--color-secondary); 
+            font-family: var(--font-body); 
+            line-height: 1.6; 
+            overflow-x: hidden; 
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); font-weight: 700; line-height: 1.1; }
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        button { cursor: pointer; background: none; border: none; font-family: inherit; }
+        .app-wrapper { width: 100%; max-width: 1440px; margin: 0 auto; position: relative; }
+
+        button:active, a.btn-primary:active, a.btn-outline:active, a.btn-fill:active { 
+            transform: scale(0.95) !important; 
+            transition: transform 0.1s ease; 
+        }
+
+        /* =========================================
+           PRELOADER MITSUBISHI
+           ========================================= */
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #050505; z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.4s ease, visibility 0.4s; }
+        #preloader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loader-logo { width: 120px; height: auto; animation: pulseGlow 1s infinite alternate ease-in-out; filter: drop-shadow(0 0 20px rgba(230,0,0,0.5)); }
+        @keyframes pulseGlow { 0% { transform: scale(0.95); opacity: 0.8; } 100% { transform: scale(1.05); opacity: 1; } }
+
+        /* =========================================
+           NAVBAR (SAMA PERSIS)
+           ========================================= */
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 24px 0; z-index: 1000; transition: var(--transition-smooth); background: transparent; }
+        .navbar.scrolled { padding: 16px 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+        
+        .brand-logo-img { height: 40px; width: auto; object-fit: contain; filter: brightness(0) invert(1); transition: var(--transition-smooth); }
+        .navbar.scrolled .brand-logo-img { filter: none; }
+        
+        .nav-links { display: none; gap: 32px; }
+        .nav-links a { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--color-primary); position: relative; transition: var(--transition-smooth); }
+        .navbar.scrolled .nav-links a { color: var(--color-secondary); }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--color-accent); transition: var(--transition-smooth); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        
+        .nav-actions { display: flex; align-items: center; gap: 16px; }
+        .btn-primary { display: inline-block; padding: 12px 28px; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition-smooth); text-align: center; background: var(--color-accent); color: var(--color-primary) !important; border: 1px solid var(--color-accent); }
+        .btn-primary:hover { background: transparent; color: var(--color-accent) !important; }
+
+        /* =========================================
+           MOBILE MENU & OVERLAY (SAMA PERSIS)
+           ========================================= */
+        .menu-toggle { display: flex; flex-direction: column; gap: 5px; z-index: 1001; padding: 4px; }
+        .menu-toggle span { display: block; width: 28px; height: 2px; background: var(--color-primary); transition: var(--transition-smooth); }
+        .navbar.scrolled .menu-toggle span { background: var(--color-secondary); }
+        
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 1004; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; }
+        .menu-overlay.active { opacity: 1; visibility: visible; }
+        
+        .mobile-menu { position: fixed; top: 0; right: 0; width: 85%; max-width: 380px; height: 100vh; background: var(--color-primary); z-index: 1005; padding: 40px 32px 100px; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: -10px 0 40px rgba(0,0,0,0.3); overflow-y: auto; }
+        .mobile-menu.active { transform: translateX(0); }
+        
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--color-border); }
+        .sidebar-title { font-family: var(--font-heading); font-weight: 800; font-size: 1.1rem; color: var(--color-secondary); text-transform: uppercase; letter-spacing: 1px; }
+        .btn-close-menu { font-size: 2.2rem; color: var(--color-secondary); line-height: 1; transition: var(--transition-smooth); font-weight: 300; }
+        .btn-close-menu:hover { color: var(--color-accent); transform: rotate(90deg); }
+        .menu-item { display: block; color: var(--color-secondary); font-weight: 600; font-size: 1.1rem; font-family: var(--font-heading); padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.05); transition: var(--transition-smooth); }
+        .menu-item:hover { color: var(--color-accent); padding-left: 8px; }
+
+        /* BUTTON OUTLINE & FILL GLOBAL */
+        .btn-outline { padding: 14px 0; text-align: center; border: 1px solid var(--color-secondary); color: var(--color-secondary); background: transparent; border-radius: 6px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; transition: var(--transition-smooth); display: flex; justify-content: center; align-items: center; width: 100%; }
+        .btn-outline:hover { background: var(--color-secondary); color: var(--color-primary); }
+        .btn-fill { padding: 14px 0; text-align: center; background: var(--color-accent); border: 1px solid var(--color-accent); color: var(--color-primary); border-radius: 6px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; transition: var(--transition-smooth); box-shadow: 0 10px 20px rgba(230,0,0,0.2); display: flex; justify-content: center; align-items: center; width: 100%; }
+        .btn-fill:hover { background: transparent; color: var(--color-accent); box-shadow: none; }
+
+        /* =========================================
+           TAMPILAN 1: GRID DAFTAR BERITA
+           ========================================= */
+        #news-list-view { opacity: 1; transition: opacity 0.5s ease; display: block; }
+        #news-list-view.hidden { opacity: 0; pointer-events: none; display: none; }
+
+        .news-hero { position: relative; width: 100%; height: 65vh; min-height: 500px; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 80px; overflow: hidden; background: #000; }
+        .news-hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0.7; transform: scale(1.05); animation: slowPan 30s infinite alternate linear; }
+        @keyframes slowPan { 0% { transform: scale(1.05) translateY(0); } 100% { transform: scale(1.1) translateY(-2%); } }
+        
+        .news-hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%); z-index: 2; }
+        
+        .news-hero-content { position: relative; z-index: 3; max-width: 1200px; margin: 0 auto; width: 100%; padding: 0 24px; }
+        .news-badge { display: inline-block; padding: 6px 16px; background: var(--color-accent); color: var(--color-primary); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; border-radius: 30px; margin-bottom: 24px; }
+        .news-hero-title { color: var(--color-primary); font-size: clamp(2rem, 5vw, 4rem); font-family: var(--font-heading); font-weight: 800; line-height: 1.1; margin-bottom: 16px; max-width: 800px; text-transform: uppercase; letter-spacing: -1px; }
+        .news-hero-desc { color: rgba(255,255,255,0.8); font-size: clamp(0.9rem, 1.5vw, 1.1rem); max-width: 600px; line-height: 1.8; font-weight: 300; }
+
+        .news-main-section { padding: 80px 24px; background: var(--color-surface); position: relative; }
+        .news-container { max-width: 1200px; margin: 0 auto; }
+
+        /* [BARU] PETUNJUK GESER UNTUK MOBILE */
+        .swipe-hint { display: none; font-size: 0.7rem; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; font-weight: 600; text-align: center; animation: slideHint 2s infinite ease-in-out; }
+        @keyframes slideHint { 0%, 100% { transform: translateX(0); opacity: 0.5; } 50% { transform: translateX(8px); opacity: 1; } }
+
+        .news-filter { display: flex; justify-content: center; gap: 32px; margin-bottom: 60px; overflow-x: auto; scrollbar-width: none; padding-bottom: 10px; }
+        .news-filter::-webkit-scrollbar { display: none; }
+        .filter-btn { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #888; transition: var(--transition-smooth); white-space: nowrap; position: relative; padding-bottom: 8px; }
+        .filter-btn::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; height: 2px; background: var(--color-accent); transition: var(--transition-smooth); }
+        .filter-btn.active, .filter-btn:hover { color: var(--color-secondary); }
+        .filter-btn.active::after, .filter-btn:hover::after { width: 100%; }
+
+        /* Transisi grid saat disortir */
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 40px; transition: opacity 0.4s ease; opacity: 1; }
+        .news-grid.filtering { opacity: 0; }
+
+        .news-card { background: var(--color-primary); border-radius: 20px; overflow: hidden; border: 1px solid var(--color-border); box-shadow: var(--shadow-premium); transition: var(--transition-smooth); display: flex; flex-direction: column; height: 100%; cursor: pointer; text-decoration: none; color: inherit; }
+        .news-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-hover); border-color: rgba(230,0,0,0.2); }
+        
+        .news-img-wrapper { width: 100%; height: 240px; overflow: hidden; position: relative; }
+        .news-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .news-card:hover .news-img { transform: scale(1.08); }
+        
+        .news-card-content { padding: 32px; display: flex; flex-direction: column; flex-grow: 1; }
+        .news-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #888; }
+        .news-category { color: var(--color-accent); }
+        
+        .news-card-title { font-size: 1.4rem; font-family: var(--font-heading); font-weight: 800; color: var(--color-secondary); line-height: 1.3; margin-bottom: 16px; transition: var(--transition-smooth); }
+        .news-card:hover .news-card-title { color: var(--color-accent); }
+        
+        .news-card-excerpt { font-size: 0.95rem; color: #666; line-height: 1.7; margin-bottom: 24px; flex-grow: 1; }
+        
+        .news-read-more { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--color-secondary); transition: var(--transition-smooth); margin-top: auto; }
+        .news-read-more svg { width: 16px; height: 16px; fill: currentColor; transition: transform 0.4s ease; }
+        .news-card:hover .news-read-more { color: var(--color-accent); }
+        .news-card:hover .news-read-more svg { transform: translateX(5px); }
+
+        /* =========================================
+           TAMPILAN 2: BACA ARTIKEL FULL (MEWAH)
+           ========================================= */
+        #news-detail-view { display: none; opacity: 0; transition: opacity 0.5s ease; background: var(--color-surface); padding-bottom: 100px; }
+        #news-detail-view.active { display: block; opacity: 1; }
+
+        .article-hero { position: relative; width: 100%; height: 50vh; min-height: 400px; background: #000; overflow: hidden; }
+        .article-hero-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+        .article-hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 100%); }
+        
+        .article-container { position: relative; z-index: 10; max-width: 800px; margin: -100px auto 0; background: var(--color-primary); padding: 50px 60px; border-radius: 20px; box-shadow: var(--shadow-hover); border: 1px solid var(--color-border); }
+        
+        .article-meta { text-align: center; margin-bottom: 24px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: #888; }
+        .article-meta span.cat { color: var(--color-accent); margin-right: 12px; }
+        
+        .article-title { text-align: center; font-size: clamp(2rem, 4vw, 3rem); font-family: var(--font-heading); font-weight: 800; color: var(--color-secondary); line-height: 1.2; margin-bottom: 40px; text-transform: uppercase; letter-spacing: -1px; }
+        
+        .article-body { font-size: 1.1rem; color: #444; line-height: 1.9; }
+        .article-body p { margin-bottom: 24px; }
+        .article-body p:first-of-type::first-letter { font-size: 4rem; float: left; margin: 8px 12px 0 0; line-height: 0.8; font-family: var(--font-heading); font-weight: 800; color: var(--color-accent); }
+        .article-body h4 { font-size: 1.5rem; margin: 40px 0 20px; color: var(--color-secondary); text-transform: uppercase; }
+
+        .bottom-nav-action-wrapper { display: flex; justify-content: space-between; gap: 24px; margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--color-border); }
+        .bottom-nav-action-wrapper > * { flex: 1; }
+
+        .reveal-up { opacity: 0; transform: translateY(40px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal-up.active { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+
+        /* =========================================
+           FOOTER (SAMA PERSIS DENGAN INDEX)
+           ========================================= */
+        .footer { background: #0A0A0A; color: var(--color-primary); padding: 80px 24px 40px; position: relative; z-index: 2; }
+        .footer-container { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; max-width: 1200px; margin: 0 auto; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        
+        .footer-brand .footer-logo { height: 44px; filter: brightness(0) invert(1); margin-bottom: 20px; }
+        .footer-brand p { color: #888; font-size: 0.9rem; line-height: 1.7; max-width: 300px; margin-bottom: 24px; }
+        .footer-socials { display: flex; gap: 12px; flex-wrap: wrap; }
+        .social-link-icon { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; color: white; transition: var(--transition-smooth); cursor: pointer; }
+        .social-link-icon:hover { background: var(--color-accent); border-color: var(--color-accent); transform: translateY(-3px); }
+        .social-link-icon svg { width: 16px; height: 16px; fill: currentColor; }
+
+        .footer-col h4 { color: white; margin-bottom: 20px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col a { color: #888; transition: var(--transition-smooth); font-size: 0.9rem; font-weight: 500; }
+        .footer-col a:hover { color: white; }
+        
+        .footer-contact p { color: #888; font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 10px; }
+        .footer-contact p svg { width: 18px; height: 18px; fill: var(--color-accent); flex-shrink: 0; margin-top: 2px; }
+
+        .footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .footer-copy { font-size: 0.85rem; color: #666; font-weight: 500; }
+        .footer-dev { font-size: 0.75rem; color: #555; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* MOBILE BOTTOM NAV (SAMA PERSIS DENGAN INDEX) */
+        .mobile-bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-top: 1px solid rgba(255, 255, 255, 0.1); display: none; justify-content: space-around; align-items: center; padding: 12px 16px; z-index: 1000; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #888; transition: var(--transition-smooth); text-decoration: none; width: 30%; cursor: pointer; }
+        .bottom-nav-icon { width: 22px; height: 22px; fill: currentColor; transition: var(--transition-smooth); }
+        .bottom-nav-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; font-family: var(--font-heading); letter-spacing: 0.5px; }
+        .bottom-nav-item:hover, .bottom-nav-item.active { color: var(--color-primary); }
+        .bottom-nav-item:hover .bottom-nav-icon, .bottom-nav-item.active .bottom-nav-icon { transform: translateY(-3px); fill: var(--color-accent); }
+
+        /* =========================================
+           RESPONSIVE UTAMA (MEDIA QUERIES)
+           ========================================= */
+        @media (min-width: 992px) { .menu-toggle { display: none; } .nav-links { display: flex; } }
+        @media (max-width: 991px) { 
+            .nav-links, .nav-actions .btn-primary { display: none; } 
+            .footer-container { grid-template-columns: 1fr 1fr; }
+            .mobile-bottom-nav { display: flex; }
+            .footer { padding-bottom: 120px; }
+        }
+        @media (max-width: 767px) { 
+            .news-hero { min-height: 60vh; padding-bottom: 40px; }
+            .news-hero-title { font-size: 2rem; margin-bottom: 12px; }
+            
+            .news-main-section { padding: 40px 16px; }
+            
+            /* TAMPILKAN HINT SWIPE DI MOBILE */
+            .swipe-hint { display: block; }
+
+            .news-filter { justify-content: flex-start; gap: 24px; padding-left: 8px; margin-bottom: 40px; }
+            .filter-btn { font-size: 0.75rem; }
+            
+            .news-grid { grid-template-columns: 1fr; gap: 24px; }
+            .news-card-content { padding: 24px; }
+            .news-card-title { font-size: 1.2rem; }
+
+            .article-hero { min-height: 300px; }
+            .article-container { margin: -50px 16px 0; padding: 32px 20px; }
+            .article-title { font-size: 1.6rem; margin-bottom: 24px; }
+            .article-body { font-size: 1rem; }
+            .article-body p:first-of-type::first-letter { font-size: 3rem; margin: 4px 8px 0 0; }
+
+            .bottom-nav-action-wrapper { flex-direction: column; gap: 16px; margin-top: 40px; }
+            .bottom-nav-action-wrapper > * { max-width: 100%; padding: 14px 0; font-size: 0.8rem; }
+
+            .footer { padding: 60px 20px 100px; }
+            .footer-container { grid-template-columns: 1fr; gap: 32px; text-align: center; } 
+            .footer-brand .footer-logo { margin: 0 auto 16px; display: block; }
+            .footer-brand p { margin: 0 auto 24px; }
+            .footer-socials { justify-content: center; }
+            .footer-contact p { justify-content: center; text-align: center; max-width: 100%; margin-bottom: 12px; }
+            .footer-bottom { flex-direction: column; gap: 12px; text-align: center; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="preloader">
+        <img src="https://i.ibb.co.com/nM5YjdVM/pngwing-com-2.png" alt="Loading..." class="loader-logo">
+    </div>
+
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="https://i.ibb.co.com/84Ss5Bjy/IMG-3284.png" alt="Mitsubishi Motors" class="brand-logo-img">
+            </a>
+            
+            <nav class="nav-links">
+                <a href="index.html">Beranda</a>
+                <a href="katalog.html">Daftar Harga</a>
+                <a href="berita.html" class="active">Berita</a>
+                <a href="index.html#testimoni">Testimoni</a>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="https://wa.me/628123456789" target="_blank" class="btn-primary">Pesan Sekarang</a>
+                <button class="menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menu-overlay"></div>
+
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="sidebar-header">
+            <span class="sidebar-title">Menu Navigasi</span>
+            <button class="btn-close-menu" id="close-menu-btn">×</button>
+        </div>
+        
+        <a href="index.html" class="menu-item">Beranda</a>
+        <a href="katalog.html" class="menu-item">Daftar Harga</a>
+        <a href="index.html#promo" class="menu-item">Promo Terbaru</a>
+        <a href="index.html#testimoni" class="menu-item">Testimonial Gallery</a>
+        <a href="berita.html" class="menu-item">Berita & Acara</a>
+        <a href="index.html#layanan" class="menu-item">Layanan Purna Jual</a>
+        <a href="index.html#lokasi" class="menu-item">Lokasi Dealer</a>
+
+        <a href="https://wa.me/628123456789" target="_blank" class="btn-primary" style="margin-top: auto; text-align: center; width: 100%;">Hubungi Sales</a>
+    </div>
+
+    <main class="app-wrapper">
+
+        <div id="news-list-view">
+            <section class="news-hero">
+                <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=1920&auto=format&fit=crop" alt="Mitsubishi Motors Event" class="news-hero-bg">
+                <div class="news-hero-overlay"></div>
+
+                <div class="news-hero-content reveal-up">
+                    <span class="news-badge">Editorial & Press Release</span>
+                    <h1 class="news-hero-title">Eksplorasi Dunia<br>Mitsubishi Motors</h1>
+                    <p class="news-hero-desc">Dapatkan informasi terkini seputar inovasi, peluncuran produk eksklusif, promo spesial, serta acara menarik dari dealer resmi Mitsubishi Batam.</p>
+                </div>
+            </section>
+
+            <section class="news-main-section">
+                <div class="news-container">
+                    
+                    <div class="swipe-hint reveal-up delay-1">← Geser Kategori Untuk Melihat →</div>
+
+                    <div class="news-filter reveal-up delay-1">
+                        <button class="filter-btn active" data-filter="Semua Kabar">Semua Kabar</button>
+                        <button class="filter-btn" data-filter="Promo Eksklusif">Promo Eksklusif</button>
+                        <button class="filter-btn" data-filter="Berita Produk">Berita Produk</button>
+                        <button class="filter-btn" data-filter="Acara Spesial">Acara Spesial</button>
+                    </div>
+
+                    <div class="news-grid" id="news-grid-container">
+                        </div>
+
+                </div>
+            </section>
+        </div>
+
+        <div id="news-detail-view">
+            <section class="article-hero">
+                <img src="" id="article-img" class="article-hero-img" alt="Hero Artikel">
+                <div class="article-hero-overlay"></div>
+            </section>
+
+            <article class="article-container">
+                <div class="article-meta">
+                    <span class="cat" id="article-cat">Kategori</span> | <span id="article-date">Tanggal</span>
+                </div>
+                
+                <h1 class="article-title" id="article-title">Judul Artikel</h1>
+                
+                <div class="article-body" id="article-body">
+                    </div>
+
+                <div class="bottom-nav-action-wrapper">
+                    <button onclick="closeArticle()" class="btn-outline">Kembali</button>
+                    <a href="katalog.html" class="btn-fill">Lihat Menu Mobil Sekarang</a>
+                </div>
+            </article>
+        </div>
+
+        <footer class="footer" id="kontak">
+            <div class="footer-container reveal-up delay-1">
+                <div class="footer-brand">
+                    <img src="https://i.ibb.co.com/84Ss5Bjy/IMG-3284.png" alt="Mitsubishi Motors" class="footer-logo">
+                    <p>Dealer Resmi Mitsubishi Batam. Menghadirkan layanan premium dan pengalaman berkendara kelas dunia untuk Anda dan keluarga.</p>
+                    <div class="footer-socials">
+                        <a href="https://facebook.com" target="_blank" class="social-link-icon" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
+                        <a href="https://instagram.com" target="_blank" class="social-link-icon" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                        <a href="https://wa.me/628123456789" target="_blank" class="social-link-icon" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+                        <a href="mailto:info@mitsubishi.com" class="social-link-icon" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Pintasan</h4>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="index.html#promo">Promo Terbaru</a></li>
+                        <li><a href="katalog.html">Daftar Harga</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Layanan</h4>
+                    <ul>
+                        <li><a href="index.html#layanan">Purna Jual</a></li>
+                        <li><a href="https://wa.me/628123456789">Test Drive</a></li>
+                        <li><a href="index.html#lokasi">Lokasi Dealer</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Kontak Kami</h4>
+                    <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Jl. Raden Patah, Lubuk Baja, Kota Batam, Kepulauan Riau</p>
+                    <p><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> +62 812-3456-7890</p>
+                </div>
+            </div>
+            <div class="footer-bottom reveal-up delay-2">
+                <div class="footer-copy">©2026. Official Mitsubishi motors Batam Aldiansyah Sales</div>
+                <div class="footer-dev">Developed by @zee_radhan</div>
+            </div>
+        </footer>
+
+        <nav class="mobile-bottom-nav">
+            <a href="katalog.html" class="bottom-nav-item" aria-label="Daftar Harga"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.41l9 9c.36.36.86.59 1.41.59s1.05-.22 1.41-.59l7-7c.36-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg><span class="bottom-nav-label">Harga</span></a>
+            <a href="tel:+6281234567890" class="bottom-nav-item" aria-label="Telepon Sales"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span class="bottom-nav-label">Telepon</span></a>
+            <a href="https://wa.me/628123456789" target="_blank" class="bottom-nav-item" aria-label="Chat WhatsApp"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span class="bottom-nav-label">WhatsApp</span></a>
+        </nav>
+
+    </main>
+
+    <script>
+        // --- PRELOADER & SCROLL NAVBAR ---
+        window.addEventListener('load', () => setTimeout(() => document.getElementById('preloader').classList.add('hide'), 1000));
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+
+        // --- MOBILE MENU ---
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+        
+        function toggleMenu() {
+            const isOpen = mobileMenu.classList.contains('active');
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = isOpen ? 'auto' : 'hidden'; 
+        }
+        
+        menuBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+
+        // --- DATABASE ARTIKEL ---
+        const newsDatabase = [
+            {
+                id: "promo-xpander",
+                category: "Promo Eksklusif",
+                date: "25 Apr 2026",
+                title: "Gebyar Promo Akhir Bulan: Bunga 0% & DP Ringan Xpander",
+                excerpt: "Wujudkan impian memiliki Mitsubishi Xpander impian Anda bulan ini. Nikmati penawaran eksklusif bunga 0% hingga tenor 2 tahun...",
+                image: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?q=80&w=1200&auto=format&fit=crop",
+                body: `
+                    <p>Wujudkan impian memiliki Mitsubishi Xpander impian Anda bulan ini. Nikmati penawaran eksklusif bunga 0% hingga tenor 2 tahun atau DP super ringan khusus pemesanan minggu ini di dealer resmi Mitsubishi Motors Batam.</p>
+                    <p>Program ini dirancang khusus untuk mempermudah Anda dalam memiliki kendaraan keluarga premium dengan cicilan yang sangat bersahabat. Selain itu, Anda juga akan mendapatkan fasilitas gratis asuransi selama 1 tahun pertama dan voucher belanja aksesori senilai jutaan rupiah.</p>
+                    <h4>Keuntungan Ekstra Bulan Ini:</h4>
+                    <p>- Gratis Paket SMART Silver untuk Perawatan/Servis Berkala hingga 50.000 km atau 4 tahun.<br>- Gratis Kaca Film V-Kool Premium senilai Rp 5.000.000.<br>- Garansi Kendaraan 100.000 km / 3 Tahun.</p>
+                    <p>Jangan tunda lagi! Unit terbatas. Segera hubungi Sales Consultant kami untuk mengatur jadwal Test Drive atau mengamankan unit Xpander pilihan Anda hari ini.</p>
+                `
+            },
+            {
+                id: "pajero-sport",
+                category: "Berita Produk",
+                date: "18 Apr 2026",
+                title: "Ketangguhan Tak Tertandingi: Mengulik Fitur Baru New Pajero Sport",
+                excerpt: "Generasi terbaru SUV legendaris telah hadir. Dilengkapi dengan teknologi keselamatan terdepan dan performa mesin yang semakin buas...",
+                image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?q=80&w=1200&auto=format&fit=crop",
+                body: `
+                    <p>Generasi terbaru dari sang penjelajah legendaris, New Pajero Sport, akhirnya mendarat di aspal Batam. Membawa desain "Dynamic Shield" yang lebih tegas dan grill depan yang memancarkan aura dominasi, SUV ini siap menjadi pusat perhatian di jalanan kota maupun medan off-road.</p>
+                    <p>Jantung pacunya dibekali mesin diesel VGT-Intercooler yang legendaris, namun kini dioptimalkan untuk menghasilkan tenaga yang lebih instan dengan efisiensi bahan bakar yang memukau. Transmisi otomatis 8-percepatan memastikan perpindahan gigi yang mulus layaknya sedan premium.</p>
+                    <h4>Inovasi Keamanan Terdepan</h4>
+                    <p>Mitsubishi Motors tidak main-main dalam hal keselamatan. Pajero terbaru kini dilengkapi dengan Forward Collision Mitigation System (FCM) dan Blind Spot Warning (BSW) yang menggunakan sensor radar canggih untuk mencegah benturan dari arah depan dan samping kendaraan.</p>
+                    <p>Interiornya pun mendapat sentuhan kemewahan dengan balutan material soft-touch terbaru, layar sentuh 9-inci yang terintegrasi dengan Apple CarPlay, serta meter cluster full digital yang futuristik. New Pajero Sport bukan sekadar SUV, ia adalah simbol kesuksesan Anda.</p>
+                `
+            },
+            {
+                id: "test-drive-xforce",
+                category: "Acara Spesial",
+                date: "10 Apr 2026",
+                title: "Undangan VIP: Test Drive Experience XForce 2026 di Mega Mall Batam",
+                excerpt: "Jangan lewatkan kesempatan eksklusif menjajal performa berkendara superior dari Mitsubishi XForce. Daftar sekarang dan dapatkan suvenir premium...",
+                image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=1200&auto=format&fit=crop",
+                body: `
+                    <p>Kami dengan bangga mengundang seluruh pelanggan setia Mitsubishi dan masyarakat Batam untuk menghadiri acara peluncuran dan sesi uji coba eksklusif, "Mitsubishi XForce Experience 2026" yang akan digelar akhir pekan ini di Atrium Mega Mall Batam Centre.</p>
+                    <p>Dalam acara ini, pengunjung tidak hanya dapat melihat dari dekat desain silky & solid khas XForce, tetapi juga berkesempatan duduk di balik kemudi dan merasakan langsung kecanggihan 4 mode berkendara (Normal, Wet, Gravel, Mud) yang disematkan pada Compact SUV revolusioner ini.</p>
+                    <h4>Hiburan & Hadiah Eksklusif</h4>
+                    <p>Sembari menikmati sensasi berkendara, telinga Anda akan dimanjakan oleh dentuman Dynamic Sound Yamaha Premium yang menjadi sistem audio bawaan XForce. Acara ini juga dimeriahkan dengan Live Music, Coffee Bar, serta permainan interaktif untuk anak-anak.</p>
+                    <p>Bagi Anda yang melakukan Booking Fee di lokasi acara, tersedia Lucky Dip dengan hadiah utama Sepeda Motor Listrik, Voucher Liburan, serta puluhan merchandise eksklusif Mitsubishi Motors. Datang dan buktikan ketangguhannya!</p>
+                `
+            },
+            {
+                id: "dealer-award",
+                category: "Press Release",
+                date: "02 Apr 2026",
+                title: "Dealer Mitsubishi Batam Raih Penghargaan Pelayanan Terbaik Nasional",
+                excerpt: "Berkat kepercayaan Anda, kami kembali menorehkan prestasi membanggakan sebagai Dealer dengan tingkat kepuasan pelanggan tertinggi di Indonesia...",
+                image: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=1200&auto=format&fit=crop",
+                body: `
+                    <p>Dalam ajang tahunan "Mitsubishi Motors Dealer Annual Convention 2026" yang diselenggarakan di Jakarta, Dealer Resmi Mitsubishi Motors Batam berhasil menyabet gelar kehormatan The Best Customer Satisfaction Dealer berskala Nasional.</p>
+                    <p>Penghargaan ini merupakan wujud dedikasi tanpa henti dari seluruh staf, mekanik, hingga konsultan penjualan kami dalam memberikan pengalaman layanan layaknya First-Class kepada setiap konsumen yang melangkah masuk ke pintu showroom maupun bengkel kami.</p>
+                    <h4>Inovasi Layanan Berkelanjutan</h4>
+                    <p>Penilaian ketat dilakukan selama 12 bulan terakhir berdasarkan survei independen kepada ribuan konsumen. Kecepatan response time keluhan, transparansi estimasi biaya servis, serta kenyamanan ruang tunggu VIP menjadi nilai tertinggi yang disumbangkan oleh dealer kami.</p>
+                    <p>"Piala ini sejatinya adalah milik seluruh pelanggan kami di Batam. Kepercayaan Andalah yang memacu kami untuk terus berinovasi," ujar Kepala Cabang Dealer Mitsubishi Batam dalam pidato kemenangannya. Ke depannya, kami berkomitmen untuk meluncurkan layanan Home Service Fast Track untuk mempermudah perawatan kendaraan pelanggan dari rumah.</p>
+                `
+            }
+        ];
+
+        // --- SISTEM FILTER & RENDER GRID ---
+        const gridContainer = document.getElementById('news-grid-container');
+        let currentFilter = "Semua Kabar";
+
+        // Observer untuk animasi scroll saat memuat ulang berita
+        const createObserver = () => {
+            const reveals = document.querySelectorAll('.reveal-up:not(.active)');
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('active');
+                        obs.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            reveals.forEach(el => obs.observe(el));
+        };
+
+        function renderNews(filter) {
+            gridContainer.classList.add('filtering'); // Animasi fade out
+            
+            setTimeout(() => {
+                gridContainer.innerHTML = ''; // Bersihkan container
+                
+                const filteredNews = (filter === "Semua Kabar") 
+                    ? newsDatabase 
+                    : newsDatabase.filter(news => news.category === filter);
+
+                if(filteredNews.length === 0) {
+                    gridContainer.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px 0;">Belum ada berita untuk kategori ini.</p>`;
+                } else {
+                    filteredNews.forEach((news, index) => {
+                        gridContainer.innerHTML += `
+                            <div class="news-card reveal-up" style="transition-delay: ${index * 0.1}s" onclick="openArticle('${news.id}')">
+                                <div class="news-img-wrapper">
+                                    <img src="${news.image}" alt="${news.title}" class="news-img">
+                                </div>
+                                <div class="news-card-content">
+                                    <div class="news-meta">
+                                        <span class="news-category">${news.category}</span>
+                                        <span>${news.date}</span>
+                                    </div>
+                                    <h3 class="news-card-title">${news.title}</h3>
+                                    <p class="news-card-excerpt">${news.excerpt}</p>
+                                    <span class="news-read-more">Baca Selengkapnya <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                gridContainer.classList.remove('filtering'); // Animasi fade in
+                createObserver(); // Trigger animasi masuk per kartu
+            }, 400); // Sinkronisasi dengan durasi CSS transition (0.4s)
+        }
+
+        // --- EVENT LISTENER TOMBOL FILTER KATEGORI ---
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Hapus warna merah dari semua tombol
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Tambahkan warna merah ke tombol yang diklik
+                btn.classList.add('active');
+                
+                // Ambil data-filter dan render ulang berita
+                const selectedFilter = btn.getAttribute('data-filter');
+                if (selectedFilter !== currentFilter) {
+                    currentFilter = selectedFilter;
+                    renderNews(currentFilter);
+                }
+            });
+        });
+
+        // Load pertama kali saat halaman dibuka
+        renderNews("Semua Kabar");
+
+        // --- LOGIKA SPA: BUKA & TUTUP ARTIKEL ---
+        const listView = document.getElementById('news-list-view');
+        const detailView = document.getElementById('news-detail-view');
+        
+        function openArticle(id) {
+            const article = newsDatabase.find(item => item.id === id);
+            if(!article) return;
+
+            // Masukkan data ke halaman artikel
+            document.getElementById('article-img').src = article.image;
+            document.getElementById('article-cat').textContent = article.category;
+            document.getElementById('article-date').textContent = article.date;
+            document.getElementById('article-title').textContent = article.title;
+            document.getElementById('article-body').innerHTML = article.body;
+
+            // Transisi UI
+            listView.classList.add('hidden');
+            detailView.classList.add('active');
+
+            // Scroll ke atas halaman
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeArticle() {
+            // Transisi UI kembali ke Grid
+            detailView.classList.remove('active');
+            listView.classList.remove('hidden');
+
+            // Scroll mulus kembali ke atas halaman Berita
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+    </script>
+</body>
+</html>
