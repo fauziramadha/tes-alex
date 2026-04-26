@@ -1,16 +1,15 @@
-import ImageKit from "@imagekit/nodejs";
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const ImageKit = require('@imagekit/nodejs');
 
-// Logika untuk menangani perbedaan cara import di Vercel
-const ImageKitConstructor = ImageKit.default || ImageKit;
-
-const imagekit = new ImageKitConstructor({
+const imagekit = new ImageKit({
   publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
   privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
   urlEndpoint: "https://ik.imagekit.io/tumbal"
 });
 
 export default function handler(req, res) {
-  // Pengaturan keamanan agar web kamu bisa mengakses API ini
+  // Atur Header agar web kamu bisa mengakses ini
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -21,6 +20,7 @@ export default function handler(req, res) {
   }
 
   try {
+    // Memanggil parameter autentikasi
     const authenticationParameters = imagekit.getAuthenticationParameters();
     res.status(200).json(authenticationParameters);
   } catch (error) {
