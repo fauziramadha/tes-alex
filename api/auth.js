@@ -1,4 +1,4 @@
-const ImageKit = require("@imagekit/nodejs"); // Perubahan di sini
+import ImageKit from "@imagekit/nodejs"; // Gunakan 'import', bukan 'require'
 
 const imagekit = new ImageKit({
   publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
@@ -9,7 +9,8 @@ const imagekit = new ImageKit({
 export default function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
-  
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
@@ -19,6 +20,6 @@ export default function handler(req, res) {
     const authenticationParameters = imagekit.getAuthenticationParameters();
     res.status(200).json(authenticationParameters);
   } catch (error) {
-    res.status(500).json({ error: "Gagal menghasilkan parameter otentikasi" });
+    res.status(500).json({ error: "Gagal menghasilkan parameter" });
   }
 }
