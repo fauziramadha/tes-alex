@@ -1,14 +1,16 @@
-import { ImageKit } from "@imagekit/nodejs"; // Tambahkan tanda kurung kurawal { } di sini
+import ImageKit from "@imagekit/nodejs";
 
-// Inisialisasi dengan pengecekan ekstra untuk Vercel
-const imagekit = new ImageKit({
+// Logika untuk menangani perbedaan cara import di Vercel
+const ImageKitConstructor = ImageKit.default || ImageKit;
+
+const imagekit = new ImageKitConstructor({
   publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
   privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
   urlEndpoint: "https://ik.imagekit.io/tumbal"
 });
 
 export default function handler(req, res) {
-  // Atur Header CORS
+  // Pengaturan keamanan agar web kamu bisa mengakses API ini
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -19,11 +21,9 @@ export default function handler(req, res) {
   }
 
   try {
-    // Memanggil fungsi autentikasi
     const authenticationParameters = imagekit.getAuthenticationParameters();
     res.status(200).json(authenticationParameters);
   } catch (error) {
-    // Jika masih ada error, tampilkan detailnya untuk kita perbaiki
     res.status(500).json({ 
       error: "Gagal menghasilkan parameter", 
       debug: error.message 
