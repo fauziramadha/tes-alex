@@ -1,4 +1,4 @@
-import ImageKit from "imagekit";
+import ImageKit from "@imagekit/nodejs";
 
 // Inisialisasi menggunakan variabel environment Vercel
 const imagekit = new ImageKit({
