@@ -854,93 +854,554 @@
             </div> </main>
     </div>
 
-    <script>
-        /* 1. FIREBASE CONFIGURATION */
-        const firebaseConfig = {
-            apiKey: "AIzaSyBrNnp8PJiKYATH-1ie67aq9WqESpIXBus",
-            authDomain: "landing-page-alex.firebaseapp.com",
-            projectId: "landing-page-alex",
-            storageBucket: "landing-page-alex.firebasestorage.app",
-            messagingSenderId: "164638589744",
-            appId: "1:164638589744:web:8470111cc7c41696887ef5"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+<script>
+    /* =========================================
+       1. KONFIGURASI & INISIALISASI
+       ========================================= */
+    const firebaseConfig = {
+        apiKey: "AIzaSyBrNnp8PJiKYATH-1ie67aq9WqESpIXBus",
+        authDomain: "landing-page-alex.firebaseapp.com",
+        projectId: "landing-page-alex",
+        storageBucket: "landing-page-alex.firebasestorage.app",
+        messagingSenderId: "164638589744",
+        appId: "1:164638589744:web:8470111cc7c41696887ef5"
+    };
 
-        /* 2. UI CONTROLLER MOBILE */
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('open');
-            document.getElementById('sidebar-overlay').classList.toggle('active');
+    // Init Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const auth = firebase.auth();
+
+    // Init ImageKit (Menggunakan Endpoint Vercel Anda)
+    const imagekit = new ImageKit({
+        publicKey: "public_XKAN1YH/RnUD5N+4hS/qIvqDJNc=",
+        urlEndpoint: "https://ik.imagekit.io/tumbal",
+        authenticationEndpoint: window.location.origin + "/api/auth" 
+    });
+
+    /* =========================================
+       2. LOGIKA AUTENTIKASI (FIREBASE AUTH)
+       ========================================= */
+    let loginAttempts = 5;
+    const telegramToken = "8760854697:AAGZDZL2psuQyK4HlHOsXCEPLSQWB0SS_wA";
+    const telegramChatId = "1444132958";
+
+    // Pantau Status Login (Jika sudah login, langsung buka dashboard)
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('admin-dashboard').classList.add('active');
+            console.log("Admin Terautentikasi:", user.email);
+            loadInitialData(); // Fungsi untuk menarik data awal dari Firebase
+        } else {
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('admin-dashboard').classList.remove('active');
+        }
+    });
+
+    // Fungsi Percobaan Login
+    async function attemptLogin() {
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        const btnLogin = document.getElementById('btn-login');
+        const errorMsg = document.getElementById('login-error-msg');
+        const attemptDisplay = document.getElementById('login-attempts');
+
+        if (!email || !password) {
+            alert("Harap isi Email dan PIN!");
+            return;
         }
 
-        function switchPanel(panelId, element, title) {
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            element.classList.add('active');
-            
-            document.querySelectorAll('.data-panel').forEach(el => el.classList.remove('active'));
-            document.getElementById(panelId).classList.add('active');
-            
-            document.getElementById('current-page-title').innerText = title;
+        btnLogin.innerText = "Memproses Otorisasi...";
+        btnLogin.disabled = true;
 
-            document.querySelector('.main-content').scrollTop = 0;
+        try {
+            // Proses Login ke Firebase
+            await auth.signInWithEmailAndPassword(email, password);
+        } catch (error) {
+            loginAttempts--;
+            attemptDisplay.innerText = loginAttempts;
+            errorMsg.style.display = 'block';
+            btnLogin.innerText = "Otorisasi Masuk";
+            btnLogin.disabled = false;
 
-            if (window.innerWidth <= 991) toggleSidebar();
-        }
-
-        /* 3. LOGIKA FORM HARGA LOGO/TEXT */
-        function toggleLogoFormat() {
-            const format = document.getElementById('logo-format-selector').value;
-            if(format === 'text') {
-                document.getElementById('input-logo-text').style.display = 'block';
-                document.getElementById('input-logo-image').style.display = 'none';
-            } else {
-                document.getElementById('input-logo-text').style.display = 'none';
-                document.getElementById('input-logo-image').style.display = 'block';
+            if (loginAttempts <= 0) {
+                errorMsg.innerHTML = "<strong>AKSES DIBLOKIR!</strong><br>Terlalu banyak percobaan salah.";
+                btnLogin.style.display = 'none';
+                document.getElementById('btn-forgot-pwd').style.display = 'block';
+                // Kirim peringatan ke Telegram jika ada percobaan mencurigakan
+                sendTelegramNotification(`🚨 *PERINGATAN KEAMANAN*\n\nSeseorang gagal login 5x ke Panel Admin.\nEmail: ${email}\nLokasi: Dashboard Admin`);
             }
         }
+    }
 
-        /* 4. LOGIN & TELEGRAM LOGIC */
-        let attempts = 5;
-        const correctPin = "123456"; 
-        const telegramToken = "8760854697:AAGZDZL2psuQyK4HlHOsXCEPLSQWB0SS_wA";
-        const telegramChatId = "1444132958";
+    // Fungsi Notifikasi Telegram
+    function sendTelegramNotification(text) {
+        const url = `https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${telegramChatId}&text=${encodeURIComponent(text)}&parse_mode=Markdown`;
+        fetch(url).catch(err => console.error("Gagal kirim Telegram:", err));
+    }
 
-        function attemptLogin() {
-            const inputPin = document.getElementById('login-password').value;
-            const inputEmail = document.getElementById('login-email').value; 
-            const errorMsg = document.getElementById('login-error-msg');
-            
-            if (inputPin === correctPin && inputEmail !== "") {
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('admin-dashboard').classList.add('active');
-            } else {
-                attempts--;
-                document.getElementById('login-attempts').innerText = attempts;
-                errorMsg.style.display = 'block';
+    // Fungsi Lupa Password (Alur reset info via Telegram)
+    function reqResetTelegram() {
+        const email = document.getElementById('login-email').value;
+        sendTelegramNotification(`🔑 *PERMINTAAN RESET PIN*\n\nAdmin dengan email ${email} meminta informasi PIN.\nPIN Default: 123456\nSegera login dan ubah di menu Keamanan.`);
+        alert("Instruksi pemulihan telah dikirim ke Telegram Anda.");
+    }
+
+    /* =========================================
+       3. FUNGSI MEDIA HANDLER (IMAGEKIT UPLOADER)
+       ========================================= */
+    
+    // Fungsi Master untuk Upload File (Support: mp4, png, jpg, webp, svg)
+    // Point 17: Mengembalikan URL dan fileId untuk disimpan di Firebase
+    async function uploadMedia(file) {
+        if (!file) return null;
+
+        try {
+            const response = await imagekit.upload({
+                file: file,
+                fileName: `mitsubishi_${Date.now()}`, // Penamaan unik agar tidak bentrok
+                tags: ["admin_panel", "mitsubishi_batam"]
+            });
+
+            return {
+                url: response.url,
+                fileId: response.fileId // Disimpan untuk keperluan hapus file nanti
+            };
+        } catch (error) {
+            console.error("Gagal upload ke ImageKit:", error);
+            alert("Gagal mengupload file media. Periksa koneksi internet Anda.");
+            return null;
+        }
+    }
+
+    // Fungsi untuk Hapus File dari ImageKit agar memori tidak penuh
+    async function deleteMedia(fileId) {
+        if (!fileId) return;
+        // Penghapusan file memerlukan Private Key, maka kita lakukan via API Vercel
+        try {
+            await fetch(window.location.origin + `/api/delete?fileId=${fileId}`, { method: 'DELETE' });
+        } catch (err) {
+            console.warn("Gagal hapus file lama di ImageKit:", err);
+        }
+    }
+
+    /* =========================================
+       4. UI CONTROLLER (SIDEBAR & PANELS)
+       ========================================= */
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('open');
+        document.getElementById('sidebar-overlay').classList.toggle('active');
+    }
+
+    function switchPanel(panelId, element, title) {
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        element.classList.add('active');
+        
+        document.querySelectorAll('.data-panel').forEach(el => el.classList.remove('active'));
+        document.getElementById(panelId).classList.add('active');
+        
+        document.getElementById('current-page-title').innerText = title;
+
+        // Reset scroll content ke atas
+        document.querySelector('.main-content').scrollTop = 0;
+
+        if (window.innerWidth <= 991) toggleSidebar();
+    }
+    /* =========================================
+       5. TARIK DATA AWAL (READ FROM FIREBASE)
+       ========================================= */
+    // Fungsi ini dipanggil otomatis saat Admin berhasil Login (di Bagian 1)
+    function loadInitialData() {
+        console.log("Sinkronisasi data dari Firebase dimulai...");
+
+        // A. Tarik Data Alamat Global
+        db.ref('global_data/alamat').once('value', snapshot => {
+            const data = snapshot.val();
+            if(data) {
+                // Mengambil input pada Panel Landing -> Card ke-4 (Alamat)
+                const inputs = document.querySelectorAll('#panel-landing .section-card:nth-child(4) .input-control');
+                if(inputs.length >= 4) {
+                    inputs[0].value = data.gmaps || '';
+                    inputs[1].value = data.teks_alamat || '';
+                    inputs[2].value = data.jam_buka || '';
+                    inputs[3].value = data.jam_tutup || '';
+                }
+            }
+        });
+
+        // B. Tarik Data Profil Sales Global
+        db.ref('global_data/kontak').once('value', snapshot => {
+             const data = snapshot.val();
+             if(data) {
+                 // Mengambil input pada Panel Kontak -> Card ke-2 (Profil)
+                 const inputs = document.querySelectorAll('#panel-kontak .section-card:nth-child(2) .input-control');
+                 if(inputs.length >= 6) {
+                     inputs[0].value = data.nama || '';
+                     inputs[1].value = data.jabatan || '';
+                     inputs[2].value = data.bio || '';
+                     inputs[3].value = data.whatsapp || '';
+                     inputs[4].value = data.telepon || '';
+                     inputs[5].value = data.ig || '';
+                 }
+                 // Menampilkan Preview Foto jika ada
+                 if(data.fotoUrl) {
+                     const wrapper = document.querySelector('#panel-kontak .section-card:nth-child(2) .file-upload-wrapper');
+                     wrapper.style.backgroundImage = `url('${data.fotoUrl}')`;
+                     wrapper.style.backgroundSize = 'cover';
+                     wrapper.style.backgroundPosition = 'center';
+                 }
+             }
+        });
+
+        // C. Tarik Data Hero Landing Page
+        db.ref('halaman/landing/hero').once('value', snapshot => {
+            const data = snapshot.val();
+            if(data) {
+                const inputs = document.querySelectorAll('#panel-landing .section-card:nth-child(1) .input-control');
+                if(inputs.length >= 2) {
+                    inputs[0].value = data.teks_atas || '';
+                    inputs[1].value = data.teks_bawah || '';
+                }
+                if(data.bgUrl) {
+                    const wrapper = document.querySelector('#panel-landing .section-card:nth-child(1) .file-upload-wrapper');
+                    wrapper.style.backgroundImage = `url('${data.bgUrl}')`;
+                    wrapper.style.backgroundSize = 'cover';
+                }
+            }
+        });
+
+        // Nanti kita akan tambahkan load data untuk Berita, Spesifikasi, dll di sini
+    }
+
+
+    /* =========================================
+       6. LOGIKA SIMPAN (WRITE & UPLOAD TO FIREBASE)
+       ========================================= */
+    // Menunggu seluruh elemen HTML selesai dimuat sebelum mengikat fungsi tombol
+    document.addEventListener('DOMContentLoaded', () => {
+
+        /* --- FITUR 1: SIMPAN ALAMAT GLOBAL --- */
+        const btnSaveAlamat = document.querySelector('#panel-landing .section-card:nth-child(4) .btn-save');
+        if(btnSaveAlamat) {
+            btnSaveAlamat.addEventListener('click', async () => {
+                btnSaveAlamat.innerText = "Menyimpan...";
+                btnSaveAlamat.style.opacity = "0.7";
                 
-                if (attempts <= 0) {
-                    errorMsg.innerText = "Akses diblokir! Silakan gunakan fitur Lupa Sandi.";
-                    document.getElementById('btn-login').style.display = 'none';
-                    document.getElementById('btn-forgot-pwd').style.display = 'block'; 
-                }
-            }
+                const inputs = document.querySelectorAll('#panel-landing .section-card:nth-child(4) .input-control');
+                
+                // Menyimpan ke tabel 'global_data/alamat'
+                await db.ref('global_data/alamat').set({
+                    gmaps: inputs[0].value,
+                    teks_alamat: inputs[1].value,
+                    jam_buka: inputs[2].value,
+                    jam_tutup: inputs[3].value,
+                    last_update: firebase.database.ServerValue.TIMESTAMP
+                });
+                
+                alert("Data Alamat Global berhasil diperbarui di seluruh Halaman!");
+                btnSaveAlamat.innerText = "Update Data Global";
+                btnSaveAlamat.style.opacity = "1";
+            });
         }
 
-        function reqResetTelegram() {
-            const emailValue = document.getElementById('login-email').value;
-            const btn = document.getElementById('btn-forgot-pwd');
-            btn.innerText = "Mengirim...";
-            
-            const textMessage = `🚨 Otorisasi Gagal!\nEmail: ${emailValue}\nPIN Rahasia CMS Anda: ${correctPin}\nSilakan login kembali.`;
-            const url = `https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${telegramChatId}&text=${encodeURIComponent(textMessage)}`;
+        /* --- FITUR 2: SIMPAN PROFIL SALES GLOBAL (DENGAN UPLOAD FOTO) --- */
+        const btnSaveKontak = document.querySelector('#panel-kontak .section-card:nth-child(2) .btn-save');
+        if(btnSaveKontak) {
+            btnSaveKontak.addEventListener('click', async () => {
+                btnSaveKontak.innerText = "Proses Upload...";
+                btnSaveKontak.style.opacity = "0.7";
+                
+                const inputs = document.querySelectorAll('#panel-kontak .section-card:nth-child(2) .input-control');
+                const fileInput = document.querySelector('#panel-kontak .section-card:nth-child(2) input[type="file"]');
+                
+                // Siapkan objek data untuk disimpan
+                let profileObj = {
+                    nama: inputs[0].value,
+                    jabatan: inputs[1].value,
+                    bio: inputs[2].value,
+                    whatsapp: inputs[3].value,
+                    telepon: inputs[4].value,
+                    ig: inputs[5].value,
+                    last_update: firebase.database.ServerValue.TIMESTAMP
+                };
 
-            fetch(url).then(res => res.json()).then(data => {
-                if(data.ok) {
-                    alert("Terkirim! Informasi pemulihan telah masuk ke Telegram Anda.");
-                    btn.innerText = "Sandi Dikirim ke Telegram";
+                // Cek apakah Admin meng-upload foto baru
+                if (fileInput && fileInput.files.length > 0) {
+                    const media = await uploadMedia(fileInput.files[0]); // Panggil fungsi ImageKit
+                    if (media) {
+                        profileObj.fotoUrl = media.url;
+                        profileObj.fotoId = media.fileId;
+                        
+                        // Opsional: Hapus foto lama dari ImageKit untuk hemat memori
+                        db.ref('global_data/kontak/fotoId').once('value', snap => {
+                            if(snap.val()) deleteMedia(snap.val());
+                        });
+                    }
                 }
-            }).catch(() => alert("Koneksi gagal."));
+
+                // Simpan ke Firebase
+                await db.ref('global_data/kontak').update(profileObj);
+                
+                alert("Profil Sales & Kontak berhasil disinkronkan ke seluruh Halaman!");
+                btnSaveKontak.innerText = "Update Profil Global";
+                btnSaveKontak.style.opacity = "1";
+            });
         }
-    </script>
+
+        /* --- FITUR 3: SIMPAN HERO LANDING PAGE --- */
+        const btnSaveHeroLanding = document.querySelector('#panel-landing .section-card:nth-child(1) .btn-save');
+        if(btnSaveHeroLanding) {
+            btnSaveHeroLanding.addEventListener('click', async () => {
+                btnSaveHeroLanding.innerText = "Menyimpan Media...";
+                btnSaveHeroLanding.style.opacity = "0.7";
+
+                const inputs = document.querySelectorAll('#panel-landing .section-card:nth-child(1) .input-control');
+                const fileInput = document.querySelector('#panel-landing .section-card:nth-child(1) input[type="file"]');
+
+                let heroObj = {
+                    teks_atas: inputs[0].value,
+                    teks_bawah: inputs[1].value
+                };
+
+                if (fileInput && fileInput.files.length > 0) {
+                    const media = await uploadMedia(fileInput.files[0]);
+                    if (media) {
+                        heroObj.bgUrl = media.url;
+                        heroObj.bgId = media.fileId;
+                        
+                        db.ref('halaman/landing/hero/bgId').once('value', snap => {
+                            if(snap.val()) deleteMedia(snap.val());
+                        });
+                    }
+                }
+
+                await db.ref('halaman/landing/hero').update(heroObj);
+                alert("Hero Landing Page berhasil diperbarui!");
+                btnSaveHeroLanding.innerText = "Simpan Hero";
+                btnSaveHeroLanding.style.opacity = "1";
+            });
+        }
+        /* --- FITUR 4: SIMPAN IKLAN BANNER / VIDEO (LANDING PAGE) --- */
+        const btnSaveIklan = document.querySelector('#panel-landing .section-card:nth-child(3) .btn-save');
+        if(btnSaveIklan) {
+            btnSaveIklan.addEventListener('click', async () => {
+                btnSaveIklan.innerText = "Mengupload Iklan...";
+                btnSaveIklan.style.opacity = "0.7";
+
+                const inputs = document.querySelectorAll('#panel-landing .section-card:nth-child(3) .input-control');
+                const fileInput = document.querySelector('#panel-landing .section-card:nth-child(3) input[type="file"]');
+
+                let iklanObj = {
+                    judul: inputs[0].value,
+                    teks_tombol: inputs[1].value
+                };
+
+                if (fileInput && fileInput.files.length > 0) {
+                    const media = await uploadMedia(fileInput.files[0]);
+                    if (media) {
+                        iklanObj.mediaUrl = media.url;
+                        iklanObj.mediaId = media.fileId;
+                        
+                        // Hapus media iklan lama di ImageKit
+                        db.ref('halaman/landing/iklan/mediaId').once('value', snap => {
+                            if(snap.val()) deleteMedia(snap.val());
+                        });
+                    }
+                }
+
+                await db.ref('halaman/landing/iklan').update(iklanObj);
+                alert("Iklan Banner/Video berhasil diperbarui di halaman Beranda!");
+                btnSaveIklan.innerText = "Simpan Iklan";
+                btnSaveIklan.style.opacity = "1";
+            });
+        }
+
+        /* --- FITUR 5: TAMBAH KATEGORI BERITA BARU --- */
+        const btnTambahKatBerita = document.querySelector('#panel-berita .section-card:nth-child(2) .btn-add');
+        if(btnTambahKatBerita) {
+            btnTambahKatBerita.addEventListener('click', async () => {
+                const inputKategori = document.querySelector('#panel-berita .section-card:nth-child(2) input[type="text"]');
+                const namaKategori = inputKategori.value.trim();
+                
+                if(namaKategori !== "") {
+                    btnTambahKatBerita.innerText = "Menyimpan...";
+                    // Simpan data kategori baru ke node 'kategori_berita' di Firebase
+                    await db.ref('kategori_berita').push({ nama: namaKategori });
+                    
+                    alert(`Kategori "${namaKategori}" berhasil ditambahkan!`);
+                    inputKategori.value = "";
+                    btnTambahKatBerita.innerText = "Simpan Kategori Baru";
+                    // Note: Untuk fitur render/tampil list realtime akan kita buat di fungsi khusus
+                } else {
+                    alert("Nama kategori tidak boleh kosong!");
+                }
+            });
+        }
+
+        /* --- FITUR 6: SIMPAN LINK BROSUR PDF GLOBAL (MENU KATALOG) --- */
+        const btnSaveBrosur = document.querySelector('#panel-katalog .section-card:nth-child(2) .btn-save');
+        if(btnSaveBrosur) {
+            btnSaveBrosur.addEventListener('click', async () => {
+                const inputBrosur = document.querySelector('#panel-katalog .section-card:nth-child(2) input[type="url"]');
+                const urlBrosur = inputBrosur.value.trim();
+                
+                btnSaveBrosur.innerText = "Menyimpan...";
+                btnSaveBrosur.style.opacity = "0.7";
+                
+                await db.ref('global_data/brosur_pdf').set(urlBrosur);
+                
+                alert("Link Brosur PDF berhasil diterapkan ke seluruh tombol download!");
+                btnSaveBrosur.innerText = "Update Link Brosur";
+                btnSaveBrosur.style.opacity = "1";
+            });
+        }
+
+        /* --- FITUR 7: AUTO-PREVIEW NAMA FILE SAAT DIPILIH --- */
+        // Logika ini agar saat Anda pilih foto/video di HP, kotak upload menampilkan nama filenya 
+        // sehingga Anda tidak bingung apakah file sudah ter-load atau belum.
+        const allFileInputs = document.querySelectorAll('input[type="file"]');
+        allFileInputs.forEach(input => {
+            input.addEventListener('change', function(e) {
+                if(e.target.files.length > 0) {
+                    const fileName = e.target.files[0].name;
+                    // Mencari elemen teks terdekat di dalam kotak upload
+                    const textSpan = this.parentElement.querySelector('.file-upload-text');
+                    if(textSpan) {
+                        textSpan.innerText = `Terpilih: ${fileName}`;
+                        textSpan.style.color = "var(--color-accent)";
+                    }
+                }
+            });
+        });
+
+        /* --- FITUR 8: LOGIKA PILIH KENDARAAN (SPESIFIKASI & HARGA) --- */
+        const selectKendaraanSpesifikasi = document.querySelector('#panel-spesifikasi .section-card:nth-child(1) select');
+        if(selectKendaraanSpesifikasi) {
+            selectKendaraanSpesifikasi.addEventListener('change', (e) => {
+                const mobilPilihan = e.target.value;
+                if(mobilPilihan !== "-- Pilih Mobil --") {
+                    console.log("Menyiapkan editor untuk mobil:", mobilPilihan);
+                    
+                    // Notifikasi visual bahwa sistem sudah mengunci editan untuk mobil ini
+                    alert(`Mode Edit Aktif untuk: ${mobilPilihan}\nSemua data Spesifikasi, Warna, dan Harga di bawah ini akan tersimpan khusus untuk tipe ini.`);
+                    
+                    // Note: Di tahap selanjutnya, kita akan menempatkan logika `db.ref('mobil/' + mobilPilihan).once()`
+                    // untuk menarik data mobil ini dari database jika sudah pernah diisi sebelumnya.
+                }
+            });
+        }
+
+    }); // <-- PENUTUP BLOK EVENT LISTENER 'DOMContentLoaded' DARI BAGIAN 2
+    /* =========================================
+       7. REALTIME LISTENER (RENDER DATA DINAMIS)
+       ========================================= */
+    
+    // A. Listener Kategori Berita
+    function listenKategoriBerita() {
+        db.ref('kategori_berita').on('value', (snapshot) => {
+            const listContainer = document.querySelector('#panel-berita .list-manager');
+            if(!listContainer) return;
+
+            // Kosongkan list HTML yang lama, buat ulang strukturnya
+            listContainer.innerHTML = '<label style="color:var(--color-text-dim); font-size:0.8rem; margin-bottom:8px; display:block;">Daftar Kategori Tersedia:</label>';
+
+            snapshot.forEach((childSnapshot) => {
+                const key = childSnapshot.key;
+                const data = childSnapshot.val();
+
+                const div = document.createElement('div');
+                div.className = 'list-item';
+                div.innerHTML = `
+                    <span class="list-item-text">${data.nama}</span>
+                    <button class="btn-delete" style="padding: 4px 10px; font-size:0.75rem;" onclick="hapusKategoriBerita('${key}')">Hapus</button>
+                `;
+                listContainer.appendChild(div);
+            });
+        });
+    }
+
+    // Fungsi global untuk hapus kategori berita (dipanggil dari tombol yang digenerate di atas)
+    window.hapusKategoriBerita = async function(key) {
+        if(confirm("Anda yakin ingin menghapus kategori berita ini?")) {
+            await db.ref('kategori_berita/' + key).remove();
+        }
+    };
+
+    // B. Listener Kategori Katalog (MPV, SUV, dll)
+    function listenKategoriKatalog() {
+        db.ref('kategori_katalog').on('value', (snapshot) => {
+            const listContainer = document.querySelector('#panel-katalog .list-manager');
+            if(!listContainer) return;
+
+            listContainer.innerHTML = ''; // Bersihkan list
+
+            snapshot.forEach((childSnapshot) => {
+                const key = childSnapshot.key;
+                const data = childSnapshot.val();
+
+                const div = document.createElement('div');
+                div.className = 'list-item';
+                // Input di sini bisa langsung di-edit teksnya
+                div.innerHTML = `
+                    <input type="text" class="input-control" value="${data.nama}" id="input-katkatalog-${key}" style="background:transparent; border:none; width:50%; font-weight:bold;">
+                    <div>
+                        <button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="editKategoriKatalog('${key}')">Edit</button>
+                        <button class="btn-delete" style="padding: 4px 10px; font-size:0.75rem;" onclick="hapusKategoriKatalog('${key}')">Hapus</button>
+                    </div>
+                `;
+                listContainer.appendChild(div);
+            });
+        });
+    }
+
+    // Mengikat tombol "+ Simpan Kategori" Katalog
+    document.addEventListener('DOMContentLoaded', () => {
+        // Tombol simpan kategori katalog ada di card ke-3 panel katalog
+        const btnSimpanKatKatalog = document.querySelector('#panel-katalog .section-card:nth-child(3) .btn-save');
+        if(btnSimpanKatKatalog) {
+            btnSimpanKatKatalog.addEventListener('click', async () => {
+                const input = document.querySelector('#panel-katalog .section-card:nth-child(3) .input-control');
+                const namaKat = input.value.trim();
+                
+                if(namaKat !== "") {
+                    btnSimpanKatKatalog.innerText = "...";
+                    await db.ref('kategori_katalog').push({ nama: namaKat });
+                    input.value = ''; // Kosongkan input setelah berhasil
+                    btnSimpanKatKatalog.innerText = "Simpan Kategori";
+                }
+            });
+        }
+    });
+
+    // Fungsi global Edit & Hapus Kategori Katalog
+    window.editKategoriKatalog = async function(key) {
+        const inputVal = document.getElementById('input-katkatalog-' + key).value.trim();
+        if(inputVal !== "") {
+            await db.ref('kategori_katalog/' + key).update({ nama: inputVal });
+            alert("Nama Kategori Katalog berhasil diupdate!");
+        }
+    };
+
+    window.hapusKategoriKatalog = async function(key) {
+        if(confirm("Hapus kategori katalog ini dari sistem?")) {
+            await db.ref('kategori_katalog/' + key).remove();
+        }
+    };
+
+    /* =========================================
+       8. TRIGGER LISTENER SAAT LOGIN BERHASIL
+       ========================================= */
+    // Kita jalankan fungsi tarik data dinamis saat Firebase mengenali admin
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            listenKategoriBerita();
+            listenKategoriKatalog();
+            // Semua dropdown <select> untuk "Pilih Kategori" di input form nantinya 
+            // bisa Anda hubungkan ke listener ini jika diperlukan.
+        }
+    });
+
+</script>
 </body>
 </html>
