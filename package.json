@@ -1,5 +1,6 @@
 {
+  "type": "module",
   "dependencies": {
-    "@imagekit/nodejs": "^7.5.0"
+    "imagekit": "^2.0.0"
   }
 }
