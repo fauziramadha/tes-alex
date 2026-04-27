@@ -118,24 +118,25 @@
         .form-full { grid-column: 1 / -1; }
         
         /* FILE UPLOAD & PREVIEW */
-        .file-upload-wrapper { position: relative; border: 1px dashed var(--color-border); border-radius: 8px; padding: 20px 16px; text-align: center; background: rgba(0,0,0,0.3); overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; cursor: pointer; }
+        .file-upload-wrapper { position: relative; border: 1px dashed var(--color-border); border-radius: 8px; padding: 20px 16px; text-align: center; background: rgba(0,0,0,0.3); overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; cursor: pointer; background-size: cover; background-position: center; }
         .file-upload-wrapper input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2; }
         
         .file-upload-icon { width: 24px; height: 24px; fill: var(--color-text-dim); }
-        .file-upload-text { font-size: 0.8rem; color: var(--color-text-dim); font-weight: 500; }
-        .file-upload-subtext { font-size: 0.65rem; color: #555; }
-        
-        .img-preview { width: 100%; max-height: 150px; object-fit: cover; border-radius: 6px; margin-top: 10px; display: none; border: 1px solid var(--color-border); }
+        .file-upload-text { font-size: 0.8rem; color: var(--color-text-dim); font-weight: 500; text-shadow: 0px 1px 3px rgba(0,0,0,0.8); }
+        .file-upload-subtext { font-size: 0.65rem; color: #aaa; text-shadow: 0px 1px 3px rgba(0,0,0,0.8); }
         
         /* LABEL ALUR / BANTUAN */
         .alur-text { color: var(--color-text-dim); font-size: 0.75rem; margin-bottom: 16px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 6px; line-height: 1.5; border-left: 2px solid var(--color-accent); }
         
         /* TOMBOL AKSI */
         .action-bar { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--color-border); flex-wrap: wrap; }
-        .btn-save, .btn-delete, .btn-add { padding: 12px 16px; border-radius: 6px; font-weight: 600; font-size: 0.8rem; cursor: pointer; border: none; }
+        .btn-save, .btn-delete, .btn-add { padding: 12px 16px; border-radius: 6px; font-weight: 600; font-size: 0.8rem; cursor: pointer; border: none; transition: var(--transition); }
         .btn-save { background: var(--color-accent); color: #FFF; }
+        .btn-save:hover { background: #cc0000; }
         .btn-add { background: #333; color: #FFF; border: 1px solid var(--color-border); }
+        .btn-add:hover { background: #444; }
         .btn-delete { background: transparent; color: #FF4444; border: 1px solid #FF4444; }
+        .btn-delete:hover { background: rgba(255,68,68,0.1); }
 
         /* DAFTAR MANAJEMEN (KATEGORI, ITEM) */
         .list-manager { margin-top: 16px; border-top: 1px solid var(--color-border); padding-top: 16px; }
@@ -160,9 +161,22 @@
             
             .btn-save, .btn-delete, .btn-add { flex: 1 1 100%; text-align: center; } 
         }
+
+        /* =========================================
+           TOAST NOTIFICATION (PEMBERITAHUAN)
+           ========================================= */
+        #toast-container { position: fixed; top: 20px; right: 20px; z-index: 10001; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+        .toast { padding: 14px 20px; border-radius: 8px; color: #FFF; font-weight: 500; font-size: 0.85rem; font-family: var(--font-body); animation: slideIn 0.3s ease forwards; box-shadow: 0 4px 15px rgba(0,0,0,0.4); display: flex; align-items: center; gap: 10px; max-width: 300px; line-height: 1.4; }
+        .toast.success { background: #121212; border-left: 4px solid #00C851; border-top: 1px solid var(--color-border); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+        .toast.error { background: #121212; border-left: 4px solid #ff4444; border-top: 1px solid var(--color-border); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+        .toast.info { background: #121212; border-left: 4px solid #33b5e5; border-top: 1px solid var(--color-border); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
     </style>
 </head>
 <body>
+
+    <div id="toast-container"></div>
 
     <div id="login-screen">
         <div class="login-box">
@@ -243,35 +257,38 @@
                                     <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
                                     <span class="file-upload-text">Ketuk untuk Pilih File Media</span>
                                     <span class="file-upload-subtext">Format didukung: MP4, PNG, JPG, WEBP, SVG</span>
-                                    <input type="file" accept=".png, .jpg, .jpeg, .webp, .svg, .mp4">
+                                    <input type="file" id="landing-hero-file" accept=".png, .jpg, .jpeg, .webp, .svg, .mp4">
                                 </div>
                             </div>
-                            <div class="input-group"><label>Tulisan Atas (Kolom 1)</label><input type="text" class="input-control" placeholder="Temukan Kendaraan Impian..."></div>
-                            <div class="input-group"><label>Tulisan Bawah (Kolom 2)</label><input type="text" class="input-control" placeholder="Bersama Mitsubishi Batam"></div>
+                            <div class="input-group"><label>Tulisan Atas (Kolom 1)</label><input type="text" id="landing-hero-teks1" class="input-control" placeholder="Temukan Kendaraan Impian..."></div>
+                            <div class="input-group"><label>Tulisan Bawah (Kolom 2)</label><input type="text" id="landing-hero-teks2" class="input-control" placeholder="Bersama Mitsubishi Batam"></div>
                         </div>
-                        <div class="action-bar"><button class="btn-save">Simpan Hero</button></div>
+                        <div class="action-bar"><button class="btn-save" id="btn-save-hero-landing">Simpan Hero</button></div>
                     </div>
 
                     <div class="section-card">
                         <div class="section-header">
                             <h3 class="section-title">B. Kartu Promo</h3>
-                            <button class="btn-add">+ Tambah Promo Baru</button>
+                            <button class="btn-add" id="btn-add-promo">+ Tambah Promo Baru</button>
                         </div>
-                        <div class="form-grid" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px;">
+                        <div class="list-manager" id="list-promo-container" style="margin-bottom: 16px;"></div>
+
+                        <div class="form-grid" id="form-promo-container" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px;">
+                            <input type="hidden" id="promo-edit-id">
                             <div class="input-group form-full">
                                 <label>Gambar Brosur / Promo</label>
                                 <div class="file-upload-wrapper">
                                     <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
                                     <span class="file-upload-text">Ketuk untuk Upload Foto Promo</span>
                                     <span class="file-upload-subtext">Hanya file PNG/JPG/WEBP</span>
-                                    <input type="file" accept=".png, .jpg, .jpeg, .webp">
+                                    <input type="file" id="promo-file" accept=".png, .jpg, .jpeg, .webp">
                                 </div>
                             </div>
-                            <div class="input-group"><label>Label Promo (Kiri)</label><input type="text" class="input-control" placeholder="Contoh: Promo Ramadhan"></div>
-                            <div class="input-group"><label>Judul Promo (Kanan)</label><input type="text" class="input-control" placeholder="Contoh: Bunga 0% Xpander"></div>
-                            <div class="input-group form-full"><label>Informasi Promo (Tengah)</label><textarea class="input-control" rows="2" placeholder="Syarat dan ketentuan berlaku..."></textarea></div>
-                            <div class="input-group form-full"><label>Tulisan Pada Tombol Aksi</label><input type="text" class="input-control" placeholder="Contoh: Klaim Sekarang"></div>
-                            <div class="action-bar form-full"><button class="btn-delete">Hapus Kartu</button><button class="btn-save">Update Kartu Promo</button></div>
+                            <div class="input-group"><label>Label Promo (Kiri)</label><input type="text" id="promo-label" class="input-control" placeholder="Contoh: Promo Ramadhan"></div>
+                            <div class="input-group"><label>Judul Promo (Kanan)</label><input type="text" id="promo-judul" class="input-control" placeholder="Contoh: Bunga 0% Xpander"></div>
+                            <div class="input-group form-full"><label>Informasi Promo (Tengah)</label><textarea id="promo-info" class="input-control" rows="2" placeholder="Syarat dan ketentuan berlaku..."></textarea></div>
+                            <div class="input-group form-full"><label>Tulisan Pada Tombol Aksi</label><input type="text" id="promo-tombol" class="input-control" placeholder="Contoh: Klaim Sekarang"></div>
+                            <div class="action-bar form-full"><button class="btn-save" id="btn-save-promo">Simpan Kartu Promo</button></div>
                         </div>
                     </div>
 
@@ -284,25 +301,25 @@
                                     <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
                                     <span class="file-upload-text">Ketuk untuk Pilih Video/Foto Iklan</span>
                                     <span class="file-upload-subtext">Bebas limitasi memori berkat ImageKit</span>
-                                    <input type="file" accept=".png, .jpg, .jpeg, .webp, .svg, .mp4">
+                                    <input type="file" id="iklan-file" accept=".png, .jpg, .jpeg, .webp, .svg, .mp4">
                                 </div>
                             </div>
-                            <div class="input-group"><label>Teks Judul Iklan</label><input type="text" class="input-control"></div>
-                            <div class="input-group"><label>Teks Tombol Iklan</label><input type="text" class="input-control"></div>
+                            <div class="input-group"><label>Teks Judul Iklan</label><input type="text" id="iklan-judul" class="input-control"></div>
+                            <div class="input-group"><label>Teks Tombol Iklan</label><input type="text" id="iklan-tombol" class="input-control"></div>
                         </div>
-                        <div class="action-bar"><button class="btn-save">Simpan Iklan</button></div>
+                        <div class="action-bar"><button class="btn-save" id="btn-save-iklan">Simpan Iklan</button></div>
                     </div>
 
                     <div class="section-card">
                         <div class="section-header"><h3 class="section-title">D. Alamat Showroom (Global)</h3></div>
                         <p class="alur-text">Setiap perubahan alamat, peta, dan jam operasional di sini akan <b>otomatis merubah</b> data pada Footer dan Navbar di seluruh HTML.</p>
                         <div class="form-grid">
-                            <div class="input-group form-full"><label>Link Embed Google Maps</label><input type="text" class="input-control" placeholder="Paste link <iframe> dari Gmaps"></div>
-                            <div class="input-group form-full"><label>Alamat Lengkap</label><textarea class="input-control" rows="2" placeholder="Jl. Raden Patah, Lubuk Baja..."></textarea></div>
-                            <div class="input-group"><label>Jam Buka</label><input type="time" class="input-control"></div>
-                            <div class="input-group"><label>Jam Tutup</label><input type="time" class="input-control"></div>
+                            <div class="input-group form-full"><label>Link Embed Google Maps</label><input type="text" id="alamat-gmaps" class="input-control" placeholder="Paste link <iframe> dari Gmaps"></div>
+                            <div class="input-group form-full"><label>Alamat Lengkap</label><textarea id="alamat-teks" class="input-control" rows="2" placeholder="Jl. Raden Patah, Lubuk Baja..."></textarea></div>
+                            <div class="input-group"><label>Jam Buka</label><input type="time" id="alamat-buka" class="input-control"></div>
+                            <div class="input-group"><label>Jam Tutup</label><input type="time" id="alamat-tutup" class="input-control"></div>
                         </div>
-                        <div class="action-bar"><button class="btn-save">Update Data Global</button></div>
+                        <div class="action-bar"><button class="btn-save" id="btn-save-alamat">Update Data Global</button></div>
                     </div>
                 </div>
 
@@ -316,14 +333,14 @@
                                 <div class="file-upload-wrapper">
                                     <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
                                     <span class="file-upload-text">Upload Background Berita</span>
-                                    <input type="file" accept=".png, .jpg, .jpeg, .webp">
+                                    <input type="file" id="berita-hero-file" accept=".png, .jpg, .jpeg, .webp">
                                 </div>
                             </div>
-                            <div class="input-group form-full"><label>Label Berita</label><input type="text" class="input-control"></div>
-                            <div class="input-group"><label>Tulisan Atas</label><input type="text" class="input-control"></div>
-                            <div class="input-group"><label>Tulisan Bawah</label><input type="text" class="input-control"></div>
+                            <div class="input-group form-full"><label>Label Berita</label><input type="text" id="berita-hero-label" class="input-control"></div>
+                            <div class="input-group"><label>Tulisan Atas</label><input type="text" id="berita-hero-teks1" class="input-control"></div>
+                            <div class="input-group"><label>Tulisan Bawah</label><input type="text" id="berita-hero-teks2" class="input-control"></div>
                         </div>
-                        <div class="action-bar"><button class="btn-save">Simpan Hero</button></div>
+                        <div class="action-bar"><button class="btn-save" id="btn-save-hero-berita">Simpan Hero</button></div>
                     </div>
 
                     <div class="section-card">
@@ -333,263 +350,100 @@
                         <div class="form-grid" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; margin-bottom: 16px;">
                             <div class="input-group form-full">
                                 <label>Tambah Kategori Baru</label>
-                                <input type="text" class="input-control" placeholder="Contoh: Tips & Perawatan">
+                                <input type="text" id="berita-kategori-baru" class="input-control" placeholder="Contoh: Tips & Perawatan">
                             </div>
-                            <div class="action-bar form-full" style="border:none; padding:0; margin:0;"><button class="btn-add">Simpan Kategori Baru</button></div>
+                            <div class="action-bar form-full" style="border:none; padding:0; margin:0;"><button class="btn-add" id="btn-add-kategori-berita">Simpan Kategori Baru</button></div>
                         </div>
 
-                        <div class="list-manager">
+                        <div class="list-manager" id="list-kategori-berita">
                             <label style="color:var(--color-text-dim); font-size:0.8rem; margin-bottom:8px; display:block;">Daftar Kategori Tersedia:</label>
-                            <div class="list-item">
-                                <span class="list-item-text">Promo & Event</span>
-                                <button class="btn-delete" style="padding: 4px 10px; font-size:0.75rem;">Hapus</button>
                             </div>
-                            <div class="list-item">
-                                <span class="list-item-text">Berita Otomotif</span>
-                                <button class="btn-delete" style="padding: 4px 10px; font-size:0.75rem;">Hapus</button>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="section-card">
-                        <div class="section-header"><h3 class="section-title">C. Tulis/Manajemen Berita</h3><button class="btn-add">+ Berita Baru</button></div>
+                        <div class="section-header"><h3 class="section-title">C. Tulis/Manajemen Berita</h3><button class="btn-add" id="btn-add-berita">+ Berita Baru</button></div>
+                        <div class="list-manager" id="list-berita-container" style="margin-bottom: 16px;"></div>
+
                         <div class="form-grid">
+                            <input type="hidden" id="berita-edit-id">
                             <div class="input-group form-full">
                                 <label>Pilih Kategori</label>
-                                <select class="input-control"><option>Promo & Event</option><option>Berita Otomotif</option></select>
+                                <select class="input-control" id="berita-kategori-pilih"></select>
                             </div>
                             <div class="input-group form-full">
                                 <label>Thumbnail Berita</label>
                                 <div class="file-upload-wrapper">
                                     <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
                                     <span class="file-upload-text">Upload Gambar Berita</span>
-                                    <input type="file" accept=".png, .jpg, .jpeg, .webp">
+                                    <input type="file" id="berita-file" accept=".png, .jpg, .jpeg, .webp">
                                 </div>
                             </div>
-                            <div class="input-group"><label>Tanggal Publikasi</label><input type="date" class="input-control"></div>
-                            <div class="input-group"><label>Judul Berita</label><input type="text" class="input-control" placeholder="Masukkan Judul..."></div>
-                            <div class="input-group form-full"><label>Isi Konten Berita</label><textarea class="input-control" rows="4"></textarea></div>
-                            <div class="action-bar form-full"><button class="btn-delete">Hapus</button><button class="btn-save">Publish Berita</button></div>
+                            <div class="input-group"><label>Tanggal Publikasi</label><input type="date" id="berita-tanggal" class="input-control"></div>
+                            <div class="input-group"><label>Judul Berita</label><input type="text" id="berita-judul" class="input-control" placeholder="Masukkan Judul..."></div>
+                            <div class="input-group form-full"><label>Isi Konten Berita</label><textarea id="berita-isi" class="input-control" rows="4"></textarea></div>
+                            <div class="action-bar form-full"><button class="btn-save" id="btn-save-berita">Publish Berita</button></div>
                         </div>
                     </div>
                 </div>
 
                 <div id="panel-spesifikasi" class="data-panel">
-                    
                     <div class="section-card" style="border-color: var(--color-accent); box-shadow: 0 0 15px rgba(230,0,0,0.1);">
                         <div class="section-header"><h3 class="section-title">Pilih Kendaraan Untuk Spesifikasi & Harga</h3></div>
                         <p class="alur-text">PENTING: Pilih jenis mobil terlebih dahulu. Semua data Spesifikasi, Varian, Warna, dan Harga yang Anda edit di bawah ini akan masuk ke mobil yang Anda pilih di sini.</p>
-                        <select class="input-control" style="padding: 10px; border-color: var(--color-accent);">
-                            <option>-- Pilih Mobil --</option>
-                            <option>Xpander</option>
-                            <option>Pajero Sport</option>
-                            <option>XForce</option>
-                        </select>
+                        <select class="input-control" id="mobil-selector" style="padding: 10px; border-color: var(--color-accent);">
+                            <option value="">-- Pilih Mobil --</option>
+                            </select>
                     </div>
 
-                    <div class="section-card">
-                        <div class="section-header"><h3 class="section-title">A. Hero Spesifikasi</h3></div>
+                    <div class="section-card"><div class="section-header"><h3 class="section-title">A. Hero Spesifikasi</h3></div>
                         <div class="form-grid">
                             <div class="input-group form-full">
                                 <label>Latar Belakang Mobil</label>
                                 <div class="file-upload-wrapper">
-                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
                                     <span class="file-upload-text">Upload Latar Mobil</span>
-                                    <input type="file" accept=".png, .jpg, .webp">
+                                    <input type="file" id="spek-hero-file" accept=".png, .jpg, .webp">
                                 </div>
                             </div>
-                            <div class="input-group"><label>Nama Mobil (Atas)</label><input type="text" class="input-control" placeholder="Contoh: XPANDER CROSS"></div>
-                            <div class="input-group"><label>Slogan (Bawah)</label><input type="text" class="input-control" placeholder="Adventure awaits..."></div>
+                            <div class="input-group"><label>Nama Mobil (Atas)</label><input type="text" id="spek-hero-nama" class="input-control"></div>
+                            <div class="input-group"><label>Slogan (Bawah)</label><input type="text" id="spek-hero-slogan" class="input-control"></div>
                         </div>
-                    </div>
-
-                    <div class="section-card">
-                        <div class="section-header"><h3 class="section-title">Fitur Utama (5 Ikon Default)</h3></div>
-                        <p class="alur-text"><b>Alur Ikon Default:</b> Di bawah ini adalah 5 ikon paten. Anda tidak perlu upload fotonya lagi. Cukup isikan informasi spesifikasinya. <b>Jika ada kolom yang dikosongkan (misal hanya diisi 3 ikon), maka 2 ikon sisanya otomatis TIDAK akan ditampilkan di website.</b></p>
-                        
-                        <div class="form-grid">
-                            <div class="input-group form-full" style="background: rgba(0,0,0,0.3); padding:16px; border-radius:8px; border-left: 3px solid #E60000;">
-                                <label>1. Ikon Perisai (Teknologi Keamanan)</label>
-                                <input type="text" class="input-control" placeholder="Contoh: 7 SRS Airbags (Kosongkan jika tak dipakai)">
-                            </div>
-                            
-                            <div class="input-group form-full" style="background: rgba(0,0,0,0.3); padding:16px; border-radius:8px; border-left: 3px solid #E60000;">
-                                <label>2. Ikon Tempat Duduk (Kenyamanan)</label>
-                                <input type="text" class="input-control" placeholder="Contoh: Premium Leather 7-Seater (Kosongkan jika tak dipakai)">
-                            </div>
-                            
-                            <div class="input-group form-full" style="background: rgba(0,0,0,0.3); padding:16px; border-radius:8px; border-left: 3px solid #E60000;">
-                                <label>3. Ikon Setir Mobil (Performa)</label>
-                                <input type="text" class="input-control" placeholder="Contoh: 1.5L MIVEC Engine (Kosongkan jika tak dipakai)">
-                            </div>
-                            
-                            <div class="input-group form-full" style="background: rgba(0,0,0,0.3); padding:16px; border-radius:8px; border-left: 3px solid #E60000;">
-                                <label>4. Ikon Mobil (Fitur Keseluruhan / Dimensi)</label>
-                                <input type="text" class="input-control" placeholder="Contoh: 220mm Ground Clearance (Kosongkan jika tak dipakai)">
-                            </div>
-
-                            <div class="input-group form-full" style="background: rgba(0,0,0,0.3); padding:16px; border-radius:8px; border-left: 3px solid #E60000;">
-                                <label>5. Ikon Mobil dengan Gelombang WiFi (Teknologi / Headunit)</label>
-                                <input type="text" class="input-control" placeholder="Contoh: 9-inch Smart Display with Apple CarPlay (Kosongkan jika tak dipakai)">
-                            </div>
-                        </div>
-                        <div class="action-bar"><button class="btn-save">Simpan 5 Ikon Default</button></div>
-
-                        <h4 style="margin-top: 32px; color: #FFF; font-size: 1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 8px;">Manajemen Ikon Fitur (Tambahan Opsional)</h4>
-                        <p class="alur-text">Gunakan bagian ini HANYA jika Anda ingin meng-upload ikon dengan gambar Anda sendiri (selain 5 ikon di atas). Pengguna dapat menambahkan lebih dari 1 ikon.</p>
-                        
-                        <div class="form-grid" style="border: 1px dashed var(--color-border); padding: 16px; border-radius: 8px; margin-bottom: 12px;">
-                            <div class="input-group form-full">
-                                <label>Upload Gambar Ikon Tambahan (SVG/PNG)</label>
-                                <div class="file-upload-wrapper" style="padding:12px;">
-                                    <span class="file-upload-text">Upload Ikon SVG/PNG</span>
-                                    <input type="file" accept=".png, .svg">
-                                </div>
-                            </div>
-                            <div class="input-group form-full"><label>Informasi Ikon</label><input type="text" class="input-control" placeholder="Cth: Dual Zone AC"></div>
-                            <div class="action-bar form-full" style="margin-top:0; padding-top:0; border:none;"><button class="btn-delete">Hapus Ikon Ini</button></div>
-                        </div>
-                        
-                        <button class="btn-add" style="width: 100%; padding: 12px;">+ Tambahkan Ikon Fitur Baru</button>
-                    </div>
-
-                    <div class="section-card">
-                        <div class="section-header">
-                            <h3 class="section-title">B. Katalog Warna Mobil</h3>
-                            <button class="btn-add">+ Tambah Warna</button>
-                        </div>
-                        <p class="alur-text">Saat pengunjung mengklik warna ini di halaman web, gambar mobil akan berubah. Anda juga dapat menentukan harga spesifik jika warna ini memiliki harga yang berbeda.</p>
-                        <div class="form-grid" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px;">
-                            <div class="input-group form-full">
-                                <label>Foto Mobil (Sesuai Warna)</label>
-                                <div class="file-upload-wrapper">
-                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
-                                    <span class="file-upload-text">Upload Mobil Warna Spesifik</span>
-                                    <input type="file" accept=".png, .jpg, .webp">
-                                </div>
-                            </div>
-                            <div class="input-group">
-                                <label>Foto Tekstur/Lingkaran Warna</label>
-                                <div class="file-upload-wrapper" style="padding: 10px;">
-                                    <span class="file-upload-text">Upload Tekstur Warna</span>
-                                    <input type="file" accept=".png, .jpg">
-                                </div>
-                            </div>
-                            <div class="input-group"><label>Nama Warna</label><input type="text" class="input-control" placeholder="Contoh: Quartz White Pearl"></div>
-                            
-                            <div class="input-group form-full">
-                                <label>Harga Khusus Untuk Warna Ini (Rp)</label>
-                                <input type="number" class="input-control" placeholder="Contoh: 1500000 (Kosongkan jika harga sama dengan standar)">
-                            </div>
-                            
-                            <div class="action-bar form-full"><button class="btn-delete">Hapus Warna</button><button class="btn-save">Update Warna</button></div>
-                        </div>
-                    </div>
-
-                    <div class="section-card">
-                        <div class="section-header">
-                            <h3 class="section-title">C. Harga & Varian Tipe Standar</h3>
-                            <button class="btn-add">+ Tambah Varian</button>
-                        </div>
-                        <p class="alur-text">Masukkan varian-varian mobil beserta harga dasarnya di sini. Data ini akan menjadi acuan utama tabel di halaman harga.html.</p>
-                        
-                        <div class="form-grid" style="border: 1px solid var(--color-border); padding: 16px; border-radius: 8px;">
-                            <div class="input-group form-full"><label>Nama Varian</label><input type="text" class="input-control" placeholder="Contoh: Ultimate CVT"></div>
-                            <div class="input-group form-full"><label>Harga Varian Dasar (Rp)</label><input type="number" class="input-control" placeholder="315900000"></div>
-                            <div class="action-bar form-full"><button class="btn-delete">Hapus Varian</button><button class="btn-save">Simpan Harga Varian</button></div>
-                        </div>
-                    </div>
-
-                    <div class="section-card">
-                        <div class="section-header"><h3 class="section-title">D. Fitur Spesifikasi Produk</h3><button class="btn-add">+ Tambah Fitur</button></div>
-                        <div class="form-grid" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px;">
-                            <div class="input-group form-full"><label>Kategori Fitur</label><select class="input-control"><option>Interior</option><option>Eksterior</option><option>Performa</option></select></div>
-                            <div class="input-group form-full">
-                                <label>Foto Fitur</label>
-                                <div class="file-upload-wrapper">
-                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
-                                    <span class="file-upload-text">Upload Foto Fitur</span>
-                                    <input type="file" accept=".png, .jpg, .webp">
-                                </div>
-                            </div>
-                            <div class="input-group form-full"><label>Kolom 1: Judul Fitur</label><input type="text" class="input-control" placeholder="Contoh: 8-inch Digital Display"></div>
-                            <div class="input-group form-full"><label>Kolom 2: Penjelasan Fitur</label><textarea class="input-control" rows="2" placeholder="Layar sentuh informatif..."></textarea></div>
-                            <div class="action-bar form-full"><button class="btn-delete">Hapus Fitur</button><button class="btn-save">Simpan Fitur</button></div>
-                        </div>
+                        <div class="action-bar"><button class="btn-save" id="btn-save-hero-spek">Simpan Hero Spesifikasi</button></div>
                     </div>
                 </div>
+
                 <div id="panel-harga" class="data-panel">
-                    <div class="section-card">
+                     <div class="section-card">
                         <div class="section-header"><h3 class="section-title">A & B. Hero Daftar Harga</h3></div>
                         <div class="form-grid">
                             <div class="input-group form-full">
                                 <label>B. Latar Belakang Hero</label>
                                 <div class="file-upload-wrapper">
-                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
                                     <span class="file-upload-text">Upload Background Harga</span>
-                                    <input type="file" accept=".png, .jpg, .webp">
+                                    <input type="file" id="harga-hero-file" accept=".png, .jpg, .webp">
                                 </div>
                             </div>
-                            <div class="input-group"><label>A. Tulisan Atas</label><input type="text" class="input-control" placeholder="Update Terbaru"></div>
-                            <div class="input-group"><label>A. Tulisan Bawah</label><input type="text" class="input-control" placeholder="Daftar Harga"></div>
+                            <div class="input-group"><label>A. Tulisan Atas</label><input type="text" id="harga-hero-teks1" class="input-control" placeholder="Update Terbaru"></div>
+                            <div class="input-group"><label>A. Tulisan Bawah</label><input type="text" id="harga-hero-teks2" class="input-control" placeholder="Daftar Harga"></div>
                         </div>
-                        <div class="action-bar"><button class="btn-save">Simpan Hero</button></div>
-                    </div>
-
-                    <div class="section-card">
-                        <div class="section-header"><h3 class="section-title">Visual Kartu Daftar Harga</h3></div>
-                        <p class="alur-text">Data varian mobil beserta harganya diambil dari menu Spesifikasi. Di sini Anda hanya mengatur visual kartunya (Foto Mobil & Logo Nama).</p>
-                        
-                        <div class="form-grid" style="border: 1px solid var(--color-border); padding: 16px; border-radius: 8px;">
-                            <div class="input-group form-full"><label>Pilih Kendaraan Untuk Diatur Visualnya:</label><select class="input-control"><option>Xpander</option><option>Pajero Sport</option></select></div>
-                            <div class="input-group form-full">
-                                <label>C. Foto Mobil Transparan</label>
-                                <div class="file-upload-wrapper">
-                                    <span class="file-upload-text">Upload PNG Transparan</span>
-                                    <input type="file" accept=".png, .webp">
-                                </div>
-                            </div>
-                            
-                            <div class="input-group form-full">
-                                <label>D. Format Nama Mobil</label>
-                                <select class="input-control" id="logo-format-selector" onchange="toggleLogoFormat()">
-                                    <option value="text">Gunakan Teks Biasa</option>
-                                    <option value="image">Gunakan File Gambar (Logo)</option>
-                                </select>
-                            </div>
-                            
-                            <div class="input-group form-full" id="input-logo-text"><label>Ketik Nama Mobil</label><input type="text" class="input-control" placeholder="Cth: Xpander Cross"></div>
-                            
-                            <div class="input-group form-full" id="input-logo-image" style="display: none;">
-                                <label>Upload Gambar Logo Mobil Transparan (SVG/PNG)</label>
-                                <div class="file-upload-wrapper">
-                                    <span class="file-upload-text">Upload Logo Transparan</span>
-                                    <input type="file" accept=".png, .svg, .webp">
-                                </div>
-                            </div>
-                            
-                            <div class="action-bar form-full"><button class="btn-save">Update Visual Kartu</button></div>
-                        </div>
+                        <div class="action-bar"><button class="btn-save" id="btn-save-hero-harga">Simpan Hero</button></div>
                     </div>
                 </div>
 
                 <div id="panel-katalog" class="data-panel">
-                    
                     <div class="section-card">
                         <div class="section-header"><h3 class="section-title">A & B. Hero Katalog</h3></div>
                         <div class="form-grid">
                             <div class="input-group form-full">
                                 <label>B. Foto Latar Belakang</label>
                                 <div class="file-upload-wrapper">
-                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
                                     <span class="file-upload-text">Upload Background Katalog</span>
-                                    <input type="file" accept=".png, .jpg, .webp">
+                                    <input type="file" id="katalog-hero-file" accept=".png, .jpg, .webp">
                                 </div>
                             </div>
-                            <div class="input-group"><label>A. Tulisan Atas</label><input type="text" class="input-control"></div>
-                            <div class="input-group"><label>A. Tulisan Bawah</label><input type="text" class="input-control"></div>
+                            <div class="input-group"><label>A. Tulisan Atas</label><input type="text" id="katalog-hero-teks1" class="input-control"></div>
+                            <div class="input-group"><label>A. Tulisan Bawah</label><input type="text" id="katalog-hero-teks2" class="input-control"></div>
                         </div>
-                        <div class="action-bar"><button class="btn-save">Simpan Hero Katalog</button></div>
+                        <div class="action-bar"><button class="btn-save" id="btn-save-hero-katalog">Simpan Hero Katalog</button></div>
                     </div>
 
                     <div class="section-card" style="border-color: #E60000;">
@@ -598,107 +452,78 @@
                         <div class="form-grid">
                             <div class="input-group form-full">
                                 <label>URL PDF / Brosur (Link Google Drive / MediaFire)</label>
-                                <input type="url" class="input-control" placeholder="https://drive.google.com/file/d/...">
+                                <input type="url" id="link-brosur-global" class="input-control" placeholder="https://drive.google.com/file/d/...">
                             </div>
                         </div>
-                        <div class="action-bar"><button class="btn-save">Update Link Brosur</button></div>
+                        <div class="action-bar"><button class="btn-save" id="btn-save-brosur">Update Link Brosur</button></div>
                     </div>
 
                     <div class="section-card">
-                        <div class="section-header"><h3 class="section-title">Manajemen Kategori Katalog</h3><button class="btn-add">+ Kategori Baru</button></div>
-                        <p class="alur-text">Tambahkan, Edit, atau Hapus kategori mobil (Contoh: SUV, MPV, Commercial). Kategori ini digunakan untuk Filter di halaman Katalog.</p>
-                        
-                        <div class="list-manager">
-                            <div class="list-item">
-                                <input type="text" class="input-control" value="MPV" style="background:transparent; border:none; width:50%; font-weight:bold;">
-                                <div>
-                                    <button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;">Edit</button>
-                                    <button class="btn-delete" style="padding: 4px 10px; font-size:0.75rem;">Hapus</button>
-                                </div>
-                            </div>
-                            <div class="list-item">
-                                <input type="text" class="input-control" value="SUV" style="background:transparent; border:none; width:50%; font-weight:bold;">
-                                <div>
-                                    <button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;">Edit</button>
-                                    <button class="btn-delete" style="padding: 4px 10px; font-size:0.75rem;">Hapus</button>
-                                </div>
-                            </div>
-                        </div>
-
+                        <div class="section-header"><h3 class="section-title">Manajemen Kategori Katalog</h3><button class="btn-add" id="btn-add-kategori-katalog">+ Kategori Baru</button></div>
+                        <div class="list-manager" id="list-kategori-katalog"></div>
                         <div class="form-grid" style="margin-top: 16px; background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px;">
-                            <div class="input-group form-full"><label>Ketik Kategori Baru</label><input type="text" class="input-control" placeholder="Cth: Commercial"></div>
-                            <div class="action-bar form-full" style="border:none; padding:0; margin:0;"><button class="btn-save">Simpan Kategori</button></div>
+                            <div class="input-group form-full"><label>Ketik Kategori Baru</label><input type="text" id="katalog-kategori-baru" class="input-control" placeholder="Cth: Commercial"></div>
+                            <div class="action-bar form-full" style="border:none; padding:0; margin:0;"><button class="btn-save" id="btn-save-kategori-katalog">Simpan Kategori</button></div>
                         </div>
                     </div>
 
                     <div class="section-card">
-                        <div class="section-header"><h3 class="section-title">Manajemen Kendaraan Katalog</h3><button class="btn-add">+ Tambah Kendaraan</button></div>
+                        <div class="section-header"><h3 class="section-title">Manajemen Kendaraan Katalog</h3><button class="btn-add" id="btn-add-mobil-katalog">+ Tambah Kendaraan</button></div>
+                        <div class="list-manager" id="list-mobil-katalog" style="margin-bottom: 16px;"></div>
+                        
                         <div class="form-grid" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px;">
-                            <div class="input-group form-full"><label>H. Pilih Kategori</label><select class="input-control"><option>MPV</option><option>SUV</option></select></div>
+                            <input type="hidden" id="katalog-edit-id">
+                            <div class="input-group form-full"><label>H. Pilih Kategori</label><select id="katalog-mobil-kategori" class="input-control"></select></div>
                             <div class="input-group form-full">
                                 <label>C. Foto Mobil Katalog</label>
                                 <div class="file-upload-wrapper">
                                     <span class="file-upload-text">Upload PNG Transparan Mobil</span>
-                                    <input type="file" accept=".png, .webp">
+                                    <input type="file" id="katalog-mobil-file" accept=".png, .webp">
                                 </div>
                             </div>
-                            <div class="input-group"><label>D. Nama Mobil</label><input type="text" class="input-control" placeholder="Cth: Pajero Sport"></div>
-                            <div class="input-group"><label>E. Label Promo/Status</label><input type="text" class="input-control" placeholder="Cth: Best Seller"></div>
-                            <div class="input-group form-full"><label>F. Harga Mulai Dari</label><input type="text" class="input-control" placeholder="Rp 500.000.000"></div>
+                            <div class="input-group"><label>D. Nama Mobil</label><input type="text" id="katalog-mobil-nama" class="input-control" placeholder="Cth: Pajero Sport"></div>
+                            <div class="input-group"><label>E. Label Promo/Status</label><input type="text" id="katalog-mobil-label" class="input-control" placeholder="Cth: Best Seller"></div>
+                            <div class="input-group form-full"><label>F. Harga Mulai Dari</label><input type="text" id="katalog-mobil-harga" class="input-control" placeholder="Rp 500.000.000"></div>
                             
                             <hr class="form-full" style="border-color: var(--color-border); margin: 10px 0;">
-                            
                             <h4 class="form-full" style="color:var(--color-accent); font-size:0.9rem;">G. Informasi 4 Ikon Spesifikasi (Katalog)</h4>
                             
-                            <div class="input-group">
-                                <label>1. Ikon Mesin (CC Kecepatan)</label>
-                                <input type="text" class="input-control" placeholder="Cth: 2442 cc">
-                            </div>
-                            <div class="input-group">
-                                <label>2. Ikon Orang (Jumlah Kursi)</label>
-                                <input type="text" class="input-control" placeholder="Cth: 7 Seater">
-                            </div>
-                            <div class="input-group">
-                                <label>3. Ikon Transmisi (Jenis Gigi)</label>
-                                <input type="text" class="input-control" placeholder="Cth: 8-Speed AT / CVT">
-                            </div>
-                            <div class="input-group">
-                                <label>4. Ikon Topi/Roda (Penggerak Roda)</label>
-                                <input type="text" class="input-control" placeholder="Cth: 4x4 / FWD">
-                            </div>
+                            <div class="input-group"><label>1. Ikon Mesin (CC)</label><input type="text" id="katalog-ikon1" class="input-control" placeholder="Cth: 2442 cc"></div>
+                            <div class="input-group"><label>2. Ikon Orang (Kursi)</label><input type="text" id="katalog-ikon2" class="input-control" placeholder="Cth: 7 Seater"></div>
+                            <div class="input-group"><label>3. Ikon Transmisi</label><input type="text" id="katalog-ikon3" class="input-control" placeholder="Cth: 8-Speed AT / CVT"></div>
+                            <div class="input-group"><label>4. Ikon Penggerak</label><input type="text" id="katalog-ikon4" class="input-control" placeholder="Cth: 4x4 / FWD"></div>
                             
-                            <div class="action-bar form-full"><button class="btn-delete">Hapus dari Katalog</button><button class="btn-save">Update Kendaraan</button></div>
+                            <div class="action-bar form-full"><button class="btn-save" id="btn-save-mobil-katalog">Update Kendaraan</button></div>
                         </div>
                     </div>
                 </div>
-
                 <div id="panel-kontak" class="data-panel">
                     <div class="section-card">
                         <div class="section-header"><h3 class="section-title">A & B. Hero Kontak VIP</h3></div>
                         <div class="form-grid">
                             <div class="input-group form-full">
                                 <label>B. Foto Latar Belakang</label>
-                                <div class="file-upload-wrapper"><span class="file-upload-text">Upload Background Kontak</span><input type="file" accept=".png, .jpg, .webp"></div>
+                                <div class="file-upload-wrapper"><span class="file-upload-text">Upload Background Kontak</span><input type="file" id="kontak-hero-file" accept=".png, .jpg, .webp"></div>
                             </div>
-                            <div class="input-group"><label>A. Tulisan Atas</label><input type="text" class="input-control"></div>
-                            <div class="input-group"><label>A. Tulisan Bawah</label><input type="text" class="input-control"></div>
+                            <div class="input-group"><label>A. Tulisan Atas</label><input type="text" id="kontak-hero-teks1" class="input-control"></div>
+                            <div class="input-group"><label>A. Tulisan Bawah</label><input type="text" id="kontak-hero-teks2" class="input-control"></div>
                         </div>
-                        <div class="action-bar"><button class="btn-save">Simpan Hero</button></div>
+                        <div class="action-bar"><button class="btn-save" id="btn-save-hero-kontak">Simpan Hero</button></div>
                     </div>
 
                     <div class="section-card">
                         <div class="section-header"><h3 class="section-title">Profil & Link Sosial (Auto-Update Global)</h3></div>
                         <p class="alur-text">Mengubah nomor Whatsapp, Telepon, dan Instagram di bawah ini akan <b>otomatis merubah</b> seluruh link tombol Whatsapp dan sosial media di SEMUA halaman web Anda.</p>
                         <div class="form-grid">
-                            <div class="input-group form-full"><label>C. Foto Profil Anda</label><div class="file-upload-wrapper"><span class="file-upload-text">Upload Foto Sales</span><input type="file" accept=".png, .jpg, .webp"></div></div>
-                            <div class="input-group"><label>D. Nama Lengkap</label><input type="text" class="input-control"></div>
-                            <div class="input-group"><label>E. Jabatan</label><input type="text" class="input-control"></div>
-                            <div class="input-group form-full"><label>F. Bio Profil (Tentang Anda)</label><textarea class="input-control" rows="3"></textarea></div>
-                            <div class="input-group"><label>G. No. WhatsApp (Gunakan 62)</label><input type="text" class="input-control" placeholder="628123456789"></div>
-                            <div class="input-group"><label>H. No. Telepon Panggilan</label><input type="text" class="input-control" placeholder="+628123456789"></div>
-                            <div class="input-group form-full"><label>I. Username Instagram (Tanpa @)</label><input type="text" class="input-control" placeholder="mitsubishi_batam"></div>
+                            <div class="input-group form-full"><label>C. Foto Profil Anda</label><div class="file-upload-wrapper"><span class="file-upload-text">Upload Foto Sales</span><input type="file" id="kontak-profil-file" accept=".png, .jpg, .webp"></div></div>
+                            <div class="input-group"><label>D. Nama Lengkap</label><input type="text" id="kontak-nama" class="input-control"></div>
+                            <div class="input-group"><label>E. Jabatan</label><input type="text" id="kontak-jabatan" class="input-control"></div>
+                            <div class="input-group form-full"><label>F. Bio Profil (Tentang Anda)</label><textarea id="kontak-bio" class="input-control" rows="3"></textarea></div>
+                            <div class="input-group"><label>G. No. WhatsApp (Gunakan 62)</label><input type="text" id="kontak-wa" class="input-control" placeholder="628123456789"></div>
+                            <div class="input-group"><label>H. No. Telepon Panggilan</label><input type="text" id="kontak-telepon" class="input-control" placeholder="+628123456789"></div>
+                            <div class="input-group form-full"><label>I. Username Instagram (Tanpa @)</label><input type="text" id="kontak-ig" class="input-control" placeholder="mitsubishi_batam"></div>
                         </div>
-                        <div class="action-bar"><button class="btn-save">Update Profil Global</button></div>
+                        <div class="action-bar"><button class="btn-save" id="btn-save-profil">Update Profil Global</button></div>
                     </div>
                 </div>
 
@@ -706,111 +531,43 @@
                     <div class="section-card">
                         <div class="section-header"><h3 class="section-title">A & B. Hero Layanan</h3></div>
                         <div class="form-grid">
-                            <div class="input-group form-full"><label>B. Foto Background</label><div class="file-upload-wrapper"><span class="file-upload-text">Upload Background Layanan</span><input type="file" accept=".png, .jpg, .webp"></div></div>
-                            <div class="input-group"><label>A. Tulisan Atas</label><input type="text" class="input-control"></div>
-                            <div class="input-group"><label>A. Tulisan Bawah</label><input type="text" class="input-control"></div>
+                            <div class="input-group form-full"><label>B. Foto Background</label><div class="file-upload-wrapper"><span class="file-upload-text">Upload Background Layanan</span><input type="file" id="layanan-hero-file" accept=".png, .jpg, .webp"></div></div>
+                            <div class="input-group"><label>A. Tulisan Atas</label><input type="text" id="layanan-hero-teks1" class="input-control"></div>
+                            <div class="input-group"><label>A. Tulisan Bawah</label><input type="text" id="layanan-hero-teks2" class="input-control"></div>
                         </div>
-                        <div class="action-bar"><button class="btn-save">Simpan Hero</button></div>
+                        <div class="action-bar"><button class="btn-save" id="btn-save-hero-layanan">Simpan Hero</button></div>
                     </div>
 
                     <div class="section-card">
                         <div class="section-header"><h3 class="section-title">C - F. Kartu Layanan Dasar</h3></div>
-                        <p class="alur-text">Apabila ada layanan yang dikosongkan (tidak diisi), maka sistem tetap akan menyimpannya dan bagian tersebut tidak akan ditampilkan di website.</p>
-                        <div class="form-grid">
-                            
+                        <div class="form-grid" id="layanan-dasar-container">
+                            <p class="alur-text form-full">Apabila ada layanan yang dikosongkan (tidak diisi), maka sistem tetap akan menyimpannya dan bagian tersebut tidak akan ditampilkan di website.</p>
                             <div class="input-group form-full" style="border-bottom:1px dashed var(--color-border); padding-bottom:16px;">
                                 <label style="color:var(--color-accent)">C. Jaminan Keaslian</label>
                                 <div class="file-upload-wrapper" style="margin-bottom:10px;"><span class="file-upload-text">Upload Foto Layanan C</span><input type="file" accept=".png, .jpg"></div>
                                 <input type="text" class="input-control" placeholder="Tulisan Atas" style="margin-bottom:8px;">
                                 <input type="text" class="input-control" placeholder="Tulisan Bawah">
                             </div>
-                            
                             <div class="input-group form-full" style="border-bottom:1px dashed var(--color-border); padding-bottom:16px;">
                                 <label style="color:var(--color-accent)">D. Berkomitmen dengan Waktu</label>
                                 <div class="file-upload-wrapper" style="margin-bottom:10px;"><span class="file-upload-text">Upload Foto Layanan D</span><input type="file" accept=".png, .jpg"></div>
                                 <input type="text" class="input-control" placeholder="Tulisan Atas" style="margin-bottom:8px;">
                                 <input type="text" class="input-control" placeholder="Tulisan Bawah">
                             </div>
-
                             <div class="input-group form-full" style="border-bottom:1px dashed var(--color-border); padding-bottom:16px;">
                                 <label style="color:var(--color-accent)">E. Suku Cadang Terjamin</label>
                                 <div class="file-upload-wrapper" style="margin-bottom:10px;"><span class="file-upload-text">Upload Foto Layanan E</span><input type="file" accept=".png, .jpg"></div>
                                 <input type="text" class="input-control" placeholder="Tulisan Atas" style="margin-bottom:8px;">
                                 <input type="text" class="input-control" placeholder="Tulisan Bawah">
                             </div>
-
                             <div class="input-group form-full" style="padding-bottom:16px;">
                                 <label style="color:var(--color-accent)">F. Dukungan Di Seluruh Indonesia</label>
                                 <div class="file-upload-wrapper" style="margin-bottom:10px;"><span class="file-upload-text">Upload Foto Layanan F</span><input type="file" accept=".png, .jpg"></div>
                                 <input type="text" class="input-control" placeholder="Tulisan Atas" style="margin-bottom:8px;">
                                 <input type="text" class="input-control" placeholder="Tulisan Bawah">
                             </div>
-
                         </div>
-                        <div class="action-bar"><button class="btn-save">Simpan Perubahan C-F</button></div>
-                    </div>
-
-                    <div class="section-card">
-                        <div class="section-header"><h3 class="section-title">G. Pelayanan Terbaik Kami (Dengan Pop-Up SPA)</h3></div>
-                        <p class="alur-text">Khusus untuk bagian ini, Anda dapat mengisi informasi tambahan yang akan muncul ketika pelanggan menekan tombol "Selengkapnya".</p>
-                        <div class="form-grid">
-                            <div class="input-group form-full" style="background:rgba(0,0,0,0.2); padding:16px; border-radius:8px;">
-                                <div class="file-upload-wrapper" style="margin-bottom:12px;"><span class="file-upload-text">Upload Foto Pelayanan Terbaik</span><input type="file" accept=".png, .jpg"></div>
-                                
-                                <label>1. Tulisan Tampilan Awal (Sebelum diklik):</label>
-                                <input type="text" class="input-control" placeholder="Tulisan Atas" style="margin-bottom:8px;">
-                                <input type="text" class="input-control" placeholder="Tulisan Bawah" style="margin-bottom:8px;">
-                                <input type="text" class="input-control" placeholder="Teks Tombol (Cth: Selengkapnya)" style="margin-bottom:20px;">
-                                
-                                <label style="color:var(--color-accent);">2. Informasi SPA (Setelah Tombol Diklik):</label>
-                                <input type="text" class="input-control" placeholder="Judul Detail (Pop-Up)" style="margin-bottom:8px;">
-                                <textarea class="input-control" rows="3" placeholder="Tuliskan informasi selengkapnya tentang pelayanan ini di sini..."></textarea>
-                            </div>
-                        </div>
-                        <div class="action-bar"><button class="btn-save">Simpan Layanan G</button></div>
-                    </div>
-
-                    <div class="section-card">
-                        <div class="section-header"><h3 class="section-title">H. Manajemen Fitur Lainnya (Tanpa SPA)</h3></div>
-                        <p class="alur-text">Di bawah ini adalah 5 katalog fitur terpisah. Isi masing-masing sesuai dengan kebutuhan tanpa ada informasi pop-up (SPA) tambahan.</p>
-                        
-                        <div class="form-grid">
-                            <div class="input-group form-full" style="border-bottom:1px solid var(--color-border); padding-bottom:16px;">
-                                <label style="font-size:1rem; margin-bottom:8px;">1. Customer Support</label>
-                                <div class="file-upload-wrapper" style="margin-bottom:8px;"><span class="file-upload-text">Upload Foto</span><input type="file" accept=".png, .jpg"></div>
-                                <input type="text" class="input-control" placeholder="Tulisan Atas" style="margin-bottom:8px;">
-                                <input type="text" class="input-control" placeholder="Tulisan Bawah">
-                            </div>
-
-                            <div class="input-group form-full" style="border-bottom:1px solid var(--color-border); padding-bottom:16px;">
-                                <label style="font-size:1rem; margin-bottom:8px;">2. Perawatan Kendaraan</label>
-                                <div class="file-upload-wrapper" style="margin-bottom:8px;"><span class="file-upload-text">Upload Foto</span><input type="file" accept=".png, .jpg"></div>
-                                <input type="text" class="input-control" placeholder="Tulisan Atas" style="margin-bottom:8px;">
-                                <input type="text" class="input-control" placeholder="Tulisan Bawah">
-                            </div>
-
-                            <div class="input-group form-full" style="border-bottom:1px solid var(--color-border); padding-bottom:16px;">
-                                <label style="font-size:1rem; margin-bottom:8px;">3. Suku Cadang</label>
-                                <div class="file-upload-wrapper" style="margin-bottom:8px;"><span class="file-upload-text">Upload Foto</span><input type="file" accept=".png, .jpg"></div>
-                                <input type="text" class="input-control" placeholder="Tulisan Atas" style="margin-bottom:8px;">
-                                <input type="text" class="input-control" placeholder="Tulisan Bawah">
-                            </div>
-
-                            <div class="input-group form-full" style="border-bottom:1px solid var(--color-border); padding-bottom:16px;">
-                                <label style="font-size:1rem; margin-bottom:8px;">4. Aksesoris</label>
-                                <div class="file-upload-wrapper" style="margin-bottom:8px;"><span class="file-upload-text">Upload Foto</span><input type="file" accept=".png, .jpg"></div>
-                                <input type="text" class="input-control" placeholder="Tulisan Atas" style="margin-bottom:8px;">
-                                <input type="text" class="input-control" placeholder="Tulisan Bawah">
-                            </div>
-
-                            <div class="input-group form-full" style="padding-bottom:16px;">
-                                <label style="font-size:1rem; margin-bottom:8px;">5. Bodi & Cat</label>
-                                <div class="file-upload-wrapper" style="margin-bottom:8px;"><span class="file-upload-text">Upload Foto</span><input type="file" accept=".png, .jpg"></div>
-                                <input type="text" class="input-control" placeholder="Tulisan Atas" style="margin-bottom:8px;">
-                                <input type="text" class="input-control" placeholder="Tulisan Bawah">
-                            </div>
-                        </div>
-                        <div class="action-bar"><button class="btn-save">Simpan Semua Fitur H</button></div>
+                        <div class="action-bar"><button class="btn-save" id="btn-save-layanan-dasar">Simpan Perubahan C-F</button></div>
                     </div>
                 </div>
 
@@ -818,22 +575,25 @@
                     <div class="section-card">
                         <div class="section-header"><h3 class="section-title">A & B. Hero Testimoni</h3></div>
                         <div class="form-grid">
-                            <div class="input-group form-full"><label>B. Foto Background</label><div class="file-upload-wrapper"><span class="file-upload-text">Upload Background Testimoni</span><input type="file" accept=".png, .jpg, .webp"></div></div>
-                            <div class="input-group"><label>A. Tulisan Atas</label><input type="text" class="input-control"></div>
-                            <div class="input-group"><label>A. Tulisan Bawah</label><input type="text" class="input-control"></div>
+                            <div class="input-group form-full"><label>B. Foto Background</label><div class="file-upload-wrapper"><span class="file-upload-text">Upload Background Testimoni</span><input type="file" id="testimoni-hero-file" accept=".png, .jpg, .webp"></div></div>
+                            <div class="input-group"><label>A. Tulisan Atas</label><input type="text" id="testimoni-hero-teks1" class="input-control"></div>
+                            <div class="input-group"><label>A. Tulisan Bawah</label><input type="text" id="testimoni-hero-teks2" class="input-control"></div>
                         </div>
-                        <div class="action-bar"><button class="btn-save">Simpan Hero</button></div>
+                        <div class="action-bar"><button class="btn-save" id="btn-save-hero-testimoni">Simpan Hero</button></div>
                     </div>
 
                     <div class="section-card">
-                        <div class="section-header"><h3 class="section-title">Kartu Testimoni Pelanggan</h3><button class="btn-add">+ Tambah Testimoni</button></div>
+                        <div class="section-header"><h3 class="section-title">Kartu Testimoni Pelanggan</h3><button class="btn-add" id="btn-add-testimoni">+ Tambah Testimoni</button></div>
+                        <div class="list-manager" id="list-testimoni-container" style="margin-bottom: 16px;"></div>
+                        
                         <div class="form-grid" style="border: 1px solid var(--color-border); padding: 16px; border-radius: 8px;">
-                            <div class="input-group form-full"><label>C. Foto Penyerahan Kendaraan</label><div class="file-upload-wrapper"><span class="file-upload-text">Upload Foto Serah Terima</span><input type="file" accept=".png, .jpg, .webp"></div></div>
-                            <div class="input-group form-full"><label>D. Rating Bintang</label><select class="input-control"><option>5 Bintang</option><option>4 Bintang</option></select></div>
-                            <div class="input-group form-full"><label>E. Tulisan Atas (Komentar/Isi)</label><textarea class="input-control" rows="2" placeholder="Pelayanan super mantap..."></textarea></div>
-                            <div class="input-group"><label>E. Tulisan Tengah (Nama)</label><input type="text" class="input-control" placeholder="Bpk. Budi"></div>
-                            <div class="input-group"><label>E. Tulisan Bawah (Unit Mobil)</label><input type="text" class="input-control" placeholder="XForce Ultimate"></div>
-                            <div class="form-full action-bar"><button class="btn-delete">Hapus</button><button class="btn-save">Publish Testimoni</button></div>
+                            <input type="hidden" id="testimoni-edit-id">
+                            <div class="input-group form-full"><label>C. Foto Penyerahan Kendaraan</label><div class="file-upload-wrapper"><span class="file-upload-text">Upload Foto Serah Terima</span><input type="file" id="testimoni-file" accept=".png, .jpg, .webp"></div></div>
+                            <div class="input-group form-full"><label>D. Rating Bintang</label><select id="testimoni-rating" class="input-control"><option value="5">5 Bintang</option><option value="4">4 Bintang</option></select></div>
+                            <div class="input-group form-full"><label>E. Tulisan Atas (Komentar/Isi)</label><textarea id="testimoni-komentar" class="input-control" rows="2" placeholder="Pelayanan super mantap..."></textarea></div>
+                            <div class="input-group"><label>E. Tulisan Tengah (Nama)</label><input type="text" id="testimoni-nama" class="input-control" placeholder="Bpk. Budi"></div>
+                            <div class="input-group"><label>E. Tulisan Bawah (Unit Mobil)</label><input type="text" id="testimoni-unit" class="input-control" placeholder="XForce Ultimate"></div>
+                            <div class="form-full action-bar"><button class="btn-save" id="btn-save-testimoni">Publish Testimoni</button></div>
                         </div>
                     </div>
                 </div>
@@ -841,38 +601,63 @@
                 <div id="panel-keamanan" class="data-panel">
                     <div class="section-card">
                         <div class="section-header"><h3 class="section-title">Keamanan Kredensial</h3></div>
-                        <p class="alur-text">Ganti Email atau PIN untuk akses CMS. Email ini juga dipakai sebagai acuan di Bot Telegram saat lupa sandi.</p>
+                        <p class="alur-text">Ganti Email atau PIN untuk akses CMS. Sistem akan otomatis me-logout Anda (keluar) setelah menyimpan sandi baru agar Anda bisa mencoba masuk kembali.</p>
                         <div class="form-grid">
-                            <div class="input-group form-full"><label>Email Akses (Master Admin)</label><input type="email" class="input-control" value="rahmadrahmad433@gmail.com" placeholder="Masukkan Email Anda"></div>
-                            <div class="input-group"><label>PIN Baru</label><input type="password" class="input-control" placeholder="Ketik 6 digit PIN"></div>
-                            <div class="input-group"><label>Konfirmasi PIN</label><input type="password" class="input-control" placeholder="Ulangi PIN baru"></div>
+                            <div class="input-group form-full"><label>Email Akses Baru (Master Admin)</label><input type="email" id="keamanan-email" class="input-control" placeholder="Masukkan Email Baru"></div>
+                            <div class="input-group"><label>PIN Baru</label><input type="password" id="keamanan-pin1" class="input-control" placeholder="Ketik 6 digit PIN"></div>
+                            <div class="input-group"><label>Konfirmasi PIN</label><input type="password" id="keamanan-pin2" class="input-control" placeholder="Ulangi PIN baru"></div>
                         </div>
-                        <div class="action-bar"><button class="btn-save">Simpan Kredensial & Email Baru</button></div>
+                        <div class="action-bar"><button class="btn-save" id="btn-save-keamanan">Simpan Kredensial & Email Baru</button></div>
                     </div>
                 </div>
 
             </div> </main>
-    </div>
+    </div> <script>
+    /* =========================================
+       0. SISTEM NOTIFIKASI TOAST PROFESIONAL
+       ========================================= */
+    function showToast(message, type = "info") {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        
+        // Ikon SVG berdasarkan tipe notifikasi
+        let icon = '';
+        if(type === 'success') {
+            icon = '<svg style="width:24px;height:24px;fill:#00C851;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>';
+        } else if(type === 'error') {
+            icon = '<svg style="width:24px;height:24px;fill:#ff4444;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>';
+        } else {
+            icon = '<svg style="width:24px;height:24px;fill:#33b5e5;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>';
+        }
 
-<script>
+        toast.innerHTML = `${icon} <span>${message}</span>`;
+        container.appendChild(toast);
+
+        // Hapus toast setelah 3.5 detik
+        setTimeout(() => {
+            toast.style.animation = 'fadeOut 0.4s ease forwards';
+            setTimeout(() => toast.remove(), 400);
+        }, 3500);
+    }
+
     /* =========================================
        1. KONFIGURASI & INISIALISASI
        ========================================= */
     const firebaseConfig = {
         apiKey: "AIzaSyBrNnp8PJiKYATH-1ie67aq9WqESpIXBus",
         authDomain: "landing-page-alex.firebaseapp.com",
+        databaseURL: "https://landing-page-alex-default-rtdb.asia-southeast1.firebasedatabase.app", // FIX ASIA REGION
         projectId: "landing-page-alex",
         storageBucket: "landing-page-alex.firebasestorage.app",
         messagingSenderId: "164638589744",
         appId: "1:164638589744:web:8470111cc7c41696887ef5"
     };
 
-    // Init Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
     const auth = firebase.auth();
 
-    // Init ImageKit (Menggunakan Endpoint Vercel Anda)
     const imagekit = new ImageKit({
         publicKey: "public_XKAN1YH/RnUD5N+4hS/qIvqDJNc=",
         urlEndpoint: "https://ik.imagekit.io/tumbal",
@@ -886,20 +671,18 @@
     const telegramToken = "8760854697:AAGZDZL2psuQyK4HlHOsXCEPLSQWB0SS_wA";
     const telegramChatId = "1444132958";
 
-    // Pantau Status Login (Jika sudah login, langsung buka dashboard)
     auth.onAuthStateChanged((user) => {
         if (user) {
             document.getElementById('login-screen').classList.add('hidden');
             document.getElementById('admin-dashboard').classList.add('active');
-            console.log("Admin Terautentikasi:", user.email);
-            loadInitialData(); // Fungsi untuk menarik data awal dari Firebase
+            showToast(`Berhasil login sebagai: ${user.email}`, 'success');
+            loadInitialData(); 
         } else {
             document.getElementById('login-screen').classList.remove('hidden');
             document.getElementById('admin-dashboard').classList.remove('active');
         }
     });
 
-    // Fungsi Percobaan Login
     async function attemptLogin() {
         const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
@@ -908,7 +691,7 @@
         const attemptDisplay = document.getElementById('login-attempts');
 
         if (!email || !password) {
-            alert("Harap isi Email dan PIN!");
+            showToast("Harap isi Email dan PIN!", "error");
             return;
         }
 
@@ -916,7 +699,6 @@
         btnLogin.disabled = true;
 
         try {
-            // Proses Login ke Firebase
             await auth.signInWithEmailAndPassword(email, password);
         } catch (error) {
             loginAttempts--;
@@ -924,66 +706,52 @@
             errorMsg.style.display = 'block';
             btnLogin.innerText = "Otorisasi Masuk";
             btnLogin.disabled = false;
+            
+            showToast("Kredensial salah atau tidak valid!", "error");
 
             if (loginAttempts <= 0) {
                 errorMsg.innerHTML = "<strong>AKSES DIBLOKIR!</strong><br>Terlalu banyak percobaan salah.";
                 btnLogin.style.display = 'none';
                 document.getElementById('btn-forgot-pwd').style.display = 'block';
-                // Kirim peringatan ke Telegram jika ada percobaan mencurigakan
                 sendTelegramNotification(`🚨 *PERINGATAN KEAMANAN*\n\nSeseorang gagal login 5x ke Panel Admin.\nEmail: ${email}\nLokasi: Dashboard Admin`);
             }
         }
     }
 
-    // Fungsi Notifikasi Telegram
     function sendTelegramNotification(text) {
         const url = `https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${telegramChatId}&text=${encodeURIComponent(text)}&parse_mode=Markdown`;
         fetch(url).catch(err => console.error("Gagal kirim Telegram:", err));
     }
 
-    // Fungsi Lupa Password (Alur reset info via Telegram)
     function reqResetTelegram() {
         const email = document.getElementById('login-email').value;
         sendTelegramNotification(`🔑 *PERMINTAAN RESET PIN*\n\nAdmin dengan email ${email} meminta informasi PIN.\nPIN Default: 123456\nSegera login dan ubah di menu Keamanan.`);
-        alert("Instruksi pemulihan telah dikirim ke Telegram Anda.");
+        showToast("Instruksi pemulihan telah dikirim ke Telegram Anda.", "info");
     }
 
     /* =========================================
        3. FUNGSI MEDIA HANDLER (IMAGEKIT UPLOADER)
        ========================================= */
-    
-    // Fungsi Master untuk Upload File (Support: mp4, png, jpg, webp, svg)
-    // Point 17: Mengembalikan URL dan fileId untuk disimpan di Firebase
     async function uploadMedia(file) {
         if (!file) return null;
-
         try {
             const response = await imagekit.upload({
                 file: file,
-                fileName: `mitsubishi_${Date.now()}`, // Penamaan unik agar tidak bentrok
+                fileName: `mitsu_${Date.now()}`,
                 tags: ["admin_panel", "mitsubishi_batam"]
             });
-
-            return {
-                url: response.url,
-                fileId: response.fileId // Disimpan untuk keperluan hapus file nanti
-            };
+            return { url: response.url, fileId: response.fileId };
         } catch (error) {
-            console.error("Gagal upload ke ImageKit:", error);
-            alert("Gagal mengupload file media. Periksa koneksi internet Anda.");
+            console.error("Gagal upload:", error);
+            showToast("Gagal mengupload file media. Periksa koneksi internet Anda.", "error");
             return null;
         }
     }
 
-    // Fungsi untuk Hapus File dari ImageKit agar memori tidak penuh
     async function deleteMedia(fileId) {
         if (!fileId) return;
-        // Penghapusan file memerlukan Private Key, maka kita lakukan via API Vercel
-        try {
-            await fetch(window.location.origin + `/api/delete?fileId=${fileId}`, { method: 'DELETE' });
-        } catch (err) {
-            console.warn("Gagal hapus file lama di ImageKit:", err);
-        }
+        try { await fetch(window.location.origin + `/api/delete?fileId=${fileId}`, { method: 'DELETE' }); } 
+        catch (err) { console.warn("Gagal hapus file lama:", err); }
     }
 
     /* =========================================
@@ -1002,16 +770,12 @@
         document.getElementById(panelId).classList.add('active');
         
         document.getElementById('current-page-title').innerText = title;
-
-        // Reset scroll content ke atas
         document.querySelector('.main-content').scrollTop = 0;
-
         if (window.innerWidth <= 991) toggleSidebar();
     }
     /* =========================================
        5. TARIK DATA AWAL (READ FROM FIREBASE)
        ========================================= */
-    // Fungsi ini dipanggil otomatis saat Admin berhasil Login (di Bagian 1)
     function loadInitialData() {
         console.log("Sinkronisasi data dari Firebase dimulai...");
 
@@ -1019,14 +783,10 @@
         db.ref('global_data/alamat').once('value', snapshot => {
             const data = snapshot.val();
             if(data) {
-                // Mengambil input pada Panel Landing -> Card ke-4 (Alamat)
-                const inputs = document.querySelectorAll('#panel-landing .section-card:nth-child(4) .input-control');
-                if(inputs.length >= 4) {
-                    inputs[0].value = data.gmaps || '';
-                    inputs[1].value = data.teks_alamat || '';
-                    inputs[2].value = data.jam_buka || '';
-                    inputs[3].value = data.jam_tutup || '';
-                }
+                document.getElementById('alamat-gmaps').value = data.gmaps || '';
+                document.getElementById('alamat-teks').value = data.teks_alamat || '';
+                document.getElementById('alamat-buka').value = data.jam_buka || '';
+                document.getElementById('alamat-tutup').value = data.jam_tutup || '';
             }
         });
 
@@ -1034,22 +794,17 @@
         db.ref('global_data/kontak').once('value', snapshot => {
              const data = snapshot.val();
              if(data) {
-                 // Mengambil input pada Panel Kontak -> Card ke-2 (Profil)
-                 const inputs = document.querySelectorAll('#panel-kontak .section-card:nth-child(2) .input-control');
-                 if(inputs.length >= 6) {
-                     inputs[0].value = data.nama || '';
-                     inputs[1].value = data.jabatan || '';
-                     inputs[2].value = data.bio || '';
-                     inputs[3].value = data.whatsapp || '';
-                     inputs[4].value = data.telepon || '';
-                     inputs[5].value = data.ig || '';
-                 }
-                 // Menampilkan Preview Foto jika ada
+                 document.getElementById('kontak-nama').value = data.nama || '';
+                 document.getElementById('kontak-jabatan').value = data.jabatan || '';
+                 document.getElementById('kontak-bio').value = data.bio || '';
+                 document.getElementById('kontak-wa').value = data.whatsapp || '';
+                 document.getElementById('kontak-telepon').value = data.telepon || '';
+                 document.getElementById('kontak-ig').value = data.ig || '';
+                 
+                 // Render gambar profil
                  if(data.fotoUrl) {
-                     const wrapper = document.querySelector('#panel-kontak .section-card:nth-child(2) .file-upload-wrapper');
+                     const wrapper = document.getElementById('kontak-profil-file').parentElement;
                      wrapper.style.backgroundImage = `url('${data.fotoUrl}')`;
-                     wrapper.style.backgroundSize = 'cover';
-                     wrapper.style.backgroundPosition = 'center';
                  }
              }
         });
@@ -1058,118 +813,107 @@
         db.ref('halaman/landing/hero').once('value', snapshot => {
             const data = snapshot.val();
             if(data) {
-                const inputs = document.querySelectorAll('#panel-landing .section-card:nth-child(1) .input-control');
-                if(inputs.length >= 2) {
-                    inputs[0].value = data.teks_atas || '';
-                    inputs[1].value = data.teks_bawah || '';
-                }
+                document.getElementById('landing-hero-teks1').value = data.teks_atas || '';
+                document.getElementById('landing-hero-teks2').value = data.teks_bawah || '';
                 if(data.bgUrl) {
-                    const wrapper = document.querySelector('#panel-landing .section-card:nth-child(1) .file-upload-wrapper');
+                    const wrapper = document.getElementById('landing-hero-file').parentElement;
                     wrapper.style.backgroundImage = `url('${data.bgUrl}')`;
-                    wrapper.style.backgroundSize = 'cover';
                 }
             }
         });
 
-        // Nanti kita akan tambahkan load data untuk Berita, Spesifikasi, dll di sini
+        // D. Tarik Link Brosur Global
+        db.ref('global_data/brosur_pdf').once('value', snapshot => {
+            if(snapshot.val()) document.getElementById('link-brosur-global').value = snapshot.val();
+        });
+
+        // Tarik data dinamis kategori (Realtime render)
+        listenKategoriBerita();
+        listenKategoriKatalog();
     }
 
-
     /* =========================================
-       6. LOGIKA SIMPAN (WRITE & UPLOAD TO FIREBASE)
+       6. LOGIKA SIMPAN (WRITE & UPLOAD)
        ========================================= */
-    // Menunggu seluruh elemen HTML selesai dimuat sebelum mengikat fungsi tombol
     document.addEventListener('DOMContentLoaded', () => {
 
-        /* --- FITUR 1: SIMPAN ALAMAT GLOBAL --- */
-        const btnSaveAlamat = document.querySelector('#panel-landing .section-card:nth-child(4) .btn-save');
+        // --- 1. SIMPAN ALAMAT (GLOBAL) ---
+        const btnSaveAlamat = document.getElementById('btn-save-alamat');
         if(btnSaveAlamat) {
             btnSaveAlamat.addEventListener('click', async () => {
                 btnSaveAlamat.innerText = "Menyimpan...";
                 btnSaveAlamat.style.opacity = "0.7";
                 
-                const inputs = document.querySelectorAll('#panel-landing .section-card:nth-child(4) .input-control');
-                
-                // Menyimpan ke tabel 'global_data/alamat'
                 await db.ref('global_data/alamat').set({
-                    gmaps: inputs[0].value,
-                    teks_alamat: inputs[1].value,
-                    jam_buka: inputs[2].value,
-                    jam_tutup: inputs[3].value,
+                    gmaps: document.getElementById('alamat-gmaps').value,
+                    teks_alamat: document.getElementById('alamat-teks').value,
+                    jam_buka: document.getElementById('alamat-buka').value,
+                    jam_tutup: document.getElementById('alamat-tutup').value,
                     last_update: firebase.database.ServerValue.TIMESTAMP
                 });
                 
-                alert("Data Alamat Global berhasil diperbarui di seluruh Halaman!");
+                showToast("Data Alamat berhasil diperbarui di seluruh Halaman!", "success");
                 btnSaveAlamat.innerText = "Update Data Global";
                 btnSaveAlamat.style.opacity = "1";
             });
         }
 
-        /* --- FITUR 2: SIMPAN PROFIL SALES GLOBAL (DENGAN UPLOAD FOTO) --- */
-        const btnSaveKontak = document.querySelector('#panel-kontak .section-card:nth-child(2) .btn-save');
-        if(btnSaveKontak) {
-            btnSaveKontak.addEventListener('click', async () => {
-                btnSaveKontak.innerText = "Proses Upload...";
-                btnSaveKontak.style.opacity = "0.7";
+        // --- 2. SIMPAN PROFIL SALES (GLOBAL) ---
+        const btnSaveProfil = document.getElementById('btn-save-profil');
+        if(btnSaveProfil) {
+            btnSaveProfil.addEventListener('click', async () => {
+                btnSaveProfil.innerText = "Proses Upload...";
+                btnSaveProfil.style.opacity = "0.7";
                 
-                const inputs = document.querySelectorAll('#panel-kontak .section-card:nth-child(2) .input-control');
-                const fileInput = document.querySelector('#panel-kontak .section-card:nth-child(2) input[type="file"]');
-                
-                // Siapkan objek data untuk disimpan
                 let profileObj = {
-                    nama: inputs[0].value,
-                    jabatan: inputs[1].value,
-                    bio: inputs[2].value,
-                    whatsapp: inputs[3].value,
-                    telepon: inputs[4].value,
-                    ig: inputs[5].value,
+                    nama: document.getElementById('kontak-nama').value,
+                    jabatan: document.getElementById('kontak-jabatan').value,
+                    bio: document.getElementById('kontak-bio').value,
+                    whatsapp: document.getElementById('kontak-wa').value,
+                    telepon: document.getElementById('kontak-telepon').value,
+                    ig: document.getElementById('kontak-ig').value,
                     last_update: firebase.database.ServerValue.TIMESTAMP
                 };
 
-                // Cek apakah Admin meng-upload foto baru
+                const fileInput = document.getElementById('kontak-profil-file');
                 if (fileInput && fileInput.files.length > 0) {
-                    const media = await uploadMedia(fileInput.files[0]); // Panggil fungsi ImageKit
+                    const media = await uploadMedia(fileInput.files[0]);
                     if (media) {
                         profileObj.fotoUrl = media.url;
                         profileObj.fotoId = media.fileId;
                         
-                        // Opsional: Hapus foto lama dari ImageKit untuk hemat memori
+                        // Hapus file lama di ImageKit
                         db.ref('global_data/kontak/fotoId').once('value', snap => {
                             if(snap.val()) deleteMedia(snap.val());
                         });
                     }
                 }
 
-                // Simpan ke Firebase
                 await db.ref('global_data/kontak').update(profileObj);
-                
-                alert("Profil Sales & Kontak berhasil disinkronkan ke seluruh Halaman!");
-                btnSaveKontak.innerText = "Update Profil Global";
-                btnSaveKontak.style.opacity = "1";
+                showToast("Profil Sales berhasil disinkronkan!", "success");
+                btnSaveProfil.innerText = "Update Profil Global";
+                btnSaveProfil.style.opacity = "1";
             });
         }
 
-        /* --- FITUR 3: SIMPAN HERO LANDING PAGE --- */
-        const btnSaveHeroLanding = document.querySelector('#panel-landing .section-card:nth-child(1) .btn-save');
+        // --- 3. SIMPAN HERO LANDING PAGE ---
+        const btnSaveHeroLanding = document.getElementById('btn-save-hero-landing');
         if(btnSaveHeroLanding) {
             btnSaveHeroLanding.addEventListener('click', async () => {
                 btnSaveHeroLanding.innerText = "Menyimpan Media...";
                 btnSaveHeroLanding.style.opacity = "0.7";
 
-                const inputs = document.querySelectorAll('#panel-landing .section-card:nth-child(1) .input-control');
-                const fileInput = document.querySelector('#panel-landing .section-card:nth-child(1) input[type="file"]');
-
                 let heroObj = {
-                    teks_atas: inputs[0].value,
-                    teks_bawah: inputs[1].value
+                    teks_atas: document.getElementById('landing-hero-teks1').value,
+                    teks_bawah: document.getElementById('landing-hero-teks2').value
                 };
 
+                const fileInput = document.getElementById('landing-hero-file');
                 if (fileInput && fileInput.files.length > 0) {
                     const media = await uploadMedia(fileInput.files[0]);
                     if (media) {
                         heroObj.bgUrl = media.url;
                         heroObj.bgId = media.fileId;
-                        
                         db.ref('halaman/landing/hero/bgId').once('value', snap => {
                             if(snap.val()) deleteMedia(snap.val());
                         });
@@ -1177,139 +921,136 @@
                 }
 
                 await db.ref('halaman/landing/hero').update(heroObj);
-                alert("Hero Landing Page berhasil diperbarui!");
+                showToast("Hero Landing Page berhasil diperbarui!", "success");
                 btnSaveHeroLanding.innerText = "Simpan Hero";
                 btnSaveHeroLanding.style.opacity = "1";
             });
         }
-        /* --- FITUR 4: SIMPAN IKLAN BANNER / VIDEO (LANDING PAGE) --- */
-        const btnSaveIklan = document.querySelector('#panel-landing .section-card:nth-child(3) .btn-save');
-        if(btnSaveIklan) {
-            btnSaveIklan.addEventListener('click', async () => {
-                btnSaveIklan.innerText = "Mengupload Iklan...";
-                btnSaveIklan.style.opacity = "0.7";
 
-                const inputs = document.querySelectorAll('#panel-landing .section-card:nth-child(3) .input-control');
-                const fileInput = document.querySelector('#panel-landing .section-card:nth-child(3) input[type="file"]');
-
-                let iklanObj = {
-                    judul: inputs[0].value,
-                    teks_tombol: inputs[1].value
-                };
-
-                if (fileInput && fileInput.files.length > 0) {
-                    const media = await uploadMedia(fileInput.files[0]);
-                    if (media) {
-                        iklanObj.mediaUrl = media.url;
-                        iklanObj.mediaId = media.fileId;
-                        
-                        // Hapus media iklan lama di ImageKit
-                        db.ref('halaman/landing/iklan/mediaId').once('value', snap => {
-                            if(snap.val()) deleteMedia(snap.val());
-                        });
-                    }
-                }
-
-                await db.ref('halaman/landing/iklan').update(iklanObj);
-                alert("Iklan Banner/Video berhasil diperbarui di halaman Beranda!");
-                btnSaveIklan.innerText = "Simpan Iklan";
-                btnSaveIklan.style.opacity = "1";
-            });
-        }
-
-        /* --- FITUR 5: TAMBAH KATEGORI BERITA BARU --- */
-        const btnTambahKatBerita = document.querySelector('#panel-berita .section-card:nth-child(2) .btn-add');
-        if(btnTambahKatBerita) {
-            btnTambahKatBerita.addEventListener('click', async () => {
-                const inputKategori = document.querySelector('#panel-berita .section-card:nth-child(2) input[type="text"]');
-                const namaKategori = inputKategori.value.trim();
-                
-                if(namaKategori !== "") {
-                    btnTambahKatBerita.innerText = "Menyimpan...";
-                    // Simpan data kategori baru ke node 'kategori_berita' di Firebase
-                    await db.ref('kategori_berita').push({ nama: namaKategori });
-                    
-                    alert(`Kategori "${namaKategori}" berhasil ditambahkan!`);
-                    inputKategori.value = "";
-                    btnTambahKatBerita.innerText = "Simpan Kategori Baru";
-                    // Note: Untuk fitur render/tampil list realtime akan kita buat di fungsi khusus
-                } else {
-                    alert("Nama kategori tidak boleh kosong!");
-                }
-            });
-        }
-
-        /* --- FITUR 6: SIMPAN LINK BROSUR PDF GLOBAL (MENU KATALOG) --- */
-        const btnSaveBrosur = document.querySelector('#panel-katalog .section-card:nth-child(2) .btn-save');
+        // --- 4. SIMPAN LINK BROSUR GLOBAL ---
+        const btnSaveBrosur = document.getElementById('btn-save-brosur');
         if(btnSaveBrosur) {
             btnSaveBrosur.addEventListener('click', async () => {
-                const inputBrosur = document.querySelector('#panel-katalog .section-card:nth-child(2) input[type="url"]');
-                const urlBrosur = inputBrosur.value.trim();
-                
+                const urlBrosur = document.getElementById('link-brosur-global').value.trim();
                 btnSaveBrosur.innerText = "Menyimpan...";
-                btnSaveBrosur.style.opacity = "0.7";
-                
                 await db.ref('global_data/brosur_pdf').set(urlBrosur);
-                
-                alert("Link Brosur PDF berhasil diterapkan ke seluruh tombol download!");
+                showToast("Link Brosur PDF diterapkan ke semua tombol!", "success");
                 btnSaveBrosur.innerText = "Update Link Brosur";
-                btnSaveBrosur.style.opacity = "1";
             });
         }
 
-        /* --- FITUR 7: AUTO-PREVIEW NAMA FILE SAAT DIPILIH --- */
-        // Logika ini agar saat Anda pilih foto/video di HP, kotak upload menampilkan nama filenya 
-        // sehingga Anda tidak bingung apakah file sudah ter-load atau belum.
+        // --- 5. TAMBAH KATEGORI BERITA BARU ---
+        const btnAddKatBerita = document.getElementById('btn-add-kategori-berita');
+        if(btnAddKatBerita) {
+            btnAddKatBerita.addEventListener('click', async () => {
+                const input = document.getElementById('berita-kategori-baru');
+                if(input.value.trim() !== "") {
+                    await db.ref('kategori_berita').push({ nama: input.value.trim() });
+                    showToast(`Kategori "${input.value}" ditambahkan!`, "success");
+                    input.value = "";
+                } else {
+                    showToast("Nama kategori tidak boleh kosong!", "error");
+                }
+            });
+        }
+
+        // --- 6. TAMBAH KATEGORI KATALOG BARU ---
+        const btnAddKatKatalog = document.getElementById('btn-save-kategori-katalog');
+        if(btnAddKatKatalog) {
+            btnAddKatKatalog.addEventListener('click', async () => {
+                const input = document.getElementById('katalog-kategori-baru');
+                if(input.value.trim() !== "") {
+                    await db.ref('kategori_katalog').push({ nama: input.value.trim() });
+                    showToast(`Kategori "${input.value}" ditambahkan!`, "success");
+                    input.value = "";
+                } else {
+                    showToast("Nama kategori tidak boleh kosong!", "error");
+                }
+            });
+        }
+
+        // --- 7. AUTO-PREVIEW FOTO SAAT DIPILIH DI FILE UPLOAD ---
         const allFileInputs = document.querySelectorAll('input[type="file"]');
         allFileInputs.forEach(input => {
             input.addEventListener('change', function(e) {
                 if(e.target.files.length > 0) {
                     const fileName = e.target.files[0].name;
-                    // Mencari elemen teks terdekat di dalam kotak upload
                     const textSpan = this.parentElement.querySelector('.file-upload-text');
                     if(textSpan) {
                         textSpan.innerText = `Terpilih: ${fileName}`;
                         textSpan.style.color = "var(--color-accent)";
                     }
+                    // Bikin efek local image preview (tanpa harus ke server dulu)
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        this.parentElement.style.backgroundImage = `url('${e.target.result}')`;
+                        // reset background style
+                    }
+                    reader.readAsDataURL(e.target.files[0]);
                 }
             });
         });
 
-        /* --- FITUR 8: LOGIKA PILIH KENDARAAN (SPESIFIKASI & HARGA) --- */
-        const selectKendaraanSpesifikasi = document.querySelector('#panel-spesifikasi .section-card:nth-child(1) select');
-        if(selectKendaraanSpesifikasi) {
-            selectKendaraanSpesifikasi.addEventListener('change', (e) => {
-                const mobilPilihan = e.target.value;
-                if(mobilPilihan !== "-- Pilih Mobil --") {
-                    console.log("Menyiapkan editor untuk mobil:", mobilPilihan);
+        // --- 8. SIMPAN KEAMANAN (GANTI PASSWORD / EMAIL) ---
+        const btnSaveKeamanan = document.getElementById('btn-save-keamanan');
+        if(btnSaveKeamanan) {
+            btnSaveKeamanan.addEventListener('click', async () => {
+                const newEmail = document.getElementById('keamanan-email').value;
+                const pin1 = document.getElementById('keamanan-pin1').value;
+                const pin2 = document.getElementById('keamanan-pin2').value;
+
+                if(pin1 && pin1 !== pin2) {
+                    showToast("Konfirmasi PIN Anda tidak cocok!", "error");
+                    return;
+                }
+
+                btnSaveKeamanan.innerText = "Memproses Pengamanan...";
+                btnSaveKeamanan.disabled = true;
+
+                try {
+                    const user = auth.currentUser;
+                    if(newEmail && newEmail !== user.email) {
+                        await user.updateEmail(newEmail);
+                    }
+                    if(pin1) {
+                        await user.updatePassword(pin1);
+                    }
+                    showToast("Kredensial berhasil diupdate! Silakan login kembali.", "success");
                     
-                    // Notifikasi visual bahwa sistem sudah mengunci editan untuk mobil ini
-                    alert(`Mode Edit Aktif untuk: ${mobilPilihan}\nSemua data Spesifikasi, Warna, dan Harga di bawah ini akan tersimpan khusus untuk tipe ini.`);
-                    
-                    // Note: Di tahap selanjutnya, kita akan menempatkan logika `db.ref('mobil/' + mobilPilihan).once()`
-                    // untuk menarik data mobil ini dari database jika sudah pernah diisi sebelumnya.
+                    // Logout otomatis setelah ganti sandi
+                    setTimeout(() => {
+                        auth.signOut().then(() => location.reload());
+                    }, 2500);
+                } catch(error) {
+                    console.error(error);
+                    showToast("Gagal mengubah kredensial. Anda harus Login ulang sebelum mencoba lagi.", "error");
+                    btnSaveKeamanan.innerText = "Simpan Kredensial & Email Baru";
+                    btnSaveKeamanan.disabled = false;
                 }
             });
         }
 
-    }); // <-- PENUTUP BLOK EVENT LISTENER 'DOMContentLoaded' DARI BAGIAN 2
+    });
+
     /* =========================================
        7. REALTIME LISTENER (RENDER DATA DINAMIS)
        ========================================= */
-    
-    // A. Listener Kategori Berita
+       
+    // Merender Kategori Berita secara Realtime
     function listenKategoriBerita() {
         db.ref('kategori_berita').on('value', (snapshot) => {
-            const listContainer = document.querySelector('#panel-berita .list-manager');
+            const listContainer = document.getElementById('list-kategori-berita');
+            const selectContainer = document.getElementById('berita-kategori-pilih');
             if(!listContainer) return;
 
-            // Kosongkan list HTML yang lama, buat ulang strukturnya
             listContainer.innerHTML = '<label style="color:var(--color-text-dim); font-size:0.8rem; margin-bottom:8px; display:block;">Daftar Kategori Tersedia:</label>';
+            if(selectContainer) selectContainer.innerHTML = '';
 
             snapshot.forEach((childSnapshot) => {
                 const key = childSnapshot.key;
                 const data = childSnapshot.val();
 
+                // 1. Buat List Hapus
                 const div = document.createElement('div');
                 div.className = 'list-item';
                 div.innerHTML = `
@@ -1317,32 +1058,43 @@
                     <button class="btn-delete" style="padding: 4px 10px; font-size:0.75rem;" onclick="hapusKategoriBerita('${key}')">Hapus</button>
                 `;
                 listContainer.appendChild(div);
+
+                // 2. Isi Dropdown Pilih Kategori di form Tambah Berita
+                if(selectContainer) {
+                    const option = document.createElement('option');
+                    option.value = data.nama;
+                    option.innerText = data.nama;
+                    selectContainer.appendChild(option);
+                }
             });
         });
     }
 
-    // Fungsi global untuk hapus kategori berita (dipanggil dari tombol yang digenerate di atas)
+    // Fungsi tombol hapus kategori berita
     window.hapusKategoriBerita = async function(key) {
-        if(confirm("Anda yakin ingin menghapus kategori berita ini?")) {
+        if(confirm("Yakin ingin menghapus kategori berita ini secara permanen?")) {
             await db.ref('kategori_berita/' + key).remove();
+            showToast("Kategori berita berhasil dihapus!", "info");
         }
     };
 
-    // B. Listener Kategori Katalog (MPV, SUV, dll)
+    // Merender Kategori Katalog secara Realtime
     function listenKategoriKatalog() {
         db.ref('kategori_katalog').on('value', (snapshot) => {
-            const listContainer = document.querySelector('#panel-katalog .list-manager');
+            const listContainer = document.getElementById('list-kategori-katalog');
+            const selectContainer = document.getElementById('katalog-mobil-kategori');
             if(!listContainer) return;
 
-            listContainer.innerHTML = ''; // Bersihkan list
+            listContainer.innerHTML = '';
+            if(selectContainer) selectContainer.innerHTML = '';
 
             snapshot.forEach((childSnapshot) => {
                 const key = childSnapshot.key;
                 const data = childSnapshot.val();
 
+                // 1. Buat List Editable
                 const div = document.createElement('div');
                 div.className = 'list-item';
-                // Input di sini bisa langsung di-edit teksnya
                 div.innerHTML = `
                     <input type="text" class="input-control" value="${data.nama}" id="input-katkatalog-${key}" style="background:transparent; border:none; width:50%; font-weight:bold;">
                     <div>
@@ -1351,56 +1103,34 @@
                     </div>
                 `;
                 listContainer.appendChild(div);
+
+                // 2. Isi Dropdown Pilih Kategori di form Tambah Mobil
+                if(selectContainer) {
+                    const option = document.createElement('option');
+                    option.value = data.nama;
+                    option.innerText = data.nama;
+                    selectContainer.appendChild(option);
+                }
             });
         });
     }
 
-    // Mengikat tombol "+ Simpan Kategori" Katalog
-    document.addEventListener('DOMContentLoaded', () => {
-        // Tombol simpan kategori katalog ada di card ke-3 panel katalog
-        const btnSimpanKatKatalog = document.querySelector('#panel-katalog .section-card:nth-child(3) .btn-save');
-        if(btnSimpanKatKatalog) {
-            btnSimpanKatKatalog.addEventListener('click', async () => {
-                const input = document.querySelector('#panel-katalog .section-card:nth-child(3) .input-control');
-                const namaKat = input.value.trim();
-                
-                if(namaKat !== "") {
-                    btnSimpanKatKatalog.innerText = "...";
-                    await db.ref('kategori_katalog').push({ nama: namaKat });
-                    input.value = ''; // Kosongkan input setelah berhasil
-                    btnSimpanKatKatalog.innerText = "Simpan Kategori";
-                }
-            });
-        }
-    });
-
-    // Fungsi global Edit & Hapus Kategori Katalog
+    // Fungsi tombol Edit Kategori Katalog
     window.editKategoriKatalog = async function(key) {
         const inputVal = document.getElementById('input-katkatalog-' + key).value.trim();
         if(inputVal !== "") {
             await db.ref('kategori_katalog/' + key).update({ nama: inputVal });
-            alert("Nama Kategori Katalog berhasil diupdate!");
+            showToast("Nama Kategori Katalog berhasil diupdate!", "success");
         }
     };
 
+    // Fungsi tombol hapus Kategori Katalog
     window.hapusKategoriKatalog = async function(key) {
-        if(confirm("Hapus kategori katalog ini dari sistem?")) {
+        if(confirm("Hapus kategori katalog ini dari sistem? Fitur filter akan hilang untuk kategori ini.")) {
             await db.ref('kategori_katalog/' + key).remove();
+            showToast("Kategori katalog dihapus.", "info");
         }
     };
-
-    /* =========================================
-       8. TRIGGER LISTENER SAAT LOGIN BERHASIL
-       ========================================= */
-    // Kita jalankan fungsi tarik data dinamis saat Firebase mengenali admin
-    auth.onAuthStateChanged((user) => {
-        if (user) {
-            listenKategoriBerita();
-            listenKategoriKatalog();
-            // Semua dropdown <select> untuk "Pilih Kategori" di input form nantinya 
-            // bisa Anda hubungkan ke listener ini jika diperlukan.
-        }
-    });
 
 </script>
 </body>
