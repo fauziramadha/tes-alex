@@ -43,7 +43,6 @@
         button { cursor: pointer; background: none; border: none; font-family: inherit; }
         .app-wrapper { width: 100%; max-width: 1440px; margin: 0 auto; position: relative; }
 
-        /* [UPDATE] ANIMASI KLIK (TACTILE FEEDBACK) - Termasuk Bottom Nav Item */
         button:active, a.btn-primary:active, a.btn-secondary:active, a.btn-outline:active, a.btn-fill:active, a.btn-glass-ad:active, .news-tab-btn:active, .btn-glass-service:active, .social-link-icon:active, .btn-luxury-outline:active, .social-btn:active, .btn-text-promo:active, .btn-map-nav:active, .btn-news-read:active, .bottom-nav-item:active {
             transform: scale(0.95) !important;
             transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
@@ -74,7 +73,7 @@
            ========================================= */
         .navbar { 
             position: fixed; top: 0; left: 0; width: 100%; padding: 24px 0; 
-            z-index: 1000; transition: var(--transition-smooth); 
+            z-index: 1050; transition: var(--transition-smooth); /* Diperbesar z-index agar tidak ketutupan */
             background: rgba(255, 255, 255, 0); 
         }
         .navbar.scrolled { 
@@ -106,6 +105,11 @@
             transition: var(--transition-smooth); 
         }
         .nav-links a:hover::after { width: 100%; }
+        
+        .nav-actions .btn-primary {
+            position: relative;
+            z-index: 1051; /* Mencegah overlap */
+        }
 
         /* =========================================
            BUTTONS
@@ -143,7 +147,8 @@
         .navbar.scrolled .menu-toggle span { background: var(--color-secondary); }
         .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
         .menu-overlay.active { opacity: 1; visibility: visible; }
-        .mobile-menu { position: fixed; top: 0; right: 0; width: 85%; max-width: 380px; height: 100vh; background: var(--color-primary); z-index: 1000; padding: 40px 32px 100px; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: -10px 0 40px rgba(0,0,0,0.15); overflow-y: auto; }
+        
+        .mobile-menu { position: fixed; top: 0; right: 0; width: 85%; max-width: 380px; height: 100vh; background: var(--color-primary); z-index: 1050; padding: 40px 32px 120px; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: -10px 0 40px rgba(0,0,0,0.15); overflow-y: auto; }
         .mobile-menu.active { transform: translateX(0); }
         .mobile-menu > * { opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         .mobile-menu.active > * { opacity: 1; transform: translateY(0); }
@@ -208,7 +213,7 @@
            ========================================= */
         .promo-section { background-color: #050505; padding: 0 0 100px 0; position: relative; overflow: hidden; color: var(--color-primary); }
         .promo-section::before { content: ''; position: absolute; top: 10%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(230,0,0,0.15) 0%, transparent 60%); filter: blur(80px); z-index: 0; pointer-events: none; }
-        .promo-header { text-align: center; position: relative; z-index: 1; margin-bottom: 60px; padding: 0 24px; }
+        .promo-header { text-align: center; margin-bottom: 60px; padding: 0 24px; position: relative; z-index: 1; }
         .promo-header h2 { font-size: clamp(2.2rem, 6vw, 3.5rem); letter-spacing: 1px; text-transform: uppercase; }
         .promo-header p { color: #aaa; margin-top: 12px; font-size: 1.1rem; }
         .promo-slider-wrapper { position: relative; width: 100%; max-width: 1440px; margin: 0 auto; }
@@ -400,18 +405,18 @@
         .footer-dev { font-size: 0.75rem; color: #555; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 2px; }
 
         /* =========================================
-           [NEW] MOBILE BOTTOM NAV (LUXURY)
+           MOBILE BOTTOM NAV (LUXURY)
            ========================================= */
         .mobile-bottom-nav {
             position: fixed; bottom: 0; left: 0; width: 100%;
-            background: rgba(5, 5, 5, 0.85); /* Tembus pandang gelap elegan */
+            background: rgba(5, 5, 5, 0.85);
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: none; /* Disembunyikan di layar Desktop/PC */
+            display: none; 
             justify-content: space-around; align-items: center;
             padding: 12px 16px; z-index: 1000;
             box-shadow: 0 -10px 40px rgba(0,0,0,0.4);
-            padding-bottom: calc(12px + env(safe-area-inset-bottom)); /* Dukungan poni iPhone */
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
         }
         .bottom-nav-item {
             display: flex; flex-direction: column; align-items: center; gap: 6px;
@@ -429,7 +434,7 @@
         .bottom-nav-item:hover, .bottom-nav-item:active { color: var(--color-primary); }
         .bottom-nav-item:hover .bottom-nav-icon, .bottom-nav-item:active .bottom-nav-icon {
             transform: translateY(-4px); fill: var(--color-accent);
-            filter: drop-shadow(0 4px 10px rgba(230,0,0,0.5)); /* Pendar merah khas Mitsubishi */
+            filter: drop-shadow(0 4px 10px rgba(230,0,0,0.5));
         }
 
         /* =========================================
@@ -456,10 +461,9 @@
             .map-container-wrapper { height: auto; display: flex; flex-direction: column; } 
             .google-map-iframe { height: 350px; }
             .footer-container { grid-template-columns: 1fr 1fr; }
-            
-            /* Tampilkan Mobile Bottom Nav dan beri jarak aman ke Footer */
             .mobile-bottom-nav { display: flex; }
             .footer { padding-bottom: 120px; } 
+            .mobile-menu .btn-primary { margin-bottom: 30px; } /* Mencegah overlap di bottom nav */
         }
         @media (min-width: 768px) { 
             .slider-btn-nav { display: flex; } 
@@ -503,7 +507,7 @@
             .testi-text { font-size: 0.75rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
             .testi-stars { font-size: 0.85rem; margin-bottom: 8px; }
 
-            .footer { padding: 80px 20px 120px; } /* Jarak aman ke Mobile Bottom Nav */
+            .footer { padding: 80px 20px 120px; } 
             .footer-container { grid-template-columns: 1fr; gap: 40px; text-align: center; }
             .footer-brand .footer-logo { margin: 0 auto 24px; }
             .footer-brand p { margin: 0 auto 32px; }
@@ -528,13 +532,14 @@
                 
                 <nav class="nav-links">
                     <a href="#home">Beranda</a>
-                    <a href="#katalog">Model</a>
-                    <a href="#berita">Berita</a>
-                    <a href="#testimoni">Testimoni</a>
+                    <a href="katalog.html">Model</a>
+                    <a href="harga.html">Daftar Harga</a>
+                    <a href="berita.html">Berita</a>
+                    <a href="testimoni.html">Testimoni</a>
                 </nav>
 
                 <div class="nav-actions">
-                    <a href="#katalog" class="btn-primary">Pesan Sekarang</a>
+                    <a href="katalog.html" class="btn-primary">Pesan Sekarang</a>
                     <button class="menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu">
                         <span></span><span></span><span></span>
                     </button>
@@ -560,33 +565,33 @@
                         <div class="accordion-inner">
                             <div style="margin-bottom: 16px; margin-top: 8px;">
                                 <span style="font-size: 0.75rem; color: var(--color-accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Passenger</span>
-                                <a href="#xforce" class="sub-menu-item">XFORCE</a>
-                                <a href="#pajero" class="sub-menu-item">NEW PAJERO SPORT</a>
-                                <a href="#xpander" class="sub-menu-item">NEW XPANDER</a>
-                                <a href="#xpandercross" class="sub-menu-item">NEW XPANDER CROSS</a>
+                                <a href="detail.html?mobil=xforce" class="sub-menu-item">XFORCE</a>
+                                <a href="detail.html?mobil=pajero-sport" class="sub-menu-item">NEW PAJERO SPORT</a>
+                                <a href="detail.html?mobil=xpander" class="sub-menu-item">NEW XPANDER</a>
+                                <a href="detail.html?mobil=xpander-cross" class="sub-menu-item">NEW XPANDER CROSS</a>
                             </div>
                             <div style="margin-bottom: 8px;">
                                 <span style="font-size: 0.75rem; color: var(--color-accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Commercial</span>
-                                <a href="#canter" class="sub-menu-item">FUSO CANTER</a>
-                                <a href="#ecanter" class="sub-menu-item">FUSO ECANTER</a>
-                                <a href="#l300" class="sub-menu-item">NEW COLT L300</a>
-                                <a href="#triton" class="sub-menu-item">ALL NEW TRITON</a>
-                                <a href="#l100" class="sub-menu-item">L100 EV</a>
+                                <a href="detail.html?mobil=canter" class="sub-menu-item">FUSO CANTER</a>
+                                <a href="detail.html?mobil=ecanter" class="sub-menu-item">FUSO ECANTER</a>
+                                <a href="detail.html?mobil=l300" class="sub-menu-item">NEW COLT L300</a>
+                                <a href="detail.html?mobil=triton" class="sub-menu-item">ALL NEW TRITON</a>
+                                <a href="detail.html?mobil=l100" class="sub-menu-item">L100 EV</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <a href="#promo" class="menu-item menu-item-2">Promo Terbaru</a>
-                <a href="#berita" class="menu-item menu-item-3">Berita & Acara</a>
-                <a href="#layanan" class="menu-item menu-item-4">Layanan Purna Jual</a>
+                <a href="berita.html" class="menu-item menu-item-3">Berita & Acara</a>
+                <a href="layanan.html" class="menu-item menu-item-4">Layanan Purna Jual</a>
                 <a href="#lokasi" class="menu-item menu-item-5">Lokasi Dealer</a>
                 
-                <a href="#testimoni" class="menu-item menu-item-6">Testimonial Gallery</a>
-                <a href="#katalog" class="menu-item menu-item-7">Daftar Harga</a>
-                <a href="#kontak" class="menu-item menu-item-8">Kontak</a>
+                <a href="testimoni.html" class="menu-item menu-item-6">Testimonial Gallery</a>
+                <a href="harga.html" class="menu-item menu-item-7">Daftar Harga</a>
+                <a href="kontak.html" class="menu-item menu-item-8">Kontak</a>
 
-                <a href="#katalog" class="btn-primary" style="margin-top: auto; text-align: center; width: 100%;">Pesan Sekarang</a>
+                <a href="katalog.html" class="btn-primary" style="margin-top: auto; text-align: center; width: 100%;">Pesan Sekarang</a>
             </div>
         </header>
 
@@ -599,8 +604,8 @@
                 <h1 class="hero-title">DRIVE YOUR <span class="text-accent">AMBITION</span></h1>
                 <p class="hero-subtitle">Rasakan harmoni sempurna antara performa mesin kelas dunia dan desain elegan masa depan. Mulai perjalanan Anda hari ini.</p>
                 <div class="hero-buttons">
-                    <a href="#katalog" class="btn-primary">Eksplorasi Model</a>
-                    <a href="#test-drive" class="btn-secondary">Test Drive</a>
+                    <a href="katalog.html" class="btn-primary">Eksplorasi Model</a>
+                    <a href="#" class="btn-secondary wa-test-drive">Test Drive</a>
                 </div>
             </div>
         </section>
@@ -617,16 +622,16 @@
                         <p class="bio-motto">"Kepuasan Anda adalah prioritas utama saya. Mari wujudkan kendaraan impian Anda dengan layanan profesional, transparan, dan sepenuh hati dari Mitsubishi Motors."</p>
                         
                         <div class="bio-socials">
-                            <a href="https://facebook.com" target="_blank" class="social-btn" aria-label="Facebook">
+                            <a href="#" target="_blank" class="social-btn link-fb-global" aria-label="Facebook">
                                 <svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
                             </a>
-                            <a href="https://instagram.com" target="_blank" class="social-btn" aria-label="Instagram">
+                            <a href="#" target="_blank" class="social-btn link-ig-global" aria-label="Instagram">
                                 <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                             </a>
-                            <a href="https://wa.me/628123456789" target="_blank" class="social-btn" aria-label="WhatsApp">
+                            <a href="#" target="_blank" class="social-btn link-wa-global" aria-label="WhatsApp">
                                 <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                             </a>
-                            <a href="mailto:info@mitsubishi.com" class="social-btn" aria-label="Email">
+                            <a href="#" class="social-btn link-email-global" aria-label="Email">
                                 <svg viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg>
                             </a>
                         </div>
@@ -657,7 +662,7 @@
                                 <span class="promo-badge">HOT PROMO</span>
                                 <h3>Bunga 0% XFORCE</h3>
                                 <p>DP ringan dan bunga 0% hingga 2 tahun eksklusif bulan ini.</p>
-                                <a href="#kontak" class="btn-text-promo">Klaim Promo <span>→</span></a>
+                                <a href="#" class="btn-text-promo wa-promo" data-promo="Bunga 0% XFORCE">Klaim Promo <span>→</span></a>
                             </div>
                         </div>
                     </div>
@@ -668,7 +673,7 @@
                                 <span class="promo-badge">CASHBACK</span>
                                 <h3>Pajero Special</h3>
                                 <p>Cashback puluhan juta rupiah dan free asuransi 1 tahun.</p>
-                                <a href="#kontak" class="btn-text-promo">Lihat Detail <span>→</span></a>
+                                <a href="#" class="btn-text-promo wa-promo" data-promo="Pajero Special">Lihat Detail <span>→</span></a>
                             </div>
                         </div>
                     </div>
@@ -679,7 +684,7 @@
                                 <span class="promo-badge">PAKET SMART</span>
                                 <h3>Xpander Family</h3>
                                 <p>Gratis biaya jasa & suku cadang hingga 50.000 KM.</p>
-                                <a href="#kontak" class="btn-text-promo">Pesan Sekarang <span>→</span></a>
+                                <a href="#" class="btn-text-promo wa-promo" data-promo="Xpander Family">Pesan Sekarang <span>→</span></a>
                             </div>
                         </div>
                     </div>
@@ -691,7 +696,7 @@
                                 <span class="promo-badge">HOT PROMO</span>
                                 <h3>Bunga 0% XFORCE</h3>
                                 <p>DP ringan dan bunga 0% hingga 2 tahun eksklusif bulan ini.</p>
-                                <a href="#kontak" class="btn-text-promo">Klaim Promo <span>→</span></a>
+                                <a href="#" class="btn-text-promo wa-promo" data-promo="Bunga 0% XFORCE">Klaim Promo <span>→</span></a>
                             </div>
                         </div>
                     </div>
@@ -702,7 +707,7 @@
                                 <span class="promo-badge">CASHBACK</span>
                                 <h3>Pajero Special</h3>
                                 <p>Cashback puluhan juta rupiah dan free asuransi 1 tahun.</p>
-                                <a href="#kontak" class="btn-text-promo">Lihat Detail <span>→</span></a>
+                                <a href="#" class="btn-text-promo wa-promo" data-promo="Pajero Special">Lihat Detail <span>→</span></a>
                             </div>
                         </div>
                     </div>
@@ -713,7 +718,7 @@
                                 <span class="promo-badge">PAKET SMART</span>
                                 <h3>Xpander Family</h3>
                                 <p>Gratis biaya jasa & suku cadang hingga 50.000 KM.</p>
-                                <a href="#kontak" class="btn-text-promo">Pesan Sekarang <span>→</span></a>
+                                <a href="#" class="btn-text-promo wa-promo" data-promo="Xpander Family">Pesan Sekarang <span>→</span></a>
                             </div>
                         </div>
                     </div>
@@ -722,7 +727,8 @@
                 
                 <div class="slider-btn-nav next" id="promo-next" aria-label="Geser Kanan"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></div>
             </div>
-
+        </section>
+        <div style="background-color: #050505; padding-bottom: 100px; margin-top: -20px;">
             <div class="ads-grid-container reveal-up delay-1">
                 <div class="ads-grid">
                     <div class="luxury-ad-space">
@@ -731,7 +737,7 @@
                         </video>
                         <div class="ad-content">
                             <h3>Drive Your Ambition</h3>
-                            <button class="btn-glass-ad" aria-label="Lihat Video"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Lihat Video</button>
+                            <a href="#" class="btn-glass-ad wa-iklan" data-iklan="Video Drive Your Ambition" aria-label="Lihat Video"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Hubungi Kami</a>
                         </div>
                     </div>
 
@@ -740,12 +746,13 @@
                         <div class="ad-content">
                             <h3>Layanan VVIP</h3>
                             <p>Prioritas servis tanpa antre khusus bulan ini.</p>
-                            <a href="#kontak" class="btn-glass-ad">Daftar Sekarang <svg viewBox="0 0 24 24" style="margin-left:4px;"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></a>
+                            <a href="#" class="btn-glass-ad wa-iklan" data-iklan="Layanan VVIP">Daftar Sekarang <svg viewBox="0 0 24 24" style="margin-left:4px;"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></a>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+
         <section class="katalog-section reveal-up delay-1" id="katalog">
             <div class="katalog-header">
                 <h2 class="katalog-title">Katalog Model</h2>
@@ -764,7 +771,10 @@
                     <div class="car-info">
                         <h3 class="car-name">XFORCE</h3><div class="car-price">Mulai Rp 379.9 Juta</div>
                         <p class="car-desc">Compact SUV 5-seater dengan desain futuristik dan mode berkendara adaptif.</p>
-                        <div class="car-actions"><a href="#" class="btn-outline">Spesifikasi</a><a href="#kontak" class="btn-fill">Pesan</a></div>
+                        <div class="car-actions">
+                            <a href="detail.html?mobil=xforce" class="btn-outline">Spesifikasi</a>
+                            <a href="#" class="btn-fill wa-pesan-mobil" data-mobil="XFORCE">Pesan</a>
+                        </div>
                     </div>
                 </div>
                 <div class="car-card" data-category="passenger">
@@ -772,7 +782,10 @@
                     <div class="car-info">
                         <h3 class="car-name">Pajero Sport</h3><div class="car-price">Mulai Rp 552.1 Juta</div>
                         <p class="car-desc">SUV tangguh dengan performa buas dan kemewahan di setiap perjalanan.</p>
-                        <div class="car-actions"><a href="#" class="btn-outline">Spesifikasi</a><a href="#kontak" class="btn-fill">Pesan</a></div>
+                        <div class="car-actions">
+                            <a href="detail.html?mobil=pajero-sport" class="btn-outline">Spesifikasi</a>
+                            <a href="#" class="btn-fill wa-pesan-mobil" data-mobil="Pajero Sport">Pesan</a>
+                        </div>
                     </div>
                 </div>
                 <div class="car-card" data-category="passenger">
@@ -780,7 +793,10 @@
                     <div class="car-info">
                         <h3 class="car-name">New Xpander</h3><div class="car-price">Mulai Rp 261.2 Juta</div>
                         <p class="car-desc">MPV keluarga yang mengedepankan kenyamanan ekstra dan suspensi canggih.</p>
-                        <div class="car-actions"><a href="#" class="btn-outline">Spesifikasi</a><a href="#kontak" class="btn-fill">Pesan</a></div>
+                        <div class="car-actions">
+                            <a href="detail.html?mobil=xpander" class="btn-outline">Spesifikasi</a>
+                            <a href="#" class="btn-fill wa-pesan-mobil" data-mobil="New Xpander">Pesan</a>
+                        </div>
                     </div>
                 </div>
                 <div class="car-card" data-category="passenger">
@@ -788,7 +804,10 @@
                     <div class="car-info">
                         <h3 class="car-name">Xpander Cross</h3><div class="car-price">Mulai Rp 319.7 Juta</div>
                         <p class="car-desc">Perpaduan gaya SUV yang kokoh dengan kenyamanan kabin MPV keluarga.</p>
-                        <div class="car-actions"><a href="#" class="btn-outline">Spesifikasi</a><a href="#kontak" class="btn-fill">Pesan</a></div>
+                        <div class="car-actions">
+                            <a href="detail.html?mobil=xpander-cross" class="btn-outline">Spesifikasi</a>
+                            <a href="#" class="btn-fill wa-pesan-mobil" data-mobil="Xpander Cross">Pesan</a>
+                        </div>
                     </div>
                 </div>
                 <div class="car-card" data-category="commercial">
@@ -796,7 +815,10 @@
                     <div class="car-info">
                         <h3 class="car-name">Colt L300</h3><div class="car-price">Mulai Rp 224.1 Juta</div>
                         <p class="car-desc">Legenda bisnis andalan Indonesia dengan mesin Euro 4 yang tangguh dan irit.</p>
-                        <div class="car-actions"><a href="#" class="btn-outline">Spesifikasi</a><a href="#kontak" class="btn-fill">Pesan</a></div>
+                        <div class="car-actions">
+                            <a href="detail.html?mobil=colt-l300" class="btn-outline">Spesifikasi</a>
+                            <a href="#" class="btn-fill wa-pesan-mobil" data-mobil="Colt L300">Pesan</a>
+                        </div>
                     </div>
                 </div>
                 <div class="car-card" data-category="commercial">
@@ -804,13 +826,16 @@
                     <div class="car-info">
                         <h3 class="car-name">All New Triton</h3><div class="car-price">Mulai Rp 290.5 Juta</div>
                         <p class="car-desc">Pick-up double cabin andalan di medan berat, siap diajak kerja keras.</p>
-                        <div class="car-actions"><a href="#" class="btn-outline">Spesifikasi</a><a href="#kontak" class="btn-fill">Pesan</a></div>
+                        <div class="car-actions">
+                            <a href="detail.html?mobil=triton" class="btn-outline">Spesifikasi</a>
+                            <a href="#" class="btn-fill wa-pesan-mobil" data-mobil="All New Triton">Pesan</a>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="katalog-more reveal-up delay-2" style="text-align: center; margin-top: 56px;">
-                <button id="btn-load-more" class="btn-primary" style="padding: 18px 48px; font-size: 1rem; box-shadow: 0 10px 20px rgba(230,0,0,0.2);">
+                <button onclick="window.location.href='katalog.html'" class="btn-primary" style="padding: 18px 48px; font-size: 1rem; box-shadow: 0 10px 20px rgba(230,0,0,0.2);">
                     Lihat Selengkapnya
                 </button>
             </div>
@@ -831,28 +856,28 @@
             </div>
 
             <div class="news-grid reveal-up delay-2" id="news-grid-container">
-                <div class="news-card" data-category="berita">
+                <div class="news-card" data-category="berita" onclick="window.location.href='berita.html?id=rekor-xforce'">
                     <div class="news-img-wrapper"><span class="news-category-badge">Berita</span><img src="https://images.unsplash.com/photo-1517524206127-48bbd363f3d7?q=80&w=800&auto=format&fit=crop" alt="Performa Kendaraan" class="news-img"></div>
                     <div class="news-content">
                         <div class="news-date">21 Apr 2026</div><h3 class="news-card-title">Mitsubishi Tembus Rekor Penjualan XFORCE Nasional Tahun Ini</h3>
                         <p class="news-snippet">Antusiasme masyarakat yang tinggi terhadap desain futuristik dan fitur premium dari Mitsubishi XFORCE berhasil mencatatkan rekor penjualan tertinggi pada kuartal pertama tahun ini di Indonesia...</p>
-                        <a href="berita.html" class="btn-news-read">Klik Selengkapnya <span>→</span></a>
+                        <a href="berita.html?id=rekor-xforce" class="btn-news-read">Klik Selengkapnya <span>→</span></a>
                     </div>
                 </div>
-                <div class="news-card" data-category="exhibition">
+                <div class="news-card" data-category="exhibition" onclick="window.location.href='berita.html?id=auto-show-2026'">
                     <div class="news-img-wrapper"><span class="news-category-badge" style="background:var(--color-accent);">Exhibition</span><img src="https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?q=80&w=800&auto=format&fit=crop" alt="Pameran Otomotif" class="news-img"></div>
                     <div class="news-content">
                         <div class="news-date">18 Apr 2026</div><h3 class="news-card-title">Auto Show 2026: Sambut Peluncuran Varian Baru SUV Premium</h3>
                         <p class="news-snippet">Kunjungi pameran eksklusif kami akhir pekan ini. Rasakan langsung kemewahan kabin dan uji coba langsung ketangguhan varian terbaru SUV yang dirancang khusus untuk memacu adrenalin Anda...</p>
-                        <a href="berita.html" class="btn-news-read">Klik Selengkapnya <span>→</span></a>
+                        <a href="berita.html?id=auto-show-2026" class="btn-news-read">Klik Selengkapnya <span>→</span></a>
                     </div>
                 </div>
-                <div class="news-card" data-category="lifestyle">
+                <div class="news-card" data-category="lifestyle" onclick="window.location.href='berita.html?id=lifestyle-eksklusif'">
                     <div class="news-img-wrapper"><span class="news-category-badge" style="background:#0A0A0A;">Lifestyle</span><img src="https://images.unsplash.com/photo-1616423641405-824ecf55d7ad?q=80&w=800&auto=format&fit=crop" alt="Gaya Hidup Eksklusif" class="news-img"></div>
                     <div class="news-content">
                         <div class="news-date">10 Apr 2026</div><h3 class="news-card-title">Eksklusivitas Berkendara: Paduan Desain Editorial dan Kecepatan</h3>
                         <p class="news-snippet">Menggabungkan estetika mewah dengan performa buas. Pelajari bagaimana desain eksterior terbaru kami terinspirasi dari gaya hidup masyarakat urban kelas atas yang mengutamakan privilese dan gaya...</p>
-                        <a href="berita.html" class="btn-news-read">Klik Selengkapnya <span>→</span></a>
+                        <a href="berita.html?id=lifestyle-eksklusif" class="btn-news-read">Klik Selengkapnya <span>→</span></a>
                     </div>
                 </div>
             </div>
@@ -946,8 +971,8 @@
                 </div>
             </div>
 
-            <div class="testi-btn-wrapper reveal-up delay-2">
-                <button class="btn-luxury-outline">
+            <div class="testi-btn-wrapper reveal-up delay-2" style="text-align: center;">
+                <button class="btn-luxury-outline" onclick="window.location.href='testimoni.html'">
                     Lihat Galeri Testimoni
                     <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
@@ -970,22 +995,22 @@
             </div>
         </section>
 
-        <footer class="footer" id="kontak">
+        <footer class="footer" id="kontak-footer">
             <div class="footer-container reveal-up delay-1">
                 <div class="footer-brand">
                     <img src="https://i.ibb.co.com/84Ss5Bjy/IMG-3284.png" alt="Mitsubishi Motors" class="footer-logo">
                     <p>Dealer Resmi Mitsubishi Batam. Menghadirkan layanan premium dan pengalaman berkendara kelas dunia untuk Anda dan keluarga.</p>
                     <div class="footer-socials">
-                        <a href="https://facebook.com" target="_blank" class="social-link-icon" id="link-fb-footer" aria-label="Facebook">
+                        <a href="#" target="_blank" class="social-link-icon link-fb-global" aria-label="Facebook">
                             <svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
                         </a>
-                        <a href="https://instagram.com" target="_blank" class="social-link-icon" id="link-ig-footer" aria-label="Instagram">
+                        <a href="#" target="_blank" class="social-link-icon link-ig-global" aria-label="Instagram">
                             <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                         </a>
-                        <a href="https://wa.me/628123456789" target="_blank" class="social-link-icon" id="link-wa-footer" aria-label="WhatsApp">
+                        <a href="#" target="_blank" class="social-link-icon link-wa-global" aria-label="WhatsApp">
                             <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                         </a>
-                        <a href="mailto:info@mitsubishi.com" class="social-link-icon" id="link-email-footer" aria-label="Email">
+                        <a href="#" class="social-link-icon link-email-global" aria-label="Email">
                             <svg viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg>
                         </a>
                     </div>
@@ -994,19 +1019,19 @@
                 <div class="footer-col">
                     <h4>Pintasan</h4>
                     <ul>
-                        <li><a href="#katalog">Katalog Model</a></li>
+                        <li><a href="katalog.html">Katalog Model</a></li>
                         <li><a href="#promo">Promo Terbaru</a></li>
-                        <li><a href="#testimoni">Testimoni Pelanggan</a></li>
-                        <li><a href="#berita">Berita & Acara</a></li>
+                        <li><a href="testimoni.html">Testimoni Pelanggan</a></li>
+                        <li><a href="berita.html">Berita & Acara</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-col">
                     <h4>Layanan</h4>
                     <ul>
-                        <li><a href="#layanan">Purna Jual</a></li>
-                        <li><a href="#katalog">Daftar Harga</a></li>
-                        <li><a href="#test-drive">Test Drive</a></li>
+                        <li><a href="layanan.html">Purna Jual</a></li>
+                        <li><a href="harga.html">Daftar Harga</a></li>
+                        <li><a href="#" class="wa-test-drive">Test Drive</a></li>
                         <li><a href="#lokasi">Lokasi Dealer</a></li>
                     </ul>
                 </div>
@@ -1031,7 +1056,7 @@
         </footer>
 
         <nav class="mobile-bottom-nav">
-            <a href="#katalog" class="bottom-nav-item" aria-label="Daftar Harga">
+            <a href="harga.html" class="bottom-nav-item" aria-label="Daftar Harga">
                 <svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.41l9 9c.36.36.86.59 1.41.59s1.05-.22 1.41-.59l7-7c.36-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
                 <span class="bottom-nav-label">Daftar Harga</span>
             </a>
@@ -1041,7 +1066,7 @@
                 <span class="bottom-nav-label">Telepon</span>
             </a>
             
-            <a href="https://wa.me/628123456789" target="_blank" class="bottom-nav-item" id="bottom-nav-wa" aria-label="Chat WhatsApp">
+            <a href="#" target="_blank" class="bottom-nav-item link-wa-global" aria-label="Chat WhatsApp">
                 <svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 <span class="bottom-nav-label">WhatsApp</span>
             </a>
@@ -1053,7 +1078,6 @@
 
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
-
     <script>
         // --- 0. LOGIKA PRELOADER (1 Detik) ---
         const preloader = document.getElementById('preloader');
@@ -1061,17 +1085,60 @@
             setTimeout(() => { preloader.classList.add('hide'); }, 1000); 
         });
 
-        // --- 1. KONFIGURASI API FIREBASE REALTIME DATABASE (SINKRON DENGAN ADMIN) ---
+        // --- 1. KONFIGURASI API FIREBASE REALTIME DATABASE ---
         const firebaseConfig = {
             apiKey: "AIzaSyBrNnp8PJiKYATH-1ie67aq9WqESpIXBus",
             authDomain: "landing-page-alex.firebaseapp.com",
+            databaseURL: "https://landing-page-alex-default-rtdb.asia-southeast1.firebasedatabase.app",
             projectId: "landing-page-alex",
             storageBucket: "landing-page-alex.firebasestorage.app",
             messagingSenderId: "164638589744",
             appId: "1:164638589744:web:8470111cc7c41696887ef5"
         };
         firebase.initializeApp(firebaseConfig); 
-        const db = firebase.database(); // Menggunakan database() BUKAN firestore()
+        const db = firebase.database();
+
+        // Variabel global untuk menyimpan nomor WA agar bisa dipanggil fungsi lain
+        let currentSalesWA = ""; 
+
+        // Fungsi khusus merakit link WhatsApp dengan teks dinamis
+        function updateWhatsAppLinks(nomorWa) {
+            if(!nomorWa) return;
+            
+            // 1. Tombol WA Global (Footer, Bottom Nav, Profil Bio)
+            const globalWaLinks = document.querySelectorAll('.link-wa-global');
+            const teksUmum = encodeURIComponent("Halo Kak, saya tertarik dengan informasi Mitsubishi Motors dari website. Boleh minta informasinya lebih lanjut? (Saya mengerti syarat wajib DP 50%)");
+            globalWaLinks.forEach(link => link.href = `https://wa.me/${nomorWa}?text=${teksUmum}`);
+
+            // 2. Tombol Test Drive (Hero & Layanan Bawah)
+            const testDriveLinks = document.querySelectorAll('.wa-test-drive');
+            const teksTestDrive = encodeURIComponent("Halo Kak, saya tertarik dengan salah satu mobil di sini, bisakah jadwalkan waktu untuk saya test drive? (Saya mengerti syarat wajib DP 50%)");
+            testDriveLinks.forEach(link => link.href = `https://wa.me/${nomorWa}?text=${teksTestDrive}`);
+
+            // 3. Tombol Promo (Glassmorphism Card)
+            const promoLinks = document.querySelectorAll('.wa-promo');
+            promoLinks.forEach(link => {
+                const namaPromo = link.getAttribute('data-promo');
+                const teksPromo = encodeURIComponent(`Halo Kak, saya ingin mengklaim penawaran promo "${namaPromo}" dari website. Mohon info lebih lanjut. (Saya mengerti syarat wajib DP 50%)`);
+                link.href = `https://wa.me/${nomorWa}?text=${teksPromo}`;
+            });
+
+            // 4. Tombol Iklan Video / VVIP
+            const iklanLinks = document.querySelectorAll('.wa-iklan');
+            iklanLinks.forEach(link => {
+                const namaIklan = link.getAttribute('data-iklan');
+                const teksIklan = encodeURIComponent(`Halo Kak, saya tertarik dengan informasi dari "${namaIklan}" di website. (Saya mengerti syarat wajib DP 50%)`);
+                link.href = `https://wa.me/${nomorWa}?text=${teksIklan}`;
+            });
+
+            // 5. Tombol Pesan di Katalog Mobil
+            const pesanMobilLinks = document.querySelectorAll('.wa-pesan-mobil');
+            pesanMobilLinks.forEach(link => {
+                const namaMobil = link.getAttribute('data-mobil');
+                const teksPesanMobil = encodeURIComponent(`Halo Kak, saya tertarik dengan mobil "${namaMobil}". Boleh minta informasinya lebih lanjut? (Saya mengerti syarat wajib DP 50%)`);
+                link.href = `https://wa.me/${nomorWa}?text=${teksPesanMobil}`;
+            });
+        }
 
         // --- 2. LOGIKA PEMBACA OTOMATIS (REALTIME SYNC) DARI ADMIN ---
         function sinkronisasiOtomatis() {
@@ -1087,21 +1154,27 @@
                     if(data.bio) document.querySelector('.bio-motto').innerText = `"${data.bio}"`;
                     if(data.fotoUrl) document.querySelector('.bio-img').src = data.fotoUrl;
 
-                    // Update Semua Link WhatsApp (Dengan peringatan DP)
-                    const waLinks = document.querySelectorAll('a[href^="https://wa.me/"]');
-                    waLinks.forEach(link => {
-                        let msg = "?text=Halo%20Mas%20Budi,%20saya%20tertarik%20dengan%20promo%20Mitsubishi.%20(Saya%20mengerti%20syarat%20wajib%20DP%2050%25)";
-                        if(data.whatsapp) link.href = `https://wa.me/${data.whatsapp}${msg}`;
-                    });
+                    // Update Social Media Global (FB & IG)
+                    if(data.ig) {
+                        document.querySelectorAll('.link-ig-global').forEach(link => link.href = `https://instagram.com/${data.ig}`);
+                    }
+                    // Jika ada field FB nanti bisa ditambahkan:
+                    // if(data.fb) { document.querySelectorAll('.link-fb-global').forEach(l => l.href = data.fb); }
 
-                    // Update Telepon Bawah
-                    if(data.telepon) document.getElementById('bottom-nav-telp').href = `tel:${data.telepon}`;
-                    
-                    // Update Instagram
-                    const igLinks = document.querySelectorAll('a[href*="instagram.com"]');
-                    igLinks.forEach(link => {
-                        if(data.ig) link.href = `https://instagram.com/${data.ig}`;
-                    });
+                    // Update Telepon 
+                    if(data.telepon) {
+                        document.getElementById('bottom-nav-telp').href = `tel:${data.telepon}`;
+                        const teksTelp = document.getElementById('footer-telepon-text');
+                        if(teksTelp) {
+                            teksTelp.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> ${data.telepon}`;
+                        }
+                    }
+
+                    // Update seluruh link WhatsApp
+                    if(data.whatsapp) {
+                        currentSalesWA = data.whatsapp;
+                        updateWhatsAppLinks(currentSalesWA);
+                    }
                 }
             });
 
@@ -1109,9 +1182,7 @@
             db.ref('global_data/alamat').on('value', (snapshot) => {
                 const data = snapshot.val();
                 if(data) {
-                    // Update Iframe Gmaps
                     if(data.gmaps) {
-                        // Mengekstrak src dari iframe Gmaps yang diinput admin
                         const tempDiv = document.createElement('div');
                         tempDiv.innerHTML = data.gmaps;
                         const iframe = tempDiv.querySelector('iframe');
@@ -1119,14 +1190,10 @@
                             document.getElementById('iframe-gmaps').src = iframe.src;
                         }
                     }
-                    
-                    // Update Teks Alamat (Di Map & Footer)
                     if(data.teks_alamat) {
                         document.getElementById('alamat-text').innerText = data.teks_alamat;
                         document.getElementById('footer-alamat-text').innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> ${data.teks_alamat}`;
                     }
-
-                    // Update Jam Operasional
                     if(data.jam_buka && data.jam_tutup) {
                         document.getElementById('jam-operasional-text').innerHTML = `Senin - Minggu<br>${data.jam_buka} - ${data.jam_tutup} WIB`;
                     }
@@ -1146,17 +1213,17 @@
             });
         }
 
-        // Panggil fungsi sinkronisasi
+        // Jalankan Sinkronisasi Otomatis
         sinkronisasiOtomatis();
 
-        // --- 2. NAVBAR SCROLL ---
+        // --- 3. NAVBAR SCROLL ---
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) navbar.classList.add('scrolled');
             else navbar.classList.remove('scrolled');
         });
 
-        // --- 3. UX SIDEBAR MENU ---
+        // --- 4. UX SIDEBAR MENU ---
         const menuBtn = document.getElementById('mobile-menu-btn');
         const closeMenuBtn = document.getElementById('close-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -1177,7 +1244,7 @@
         const normalLinks = document.querySelectorAll('.mobile-menu .menu-item, .mobile-menu .sub-menu-item');
         normalLinks.forEach(link => { link.addEventListener('click', () => { if(isMenuOpen) toggleMenu(); }); });
 
-        // --- 4. PARALLAX SCROLL BIO ---
+        // --- 5. PARALLAX SCROLL BIO ---
         const parallaxCard = document.getElementById('parallax-card');
         let ticking = false;
         window.addEventListener('scroll', () => {
@@ -1199,7 +1266,7 @@
             }
         });
 
-        // --- 5. LOGIKA SLIDER PROMO (INFINITE AUTO LOOP PC/MOBILE) ---
+        // --- 6. LOGIKA SLIDER PROMO (INFINITE AUTO LOOP PC/MOBILE) ---
         const promoSlider = document.getElementById('promo-slider');
         const btnPrev = document.getElementById('promo-prev');
         const btnNext = document.getElementById('promo-next');
@@ -1274,7 +1341,7 @@
             promoSlider.addEventListener('touchend', startSliderLoop);
         }
 
-        // --- 6. LOGIKA REVEAL UP (Animasi Muncul) ---
+        // --- 7. LOGIKA REVEAL UP (Animasi Muncul) ---
         const revealElements = document.querySelectorAll('.reveal-up');
         const revealOptions = { threshold: 0.05, rootMargin: "0px 0px 50px 0px" };
         const revealOnScroll = new IntersectionObserver(function(entries, observer) {
@@ -1287,7 +1354,7 @@
         }, revealOptions);
         revealElements.forEach(el => revealOnScroll.observe(el));
 
-        // --- 7. LOGIKA FILTER KATALOG PRODUK ---
+        // --- 8. LOGIKA FILTER KATALOG PRODUK ---
         const filterBtns = document.querySelectorAll('.filter-btn');
         const carCards = document.querySelectorAll('.car-card');
         filterBtns.forEach(btn => {
@@ -1306,7 +1373,7 @@
             });
         });
 
-        // --- 8. LOGIKA FILTER BERITA & ACARA ---
+        // --- 9. LOGIKA FILTER BERITA & ACARA ---
         const newsTabs = document.querySelectorAll('.news-tab-btn');
         const newsCards = document.querySelectorAll('.news-card');
         newsTabs.forEach(tab => {
