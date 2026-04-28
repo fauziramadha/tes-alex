@@ -943,7 +943,7 @@
     <div id="toast-container"></div>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
-    <script>
+       <script>
         // --- 0. LOGIKA PRELOADER (1 Detik) ---
         const preloader = document.getElementById('preloader');
         window.addEventListener('load', () => { 
@@ -970,17 +970,14 @@
         function updateWhatsAppLinks(nomorWa) {
             if(!nomorWa) return;
             
-            // 1. Tombol WA Global (Footer, Bottom Nav, Profil Bio)
             const globalWaLinks = document.querySelectorAll('.link-wa-global');
             const teksUmum = encodeURIComponent("Halo Kak, saya tertarik dengan informasi Mitsubishi Motors dari website. Boleh minta informasinya lebih lanjut?");
             globalWaLinks.forEach(link => link.href = `https://wa.me/${nomorWa}?text=${teksUmum}`);
 
-            // 2. Tombol Test Drive (Hero & Layanan Bawah)
             const testDriveLinks = document.querySelectorAll('.wa-test-drive');
             const teksTestDrive = encodeURIComponent("Halo Kak, saya tertarik dengan salah satu mobil di dealer, boleh minta informasi lebih detail untuk jadwal test drive mobilnya Kak?");
             testDriveLinks.forEach(link => link.href = `https://wa.me/${nomorWa}?text=${teksTestDrive}`);
 
-            // 3. Tombol Promo (Glassmorphism Card)
             const promoLinks = document.querySelectorAll('.wa-promo');
             promoLinks.forEach(link => {
                 const namaPromo = link.getAttribute('data-promo') || "Promo Spesial";
@@ -988,7 +985,6 @@
                 link.href = `https://wa.me/${nomorWa}?text=${teksPromo}`;
             });
 
-            // 4. Tombol Iklan Video / VVIP
             const iklanLinks = document.querySelectorAll('.wa-iklan');
             iklanLinks.forEach(link => {
                 const namaIklan = link.getAttribute('data-iklan') || "Iklan";
@@ -996,7 +992,6 @@
                 link.href = `https://wa.me/${nomorWa}?text=${teksIklan}`;
             });
 
-            // 5. Tombol Pesan di Katalog Mobil
             const pesanMobilLinks = document.querySelectorAll('.wa-pesan-mobil');
             pesanMobilLinks.forEach(link => {
                 const namaMobil = link.getAttribute('data-mobil') || "Mobil Mitsubishi";
@@ -1017,20 +1012,13 @@
                     if(data.bio) document.querySelector('.bio-motto').innerText = `"${data.bio}"`;
                     if(data.fotoUrl) document.querySelector('.bio-img').src = data.fotoUrl;
 
-                    if(data.ig) {
-                        document.querySelectorAll('.link-ig-global').forEach(link => link.href = `https://instagram.com/${data.ig}`);
-                    }
+                    if(data.ig) { document.querySelectorAll('.link-ig-global').forEach(link => link.href = `https://instagram.com/${data.ig}`); }
                     if(data.telepon) {
                         document.getElementById('bottom-nav-telp').href = `tel:${data.telepon}`;
                         const teksTelp = document.getElementById('footer-telepon-text');
-                        if(teksTelp) {
-                            teksTelp.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> ${data.telepon}`;
-                        }
+                        if(teksTelp) teksTelp.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> ${data.telepon}`;
                     }
-                    if(data.whatsapp) {
-                        currentSalesWA = data.whatsapp;
-                        updateWhatsAppLinks(currentSalesWA);
-                    }
+                    if(data.whatsapp) { currentSalesWA = data.whatsapp; updateWhatsAppLinks(currentSalesWA); }
                 }
             });
 
@@ -1042,9 +1030,7 @@
                         const tempDiv = document.createElement('div');
                         tempDiv.innerHTML = data.gmaps;
                         const iframe = tempDiv.querySelector('iframe');
-                        if(iframe && iframe.src) {
-                            document.getElementById('iframe-gmaps').src = iframe.src;
-                        }
+                        if(iframe && iframe.src) document.getElementById('iframe-gmaps').src = iframe.src;
                     }
                     if(data.teks_alamat) {
                         document.getElementById('alamat-text').innerText = data.teks_alamat;
@@ -1056,24 +1042,26 @@
                 }
             });
 
-            // C. Sinkronisasi Hero Beranda (Dengan Data Teks Aksen)
+            // C. Sinkronisasi Hero Beranda (SISTEM ANTI-GAGAL)
             db.ref('halaman/landing/hero').on('value', (snapshot) => {
                 const data = snapshot.val();
                 
-                // Menarik tulisan atas (biasanya hitam/putih standar)
-                const teksAtas = (data && data.teks_atas) ? data.teks_atas : "DRIVE YOUR";
-                // Menarik tulisan aksen merah dari database
+                // Menarik data dari Firebase
+                let teksAtas = (data && data.teks_atas) ? data.teks_atas : "DRIVE YOUR";
                 const teksAksen = (data && data.teks_aksen) ? data.teks_aksen : "AMBITION"; 
-                // Menarik tulisan sub-judul bawah
                 const teksBawah = (data && data.teks_bawah) ? data.teks_bawah : "Rasakan harmoni sempurna antara performa mesin kelas dunia dan desain elegan masa depan. Mulai perjalanan Anda hari ini.";
                 const bgUrl = (data && data.bgUrl) ? data.bgUrl : "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?q=80&w=2000&auto=format&fit=crop";
 
-                // Menempelkan ke elemen HTML yang sesuai
-                const titleMainElement = document.getElementById('hero-title-main');
-                const titleAksenElement = document.getElementById('hero-aksen');
-                
-                if (titleMainElement) titleMainElement.innerText = teksAtas;
-                if (titleAksenElement) titleAksenElement.innerText = teksAksen;
+                // PENTING: Bersihkan teksAtas jika tidak sengaja menyimpan kode HTML <span...> dari database lama
+                if (teksAtas.includes('<span')) { 
+                    teksAtas = teksAtas.split('<span')[0].trim(); 
+                }
+
+                // Paksa cetak ulang HTML-nya agar aksen merah pasti keluar tanpa peduli struktur lawas
+                const heroTitleElement = document.querySelector('.hero-title');
+                if (heroTitleElement) {
+                    heroTitleElement.innerHTML = `${teksAtas} <span class="text-accent">${teksAksen}</span>`;
+                }
                 
                 document.querySelector('.hero-subtitle').innerText = teksBawah;
                 document.querySelector('.hero-img').src = bgUrl;
@@ -1086,10 +1074,9 @@
                 if(!sliderContainer) return;
 
                 if(data) {
-                    sliderContainer.innerHTML = ''; // Hapus Dummy Promo
+                    sliderContainer.innerHTML = '';
                     Object.keys(data).forEach(key => {
                         const promo = data[key];
-                        // Dummy image jika foto tidak diupload
                         const img = promo.imgUrl || "https://images.unsplash.com/photo-1605810730836-474be6843477?q=80&w=800&auto=format&fit=crop";
                         
                         sliderContainer.innerHTML += `
@@ -1107,8 +1094,6 @@
                             </div>
                         </div>`;
                     });
-                    
-                    // Render ulang link WA karena ada tombol baru
                     if(currentSalesWA) updateWhatsAppLinks(currentSalesWA);
                 } 
             });
@@ -1120,12 +1105,11 @@
                 if(!iklanContainer) return;
 
                 if(data) {
-                    iklanContainer.innerHTML = ''; // Hapus Dummy Iklan
+                    iklanContainer.innerHTML = ''; 
                     Object.keys(data).forEach(key => {
                         const iklan = data[key];
                         const img = iklan.mediaUrl || "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=800&auto=format&fit=crop";
                         
-                        // Cek apakah file adalah video mp4
                         const isVideo = img.match(/\.(mp4|webm)$/i);
                         let mediaElement = isVideo 
                             ? `<video class="luxury-media" autoplay loop muted playsinline><source src="${img}" type="video/mp4"></video>`
@@ -1142,14 +1126,11 @@
                             </div>
                         </div>`;
                     });
-
-                    // Render ulang link WA karena ada tombol baru
                     if(currentSalesWA) updateWhatsAppLinks(currentSalesWA);
                 }
             });
         }
 
-        // Jalankan Sinkronisasi Otomatis
         sinkronisasiOtomatis();
 
         // --- 3. NAVBAR SCROLL ---
