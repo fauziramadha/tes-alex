@@ -83,7 +83,6 @@
         .file-upload-wrapper input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2; }
         .file-upload-icon { width: 24px; height: 24px; fill: var(--color-text-dim); }
         .file-upload-text { font-size: 0.8rem; color: var(--color-text-dim); font-weight: 500; text-shadow: 0px 1px 3px rgba(0,0,0,0.8); }
-        .file-upload-subtext { font-size: 0.65rem; color: #aaa; text-shadow: 0px 1px 3px rgba(0,0,0,0.8); }
         .alur-text { color: var(--color-text-dim); font-size: 0.75rem; margin-bottom: 16px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 6px; line-height: 1.5; border-left: 2px solid var(--color-accent); }
         .action-bar { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--color-border); flex-wrap: wrap; }
         .btn-save, .btn-delete, .btn-add { padding: 12px 16px; border-radius: 6px; font-weight: 600; font-size: 0.8rem; cursor: pointer; border: none; transition: var(--transition); }
@@ -188,8 +187,22 @@
                                     <input type="file" id="landing-hero-file" accept=".png, .jpg, .jpeg, .webp, .svg, .mp4">
                                 </div>
                             </div>
-                            <div class="input-group"><label>Tulisan Atas (Kolom 1)</label><input type="text" id="landing-hero-teks1" class="input-control" placeholder="Temukan Kendaraan Impian..."></div>
-                            <div class="input-group"><label>Tulisan Bawah (Kolom 2)</label><input type="text" id="landing-hero-teks2" class="input-control" placeholder="Bersama Mitsubishi Batam"></div>
+                            
+                            <div class="input-group">
+                                <label>Tulisan Atas (Kolom 1)</label>
+                                <input type="text" id="landing-hero-teks1" class="input-control" placeholder="Contoh: DRIVE YOUR">
+                            </div>
+
+                            <div class="input-group form-full">
+                                <label>Tulisan Aksen (Warna Merah)</label>
+                                <p class="alur-text" style="margin: 0 0 8px 0; padding: 8px;"><b>Alur:</b> Teks ini akan otomatis menyambung di sebelah/bawah Tulisan Atas dengan gaya font merah yang tegas dan mencolok. (Contoh standar: AMBITION)</p>
+                                <input type="text" id="landing-hero-teks-aksen" class="input-control" placeholder="Contoh: AMBITION">
+                            </div>
+
+                            <div class="input-group">
+                                <label>Tulisan Bawah (Kolom 2)</label>
+                                <input type="text" id="landing-hero-teks2" class="input-control" placeholder="Bersama Mitsubishi Batam">
+                            </div>
                         </div>
                         <div class="action-bar">
                             <button class="btn-delete" id="btn-delete-hero-landing">Hapus Hero (Default)</button>
@@ -200,11 +213,10 @@
                     <div class="section-card">
                         <div class="section-header">
                             <h3 class="section-title">B. Kartu Promo</h3>
-                            <button class="btn-add" onclick="document.getElementById('form-promo-container').style.display='grid'; document.getElementById('promo-edit-id').value=''; document.getElementById('promo-label').value=''; document.getElementById('promo-judul').value=''; document.getElementById('promo-info').value=''; document.getElementById('promo-tombol').value=''; document.getElementById('promo-file').value='';">+ Tambah Promo Baru</button>
+                            <button class="btn-add" onclick="document.getElementById('form-promo-container').style.display='grid'; document.getElementById('promo-edit-id').value=''; document.getElementById('promo-label').value=''; document.getElementById('promo-judul').value=''; document.getElementById('promo-info').value=''; document.getElementById('promo-tombol').value=''; document.getElementById('promo-file').value=''; document.querySelector('#form-promo-container .file-upload-text').innerText='Ketuk untuk Upload Foto Promo';">+ Tambah Promo Baru</button>
                         </div>
                         
-                        <div class="list-manager" id="list-promo-container" style="margin-bottom: 16px;">
-                            </div>
+                        <div class="list-manager" id="list-promo-container" style="margin-bottom: 16px;"></div>
 
                         <div class="form-grid" id="form-promo-container" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; display: none;">
                             <input type="hidden" id="promo-edit-id">
@@ -230,11 +242,10 @@
                     <div class="section-card">
                         <div class="section-header">
                             <h3 class="section-title">C. Iklan Banner / Video</h3>
-                            <button class="btn-add" onclick="document.getElementById('form-iklan-container').style.display='grid'; document.getElementById('iklan-edit-id').value=''; document.getElementById('iklan-judul').value=''; document.getElementById('iklan-tombol').value=''; document.getElementById('iklan-file').value='';">+ Tambah Iklan Baru</button>
+                            <button class="btn-add" onclick="document.getElementById('form-iklan-container').style.display='grid'; document.getElementById('iklan-edit-id').value=''; document.getElementById('iklan-judul').value=''; document.getElementById('iklan-tombol').value=''; document.getElementById('iklan-file').value=''; document.querySelector('#form-iklan-container .file-upload-text').innerText='Ketuk untuk Pilih Video/Foto Iklan';">+ Tambah Iklan Baru</button>
                         </div>
                         
-                        <div class="list-manager" id="list-iklan-container" style="margin-bottom: 16px;">
-                            </div>
+                        <div class="list-manager" id="list-iklan-container" style="margin-bottom: 16px;"></div>
 
                         <div class="form-grid" id="form-iklan-container" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; display: none;">
                             <input type="hidden" id="iklan-edit-id">
@@ -394,12 +405,19 @@
         }
     }
 
+    // PERBAIKAN: Fungsi hapus ImageKit sekarang dijamin berjalan dengan await
     async function deleteMedia(fileId) {
-        if (!fileId) return;
+        if (!fileId || fileId === 'undefined') return;
         try { 
-            await fetch(window.location.origin + `/api/delete?fileId=${fileId}`, { method: 'DELETE' }); 
+            console.log("Mencoba menghapus file lama di ImageKit:", fileId);
+            const response = await fetch(window.location.origin + `/api/delete?fileId=${fileId}`, { method: 'DELETE' }); 
+            if(response.ok) {
+                console.log("File lama berhasil dihapus dari ImageKit");
+            } else {
+                console.warn("Gagal menghapus file di ImageKit via API Vercel");
+            }
         } catch (err) { 
-            console.warn("Abaikan: Hapus file lama di server gagal", err); 
+            console.error("Error saat menghapus file lama:", err); 
         }
     }
 
@@ -452,6 +470,15 @@
                 document.getElementById('alamat-tutup').value = snap.val().jam_tutup || '';
             }
         });
+
+        // Ambil Data Hero (Untuk mengisi form jika data sudah ada sebelumnya)
+        db.ref('halaman/landing/hero').once('value', snap => {
+            if(snap.val()) {
+                document.getElementById('landing-hero-teks1').value = snap.val().teks_atas || '';
+                document.getElementById('landing-hero-teks-aksen').value = snap.val().teks_aksen || '';
+                document.getElementById('landing-hero-teks2').value = snap.val().teks_bawah || '';
+            }
+        });
         
         // Aktifkan List Otomatis
         listenPromo();
@@ -494,9 +521,13 @@
 
     window.hapusPromo = async function(key, imgId) {
         if(confirm("Hapus promo ini secara permanen?")) {
+            // PERBAIKAN: Hapus dari ImageKit terlebih dahulu dengan await
+            if(imgId && imgId !== 'undefined') { 
+                showToast("Menghapus foto di server...", "info");
+                await deleteMedia(imgId); 
+            }
             await db.ref('promo_list/' + key).remove();
-            if(imgId && imgId !== 'undefined') { deleteMedia(imgId); }
-            showToast("Promo berhasil dihapus!", "info");
+            showToast("Promo berhasil dihapus!", "success");
         }
     };
 
@@ -534,9 +565,13 @@
 
     window.hapusIklan = async function(key, mediaId) {
         if(confirm("Yakin ingin menghapus iklan ini?")) {
+            // PERBAIKAN: Hapus dari ImageKit terlebih dahulu dengan await
+            if(mediaId && mediaId !== 'undefined') { 
+                showToast("Menghapus media di server...", "info");
+                await deleteMedia(mediaId); 
+            }
             await db.ref('iklan_list/' + key).remove();
-            if(mediaId && mediaId !== 'undefined') { deleteMedia(mediaId); }
-            showToast("Iklan berhasil dihapus!", "info");
+            showToast("Iklan berhasil dihapus!", "success");
         }
     };
 
@@ -556,9 +591,11 @@
             try {
                 let obj = {};
                 const t1 = document.getElementById('landing-hero-teks1').value.trim();
+                const tAksen = document.getElementById('landing-hero-teks-aksen').value.trim(); // Kolom Aksen Merah Baru
                 const t2 = document.getElementById('landing-hero-teks2').value.trim();
                 
                 if (t1 !== "") obj.teks_atas = t1;
+                if (tAksen !== "") obj.teks_aksen = tAksen; // Menyimpan aksen merah
                 if (t2 !== "") obj.teks_bawah = t2;
 
                 const file = document.getElementById('landing-hero-file').files[0];
@@ -568,10 +605,11 @@
                         obj.bgUrl = media.url; 
                         obj.bgId = media.fileId; 
                         
-                        // Menghapus media lama di ImageKit jika ada
-                        db.ref('halaman/landing/hero/bgId').once('value', snap => { 
-                            if(snap.val()) deleteMedia(snap.val()); 
-                        });
+                        // Menghapus media lama di ImageKit jika ada (mengganti background)
+                        const snap = await db.ref('halaman/landing/hero/bgId').once('value');
+                        if(snap.val()) {
+                            await deleteMedia(snap.val()); 
+                        }
                     } else {
                         throw new Error("Gagal upload media Hero");
                     }
@@ -580,9 +618,6 @@
                 if(Object.keys(obj).length > 0) {
                     await db.ref('halaman/landing/hero').update(obj);
                     showToast("Hero Beranda berhasil diupdate!", "success");
-                    
-                    document.getElementById('landing-hero-teks1').value = "";
-                    document.getElementById('landing-hero-teks2').value = "";
                 } else {
                     showToast("Form masih kosong, tidak ada yang disimpan.", "info");
                 }
@@ -603,16 +638,22 @@
                 btn.disabled = true;
                 
                 try {
-                    // Hapus gambar dari ImageKit (Bila ada)
+                    // Hapus gambar dari ImageKit secara aman (Bila ada)
                     const snap = await db.ref('halaman/landing/hero/bgId').once('value');
-                    if(snap.val()) { deleteMedia(snap.val()); }
+                    if(snap.val()) { 
+                        showToast("Membersihkan foto hero di server...", "info");
+                        await deleteMedia(snap.val()); 
+                    }
                     
                     // Hapus seluruh data hero dari Firebase
                     await db.ref('halaman/landing/hero').remove();
                     
-                    showToast("Hero dihapus. Web kembali ke default.", "info");
+                    showToast("Hero dihapus. Web kembali ke default.", "success");
                     document.getElementById('landing-hero-teks1').value = "";
+                    document.getElementById('landing-hero-teks-aksen').value = "";
                     document.getElementById('landing-hero-teks2').value = "";
+                    document.querySelector('#landing-hero-file').parentElement.style.backgroundImage = 'none';
+                    document.querySelector('#landing-hero-file').parentElement.querySelector('.file-upload-text').innerText = 'Ketuk untuk Pilih File Media';
                 } catch(err) {
                     showToast("Gagal menghapus hero.", "error");
                 } finally {
@@ -630,6 +671,7 @@
             btn.disabled = true;
             
             try {
+                const editId = document.getElementById('promo-edit-id').value;
                 let obj = {
                     label: document.getElementById('promo-label').value.trim(),
                     judul: document.getElementById('promo-judul').value.trim(),
@@ -641,18 +683,28 @@
                 const file = document.getElementById('promo-file').files[0];
                 if (file) {
                     const media = await uploadMedia(file);
-                    if (media) { obj.imgUrl = media.url; obj.imgId = media.fileId; }
+                    if (media) { 
+                        obj.imgUrl = media.url; 
+                        obj.imgId = media.fileId; 
+                        
+                        // PERBAIKAN: Jika sedang mengedit dan upload foto baru, hapus foto lama!
+                        if(editId) {
+                            const snap = await db.ref('promo_list/' + editId + '/imgId').once('value');
+                            if(snap.val()) await deleteMedia(snap.val());
+                        }
+                    }
                 }
 
-                const editId = document.getElementById('promo-edit-id').value;
                 if(editId) {
                     await db.ref('promo_list/' + editId).update(obj);
+                    showToast("Promo berhasil diubah!", "success");
                 } else {
                     await db.ref('promo_list').push(obj);
+                    showToast("Kartu Promo berhasil diterbitkan!", "success");
                 }
                 
-                showToast("Kartu Promo berhasil diterbitkan!", "success");
                 document.getElementById('form-promo-container').style.display = 'none';
+                document.querySelector('#form-promo-container .file-upload-wrapper').style.backgroundImage = 'none';
             } catch(err) {
                 showToast("Gagal menyimpan promo.", "error");
             } finally {
@@ -670,6 +722,7 @@
             btn.disabled = true;
 
             try {
+                const editId = document.getElementById('iklan-edit-id').value;
                 let obj = {
                     judul: document.getElementById('iklan-judul').value.trim(),
                     tombol: document.getElementById('iklan-tombol').value.trim(),
@@ -679,18 +732,28 @@
                 const file = document.getElementById('iklan-file').files[0];
                 if (file) {
                     const media = await uploadMedia(file);
-                    if (media) { obj.mediaUrl = media.url; obj.mediaId = media.fileId; }
+                    if (media) { 
+                        obj.mediaUrl = media.url; 
+                        obj.mediaId = media.fileId; 
+                        
+                        // PERBAIKAN: Jika sedang mengedit dan upload media baru, hapus media lama!
+                        if(editId) {
+                            const snap = await db.ref('iklan_list/' + editId + '/mediaId').once('value');
+                            if(snap.val()) await deleteMedia(snap.val());
+                        }
+                    }
                 }
 
-                const editId = document.getElementById('iklan-edit-id').value;
                 if(editId) {
                     await db.ref('iklan_list/' + editId).update(obj);
+                    showToast("Iklan berhasil diubah!", "success");
                 } else {
                     await db.ref('iklan_list').push(obj);
+                    showToast("Iklan Banner/Video berhasil disimpan!", "success");
                 }
 
-                showToast("Iklan Banner/Video berhasil disimpan!", "success");
                 document.getElementById('form-iklan-container').style.display = 'none';
+                document.querySelector('#form-iklan-container .file-upload-wrapper').style.backgroundImage = 'none';
             } catch(err) {
                 showToast("Gagal menyimpan Iklan.", "error");
             } finally {
