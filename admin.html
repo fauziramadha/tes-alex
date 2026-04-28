@@ -169,7 +169,7 @@
                     <div class="section-card">
                         <h3 class="section-title">Informasi Sistem</h3>
                         <p class="alur-text">
-                            <b>Fokus Landing Page:</b> Saat ini kita sedang berfokus pada perbaikan bagian Landing Page (Hero, Promo, Iklan, dan Alamat). Silakan pilih menu di kiri untuk mulai mengedit.
+                            <b>Fokus Landing Page:</b> Sesuai permintaan, saat ini kita berfokus pada halaman Landing Page (Hero, Promo, Iklan, dan Alamat). Silakan pilih menu di sebelah kiri.
                         </p>
                     </div>
                 </div>
@@ -178,27 +178,29 @@
                     
                     <div class="section-card">
                         <div class="section-header"><h3 class="section-title">A. Hero Section (Beranda)</h3></div>
-                        <p class="alur-text">Ubah latar dan dua baris tulisan penawaran yang muncul pertama kali di halaman utama.</p>
+                        <p class="alur-text">Ubah latar dan dua baris tulisan penawaran. <b>Jika dihapus</b>, web akan otomatis menggunakan tampilan bawaan (dummy).</p>
                         <div class="form-grid">
                             <div class="input-group form-full">
                                 <label>Foto/Video Latar</label>
                                 <div class="file-upload-wrapper">
                                     <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
                                     <span class="file-upload-text">Ketuk untuk Pilih File Media</span>
-                                    <span class="file-upload-subtext">Format didukung: MP4, PNG, JPG, WEBP, SVG</span>
                                     <input type="file" id="landing-hero-file" accept=".png, .jpg, .jpeg, .webp, .svg, .mp4">
                                 </div>
                             </div>
                             <div class="input-group"><label>Tulisan Atas (Kolom 1)</label><input type="text" id="landing-hero-teks1" class="input-control" placeholder="Temukan Kendaraan Impian..."></div>
                             <div class="input-group"><label>Tulisan Bawah (Kolom 2)</label><input type="text" id="landing-hero-teks2" class="input-control" placeholder="Bersama Mitsubishi Batam"></div>
                         </div>
-                        <div class="action-bar"><button class="btn-save" id="btn-save-hero-landing">Simpan Hero</button></div>
+                        <div class="action-bar">
+                            <button class="btn-delete" id="btn-delete-hero-landing">Hapus Hero (Default)</button>
+                            <button class="btn-save" id="btn-save-hero-landing">Simpan Hero</button>
+                        </div>
                     </div>
 
                     <div class="section-card">
                         <div class="section-header">
                             <h3 class="section-title">B. Kartu Promo</h3>
-                            <button class="btn-add" id="btn-add-promo" onclick="document.getElementById('form-promo-container').style.display='grid'; document.getElementById('promo-edit-id').value=''; document.getElementById('promo-label').value=''; document.getElementById('promo-judul').value=''; document.getElementById('promo-info').value=''; document.getElementById('promo-tombol').value='';">+ Tambah Promo Baru</button>
+                            <button class="btn-add" onclick="document.getElementById('form-promo-container').style.display='grid'; document.getElementById('promo-edit-id').value=''; document.getElementById('promo-label').value=''; document.getElementById('promo-judul').value=''; document.getElementById('promo-info').value=''; document.getElementById('promo-tombol').value=''; document.getElementById('promo-file').value='';">+ Tambah Promo Baru</button>
                         </div>
                         
                         <div class="list-manager" id="list-promo-container" style="margin-bottom: 16px;">
@@ -211,7 +213,6 @@
                                 <div class="file-upload-wrapper">
                                     <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
                                     <span class="file-upload-text">Ketuk untuk Upload Foto Promo</span>
-                                    <span class="file-upload-subtext">Hanya file PNG/JPG/WEBP</span>
                                     <input type="file" id="promo-file" accept=".png, .jpg, .jpeg, .webp">
                                 </div>
                             </div>
@@ -220,33 +221,43 @@
                             <div class="input-group form-full"><label>Informasi Promo (Tengah)</label><textarea id="promo-info" class="input-control" rows="2" placeholder="Syarat dan ketentuan berlaku..."></textarea></div>
                             <div class="input-group form-full"><label>Tulisan Pada Tombol Aksi</label><input type="text" id="promo-tombol" class="input-control" placeholder="Contoh: Klaim Sekarang"></div>
                             <div class="action-bar form-full">
-                                <button class="btn-delete" id="btn-cancel-promo" onclick="document.getElementById('form-promo-container').style.display='none'">Batal</button>
+                                <button class="btn-delete" onclick="document.getElementById('form-promo-container').style.display='none'">Batal</button>
                                 <button class="btn-save" id="btn-save-promo">Simpan Kartu Promo</button>
                             </div>
                         </div>
                     </div>
 
                     <div class="section-card">
-                        <div class="section-header"><h3 class="section-title">C. Iklan Banner / Video</h3></div>
-                        <div class="form-grid">
+                        <div class="section-header">
+                            <h3 class="section-title">C. Iklan Banner / Video</h3>
+                            <button class="btn-add" onclick="document.getElementById('form-iklan-container').style.display='grid'; document.getElementById('iklan-edit-id').value=''; document.getElementById('iklan-judul').value=''; document.getElementById('iklan-tombol').value=''; document.getElementById('iklan-file').value='';">+ Tambah Iklan Baru</button>
+                        </div>
+                        
+                        <div class="list-manager" id="list-iklan-container" style="margin-bottom: 16px;">
+                            </div>
+
+                        <div class="form-grid" id="form-iklan-container" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; display: none;">
+                            <input type="hidden" id="iklan-edit-id">
                             <div class="input-group form-full">
                                 <label>Upload Video/Gambar Iklan</label>
                                 <div class="file-upload-wrapper">
                                     <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
                                     <span class="file-upload-text">Ketuk untuk Pilih Video/Foto Iklan</span>
-                                    <span class="file-upload-subtext">Bebas limitasi memori berkat ImageKit</span>
                                     <input type="file" id="iklan-file" accept=".png, .jpg, .jpeg, .webp, .svg, .mp4">
                                 </div>
                             </div>
                             <div class="input-group"><label>Teks Judul Iklan</label><input type="text" id="iklan-judul" class="input-control" placeholder="Drive Your Ambition"></div>
                             <div class="input-group"><label>Teks Tombol Iklan</label><input type="text" id="iklan-tombol" class="input-control" placeholder="Hubungi Kami"></div>
+                            <div class="action-bar form-full">
+                                <button class="btn-delete" onclick="document.getElementById('form-iklan-container').style.display='none'">Batal</button>
+                                <button class="btn-save" id="btn-save-iklan">Simpan Iklan</button>
+                            </div>
                         </div>
-                        <div class="action-bar"><button class="btn-save" id="btn-save-iklan">Simpan Iklan</button></div>
                     </div>
 
                     <div class="section-card">
                         <div class="section-header"><h3 class="section-title">D. Alamat Showroom (Global)</h3></div>
-                        <p class="alur-text">Setiap perubahan alamat, peta, dan jam operasional di sini akan <b>otomatis merubah</b> data pada Footer dan Navbar di seluruh HTML.</p>
+                        <p class="alur-text">Data ini akan meng-update informasi alamat di Footer dan Navbar pada seluruh halaman website.</p>
                         <div class="form-grid">
                             <div class="input-group form-full"><label>Link Embed Google Maps</label><input type="text" id="alamat-gmaps" class="input-control" placeholder="Paste link <iframe> dari Gmaps"></div>
                             <div class="input-group form-full"><label>Alamat Lengkap</label><textarea id="alamat-teks" class="input-control" rows="2" placeholder="Jl. Raden Patah, Lubuk Baja..."></textarea></div>
@@ -257,11 +268,9 @@
                     </div>
 
                 </div>
-
             </div> 
         </main>
-    </div> 
-
+    </div>
 <script>
     /* =========================================
        0. SISTEM NOTIFIKASI TOAST
@@ -270,12 +279,18 @@
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
         toast.className = `toast ${type}`;
+        
         let icon = type === 'success' ? '<svg style="width:24px;height:24px;fill:#00C851;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>' : 
                    type === 'error' ? '<svg style="width:24px;height:24px;fill:#ff4444;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>' : 
                    '<svg style="width:24px;height:24px;fill:#33b5e5;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>';
+        
         toast.innerHTML = `${icon} <span>${message}</span>`;
         container.appendChild(toast);
-        setTimeout(() => { toast.style.animation = 'fadeOut 0.4s ease forwards'; setTimeout(() => toast.remove(), 400); }, 3500);
+        
+        setTimeout(() => { 
+            toast.style.animation = 'fadeOut 0.4s ease forwards'; 
+            setTimeout(() => toast.remove(), 400); 
+        }, 3500);
     }
 
     /* =========================================
@@ -318,7 +333,9 @@
         const btnLogin = document.getElementById('btn-login');
 
         if (!email || !password) { showToast("Isi Email dan PIN!", "error"); return; }
-        btnLogin.innerText = "Memproses..."; btnLogin.disabled = true;
+        
+        btnLogin.innerText = "Memproses..."; 
+        btnLogin.disabled = true;
 
         try {
             await auth.signInWithEmailAndPassword(email, password);
@@ -326,7 +343,9 @@
             loginAttempts--;
             document.getElementById('login-attempts').innerText = loginAttempts;
             document.getElementById('login-error-msg').style.display = 'block';
-            btnLogin.innerText = "Otorisasi Masuk"; btnLogin.disabled = false;
+            btnLogin.innerText = "Otorisasi Masuk"; 
+            btnLogin.disabled = false;
+            
             showToast("Gagal Login!", "error");
             if (loginAttempts <= 0) {
                 document.getElementById('login-error-msg').innerHTML = "<strong>AKSES DIBLOKIR!</strong>";
@@ -341,12 +360,12 @@
     async function uploadMedia(file) {
         if (!file) return null;
         try {
-            showToast("Mengambil tiket server...", "info");
+            showToast("Mengambil izin server (Vercel)...", "info");
             const authResponse = await fetch(window.location.origin + "/api/auth");
             if (!authResponse.ok) throw new Error("API Vercel gagal diakses");
             const authData = await authResponse.json();
 
-            showToast("Sedang upload media...", "info");
+            showToast("Sedang upload media ke ImageKit...", "info");
             const formData = new FormData();
             formData.append("file", file);
             formData.append("fileName", "mitsu_" + Date.now());
@@ -365,22 +384,27 @@
             if (uploadResponse.ok) {
                 showToast("Upload Selesai!", "success");
                 return { url: result.url, fileId: result.fileId };
-            } else { throw new Error(result.message); }
+            } else { 
+                throw new Error(result.message); 
+            }
         } catch (error) {
             console.error("Gagal upload:", error);
-            showToast("Upload Gagal! Cek API/Koneksi.", "error");
+            showToast("Upload Gagal! Cek koneksi internet.", "error");
             return null;
         }
     }
 
     async function deleteMedia(fileId) {
         if (!fileId) return;
-        try { await fetch(window.location.origin + `/api/delete?fileId=${fileId}`, { method: 'DELETE' }); } 
-        catch (err) { console.warn("Abaikan: Hapus file lama gagal", err); }
+        try { 
+            await fetch(window.location.origin + `/api/delete?fileId=${fileId}`, { method: 'DELETE' }); 
+        } catch (err) { 
+            console.warn("Abaikan: Hapus file lama di server gagal", err); 
+        }
     }
 
     /* =========================================
-       4. UI CONTROLLER (SIDEBAR & PREVIEW)
+       4. UI CONTROLLER (SIDEBAR & PREVIEW GAMBAR)
        ========================================= */
     function toggleSidebar() {
         document.getElementById('sidebar').classList.toggle('open');
@@ -397,23 +421,29 @@
         if (window.innerWidth <= 991) toggleSidebar();
     }
 
+    // Auto Preview File Upload
     document.querySelectorAll('input[type="file"]').forEach(input => {
         input.addEventListener('change', function(e) {
             if(e.target.files.length > 0) {
                 const textSpan = this.parentElement.querySelector('.file-upload-text');
-                if(textSpan) { textSpan.innerText = `Terpilih: ${e.target.files[0].name}`; textSpan.style.color = "var(--color-accent)"; }
+                if(textSpan) { 
+                    textSpan.innerText = `Terpilih: ${e.target.files[0].name}`; 
+                    textSpan.style.color = "var(--color-accent)"; 
+                }
                 const reader = new FileReader();
-                reader.onload = (event) => { this.parentElement.style.backgroundImage = `url('${event.target.result}')`; }
+                reader.onload = (event) => { 
+                    this.parentElement.style.backgroundImage = `url('${event.target.result}')`; 
+                }
                 reader.readAsDataURL(e.target.files[0]);
             }
         });
     });
 
     /* =========================================
-       5. READ DATA & LISTENERS UTAMA
+       5. DATA LOADERS & REALTIME LISTENERS
        ========================================= */
     function loadInitialData() {
-        // Alamat Global
+        // Ambil Data Alamat Global
         db.ref('global_data/alamat').once('value', snap => {
             if(snap.val()) {
                 document.getElementById('alamat-gmaps').value = snap.val().gmaps || '';
@@ -423,119 +453,12 @@
             }
         });
         
-        // Listener Promo List
+        // Aktifkan List Otomatis
         listenPromo();
+        listenIklan();
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-
-        // --- SIMPAN HERO LANDING (A) ---
-        document.getElementById('btn-save-hero-landing').addEventListener('click', async () => {
-            const btn = document.getElementById('btn-save-hero-landing');
-            btn.innerText = "Menyimpan..."; btn.style.opacity = "0.7";
-            let obj = {};
-            
-            const t1 = document.getElementById('landing-hero-teks1').value.trim();
-            const t2 = document.getElementById('landing-hero-teks2').value.trim();
-            if (t1) obj.teks_atas = t1;
-            if (t2) obj.teks_bawah = t2;
-
-            const file = document.getElementById('landing-hero-file').files[0];
-            if (file) {
-                const media = await uploadMedia(file);
-                if (media) { 
-                    obj.bgUrl = media.url; obj.bgId = media.fileId; 
-                    db.ref(`halaman/landing/hero/bgId`).once('value', snap => { if(snap.val()) deleteMedia(snap.val()); });
-                }
-            }
-
-            if(Object.keys(obj).length > 0) {
-                await db.ref('halaman/landing/hero').update(obj);
-                showToast("Hero Beranda berhasil diupdate!", "success");
-                document.getElementById('landing-hero-teks1').value = "";
-                document.getElementById('landing-hero-teks2').value = "";
-            } else {
-                showToast("Tidak ada teks/foto yang diisi.", "info");
-            }
-            btn.innerText = "Simpan Hero"; btn.style.opacity = "1";
-        });
-
-        // --- SIMPAN PROMO (B) ---
-        document.getElementById('btn-save-promo').addEventListener('click', async () => {
-            const btn = document.getElementById('btn-save-promo');
-            btn.innerText = "Menyimpan..."; btn.style.opacity = "0.7";
-            
-            let obj = {
-                label: document.getElementById('promo-label').value,
-                judul: document.getElementById('promo-judul').value,
-                info: document.getElementById('promo-info').value,
-                tombol: document.getElementById('promo-tombol').value,
-                timestamp: firebase.database.ServerValue.TIMESTAMP
-            };
-            
-            const file = document.getElementById('promo-file').files[0];
-            if (file) {
-                const media = await uploadMedia(file);
-                if (media) { obj.imgUrl = media.url; obj.imgId = media.fileId; }
-            }
-
-            const editId = document.getElementById('promo-edit-id').value;
-            if(editId) await db.ref('promo_list/' + editId).update(obj);
-            else await db.ref('promo_list').push(obj);
-            
-            showToast("Kartu Promo berhasil diterbitkan!", "success");
-            document.getElementById('form-promo-container').style.display = 'none';
-            btn.innerText = "Simpan Kartu Promo"; btn.style.opacity = "1";
-        });
-
-        // --- SIMPAN IKLAN (C) ---
-        document.getElementById('btn-save-iklan').addEventListener('click', async () => {
-            const btn = document.getElementById('btn-save-iklan');
-            btn.innerText = "Menyimpan..."; btn.style.opacity = "0.7";
-            let obj = {};
-            
-            const jdl = document.getElementById('iklan-judul').value.trim();
-            const tbl = document.getElementById('iklan-tombol').value.trim();
-            if(jdl) obj.judul = jdl;
-            if(tbl) obj.tombol = tbl;
-
-            const file = document.getElementById('iklan-file').files[0];
-            if (file) {
-                const media = await uploadMedia(file);
-                if (media) { 
-                    obj.mediaUrl = media.url; obj.mediaId = media.fileId; 
-                    db.ref(`halaman/landing/iklan/mediaId`).once('value', snap => { if(snap.val()) deleteMedia(snap.val()); });
-                }
-            }
-            if(Object.keys(obj).length > 0) {
-                await db.ref('halaman/landing/iklan').update(obj);
-                showToast("Video/Banner Iklan diperbarui!", "success");
-                document.getElementById('iklan-judul').value = "";
-                document.getElementById('iklan-tombol').value = "";
-            }
-            btn.innerText = "Simpan Iklan"; btn.style.opacity = "1";
-        });
-
-        // --- SIMPAN ALAMAT (D) ---
-        document.getElementById('btn-save-alamat').addEventListener('click', async () => {
-            const btn = document.getElementById('btn-save-alamat');
-            btn.innerText = "Menyimpan..."; btn.style.opacity = "0.7";
-            let obj = { last_update: firebase.database.ServerValue.TIMESTAMP };
-            
-            if(document.getElementById('alamat-gmaps').value) obj.gmaps = document.getElementById('alamat-gmaps').value;
-            if(document.getElementById('alamat-teks').value) obj.teks_alamat = document.getElementById('alamat-teks').value;
-            if(document.getElementById('alamat-buka').value) obj.jam_buka = document.getElementById('alamat-buka').value;
-            if(document.getElementById('alamat-tutup').value) obj.jam_tutup = document.getElementById('alamat-tutup').value;
-            
-            await db.ref('global_data/alamat').update(obj);
-            showToast("Alamat Global Diperbarui!", "success");
-            btn.innerText = "Update Data Global"; btn.style.opacity = "1";
-        });
-    });
-
-    /* =========================================
-       6. RENDER LIST REALTIME
-       ========================================= */
+    // Menarik Data Promo
     function listenPromo() {
         db.ref('promo_list').on('value', (snap) => {
             const list = document.getElementById('list-promo-container');
@@ -545,7 +468,7 @@
                 const data = child.val();
                 list.innerHTML += `
                 <div class="list-item">
-                    <span class="list-item-text"><b>${data.judul}</b> (${data.label})</span>
+                    <span class="list-item-text"><b>${data.judul || 'Tanpa Judul'}</b> (${data.label || 'Promo'})</span>
                     <div>
                         <button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="editPromo('${child.key}')">Edit</button>
                         <button class="btn-delete" style="padding: 4px 10px; font-size:0.75rem;" onclick="hapusPromo('${child.key}', '${data.imgId}')">Hapus</button>
@@ -576,6 +499,240 @@
             showToast("Promo berhasil dihapus!", "info");
         }
     };
+
+    // Menarik Data Iklan (Sistem List Baru)
+    function listenIklan() {
+        db.ref('iklan_list').on('value', (snap) => {
+            const list = document.getElementById('list-iklan-container');
+            if(!list) return; list.innerHTML = '';
+            
+            snap.forEach(child => {
+                const data = child.val();
+                list.innerHTML += `
+                <div class="list-item">
+                    <span class="list-item-text"><b>${data.judul || 'Tanpa Judul'}</b></span>
+                    <div>
+                        <button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="editIklan('${child.key}')">Edit</button>
+                        <button class="btn-delete" style="padding: 4px 10px; font-size:0.75rem;" onclick="hapusIklan('${child.key}', '${data.mediaId}')">Hapus</button>
+                    </div>
+                </div>`;
+            });
+        });
+    }
+
+    window.editIklan = function(key) {
+        db.ref('iklan_list/' + key).once('value', snap => {
+            const data = snap.val();
+            document.getElementById('form-iklan-container').style.display = 'grid';
+            document.getElementById('iklan-edit-id').value = key;
+            document.getElementById('iklan-judul').value = data.judul || '';
+            document.getElementById('iklan-tombol').value = data.tombol || '';
+            document.querySelector('.main-content').scrollTop = document.getElementById('form-iklan-container').offsetTop;
+            showToast("Silakan edit form iklan", "info");
+        });
+    };
+
+    window.hapusIklan = async function(key, mediaId) {
+        if(confirm("Yakin ingin menghapus iklan ini?")) {
+            await db.ref('iklan_list/' + key).remove();
+            if(mediaId && mediaId !== 'undefined') { deleteMedia(mediaId); }
+            showToast("Iklan berhasil dihapus!", "info");
+        }
+    };
+
+
+    /* =========================================
+       6. EKSEKUSI TOMBOL (SIMPAN / HAPUS)
+       ========================================= */
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- A1. SIMPAN HERO LANDING ---
+        document.getElementById('btn-save-hero-landing').addEventListener('click', async () => {
+            const btn = document.getElementById('btn-save-hero-landing');
+            btn.innerText = "Menyimpan..."; 
+            btn.style.opacity = "0.7"; 
+            btn.disabled = true;
+
+            try {
+                let obj = {};
+                const t1 = document.getElementById('landing-hero-teks1').value.trim();
+                const t2 = document.getElementById('landing-hero-teks2').value.trim();
+                
+                if (t1 !== "") obj.teks_atas = t1;
+                if (t2 !== "") obj.teks_bawah = t2;
+
+                const file = document.getElementById('landing-hero-file').files[0];
+                if (file) {
+                    const media = await uploadMedia(file);
+                    if (media) { 
+                        obj.bgUrl = media.url; 
+                        obj.bgId = media.fileId; 
+                        
+                        // Menghapus media lama di ImageKit jika ada
+                        db.ref('halaman/landing/hero/bgId').once('value', snap => { 
+                            if(snap.val()) deleteMedia(snap.val()); 
+                        });
+                    } else {
+                        throw new Error("Gagal upload media Hero");
+                    }
+                }
+
+                if(Object.keys(obj).length > 0) {
+                    await db.ref('halaman/landing/hero').update(obj);
+                    showToast("Hero Beranda berhasil diupdate!", "success");
+                    
+                    document.getElementById('landing-hero-teks1').value = "";
+                    document.getElementById('landing-hero-teks2').value = "";
+                } else {
+                    showToast("Form masih kosong, tidak ada yang disimpan.", "info");
+                }
+            } catch (err) {
+                showToast("Terjadi kesalahan saat menyimpan hero.", "error");
+            } finally {
+                btn.innerText = "Simpan Hero"; 
+                btn.style.opacity = "1"; 
+                btn.disabled = false;
+            }
+        });
+
+        // --- A2. HAPUS HERO LANDING (DEFAULT DUMMY) ---
+        document.getElementById('btn-delete-hero-landing').addEventListener('click', async () => {
+            if(confirm("Yakin hapus Hero? Website akan menggunakan foto & teks bawaan (dummy).")) {
+                const btn = document.getElementById('btn-delete-hero-landing');
+                btn.innerText = "Menghapus...";
+                btn.disabled = true;
+                
+                try {
+                    // Hapus gambar dari ImageKit (Bila ada)
+                    const snap = await db.ref('halaman/landing/hero/bgId').once('value');
+                    if(snap.val()) { deleteMedia(snap.val()); }
+                    
+                    // Hapus seluruh data hero dari Firebase
+                    await db.ref('halaman/landing/hero').remove();
+                    
+                    showToast("Hero dihapus. Web kembali ke default.", "info");
+                    document.getElementById('landing-hero-teks1').value = "";
+                    document.getElementById('landing-hero-teks2').value = "";
+                } catch(err) {
+                    showToast("Gagal menghapus hero.", "error");
+                } finally {
+                    btn.innerText = "Hapus Hero (Default)";
+                    btn.disabled = false;
+                }
+            }
+        });
+
+        // --- B. SIMPAN KARTU PROMO ---
+        document.getElementById('btn-save-promo').addEventListener('click', async () => {
+            const btn = document.getElementById('btn-save-promo');
+            btn.innerText = "Menyimpan..."; 
+            btn.style.opacity = "0.7"; 
+            btn.disabled = true;
+            
+            try {
+                let obj = {
+                    label: document.getElementById('promo-label').value.trim(),
+                    judul: document.getElementById('promo-judul').value.trim(),
+                    info: document.getElementById('promo-info').value.trim(),
+                    tombol: document.getElementById('promo-tombol').value.trim(),
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                };
+                
+                const file = document.getElementById('promo-file').files[0];
+                if (file) {
+                    const media = await uploadMedia(file);
+                    if (media) { obj.imgUrl = media.url; obj.imgId = media.fileId; }
+                }
+
+                const editId = document.getElementById('promo-edit-id').value;
+                if(editId) {
+                    await db.ref('promo_list/' + editId).update(obj);
+                } else {
+                    await db.ref('promo_list').push(obj);
+                }
+                
+                showToast("Kartu Promo berhasil diterbitkan!", "success");
+                document.getElementById('form-promo-container').style.display = 'none';
+            } catch(err) {
+                showToast("Gagal menyimpan promo.", "error");
+            } finally {
+                btn.innerText = "Simpan Kartu Promo"; 
+                btn.style.opacity = "1"; 
+                btn.disabled = false;
+            }
+        });
+
+        // --- C. SIMPAN IKLAN BANNER / VIDEO ---
+        document.getElementById('btn-save-iklan').addEventListener('click', async () => {
+            const btn = document.getElementById('btn-save-iklan');
+            btn.innerText = "Menyimpan..."; 
+            btn.style.opacity = "0.7"; 
+            btn.disabled = true;
+
+            try {
+                let obj = {
+                    judul: document.getElementById('iklan-judul').value.trim(),
+                    tombol: document.getElementById('iklan-tombol').value.trim(),
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                };
+
+                const file = document.getElementById('iklan-file').files[0];
+                if (file) {
+                    const media = await uploadMedia(file);
+                    if (media) { obj.mediaUrl = media.url; obj.mediaId = media.fileId; }
+                }
+
+                const editId = document.getElementById('iklan-edit-id').value;
+                if(editId) {
+                    await db.ref('iklan_list/' + editId).update(obj);
+                } else {
+                    await db.ref('iklan_list').push(obj);
+                }
+
+                showToast("Iklan Banner/Video berhasil disimpan!", "success");
+                document.getElementById('form-iklan-container').style.display = 'none';
+            } catch(err) {
+                showToast("Gagal menyimpan Iklan.", "error");
+            } finally {
+                btn.innerText = "Simpan Iklan"; 
+                btn.style.opacity = "1"; 
+                btn.disabled = false;
+            }
+        });
+
+        // --- D. SIMPAN ALAMAT GLOBAL ---
+        document.getElementById('btn-save-alamat').addEventListener('click', async () => {
+            const btn = document.getElementById('btn-save-alamat');
+            btn.innerText = "Menyimpan..."; 
+            btn.style.opacity = "0.7"; 
+            btn.disabled = true;
+            
+            try {
+                let obj = { last_update: firebase.database.ServerValue.TIMESTAMP };
+                
+                const gmaps = document.getElementById('alamat-gmaps').value;
+                const teks_alamat = document.getElementById('alamat-teks').value;
+                const jam_buka = document.getElementById('alamat-buka').value;
+                const jam_tutup = document.getElementById('alamat-tutup').value;
+
+                if(gmaps) obj.gmaps = gmaps;
+                if(teks_alamat) obj.teks_alamat = teks_alamat;
+                if(jam_buka) obj.jam_buka = jam_buka;
+                if(jam_tutup) obj.jam_tutup = jam_tutup;
+                
+                await db.ref('global_data/alamat').update(obj);
+                showToast("Alamat Global Diperbarui!", "success");
+            } catch(err) {
+                showToast("Gagal memperbarui alamat.", "error");
+            } finally {
+                btn.innerText = "Update Data Global"; 
+                btn.style.opacity = "1"; 
+                btn.disabled = false;
+            }
+        });
+
+    });
+
 </script>
 </body>
 </html>
