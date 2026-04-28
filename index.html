@@ -31,13 +31,7 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html { scroll-behavior: smooth; font-size: 16px; }
-        body { 
-            background-color: var(--color-primary); 
-            color: var(--color-secondary); 
-            font-family: var(--font-body); 
-            line-height: 1.6; 
-            overflow-x: hidden; 
-        }
+        body { background-color: var(--color-primary); color: var(--color-secondary); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; }
         h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); font-weight: 700; line-height: 1.1; }
         a { text-decoration: none; color: inherit; cursor: pointer; }
         button { cursor: pointer; background: none; border: none; font-family: inherit; }
@@ -49,76 +43,34 @@
         }
 
         /* =========================================
-           PRELOADER MITSUBISHI MEWAH (1 DETIK)
+           PRELOADER
            ========================================= */
-        #preloader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: #050505; z-index: 9999;
-            display: flex; justify-content: center; align-items: center;
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
-        }
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #050505; z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s; }
         #preloader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
-        .loader-logo {
-            width: 140px; height: auto;
-            animation: pulseGlow 1s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-            filter: drop-shadow(0 0 25px rgba(230,0,0,0.6));
-        }
-        @keyframes pulseGlow { 
-            0% { transform: scale(0.95); opacity: 0.8; filter: drop-shadow(0 0 15px rgba(230,0,0,0.4)); } 
-            100% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 35px rgba(230,0,0,0.8)); } 
-        }
+        .loader-logo { width: 140px; height: auto; animation: pulseGlow 1s infinite alternate cubic-bezier(0.4, 0, 0.2, 1); filter: drop-shadow(0 0 25px rgba(230,0,0,0.6)); }
+        @keyframes pulseGlow { 0% { transform: scale(0.95); opacity: 0.8; filter: drop-shadow(0 0 15px rgba(230,0,0,0.4)); } 100% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 35px rgba(230,0,0,0.8)); } }
 
         /* =========================================
-           NAVBAR & LOGO IMAGE
+           NAVBAR
            ========================================= */
-        .navbar { 
-            position: fixed; top: 0; left: 0; width: 100%; padding: 24px 0; 
-            z-index: 1050; transition: var(--transition-smooth); /* Diperbesar z-index agar tidak ketutupan */
-            background: rgba(255, 255, 255, 0); 
-        }
-        .navbar.scrolled { 
-            padding: 16px 0; background: rgba(255, 255, 255, 0.95); 
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); 
-            box-shadow: var(--shadow-premium); 
-        }
-        .nav-container { 
-            max-width: 1200px; margin: 0 auto; padding: 0 24px; 
-            display: flex; justify-content: space-between; align-items: center; 
-        }
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 24px 0; z-index: 1050; transition: var(--transition-smooth); background: rgba(255, 255, 255, 0); }
+        .navbar.scrolled { padding: 16px 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: var(--shadow-premium); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
         .nav-logo { display: flex; align-items: center; transition: var(--transition-smooth); }
-        .brand-logo-img { 
-            height: 44px; width: auto; object-fit: contain; 
-            transition: var(--transition-smooth); filter: brightness(0) invert(1); 
-        }
+        .brand-logo-img { height: 44px; width: auto; object-fit: contain; transition: var(--transition-smooth); filter: brightness(0) invert(1); }
         .navbar.scrolled .brand-logo-img { filter: none; }
         
         .nav-links { display: none; gap: 40px; }
-        .nav-links a { 
-            font-weight: 500; font-size: 0.85rem; text-transform: uppercase; 
-            letter-spacing: 1.5px; color: var(--color-primary); 
-            position: relative; transition: var(--transition-smooth); 
-        }
+        .nav-links a { font-weight: 500; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--color-primary); position: relative; transition: var(--transition-smooth); }
         .navbar.scrolled .nav-links a { color: var(--color-secondary); }
-        .nav-links a::after { 
-            content: ''; position: absolute; bottom: -6px; left: 0; 
-            width: 0; height: 2px; background: var(--color-accent); 
-            transition: var(--transition-smooth); 
-        }
+        .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: var(--color-accent); transition: var(--transition-smooth); }
         .nav-links a:hover::after { width: 100%; }
-        
-        .nav-actions .btn-primary {
-            position: relative;
-            z-index: 1051; /* Mencegah overlap */
-        }
+        .nav-actions .btn-primary { position: relative; z-index: 1051; }
 
         /* =========================================
            BUTTONS
            ========================================= */
-        .btn-primary, .btn-secondary { 
-            display: inline-block; padding: 14px 32px; border-radius: 4px; 
-            font-weight: 600; font-size: 0.9rem; text-transform: uppercase; 
-            letter-spacing: 1px; transition: var(--transition-smooth); text-align: center; 
-        }
+        .btn-primary, .btn-secondary { display: inline-block; padding: 14px 32px; border-radius: 4px; font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition-smooth); text-align: center; }
         .btn-primary { background: var(--color-accent); color: var(--color-primary) !important; border: 1px solid var(--color-accent); }
         .btn-primary:hover { background: transparent; color: var(--color-accent) !important; }
         .btn-secondary { background: transparent; color: var(--color-primary); border: 1px solid var(--color-primary); }
@@ -170,7 +122,6 @@
         .btn-close-menu:hover { color: var(--color-accent); transform: scale(1.1); }
         .menu-item { display: block; color: var(--color-secondary); font-weight: 600; font-size: 1.2rem; font-family: var(--font-heading); letter-spacing: 1px; padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
 
-        /* AKORDION SIDEBAR */
         .accordion-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; color: var(--color-secondary); font-weight: 600; font-size: 1.2rem; font-family: var(--font-heading); letter-spacing: 1px; padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
         .accordion-icon { font-size: 0.8rem; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.6s; }
         .accordion-content { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -211,7 +162,7 @@
         /* =========================================
            PROMO SECTION
            ========================================= */
-        .promo-section { background-color: #050505; padding: 0 0 100px 0; position: relative; overflow: hidden; color: var(--color-primary); }
+        .promo-section { background-color: #050505; padding: 0 0 60px 0; position: relative; overflow: hidden; color: var(--color-primary); }
         .promo-section::before { content: ''; position: absolute; top: 10%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(230,0,0,0.15) 0%, transparent 60%); filter: blur(80px); z-index: 0; pointer-events: none; }
         .promo-header { text-align: center; margin-bottom: 60px; padding: 0 24px; position: relative; z-index: 1; }
         .promo-header h2 { font-size: clamp(2.2rem, 6vw, 3.5rem); letter-spacing: 1px; text-transform: uppercase; }
@@ -240,21 +191,27 @@
         .promo-card-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 24px; display: flex; flex-direction: column; align-items: flex-start; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.95) 100%); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); transform: translateY(10px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); border-top: 1px solid rgba(255,255,255,0.08); min-height: 35%; }
         
         .promo-badge { background: var(--color-accent); color: white; padding: 4px 12px; border-radius: 30px; font-size: 0.65rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
-        .promo-card-content h3 { font-size: 1.5rem; line-height: 1.2; margin-bottom: 8px; }
+        .promo-card-content h3 { font-size: 1.5rem; line-height: 1.2; margin-bottom: 8px; color: #FFFFFF; }
         .promo-card-content p { color: rgba(255,255,255,0.7); font-size: 0.85rem; line-height: 1.5; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         
         .btn-text-promo { font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: white; display: inline-flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--color-accent); padding-bottom: 4px; transition: var(--transition-smooth); cursor: pointer; }
         .btn-text-promo:hover { color: var(--color-accent); gap: 14px; border-bottom-color: white; }
 
-        /* ADS GRID */
-        .ads-grid-container { padding: 0 24px; position: relative; z-index: 1; margin-top: 20px; }
+        /* =========================================
+           ADS / IKLAN SECTION (RAPATKAN JARAK)
+           ========================================= */
+        .ads-section { background-color: #050505; padding-bottom: 100px; }
+        .ads-grid-container { padding: 0 24px; position: relative; z-index: 1; margin-top: 0; }
         .ads-grid { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 1200px; margin: 0 auto; }
         .luxury-ad-space { width: 100%; height: 420px; border-radius: 24px; overflow: hidden; position: relative; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 30px 60px rgba(0,0,0,0.6); transform: translateZ(0); }
         .luxury-ad-space::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%); pointer-events: none; z-index: 1; }
         .luxury-media { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); transition: var(--transition-smooth); }
         .ad-content { position: absolute; bottom: 32px; left: 32px; text-align: left; max-width: 80%; z-index: 2; }
-        .ad-content h3 { font-size: clamp(1.4rem, 4vw, 2.2rem); text-transform: uppercase; text-shadow: 0 4px 20px rgba(0,0,0,0.8); margin-bottom: 12px; }
+        
+        /* WARNA PUTIH DI IKLAN */
+        .ad-content h3 { font-size: clamp(1.4rem, 4vw, 2.2rem); text-transform: uppercase; text-shadow: 0 4px 20px rgba(0,0,0,0.8); margin-bottom: 12px; color: #FFFFFF; }
         .ad-content p { font-size: 1rem; color: rgba(255,255,255,0.9); margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        
         .btn-glass-ad { pointer-events: auto; display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; border-radius: 30px; background: rgba(10, 10, 10, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.15); color: white; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition-smooth); }
         .btn-glass-ad svg { width: 18px; height: 18px; fill: currentColor; }
         .btn-glass-ad:hover { background: rgba(10, 10, 10, 0.7); border-color: var(--color-accent); transform: translateY(-4px); }
@@ -313,7 +270,7 @@
         .btn-news-read:hover { color: var(--color-accent); border-color: var(--color-accent); gap: 12px; }
 
         /* =========================================
-           LOCATION & MAP SECTION (LUXURY)
+           LOCATION & MAP SECTION
            ========================================= */
         .location-section { padding: 120px 24px 0 24px; background: var(--color-surface); position: relative; z-index: 2; border-top: 1px solid var(--color-border); }
         .location-header { text-align: center; margin-bottom: 60px; }
@@ -357,7 +314,7 @@
         .news-more-btn-wrapper { text-align: center; margin-top: 56px; }
 
         /* =========================================
-           LAYANAN PURNA JUAL SECTION (SEAMLESS BLEND)
+           LAYANAN PURNA JUAL SECTION 
            ========================================= */
         .service-section { position: relative; padding: 160px 24px 120px; background: #050505; color: var(--color-primary); overflow: hidden; text-align: center; display: flex; align-items: center; justify-content: center; }
         .service-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 180px; background: linear-gradient(to bottom, var(--color-surface) 0%, transparent 100%); z-index: 2; pointer-events: none; }
@@ -377,11 +334,10 @@
         .btn-glass-service:hover svg { transform: translateX(8px); }
 
         /* =========================================
-           MEGA FOOTER LUXURY
+           MEGA FOOTER
            ========================================= */
         .footer { background: #050505; color: var(--color-primary); padding: 100px 24px 40px; position: relative; z-index: 2; border-top: 1px solid rgba(255,255,255,0.05); }
         .footer-container { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; max-width: 1200px; margin: 0 auto; padding-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        
         .footer-brand .footer-logo { height: 50px; filter: brightness(0) invert(1); margin-bottom: 24px; }
         .footer-brand p { color: #888; font-size: 0.95rem; line-height: 1.8; max-width: 300px; margin-bottom: 32px; }
         .footer-socials { display: flex; gap: 16px; flex-wrap: wrap; }
@@ -405,37 +361,14 @@
         .footer-dev { font-size: 0.75rem; color: #555; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 2px; }
 
         /* =========================================
-           MOBILE BOTTOM NAV (LUXURY)
+           MOBILE BOTTOM NAV
            ========================================= */
-        .mobile-bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            background: rgba(5, 5, 5, 0.85);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: none; 
-            justify-content: space-around; align-items: center;
-            padding: 12px 16px; z-index: 1000;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.4);
-            padding-bottom: calc(12px + env(safe-area-inset-bottom));
-        }
-        .bottom-nav-item {
-            display: flex; flex-direction: column; align-items: center; gap: 6px;
-            color: #888; transition: var(--transition-smooth);
-            text-decoration: none; width: 30%; cursor: pointer;
-        }
-        .bottom-nav-icon {
-            width: 24px; height: 24px; fill: currentColor;
-            transition: var(--transition-smooth);
-        }
-        .bottom-nav-label {
-            font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 1px; font-family: var(--font-heading);
-        }
+        .mobile-bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-top: 1px solid rgba(255, 255, 255, 0.1); display: none; justify-content: space-around; align-items: center; padding: 12px 16px; z-index: 1000; box-shadow: 0 -10px 40px rgba(0,0,0,0.4); padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; gap: 6px; color: #888; transition: var(--transition-smooth); text-decoration: none; width: 30%; cursor: pointer; }
+        .bottom-nav-icon { width: 24px; height: 24px; fill: currentColor; transition: var(--transition-smooth); }
+        .bottom-nav-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-heading); }
         .bottom-nav-item:hover, .bottom-nav-item:active { color: var(--color-primary); }
-        .bottom-nav-item:hover .bottom-nav-icon, .bottom-nav-item:active .bottom-nav-icon {
-            transform: translateY(-4px); fill: var(--color-accent);
-            filter: drop-shadow(0 4px 10px rgba(230,0,0,0.5));
-        }
+        .bottom-nav-item:hover .bottom-nav-icon, .bottom-nav-item:active .bottom-nav-icon { transform: translateY(-4px); fill: var(--color-accent); filter: drop-shadow(0 4px 10px rgba(230,0,0,0.5)); }
 
         /* =========================================
            ANIMASI REVEAL
@@ -446,15 +379,11 @@
         .delay-2 { transition-delay: 0.1s; }
 
         /* =========================================
-           RESPONSIVE UTAMA (MEDIA QUERIES AMAN)
+           RESPONSIVE UTAMA
            ========================================= */
-        @media (min-width: 992px) { 
-            .nav-links { display: flex; } 
-            .menu-toggle { display: none; } 
-        }
+        @media (min-width: 992px) { .nav-links { display: flex; } .menu-toggle { display: none; } }
         @media (max-width: 991px) { 
-            .nav-links { display: none; } 
-            .nav-actions .btn-primary { display: none; } 
+            .nav-links { display: none; } .nav-actions .btn-primary { display: none; } 
             .hero-buttons { flex-direction: column; width: 100%; max-width: 300px; margin: 0 auto; } 
             .hero-buttons .btn-primary, .hero-buttons .btn-secondary { width: 100%; } 
             .map-info-card { position: relative; top: 0; left: 0; width: 100%; border-radius: 0; background: var(--color-primary); } 
@@ -463,13 +392,9 @@
             .footer-container { grid-template-columns: 1fr 1fr; }
             .mobile-bottom-nav { display: flex; }
             .footer { padding-bottom: 120px; } 
-            .mobile-menu .btn-primary { margin-bottom: 30px; } /* Mencegah overlap di bottom nav */
+            .mobile-menu .btn-primary { margin-bottom: 30px; }
         }
-        @media (min-width: 768px) { 
-            .slider-btn-nav { display: flex; } 
-            .ads-grid { grid-template-columns: 1fr 1fr; } 
-            .news-nav { justify-content: center; }
-        }
+        @media (min-width: 768px) { .slider-btn-nav { display: flex; } .ads-grid { grid-template-columns: 1fr 1fr; } .news-nav { justify-content: center; } }
         @media (max-width: 767px) { 
             .bio-card { flex-direction: column; text-align: left; padding: 40px 24px; gap: 32px; } 
             .bio-img-wrapper { width: 100%; height: 400px; } 
@@ -498,7 +423,6 @@
             .service-title { font-size: 2.5rem; }
             .service-desc { font-size: 1rem; }
             .btn-glass-service { padding: 16px 32px; font-size: 0.85rem; }
-            
             .testimonial-section { padding: 60px 16px 80px; }
             .testi-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
             .testi-img-main { height: 140px; border-bottom: 2px solid var(--color-accent); }
@@ -506,7 +430,6 @@
             .testi-name { font-size: 0.95rem; }
             .testi-text { font-size: 0.75rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
             .testi-stars { font-size: 0.85rem; margin-bottom: 8px; }
-
             .footer { padding: 80px 20px 120px; } 
             .footer-container { grid-template-columns: 1fr; gap: 40px; text-align: center; }
             .footer-brand .footer-logo { margin: 0 auto 24px; }
@@ -655,7 +578,7 @@
                 <div class="slider-btn-nav prev" id="promo-prev" aria-label="Geser Kiri"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></div>
                 
                 <div class="promo-slider smooth-scroll" id="promo-slider">
-                    <div class="promo-card">
+                    <div class="promo-card dummy-promo">
                         <div class="promo-card-inner">
                             <img src="https://images.unsplash.com/photo-1605810730836-474be6843477?q=80&w=800&auto=format&fit=crop" alt="Promo XFORCE" class="promo-card-bg">
                             <div class="promo-card-content">
@@ -666,7 +589,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="promo-card">
+                    <div class="promo-card dummy-promo">
                         <div class="promo-card-inner">
                             <img src="https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=800&auto=format&fit=crop" alt="Promo Pajero" class="promo-card-bg">
                             <div class="promo-card-content">
@@ -677,71 +600,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="promo-card">
-                        <div class="promo-card-inner">
-                            <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?q=80&w=800&auto=format&fit=crop" alt="Promo Xpander" class="promo-card-bg">
-                            <div class="promo-card-content">
-                                <span class="promo-badge">PAKET SMART</span>
-                                <h3>Xpander Family</h3>
-                                <p>Gratis biaya jasa & suku cadang hingga 50.000 KM.</p>
-                                <a href="#" class="btn-text-promo wa-promo" data-promo="Xpander Family">Pesan Sekarang <span>→</span></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="promo-card clone-card">
-                        <div class="promo-card-inner">
-                            <img src="https://images.unsplash.com/photo-1605810730836-474be6843477?q=80&w=800&auto=format&fit=crop" alt="Promo XFORCE" class="promo-card-bg">
-                            <div class="promo-card-content">
-                                <span class="promo-badge">HOT PROMO</span>
-                                <h3>Bunga 0% XFORCE</h3>
-                                <p>DP ringan dan bunga 0% hingga 2 tahun eksklusif bulan ini.</p>
-                                <a href="#" class="btn-text-promo wa-promo" data-promo="Bunga 0% XFORCE">Klaim Promo <span>→</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="promo-card clone-card">
-                        <div class="promo-card-inner">
-                            <img src="https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=800&auto=format&fit=crop" alt="Promo Pajero" class="promo-card-bg">
-                            <div class="promo-card-content">
-                                <span class="promo-badge">CASHBACK</span>
-                                <h3>Pajero Special</h3>
-                                <p>Cashback puluhan juta rupiah dan free asuransi 1 tahun.</p>
-                                <a href="#" class="btn-text-promo wa-promo" data-promo="Pajero Special">Lihat Detail <span>→</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="promo-card clone-card">
-                        <div class="promo-card-inner">
-                            <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?q=80&w=800&auto=format&fit=crop" alt="Promo Xpander" class="promo-card-bg">
-                            <div class="promo-card-content">
-                                <span class="promo-badge">PAKET SMART</span>
-                                <h3>Xpander Family</h3>
-                                <p>Gratis biaya jasa & suku cadang hingga 50.000 KM.</p>
-                                <a href="#" class="btn-text-promo wa-promo" data-promo="Xpander Family">Pesan Sekarang <span>→</span></a>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
                 
                 <div class="slider-btn-nav next" id="promo-next" aria-label="Geser Kanan"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></div>
             </div>
         </section>
-        <div style="background-color: #050505; padding-bottom: 100px; margin-top: -20px;">
+
+        <section class="ads-section" id="iklan-banner">
             <div class="ads-grid-container reveal-up delay-1">
-                <div class="ads-grid">
-                    <div class="luxury-ad-space">
+                <div class="ads-grid" id="iklan-grid-container">
+                    <div class="luxury-ad-space dummy-iklan">
                         <video class="luxury-media" autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=800&auto=format&fit=crop">
                             <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" type="video/mp4">
                         </video>
                         <div class="ad-content">
                             <h3>Drive Your Ambition</h3>
-                            <a href="#" class="btn-glass-ad wa-iklan" data-iklan="Video Drive Your Ambition" aria-label="Lihat Video"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Hubungi Kami</a>
+                            <a href="#" class="btn-glass-ad wa-iklan" data-iklan="Video Drive Your Ambition"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Hubungi Kami</a>
                         </div>
                     </div>
 
-                    <div class="luxury-ad-space">
+                    <div class="luxury-ad-space dummy-iklan">
                         <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=800&auto=format&fit=crop" alt="Layanan Eksklusif" class="luxury-media">
                         <div class="ad-content">
                             <h3>Layanan VVIP</h3>
@@ -751,7 +629,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <section class="katalog-section reveal-up delay-1" id="katalog">
             <div class="katalog-header">
@@ -1075,7 +953,6 @@
     </main>
 
     <div id="toast-container"></div>
-
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     <script>
@@ -1098,70 +975,63 @@
         firebase.initializeApp(firebaseConfig); 
         const db = firebase.database();
 
-        // Variabel global untuk menyimpan nomor WA agar bisa dipanggil fungsi lain
+        // Variabel global untuk menyimpan nomor WA
         let currentSalesWA = ""; 
 
-        // Fungsi khusus merakit link WhatsApp dengan teks dinamis
+        // Fungsi khusus merakit link WhatsApp dinamis (TANPA DP 50%)
         function updateWhatsAppLinks(nomorWa) {
             if(!nomorWa) return;
             
             // 1. Tombol WA Global (Footer, Bottom Nav, Profil Bio)
             const globalWaLinks = document.querySelectorAll('.link-wa-global');
-            const teksUmum = encodeURIComponent("Halo Kak, saya tertarik dengan informasi Mitsubishi Motors dari website. Boleh minta informasinya lebih lanjut? (Saya mengerti syarat wajib DP 50%)");
+            const teksUmum = encodeURIComponent("Halo Kak, saya tertarik dengan informasi Mitsubishi Motors dari website. Boleh minta informasinya lebih lanjut?");
             globalWaLinks.forEach(link => link.href = `https://wa.me/${nomorWa}?text=${teksUmum}`);
 
             // 2. Tombol Test Drive (Hero & Layanan Bawah)
             const testDriveLinks = document.querySelectorAll('.wa-test-drive');
-            const teksTestDrive = encodeURIComponent("Halo Kak, saya tertarik dengan salah satu mobil di sini, bisakah jadwalkan waktu untuk saya test drive? (Saya mengerti syarat wajib DP 50%)");
+            const teksTestDrive = encodeURIComponent("Halo Kak, saya tertarik dengan salah satu mobil di dealer, boleh minta informasi lebih detail untuk jadwal test drive mobilnya Kak?");
             testDriveLinks.forEach(link => link.href = `https://wa.me/${nomorWa}?text=${teksTestDrive}`);
 
             // 3. Tombol Promo (Glassmorphism Card)
             const promoLinks = document.querySelectorAll('.wa-promo');
             promoLinks.forEach(link => {
-                const namaPromo = link.getAttribute('data-promo');
-                const teksPromo = encodeURIComponent(`Halo Kak, saya ingin mengklaim penawaran promo "${namaPromo}" dari website. Mohon info lebih lanjut. (Saya mengerti syarat wajib DP 50%)`);
+                const namaPromo = link.getAttribute('data-promo') || "Promo Spesial";
+                const teksPromo = encodeURIComponent(`Halo Kak, saya ingin bertanya dan mengklaim penawaran promo "${namaPromo}" yang ada di website. Mohon info lebih lanjut Kak.`);
                 link.href = `https://wa.me/${nomorWa}?text=${teksPromo}`;
             });
 
             // 4. Tombol Iklan Video / VVIP
             const iklanLinks = document.querySelectorAll('.wa-iklan');
             iklanLinks.forEach(link => {
-                const namaIklan = link.getAttribute('data-iklan');
-                const teksIklan = encodeURIComponent(`Halo Kak, saya tertarik dengan informasi dari "${namaIklan}" di website. (Saya mengerti syarat wajib DP 50%)`);
+                const namaIklan = link.getAttribute('data-iklan') || "Iklan";
+                const teksIklan = encodeURIComponent(`Halo Kak, saya tertarik dengan informasi dari banner "${namaIklan}" di website. Boleh minta detailnya?`);
                 link.href = `https://wa.me/${nomorWa}?text=${teksIklan}`;
             });
 
             // 5. Tombol Pesan di Katalog Mobil
             const pesanMobilLinks = document.querySelectorAll('.wa-pesan-mobil');
             pesanMobilLinks.forEach(link => {
-                const namaMobil = link.getAttribute('data-mobil');
-                const teksPesanMobil = encodeURIComponent(`Halo Kak, saya tertarik dengan mobil "${namaMobil}". Boleh minta informasinya lebih lanjut? (Saya mengerti syarat wajib DP 50%)`);
+                const namaMobil = link.getAttribute('data-mobil') || "Mobil Mitsubishi";
+                const teksPesanMobil = encodeURIComponent(`Halo Kak, saya tertarik dengan mobil "${namaMobil}". Boleh minta informasinya lebih lanjut Kak?`);
                 link.href = `https://wa.me/${nomorWa}?text=${teksPesanMobil}`;
             });
         }
 
         // --- 2. LOGIKA PEMBACA OTOMATIS (REALTIME SYNC) DARI ADMIN ---
         function sinkronisasiOtomatis() {
-            console.log("Memulai sinkronisasi data dengan Admin...");
-
+            
             // A. Sinkronisasi Profil Sales & Sosial Media
             db.ref('global_data/kontak').on('value', (snapshot) => {
                 const data = snapshot.val();
                 if(data) {
-                    // Update Bio Card (Di tengah halaman)
                     if(data.nama) document.querySelector('.bio-name').innerText = data.nama;
                     if(data.jabatan) document.querySelector('.bio-role').innerText = data.jabatan;
                     if(data.bio) document.querySelector('.bio-motto').innerText = `"${data.bio}"`;
                     if(data.fotoUrl) document.querySelector('.bio-img').src = data.fotoUrl;
 
-                    // Update Social Media Global (FB & IG)
                     if(data.ig) {
                         document.querySelectorAll('.link-ig-global').forEach(link => link.href = `https://instagram.com/${data.ig}`);
                     }
-                    // Jika ada field FB nanti bisa ditambahkan:
-                    // if(data.fb) { document.querySelectorAll('.link-fb-global').forEach(l => l.href = data.fb); }
-
-                    // Update Telepon 
                     if(data.telepon) {
                         document.getElementById('bottom-nav-telp').href = `tel:${data.telepon}`;
                         const teksTelp = document.getElementById('footer-telepon-text');
@@ -1169,8 +1039,6 @@
                             teksTelp.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> ${data.telepon}`;
                         }
                     }
-
-                    // Update seluruh link WhatsApp
                     if(data.whatsapp) {
                         currentSalesWA = data.whatsapp;
                         updateWhatsAppLinks(currentSalesWA);
@@ -1200,15 +1068,87 @@
                 }
             });
 
-            // C. Sinkronisasi Hero Beranda
+            // C. Sinkronisasi Hero Beranda (Dengan Dummy Protection)
             db.ref('halaman/landing/hero').on('value', (snapshot) => {
                 const data = snapshot.val();
+                
+                // Gunakan dummy bawaan HTML jika Firebase kosong
+                const teksAtas = (data && data.teks_atas) ? data.teks_atas : `DRIVE YOUR <span class="text-accent">AMBITION</span>`;
+                const teksBawah = (data && data.teks_bawah) ? data.teks_bawah : "Rasakan harmoni sempurna antara performa mesin kelas dunia dan desain elegan masa depan. Mulai perjalanan Anda hari ini.";
+                const bgUrl = (data && data.bgUrl) ? data.bgUrl : "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?q=80&w=2000&auto=format&fit=crop";
+
+                document.querySelector('.hero-title').innerHTML = teksAtas;
+                document.querySelector('.hero-subtitle').innerText = teksBawah;
+                document.querySelector('.hero-img').src = bgUrl;
+            });
+
+            // D. Sinkronisasi Kartu Promo Terbaru
+            db.ref('promo_list').on('value', (snapshot) => {
+                const data = snapshot.val();
+                const sliderContainer = document.getElementById('promo-slider');
+                if(!sliderContainer) return;
+
                 if(data) {
-                    if(data.teks_atas) {
-                        document.querySelector('.hero-title').innerHTML = `${data.teks_atas} <span class="text-accent">MITSUBISHI</span>`;
-                    }
-                    if(data.teks_bawah) document.querySelector('.hero-subtitle').innerText = data.teks_bawah;
-                    if(data.bgUrl) document.querySelector('.hero-img').src = data.bgUrl;
+                    sliderContainer.innerHTML = ''; // Hapus Dummy Promo
+                    Object.keys(data).forEach(key => {
+                        const promo = data[key];
+                        // Dummy image jika foto tidak diupload
+                        const img = promo.imgUrl || "https://images.unsplash.com/photo-1605810730836-474be6843477?q=80&w=800&auto=format&fit=crop";
+                        
+                        sliderContainer.innerHTML += `
+                        <div class="promo-card">
+                            <div class="promo-card-inner">
+                                <img src="${img}" alt="${promo.judul || 'Promo'}" class="promo-card-bg">
+                                <div class="promo-card-content">
+                                    <span class="promo-badge">${promo.label || 'PROMO'}</span>
+                                    <h3 style="color: #FFF;">${promo.judul || 'Penawaran Spesial'}</h3>
+                                    <p>${promo.info || 'Syarat dan ketentuan berlaku.'}</p>
+                                    <a href="#" class="btn-text-promo wa-promo" data-promo="${promo.judul || 'Promo Spesial'}">
+                                        ${promo.tombol || 'Klaim Sekarang'} <span>→</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+                    
+                    // Render ulang link WA karena ada tombol baru
+                    if(currentSalesWA) updateWhatsAppLinks(currentSalesWA);
+                } 
+                // Jika data kosong, biarkan kode HTML Dummy yang bekerja.
+            });
+
+            // E. Sinkronisasi Iklan Banner / Video
+            db.ref('iklan_list').on('value', (snapshot) => {
+                const data = snapshot.val();
+                const iklanContainer = document.getElementById('iklan-grid-container');
+                if(!iklanContainer) return;
+
+                if(data) {
+                    iklanContainer.innerHTML = ''; // Hapus Dummy Iklan
+                    Object.keys(data).forEach(key => {
+                        const iklan = data[key];
+                        const img = iklan.mediaUrl || "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=800&auto=format&fit=crop";
+                        
+                        // Cek apakah file adalah video mp4
+                        const isVideo = img.match(/\.(mp4|webm)$/i);
+                        let mediaElement = isVideo 
+                            ? `<video class="luxury-media" autoplay loop muted playsinline><source src="${img}" type="video/mp4"></video>`
+                            : `<img src="${img}" alt="${iklan.judul || 'Iklan'}" class="luxury-media">`;
+
+                        iklanContainer.innerHTML += `
+                        <div class="luxury-ad-space">
+                            ${mediaElement}
+                            <div class="ad-content">
+                                <h3 style="color: #FFF;">${iklan.judul || 'Iklan Spesial'}</h3>
+                                <a href="#" class="btn-glass-ad wa-iklan" data-iklan="${iklan.judul || 'Iklan Spesial'}">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> ${iklan.tombol || 'Hubungi Kami'}
+                                </a>
+                            </div>
+                        </div>`;
+                    });
+
+                    // Render ulang link WA karena ada tombol baru
+                    if(currentSalesWA) updateWhatsAppLinks(currentSalesWA);
                 }
             });
         }
@@ -1266,11 +1206,10 @@
             }
         });
 
-        // --- 6. LOGIKA SLIDER PROMO (INFINITE AUTO LOOP PC/MOBILE) ---
+        // --- 6. LOGIKA SLIDER PROMO ---
         const promoSlider = document.getElementById('promo-slider');
         const btnPrev = document.getElementById('promo-prev');
         const btnNext = document.getElementById('promo-next');
-        let sliderLoopInterval;
 
         if (promoSlider) {
             function updateCenterCard() {
@@ -1285,60 +1224,19 @@
                 if (closestCard) closestCard.classList.add('is-active');
             }
 
-            function startSliderLoop() {
-                stopSliderLoop(); 
-                sliderLoopInterval = setInterval(() => {
-                    const maxScroll = promoSlider.scrollWidth - promoSlider.clientWidth;
-                    // Deteksi jika hampir mencapai ujung clone, reset senyap ke awal (kartu asli)
-                    if (promoSlider.scrollLeft >= maxScroll - 10) {
-                        promoSlider.classList.remove('smooth-scroll'); // Matikan smooth sementara
-                        promoSlider.scrollTo({ left: 0 }); // Lompat instan
-                        setTimeout(() => {
-                            promoSlider.classList.add('smooth-scroll'); // Nyalakan lagi
-                            const cardWidth = document.querySelector('.promo-card').offsetWidth;
-                            promoSlider.scrollBy({ left: cardWidth + 24 });
-                        }, 50);
-                    } else {
-                        const cardWidth = document.querySelector('.promo-card').offsetWidth;
-                        promoSlider.scrollBy({ left: cardWidth + 24 });
-                    }
-                }, 3500);
-            }
-            
-            function stopSliderLoop() { clearInterval(sliderLoopInterval); }
-
             promoSlider.addEventListener('scroll', () => window.requestAnimationFrame(updateCenterCard));
             updateCenterCard();
 
             if (btnNext && btnPrev) {
                 btnNext.addEventListener('click', () => { 
-                    const cardW = document.querySelector('.promo-card').offsetWidth;
-                    const maxScroll = promoSlider.scrollWidth - promoSlider.clientWidth;
-                    if(promoSlider.scrollLeft >= maxScroll - 10) {
-                        promoSlider.classList.remove('smooth-scroll');
-                        promoSlider.scrollTo({ left: 0 });
-                        setTimeout(() => { promoSlider.classList.add('smooth-scroll'); promoSlider.scrollBy({ left: cardW + 24 }); }, 50);
-                    } else {
-                        promoSlider.scrollBy({ left: cardW + 24 }); 
-                    }
+                    const cardW = document.querySelector('.promo-card') ? document.querySelector('.promo-card').offsetWidth : 300;
+                    promoSlider.scrollBy({ left: cardW + 24 }); 
                 });
                 btnPrev.addEventListener('click', () => { 
-                    const cardW = document.querySelector('.promo-card').offsetWidth;
-                    if(promoSlider.scrollLeft <= 10) {
-                        promoSlider.classList.remove('smooth-scroll');
-                        promoSlider.scrollTo({ left: promoSlider.scrollWidth });
-                        setTimeout(() => { promoSlider.classList.add('smooth-scroll'); promoSlider.scrollBy({ left: -(cardW + 24) }); }, 50);
-                    } else {
-                        promoSlider.scrollBy({ left: -(cardW + 24) }); 
-                    }
+                    const cardW = document.querySelector('.promo-card') ? document.querySelector('.promo-card').offsetWidth : 300;
+                    promoSlider.scrollBy({ left: -(cardW + 24) }); 
                 });
             }
-
-            startSliderLoop();
-            promoSlider.addEventListener('mouseenter', stopSliderLoop);
-            promoSlider.addEventListener('mouseleave', startSliderLoop);
-            promoSlider.addEventListener('touchstart', stopSliderLoop);
-            promoSlider.addEventListener('touchend', startSliderLoop);
         }
 
         // --- 7. LOGIKA REVEAL UP (Animasi Muncul) ---
