@@ -83,6 +83,7 @@
         .file-upload-wrapper input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2; }
         .file-upload-icon { width: 24px; height: 24px; fill: var(--color-text-dim); }
         .file-upload-text { font-size: 0.8rem; color: var(--color-text-dim); font-weight: 500; text-shadow: 0px 1px 3px rgba(0,0,0,0.8); }
+        .file-upload-subtext { font-size: 0.65rem; color: #aaa; text-shadow: 0px 1px 3px rgba(0,0,0,0.8); }
         .alur-text { color: var(--color-text-dim); font-size: 0.75rem; margin-bottom: 16px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 6px; line-height: 1.5; border-left: 2px solid var(--color-accent); }
         .action-bar { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--color-border); flex-wrap: wrap; }
         .btn-save, .btn-delete, .btn-add { padding: 12px 16px; border-radius: 6px; font-weight: 600; font-size: 0.8rem; cursor: pointer; border: none; transition: var(--transition); }
@@ -177,7 +178,7 @@
                     
                     <div class="section-card">
                         <div class="section-header"><h3 class="section-title">A. Hero Section (Beranda)</h3></div>
-                        <p class="alur-text">Ubah latar dan dua baris tulisan penawaran. <b>Jika dihapus</b>, web akan otomatis menggunakan tampilan bawaan (dummy).</p>
+                        <p class="alur-text">Ubah latar dan baris tulisan penawaran. <b>Jika dihapus</b>, web akan otomatis menggunakan tampilan bawaan (dummy).</p>
                         <div class="form-grid">
                             <div class="input-group form-full">
                                 <label>Foto/Video Latar</label>
@@ -192,7 +193,7 @@
                                 <label>Tulisan Atas (Kolom 1)</label>
                                 <input type="text" id="landing-hero-teks1" class="input-control" placeholder="Contoh: DRIVE YOUR">
                             </div>
-
+                            
                             <div class="input-group form-full">
                                 <label>Tulisan Aksen (Warna Merah)</label>
                                 <p class="alur-text" style="margin: 0 0 8px 0; padding: 8px;"><b>Alur:</b> Teks ini akan otomatis menyambung di sebelah/bawah Tulisan Atas dengan gaya font merah yang tegas dan mencolok. (Contoh standar: AMBITION)</p>
@@ -366,7 +367,7 @@
     }
 
     /* =========================================
-       3. FUNGSI MEDIA (IMAGEKIT + VERCEL API)
+       3. FUNGSI MEDIA (IMAGEKIT API RESMI)
        ========================================= */
     async function uploadMedia(file) {
         if (!file) return null;
@@ -405,21 +406,27 @@
         }
     }
 
-    // PERBAIKAN: Fungsi hapus ImageKit sekarang dijamin berjalan dengan await
+    // FUNGSI HAPUS IMAGEKIT YANG SUDAH DIPERBAIKI SESUAI DOKUMENTASI RESMI
     async function deleteMedia(fileId) {
-        if (!fileId || fileId === 'undefined') return;
-        try { 
-            console.log("Mencoba menghapus file lama di ImageKit:", fileId);
-            const response = await fetch(window.location.origin + `/api/delete?fileId=${fileId}`, { method: 'DELETE' }); 
-            if(response.ok) {
-                console.log("File lama berhasil dihapus dari ImageKit");
-            } else {
-                console.warn("Gagal menghapus file di ImageKit via API Vercel");
-            }
-        } catch (err) { 
-            console.error("Error saat menghapus file lama:", err); 
+    if (!fileId || fileId === 'undefined') return;
+    
+    try { 
+        console.log("Meminta Vercel untuk menghapus file:", fileId);
+        
+        // Kita tidak menaruh Kunci di sini, tapi kita suruh Vercel yang menghapus
+        const response = await fetch(window.location.origin + `/api/delete?fileId=${fileId}`, { 
+            method: 'DELETE' 
+        }); 
+
+        if (response.ok) {
+            console.log("Berhasil! Vercel telah menghapus file di ImageKit.");
+        } else {
+            console.warn("Gagal! Pastikan file api/delete.js di Vercel sudah benar.");
         }
+    } catch (err) { 
+        console.error("Error saat menghubungi server Vercel:", err); 
     }
+}
 
     /* =========================================
        4. UI CONTROLLER (SIDEBAR & PREVIEW GAMBAR)
@@ -471,7 +478,7 @@
             }
         });
 
-        // Ambil Data Hero (Untuk mengisi form jika data sudah ada sebelumnya)
+        // Ambil Data Hero (Mengisi form jika ada data)
         db.ref('halaman/landing/hero').once('value', snap => {
             if(snap.val()) {
                 document.getElementById('landing-hero-teks1').value = snap.val().teks_atas || '';
@@ -521,9 +528,8 @@
 
     window.hapusPromo = async function(key, imgId) {
         if(confirm("Hapus promo ini secara permanen?")) {
-            // PERBAIKAN: Hapus dari ImageKit terlebih dahulu dengan await
             if(imgId && imgId !== 'undefined') { 
-                showToast("Menghapus foto di server...", "info");
+                showToast("Menghapus foto di server ImageKit...", "info");
                 await deleteMedia(imgId); 
             }
             await db.ref('promo_list/' + key).remove();
@@ -531,7 +537,7 @@
         }
     };
 
-    // Menarik Data Iklan (Sistem List Baru)
+    // Menarik Data Iklan
     function listenIklan() {
         db.ref('iklan_list').on('value', (snap) => {
             const list = document.getElementById('list-iklan-container');
@@ -565,9 +571,8 @@
 
     window.hapusIklan = async function(key, mediaId) {
         if(confirm("Yakin ingin menghapus iklan ini?")) {
-            // PERBAIKAN: Hapus dari ImageKit terlebih dahulu dengan await
             if(mediaId && mediaId !== 'undefined') { 
-                showToast("Menghapus media di server...", "info");
+                showToast("Menghapus media di server ImageKit...", "info");
                 await deleteMedia(mediaId); 
             }
             await db.ref('iklan_list/' + key).remove();
@@ -591,11 +596,11 @@
             try {
                 let obj = {};
                 const t1 = document.getElementById('landing-hero-teks1').value.trim();
-                const tAksen = document.getElementById('landing-hero-teks-aksen').value.trim(); // Kolom Aksen Merah Baru
+                const tAksen = document.getElementById('landing-hero-teks-aksen').value.trim();
                 const t2 = document.getElementById('landing-hero-teks2').value.trim();
                 
                 if (t1 !== "") obj.teks_atas = t1;
-                if (tAksen !== "") obj.teks_aksen = tAksen; // Menyimpan aksen merah
+                if (tAksen !== "") obj.teks_aksen = tAksen;
                 if (t2 !== "") obj.teks_bawah = t2;
 
                 const file = document.getElementById('landing-hero-file').files[0];
@@ -605,7 +610,7 @@
                         obj.bgUrl = media.url; 
                         obj.bgId = media.fileId; 
                         
-                        // Menghapus media lama di ImageKit jika ada (mengganti background)
+                        // Menghapus media lama di ImageKit saat mengganti background baru
                         const snap = await db.ref('halaman/landing/hero/bgId').once('value');
                         if(snap.val()) {
                             await deleteMedia(snap.val()); 
@@ -638,14 +643,12 @@
                 btn.disabled = true;
                 
                 try {
-                    // Hapus gambar dari ImageKit secara aman (Bila ada)
                     const snap = await db.ref('halaman/landing/hero/bgId').once('value');
                     if(snap.val()) { 
-                        showToast("Membersihkan foto hero di server...", "info");
+                        showToast("Membersihkan foto hero di ImageKit...", "info");
                         await deleteMedia(snap.val()); 
                     }
                     
-                    // Hapus seluruh data hero dari Firebase
                     await db.ref('halaman/landing/hero').remove();
                     
                     showToast("Hero dihapus. Web kembali ke default.", "success");
@@ -687,7 +690,7 @@
                         obj.imgUrl = media.url; 
                         obj.imgId = media.fileId; 
                         
-                        // PERBAIKAN: Jika sedang mengedit dan upload foto baru, hapus foto lama!
+                        // Menghapus foto lama jika upload foto baru
                         if(editId) {
                             const snap = await db.ref('promo_list/' + editId + '/imgId').once('value');
                             if(snap.val()) await deleteMedia(snap.val());
@@ -736,7 +739,7 @@
                         obj.mediaUrl = media.url; 
                         obj.mediaId = media.fileId; 
                         
-                        // PERBAIKAN: Jika sedang mengedit dan upload media baru, hapus media lama!
+                        // Menghapus media lama jika upload media baru
                         if(editId) {
                             const snap = await db.ref('iklan_list/' + editId + '/mediaId').once('value');
                             if(snap.val()) await deleteMedia(snap.val());
