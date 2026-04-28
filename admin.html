@@ -406,27 +406,25 @@
         }
     }
 
-    // FUNGSI HAPUS IMAGEKIT YANG SUDAH DIPERBAIKI SESUAI DOKUMENTASI RESMI
     async function deleteMedia(fileId) {
-    if (!fileId || fileId === 'undefined') return;
-    
-    try { 
-        console.log("Meminta Vercel untuk menghapus file:", fileId);
+        if (!fileId || fileId === 'undefined') return;
         
-        // Kita tidak menaruh Kunci di sini, tapi kita suruh Vercel yang menghapus
-        const response = await fetch(window.location.origin + `/api/delete?fileId=${fileId}`, { 
-            method: 'DELETE' 
-        }); 
+        try { 
+            console.log("Meminta Vercel untuk menghapus file:", fileId);
+            
+            const response = await fetch(window.location.origin + `/api/delete?fileId=${fileId}`, { 
+                method: 'DELETE' 
+            }); 
 
-        if (response.ok) {
-            console.log("Berhasil! Vercel telah menghapus file di ImageKit.");
-        } else {
-            console.warn("Gagal! Pastikan file api/delete.js di Vercel sudah benar.");
+            if (response.ok) {
+                console.log("Berhasil! Vercel telah menghapus file di ImageKit.");
+            } else {
+                console.warn("Gagal! Pastikan file api/delete.js di Vercel sudah benar.");
+            }
+        } catch (err) { 
+            console.error("Error saat menghubungi server Vercel:", err); 
         }
-    } catch (err) { 
-        console.error("Error saat menghubungi server Vercel:", err); 
     }
-}
 
     /* =========================================
        4. UI CONTROLLER (SIDEBAR & PREVIEW GAMBAR)
@@ -478,10 +476,17 @@
             }
         });
 
-        // Ambil Data Hero (Mengisi form jika ada data)
+        // Ambil Data Hero (Pembersih Tag HTML Otomatis)
         db.ref('halaman/landing/hero').once('value', snap => {
             if(snap.val()) {
-                document.getElementById('landing-hero-teks1').value = snap.val().teks_atas || '';
+                let tAtas = snap.val().teks_atas || '';
+                
+                // SISTEM PEMBERSIH: Jika ada sisa kode <span dari versi lama, kita buang paksa!
+                if (tAtas.includes('<span')) {
+                    tAtas = tAtas.split('<span')[0].trim();
+                }
+
+                document.getElementById('landing-hero-teks1').value = tAtas;
                 document.getElementById('landing-hero-teks-aksen').value = snap.val().teks_aksen || '';
                 document.getElementById('landing-hero-teks2').value = snap.val().teks_bawah || '';
             }
@@ -586,7 +591,7 @@
        ========================================= */
     document.addEventListener('DOMContentLoaded', () => {
 
-        // --- A1. SIMPAN HERO LANDING ---
+        // --- A1. SIMPAN HERO LANDING (SUDAH DIPERBAIKI) ---
         document.getElementById('btn-save-hero-landing').addEventListener('click', async () => {
             const btn = document.getElementById('btn-save-hero-landing');
             btn.innerText = "Menyimpan..."; 
@@ -594,14 +599,13 @@
             btn.disabled = true;
 
             try {
-                let obj = {};
-                const t1 = document.getElementById('landing-hero-teks1').value.trim();
-                const tAksen = document.getElementById('landing-hero-teks-aksen').value.trim();
-                const t2 = document.getElementById('landing-hero-teks2').value.trim();
-                
-                if (t1 !== "") obj.teks_atas = t1;
-                if (tAksen !== "") obj.teks_aksen = tAksen;
-                if (t2 !== "") obj.teks_bawah = t2;
+                // Sekarang object ini akan SELALU menangkap data dari kotak input,
+                // meskipun kotaknya sengaja kamu kosongkan (sehingga Firebase jadi bersih)
+                let obj = {
+                    teks_atas: document.getElementById('landing-hero-teks1').value.trim(),
+                    teks_aksen: document.getElementById('landing-hero-teks-aksen').value.trim(),
+                    teks_bawah: document.getElementById('landing-hero-teks2').value.trim()
+                };
 
                 const file = document.getElementById('landing-hero-file').files[0];
                 if (file) {
@@ -620,12 +624,10 @@
                     }
                 }
 
-                if(Object.keys(obj).length > 0) {
-                    await db.ref('halaman/landing/hero').update(obj);
-                    showToast("Hero Beranda berhasil diupdate!", "success");
-                } else {
-                    showToast("Form masih kosong, tidak ada yang disimpan.", "info");
-                }
+                // Update database
+                await db.ref('halaman/landing/hero').update(obj);
+                showToast("Hero Beranda berhasil diupdate!", "success");
+                
             } catch (err) {
                 showToast("Terjadi kesalahan saat menyimpan hero.", "error");
             } finally {
