@@ -104,17 +104,6 @@
         .mobile-menu.active { transform: translateX(0); }
         .mobile-menu > * { opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         .mobile-menu.active > * { opacity: 1; transform: translateY(0); }
-        .mobile-menu.active .sidebar-header { transition-delay: 0.1s; }
-        .mobile-menu.active .menu-item-1 { transition-delay: 0.15s; }
-        .mobile-menu.active .accordion-item { transition-delay: 0.2s; }
-        .mobile-menu.active .menu-item-2 { transition-delay: 0.25s; }
-        .mobile-menu.active .menu-item-3 { transition-delay: 0.3s; }
-        .mobile-menu.active .menu-item-4 { transition-delay: 0.35s; }
-        .mobile-menu.active .menu-item-5 { transition-delay: 0.4s; }
-        .mobile-menu.active .menu-item-6 { transition-delay: 0.45s; }
-        .mobile-menu.active .menu-item-7 { transition-delay: 0.5s; }
-        .mobile-menu.active .menu-item-8 { transition-delay: 0.55s; }
-        .mobile-menu.active .btn-primary { transition-delay: 0.6s; }
         
         .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--color-border); }
         .sidebar-title { font-family: var(--font-heading); font-weight: 800; font-size: 1.2rem; }
@@ -134,7 +123,7 @@
         /* =========================================
            BIODATA SALES
            ========================================= */
-        .sales-bio { background-color: var(--color-primary); padding: 40px 24px 80px; display: flex; justify-content: center; position: relative; z-index: 2; }
+        .sales-bio { background-color: var(--color-primary); padding: 40px 24px 80px; display: flex; justify-content: center; position: relative; z-index: 2; margin-top: -1px; /* Kompensasi Garis Hitam */ }
         .bio-card-wrapper { width: 100%; max-width: 950px; will-change: transform; }
         .bio-card { background: var(--color-primary); width: 100%; border-radius: 8px; padding: 48px; box-shadow: var(--shadow-premium); display: flex; align-items: center; gap: 48px; border: 1px solid var(--color-border); border-top: 3px solid var(--color-accent); position: relative; overflow: hidden; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .bio-card:hover { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.1); }
@@ -155,14 +144,14 @@
         /* =========================================
            DEALER INFO SECTION
            ========================================= */
-        .dealer-info { padding: 20px 24px 160px; background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary) 50%, #050505 100%); text-align: center; position: relative; z-index: 2; }
+        .dealer-info { padding: 20px 24px 160px; background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary) 50%, #050505 100%); text-align: center; position: relative; z-index: 2; margin-top: -1px; /* Kompensasi Garis Hitam */ }
         .dealer-title { font-size: clamp(1.8rem, 5vw, 2.5rem); color: var(--color-secondary); letter-spacing: -0.5px; margin-bottom: 16px; text-transform: uppercase; }
         .dealer-desc { max-width: 700px; margin: 0 auto; color: #555; font-size: 1.1rem; line-height: 1.8; }
 
         /* =========================================
            PROMO SECTION
            ========================================= */
-        .promo-section { background-color: #050505; padding: 0 0 60px 0; position: relative; overflow: hidden; color: var(--color-primary); }
+        .promo-section { background-color: #050505; padding: 0 0 60px 0; position: relative; overflow: hidden; color: var(--color-primary); margin-top: -1px; /* Kompensasi Garis Hitam */ }
         .promo-section::before { content: ''; position: absolute; top: 10%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(230,0,0,0.15) 0%, transparent 60%); filter: blur(80px); z-index: 0; pointer-events: none; }
         .promo-header { text-align: center; margin-bottom: 60px; padding: 0 24px; position: relative; z-index: 1; }
         .promo-header h2 { font-size: clamp(2.2rem, 6vw, 3.5rem); letter-spacing: 1px; text-transform: uppercase; }
@@ -198,9 +187,9 @@
         .btn-text-promo:hover { color: var(--color-accent); gap: 14px; border-bottom-color: white; }
 
         /* =========================================
-           ADS / IKLAN SECTION (RAPATKAN JARAK)
+           ADS / IKLAN SECTION 
            ========================================= */
-        .ads-section { background-color: #050505; padding-bottom: 100px; }
+        .ads-section { background-color: #050505; padding-bottom: 100px; margin-top: -1px; /* Kompensasi Garis Hitam */ }
         .ads-grid-container { padding: 0 24px; position: relative; z-index: 1; margin-top: 0; }
         .ads-grid { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 1200px; margin: 0 auto; }
         .luxury-ad-space { width: 100%; height: 420px; border-radius: 24px; overflow: hidden; position: relative; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 30px 60px rgba(0,0,0,0.6); transform: translateZ(0); }
@@ -208,7 +197,6 @@
         .luxury-media { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); transition: var(--transition-smooth); }
         .ad-content { position: absolute; bottom: 32px; left: 32px; text-align: left; max-width: 80%; z-index: 2; }
         
-        /* WARNA PUTIH DI IKLAN */
         .ad-content h3 { font-size: clamp(1.4rem, 4vw, 2.2rem); text-transform: uppercase; text-shadow: 0 4px 20px rgba(0,0,0,0.8); margin-bottom: 12px; color: #FFFFFF; }
         .ad-content p { font-size: 1rem; color: rgba(255,255,255,0.9); margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
         
@@ -219,7 +207,7 @@
         /* =========================================
            KATALOG SECTION
            ========================================= */
-        .katalog-section { padding: 100px 24px; background: var(--color-surface); position: relative; z-index: 2; }
+        .katalog-section { padding: 100px 24px; background: var(--color-surface); position: relative; z-index: 2; margin-top: -1px; /* Kompensasi Garis Hitam */ border-top: 1px solid var(--color-border); }
         .katalog-header { text-align: center; margin-bottom: 48px; }
         .katalog-title { font-size: clamp(2rem, 5vw, 3rem); text-transform: uppercase; color: var(--color-secondary); letter-spacing: -0.5px; }
         .katalog-subtitle { color: #666; margin-top: 12px; font-size: 1.1rem; }
@@ -316,7 +304,7 @@
         /* =========================================
            LAYANAN PURNA JUAL SECTION 
            ========================================= */
-        .service-section { position: relative; padding: 160px 24px 120px; background: #050505; color: var(--color-primary); overflow: hidden; text-align: center; display: flex; align-items: center; justify-content: center; }
+        .service-section { position: relative; padding: 160px 24px 120px; background: #050505; color: var(--color-primary); overflow: hidden; text-align: center; display: flex; align-items: center; justify-content: center; margin-top: -1px; /* Kompensasi Garis Hitam */ }
         .service-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 180px; background: linear-gradient(to bottom, var(--color-surface) 0%, transparent 100%); z-index: 2; pointer-events: none; }
         .service-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4) grayscale(0.2); transition: transform 10s ease; z-index: 0; }
         .service-section:hover .service-bg { transform: scale(1.05); }
@@ -336,7 +324,7 @@
         /* =========================================
            MEGA FOOTER
            ========================================= */
-        .footer { background: #050505; color: var(--color-primary); padding: 100px 24px 40px; position: relative; z-index: 2; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer { background: #050505; color: var(--color-primary); padding: 100px 24px 40px; position: relative; z-index: 2; margin-top: -1px; /* Kompensasi Garis Hitam */ }
         .footer-container { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; max-width: 1200px; margin: 0 auto; padding-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .footer-brand .footer-logo { height: 50px; filter: brightness(0) invert(1); margin-bottom: 24px; }
         .footer-brand p { color: #888; font-size: 0.95rem; line-height: 1.8; max-width: 300px; margin-bottom: 32px; }
@@ -524,7 +512,7 @@
                 <div class="hero-overlay"></div>
             </div>
             <div class="hero-content">
-                <h1 class="hero-title">DRIVE YOUR <span class="text-accent">AMBITION</span></h1>
+                <h1 class="hero-title"><span id="hero-title-main">DRIVE YOUR</span> <span class="text-accent" id="hero-aksen">AMBITION</span></h1>
                 <p class="hero-subtitle">Rasakan harmoni sempurna antara performa mesin kelas dunia dan desain elegan masa depan. Mulai perjalanan Anda hari ini.</p>
                 <div class="hero-buttons">
                     <a href="katalog.html" class="btn-primary">Eksplorasi Model</a>
@@ -978,7 +966,7 @@
         // Variabel global untuk menyimpan nomor WA
         let currentSalesWA = ""; 
 
-        // Fungsi khusus merakit link WhatsApp dinamis (TANPA DP 50%)
+        // Fungsi khusus merakit link WhatsApp dinamis
         function updateWhatsAppLinks(nomorWa) {
             if(!nomorWa) return;
             
@@ -1068,16 +1056,25 @@
                 }
             });
 
-            // C. Sinkronisasi Hero Beranda (Dengan Dummy Protection)
+            // C. Sinkronisasi Hero Beranda (Dengan Data Teks Aksen)
             db.ref('halaman/landing/hero').on('value', (snapshot) => {
                 const data = snapshot.val();
                 
-                // Gunakan dummy bawaan HTML jika Firebase kosong
-                const teksAtas = (data && data.teks_atas) ? data.teks_atas : `DRIVE YOUR <span class="text-accent">AMBITION</span>`;
+                // Menarik tulisan atas (biasanya hitam/putih standar)
+                const teksAtas = (data && data.teks_atas) ? data.teks_atas : "DRIVE YOUR";
+                // Menarik tulisan aksen merah dari database
+                const teksAksen = (data && data.teks_aksen) ? data.teks_aksen : "AMBITION"; 
+                // Menarik tulisan sub-judul bawah
                 const teksBawah = (data && data.teks_bawah) ? data.teks_bawah : "Rasakan harmoni sempurna antara performa mesin kelas dunia dan desain elegan masa depan. Mulai perjalanan Anda hari ini.";
                 const bgUrl = (data && data.bgUrl) ? data.bgUrl : "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?q=80&w=2000&auto=format&fit=crop";
 
-                document.querySelector('.hero-title').innerHTML = teksAtas;
+                // Menempelkan ke elemen HTML yang sesuai
+                const titleMainElement = document.getElementById('hero-title-main');
+                const titleAksenElement = document.getElementById('hero-aksen');
+                
+                if (titleMainElement) titleMainElement.innerText = teksAtas;
+                if (titleAksenElement) titleAksenElement.innerText = teksAksen;
+                
                 document.querySelector('.hero-subtitle').innerText = teksBawah;
                 document.querySelector('.hero-img').src = bgUrl;
             });
@@ -1114,7 +1111,6 @@
                     // Render ulang link WA karena ada tombol baru
                     if(currentSalesWA) updateWhatsAppLinks(currentSalesWA);
                 } 
-                // Jika data kosong, biarkan kode HTML Dummy yang bekerja.
             });
 
             // E. Sinkronisasi Iklan Banner / Video
