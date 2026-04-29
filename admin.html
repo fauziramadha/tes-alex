@@ -83,7 +83,6 @@
         .file-upload-wrapper input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2; }
         .file-upload-icon { width: 24px; height: 24px; fill: var(--color-text-dim); }
         .file-upload-text { font-size: 0.8rem; color: var(--color-text-dim); font-weight: 500; text-shadow: 0px 1px 3px rgba(0,0,0,0.8); }
-        .file-upload-subtext { font-size: 0.65rem; color: #aaa; text-shadow: 0px 1px 3px rgba(0,0,0,0.8); }
         .alur-text { color: var(--color-text-dim); font-size: 0.75rem; margin-bottom: 16px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 6px; line-height: 1.5; border-left: 2px solid var(--color-accent); }
         .action-bar { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--color-border); flex-wrap: wrap; }
         .btn-save, .btn-delete, .btn-add { padding: 12px 16px; border-radius: 6px; font-weight: 600; font-size: 0.8rem; cursor: pointer; border: none; transition: var(--transition); }
@@ -115,6 +114,12 @@
         .toast.info { background: #121212; border-left: 4px solid #33b5e5; border-top: 1px solid var(--color-border); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+        /* Khusus Animasi Pengunci Spesifikasi */
+        #spesifikasi-locked-wrapper { transition: opacity 0.4s ease; position: relative; opacity: 0.4; }
+        #spesifikasi-locked-wrapper.unlocked { opacity: 1; }
+        #spesifikasi-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 100; cursor: not-allowed; }
+        #spesifikasi-locked-wrapper.unlocked #spesifikasi-overlay { display: none; }
     </style>
 </head>
 <body>
@@ -151,6 +156,7 @@
                 <a class="nav-item active" onclick="switchPanel('panel-home', this, 'Dashboard Utama')">Dashboard</a>
                 <a class="nav-item" onclick="switchPanel('panel-landing', this, 'Edit Landing Page (Index)')">Landing Page (Index)</a>
                 <a class="nav-item" onclick="switchPanel('panel-berita', this, 'Manajemen Berita & Acara')">Berita & Acara</a>
+                <a class="nav-item" onclick="switchPanel('panel-spesifikasi', this, 'Manajemen Spesifikasi & Harga')">Spesifikasi & Harga</a>
             </nav>
             
             <div class="sidebar-footer">
@@ -172,7 +178,7 @@
                     <div class="section-card">
                         <h3 class="section-title">Informasi Sistem</h3>
                         <p class="alur-text">
-                            Silakan pilih menu di sebelah kiri untuk mengatur konten Website Anda. (Landing Page atau Berita & Acara).
+                            Silakan pilih menu di sebelah kiri untuk mengatur konten Website Anda. (Landing Page, Berita & Acara, atau Spesifikasi & Harga).
                         </p>
                     </div>
                 </div>
@@ -266,7 +272,6 @@
                 </div>
 
                 <div id="panel-berita" class="data-panel">
-                    
                     <div class="section-card">
                         <div class="section-header"><h3 class="section-title">A. Hero Berita (Halaman Atas)</h3></div>
                         <p class="alur-text">Desain latar belakang dan judul utama saat pengunjung membuka menu Berita.</p>
@@ -301,8 +306,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="list-manager" id="list-kategori-container">
-                            </div>
+                        <div class="list-manager" id="list-kategori-container"></div>
                     </div>
 
                     <div class="section-card">
@@ -312,8 +316,7 @@
                         </div>
                         
                         <p class="alur-text">Daftar Berita yang sedang tayang di website:</p>
-                        <div class="list-manager" id="list-berita-container" style="margin-bottom: 24px;">
-                            </div>
+                        <div class="list-manager" id="list-berita-container" style="margin-bottom: 24px;"></div>
 
                         <div class="form-grid" id="form-berita-container" style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 8px; border: 1px solid var(--color-border); display: none;">
                             <input type="hidden" id="berita-edit-id">
@@ -322,7 +325,7 @@
                                 <label>Pilih Kategori</label>
                                 <select id="berita-kategori" class="input-control" style="cursor: pointer;">
                                     <option value="" disabled selected>-- Klik untuk Pilih Kategori --</option>
-                                    </select>
+                                </select>
                             </div>
 
                             <div class="input-group form-full">
@@ -359,10 +362,234 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
-            </div> 
-        </main>
+
+                <div id="panel-spesifikasi" class="data-panel">
+                    
+                    <div class="section-card" style="border: 1px solid var(--color-accent); position: sticky; top: 70px; z-index: 5; background: var(--color-surface); box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+                        <div class="section-header" style="border-bottom: none; margin-bottom: 0;">
+                            <h3 class="section-title">PILIH KENDARAAN UNTUK SPESIFIKASI & HARGA</h3>
+                        </div>
+                        <p class="alur-text"><b>PENTING:</b> Pilih jenis mobil terlebih dahulu. Semua data Spesifikasi, Varian, Warna, dan Harga yang Anda edit di bawah ini akan masuk ke mobil yang Anda pilih di sini.</p>
+                        <div class="input-group form-full" style="margin-bottom: 0;">
+                            <select id="pilih-mobil-spesifikasi" class="input-control" style="cursor: pointer; font-weight: bold; color: var(--color-accent); font-size: 1rem; border: 1px solid var(--color-accent);" onchange="bukaKunciSpesifikasi()">
+                                <option value="" disabled selected>-- Pilih Kendaraan Terlebih Dahulu --</option>
+                                <option value="xpander">Mitsubishi Xpander</option>
+                                <option value="xpander-cross">Mitsubishi Xpander Cross</option>
+                                <option value="pajero-sport">Mitsubishi Pajero Sport</option>
+                                <option value="xforce">Mitsubishi XForce</option>
+                                <option value="triton">Mitsubishi Triton</option>
+                                <option value="l300">Mitsubishi L300</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="spesifikasi-locked-wrapper">
+                        <div id="spesifikasi-overlay" onclick="showToast('Harap pilih kendaraan di kotak atas terlebih dahulu!', 'error')"></div>
+
+                        <div class="section-card">
+                            <div class="section-header"><h3 class="section-title">A. HERO SPESIFIKASI</h3></div>
+                            <p class="alur-text">Ubah gambar latar utama (hero) dan slogan saat pelanggan membuka halaman detail spesifikasi kendaraan ini.</p>
+                            <div class="form-grid">
+                                <div class="input-group form-full">
+                                    <label>LATAR BELAKANG MOBIL</label>
+                                    <div class="file-upload-wrapper">
+                                        <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
+                                        <span class="file-upload-text">Ketuk untuk Pilih Latar Belakang Mobil</span>
+                                        <input type="file" id="spesifikasi-hero-file" accept=".png, .jpg, .jpeg, .webp">
+                                    </div>
+                                </div>
+                                <div class="input-group form-full">
+                                    <label>NAMA MOBIL (ATAS)</label>
+                                    <input type="text" id="spesifikasi-hero-nama" class="input-control" placeholder="Contoh: NEW XPANDER CROSS">
+                                </div>
+                                <div class="input-group form-full">
+                                    <label>SLOGAN (BAWAH)</label>
+                                    <input type="text" id="spesifikasi-hero-slogan" class="input-control" placeholder="Contoh: Rise To Your Life's Adventure">
+                                </div>
+                            </div>
+                            <div class="action-bar">
+                                <button class="btn-save" id="btn-save-hero-spesifikasi">Simpan Hero Spesifikasi</button>
+                            </div>
+                        </div>
+
+                        <div class="section-card">
+                            <div class="section-header"><h3 class="section-title">FITUR UTAMA (5 IKON DEFAULT)</h3></div>
+                            <p class="alur-text"><b>Alur Ikon Default:</b> Di bawah ini adalah 5 ikon paten. Anda tidak perlu upload fotonya lagi. Cukup isikan informasi spesifikasinya. Jika ada kolom yang dikosongkan (misal hanya diisi 3 ikon), maka 2 ikon sisanya otomatis TIDAK akan ditampilkan di website.</p>
+                            <div class="form-grid">
+                                <div class="input-group form-full">
+                                    <label>1. IKON PERISAI (TEKNOLOGI KEAMANAN)</label>
+                                    <input type="text" id="icon-default-1" class="input-control" placeholder="Contoh: 7 SRS Airbags">
+                                </div>
+                                <div class="input-group form-full">
+                                    <label>2. IKON TEMPAT DUDUK (KENYAMANAN)</label>
+                                    <input type="text" id="icon-default-2" class="input-control" placeholder="Contoh: Premium Leather Seat">
+                                </div>
+                                <div class="input-group form-full">
+                                    <label>3. IKON SETIR MOBIL (PERFORMA)</label>
+                                    <input type="text" id="icon-default-3" class="input-control" placeholder="Contoh: 1.5L MIVEC DOHC">
+                                </div>
+                                <div class="input-group form-full">
+                                    <label>4. IKON MOBIL (FITUR KESELURUHAN / DIMENSI)</label>
+                                    <input type="text" id="icon-default-4" class="input-control" placeholder="Contoh: High Ground Clearance 220mm">
+                                </div>
+                                <div class="input-group form-full">
+                                    <label>5. IKON MOBIL DENGAN GELOMBANG WIFI (TEKNOLOGI / HEADUNIT)</label>
+                                    <input type="text" id="icon-default-5" class="input-control" placeholder="Contoh: 8 Inch Touchscreen Audio">
+                                </div>
+                            </div>
+                            <div class="action-bar">
+                                <button class="btn-save" id="btn-save-icon-default">Simpan 5 Icon Default</button>
+                            </div>
+
+                            <div style="margin-top: 40px; border-top: 1px dashed var(--color-border); padding-top: 24px;">
+                                <div class="section-header">
+                                    <h3 class="section-title" style="color: #FFF; font-size: 0.9rem;">Manajemen Ikon Fitur (Tambahan Opsional)</h3>
+                                    <button class="btn-add" onclick="document.getElementById('form-ikon-tambahan').style.display='grid';">+ Tambahkan Ikon Fitur Baru</button>
+                                </div>
+                                <p class="alur-text">Gunakan bagian ini HANYA jika Anda ingin meng-upload ikon dengan gambar Anda sendiri (selain 5 ikon di atas). Pengguna dapat menambahkan lebih dari 1 ikon.</p>
+                                
+                                <div class="list-manager" id="list-ikon-tambahan" style="margin-bottom: 16px;"></div>
+
+                                <div class="form-grid" id="form-ikon-tambahan" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; border: 1px solid var(--color-border); display: none;">
+                                    <input type="hidden" id="ikon-tambahan-id">
+                                    <div class="input-group form-full">
+                                        <label>UPLOAD GAMBAR IKON TAMBAHAN (SVG/PNG/JPG/JPEG/WebP)</label>
+                                        <div class="file-upload-wrapper">
+                                            <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
+                                            <span class="file-upload-text">Ketuk untuk Upload Ikon Tambahan</span>
+                                            <input type="file" id="ikon-tambahan-file" accept=".png, .jpg, .jpeg, .webp, .svg">
+                                        </div>
+                                    </div>
+                                    <div class="input-group form-full">
+                                        <label>INFORMASI IKON</label>
+                                        <input type="text" id="ikon-tambahan-info" class="input-control" placeholder="Contoh: Active Stability Control">
+                                    </div>
+                                    <div class="action-bar form-full">
+                                        <button class="btn-delete" onclick="document.getElementById('form-ikon-tambahan').style.display='none'">Batal</button>
+                                        <button class="btn-delete" id="btn-hapus-ikon-tambahan" style="display:none;">Hapus Icon Ini</button>
+                                        <button class="btn-save" id="btn-simpan-ikon-tambahan">Simpan Ikon Tambahan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h3 class="section-title">B. KATALOG WARNA MOBIL</h3>
+                                <button class="btn-add" onclick="document.getElementById('form-warna-container').style.display='grid';">+ Tambah Warna</button>
+                            </div>
+                            <p class="alur-text">Saat pengunjung mengklik warna ini di halaman web, gambar mobil akan berubah. Anda juga dapat menentukan harga spesifik jika warna ini memiliki harga yang berbeda.</p>
+                            
+                            <div class="list-manager" id="list-warna-container" style="margin-bottom: 16px;"></div>
+
+                            <div class="form-grid" id="form-warna-container" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; border: 1px solid var(--color-border); display: none;">
+                                <input type="hidden" id="warna-edit-id">
+                                <div class="input-group form-full">
+                                    <label>FOTO MOBIL (SESUAI WARNA)</label>
+                                    <div class="file-upload-wrapper">
+                                        <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
+                                        <span class="file-upload-text">Ketuk untuk Upload Foto Mobil Berwarna Ini</span>
+                                        <input type="file" id="warna-foto-mobil" accept=".png, .jpg, .jpeg, .webp">
+                                    </div>
+                                </div>
+                                <div class="input-group form-full">
+                                    <label>FOTO TEKSTUR / LINGKARAN WARNA</label>
+                                    <div class="file-upload-wrapper" style="height: 100px;">
+                                        <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                                        <span class="file-upload-text">Ketuk Upload Bulatan Warna (Kecil)</span>
+                                        <input type="file" id="warna-foto-bulat" accept=".png, .jpg, .jpeg, .webp">
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label>NAMA WARNA</label>
+                                    <input type="text" id="warna-nama" class="input-control" placeholder="Contoh: Quartz White Pearl">
+                                </div>
+                                <div class="input-group">
+                                    <label>HARGA KHUSUS UNTUK WARNA INI (RP)</label>
+                                    <p class="alur-text" style="padding:4px; margin-bottom:4px; font-size:0.65rem;">(Kosongkan jika harga sama dengan standar)</p>
+                                    <input type="number" id="warna-harga" class="input-control" placeholder="Contoh: 350000000">
+                                </div>
+                                <div class="action-bar form-full">
+                                    <button class="btn-delete" onclick="document.getElementById('form-warna-container').style.display='none'">Batal</button>
+                                    <button class="btn-delete" id="btn-hapus-warna" style="display:none;">Hapus Warna</button>
+                                    <button class="btn-save" id="btn-simpan-warna">Update Warna</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h3 class="section-title">C. HARGA & VARIAN TIPE STANDAR</h3>
+                                <button class="btn-add" onclick="document.getElementById('form-varian-container').style.display='grid';">+ Tambah Varian</button>
+                            </div>
+                            <p class="alur-text">Masukkan varian-varian mobil beserta harga dasarnya di sini. Data ini akan menjadi acuan utama tabel di halaman harga.html.</p>
+                            
+                            <div class="list-manager" id="list-varian-container" style="margin-bottom: 16px;"></div>
+
+                            <div class="form-grid" id="form-varian-container" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; border: 1px solid var(--color-border); display: none;">
+                                <input type="hidden" id="varian-edit-id">
+                                <div class="input-group form-full">
+                                    <label>NAMA VARIAN</label>
+                                    <input type="text" id="varian-nama" class="input-control" placeholder="Contoh: Ultimate AT">
+                                </div>
+                                <div class="input-group form-full">
+                                    <label>HARGA VARIAN DASAR (RP)</label>
+                                    <input type="number" id="varian-harga" class="input-control" placeholder="Contoh: 312000000">
+                                </div>
+                                <div class="action-bar form-full">
+                                    <button class="btn-delete" onclick="document.getElementById('form-varian-container').style.display='none'">Batal</button>
+                                    <button class="btn-delete" id="btn-hapus-varian" style="display:none;">Hapus Varian</button>
+                                    <button class="btn-save" id="btn-simpan-varian">Simpan Harga Varian</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h3 class="section-title">D. FITUR SPESIFIKASI PRODUK</h3>
+                                <button class="btn-add" onclick="document.getElementById('form-fitur-container').style.display='grid';">+ Tambahkan Fitur</button>
+                            </div>
+                            <p class="alur-text">Tambahkan galeri fitur-fitur detail mobil ini. Kelompokkan ke dalam kategori Interior, Eksterior, atau Performa.</p>
+                            
+                            <div class="list-manager" id="list-fitur-container" style="margin-bottom: 16px;"></div>
+
+                            <div class="form-grid" id="form-fitur-container" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; border: 1px solid var(--color-border); display: none;">
+                                <input type="hidden" id="fitur-edit-id">
+                                <div class="input-group form-full">
+                                    <label>KATEGORI FITUR</label>
+                                    <select id="fitur-kategori" class="input-control" style="cursor: pointer;">
+                                        <option value="" disabled selected>-- Pilih Kategori --</option>
+                                        <option value="Interior">Interior</option>
+                                        <option value="Eksterior">Eksterior</option>
+                                        <option value="Performa">Performa</option>
+                                    </select>
+                                </div>
+                                <div class="input-group form-full">
+                                    <label>FOTO FITUR</label>
+                                    <div class="file-upload-wrapper">
+                                        <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
+                                        <span class="file-upload-text">Ketuk untuk Upload Foto Fitur</span>
+                                        <input type="file" id="fitur-foto" accept=".png, .jpg, .jpeg, .webp">
+                                    </div>
+                                </div>
+                                <div class="input-group form-full">
+                                    <label>KOLOM 1: JUDUL FITUR</label>
+                                    <input type="text" id="fitur-judul" class="input-control" placeholder="Contoh: Digital AC & 8-Inch Head Unit">
+                                </div>
+                                <div class="input-group form-full">
+                                    <label>KOLOM 2: PENJELASAN FITUR</label>
+                                    <textarea id="fitur-deskripsi" class="input-control" rows="3" placeholder="Penjelasan singkat mengenai fitur ini..."></textarea>
+                                </div>
+                                <div class="action-bar form-full">
+                                    <button class="btn-delete" onclick="document.getElementById('form-fitur-container').style.display='none'">Batal</button>
+                                    <button class="btn-delete" id="btn-hapus-fitur" style="display:none;">Hapus Fitur</button>
+                                    <button class="btn-save" id="btn-simpan-fitur">Simpan Fitur</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> </div> </div> </main>
     </div>
     <script>
         /* =========================================
@@ -555,9 +782,6 @@
                     document.getElementById('berita-hero-label').value = snap.val().label || '';
                     document.getElementById('berita-hero-teks-atas').value = snap.val().teks_atas || '';
                     document.getElementById('berita-hero-teks-bawah').value = snap.val().teks_bawah || '';
-                    if(snap.val().bgUrl) {
-                        document.querySelector('#berita-hero-file').parentElement.style.backgroundImage = `url('${snap.val().bgUrl}')`;
-                    }
                 }
             });
             listenKategori(); listenBerita();
@@ -589,7 +813,6 @@
         window.hapusIklan = async function(key, mediaId) { if(confirm("Hapus iklan ini?")) { if(mediaId && mediaId !== 'undefined') await deleteMedia(mediaId); await db.ref('iklan_list/' + key).remove(); showToast("Iklan dihapus!", "success"); } };
 
         // --- 5B. LISTENER MENU BERITA ---
-        
         function listenKategori() {
             db.ref('kategori_berita').on('value', (snap) => {
                 const list = document.getElementById('list-kategori-container');
@@ -643,7 +866,7 @@
             });
         }
 
-        // --- UX FORM BERITA (Dinamis Edit/Buat Baru) ---
+        // --- UX FORM BERITA ---
         window.bukaFormBerita = function() {
             document.getElementById('form-berita-container').style.display = 'grid';
             document.getElementById('berita-edit-id').value = '';
@@ -694,6 +917,110 @@
             });
         };
 
+
+        // --- 5C. LISTENER MENU SPESIFIKASI & HARGA (BARU) ---
+        let currentMobilId = ""; // Variabel global penyimpan ID mobil yang sedang aktif
+
+        // Fungsi Membuka Kunci Form (Berdasarkan dropdown)
+        window.bukaKunciSpesifikasi = function() {
+            const selectEl = document.getElementById('pilih-mobil-spesifikasi');
+            currentMobilId = selectEl.value;
+            
+            if(currentMobilId) {
+                document.getElementById('spesifikasi-locked-wrapper').classList.add('unlocked');
+                showToast(`Mobil [${selectEl.options[selectEl.selectedIndex].text}] Dipilih. Form Terbuka!`, "success");
+                loadSpesifikasiData(currentMobilId);
+            }
+        };
+
+        // Fungsi Load Seluruh Data Spesifikasi Berdasarkan Mobil yang Dipilih
+        function loadSpesifikasiData(mobilId) {
+            // Bersihkan form
+            document.getElementById('spesifikasi-hero-nama').value = '';
+            document.getElementById('spesifikasi-hero-slogan').value = '';
+            document.querySelector('#spesifikasi-hero-file').parentElement.style.backgroundImage = 'none';
+            for(let i=1; i<=5; i++) document.getElementById(`icon-default-${i}`).value = '';
+            
+            // 1. Load Hero
+            db.ref(`spesifikasi/${mobilId}/hero`).once('value', snap => {
+                if(snap.val()) {
+                    document.getElementById('spesifikasi-hero-nama').value = snap.val().nama || '';
+                    document.getElementById('spesifikasi-hero-slogan').value = snap.val().slogan || '';
+                    if(snap.val().bgUrl) {
+                        document.querySelector('#spesifikasi-hero-file').parentElement.style.backgroundImage = `url('${snap.val().bgUrl}')`;
+                    }
+                }
+            });
+
+            // 2. Load Icon Default
+            db.ref(`spesifikasi/${mobilId}/icon_default`).once('value', snap => {
+                if(snap.val()) {
+                    for(let i=1; i<=5; i++) {
+                        document.getElementById(`icon-default-${i}`).value = snap.val()[`icon${i}`] || '';
+                    }
+                }
+            });
+
+            // 3. Listeners List (Realtime per mobil)
+            listenIkonTambahan(mobilId);
+            listenWarna(mobilId);
+            listenVarian(mobilId);
+            listenFitur(mobilId);
+        }
+
+        // Listener Ikon Tambahan
+        function listenIkonTambahan(mobilId) {
+            db.ref(`spesifikasi/${mobilId}/ikon_tambahan`).on('value', snap => {
+                const list = document.getElementById('list-ikon-tambahan'); if(!list) return; list.innerHTML = '';
+                snap.forEach(child => {
+                    const data = child.val();
+                    list.innerHTML += `<div class="list-item"><span class="list-item-text">${data.info || 'Ikon'}</span><div><button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="editIkonTambahan('${child.key}')">Edit</button></div></div>`;
+                });
+            });
+        }
+        window.editIkonTambahan = function(key) { db.ref(`spesifikasi/${currentMobilId}/ikon_tambahan/` + key).once('value', snap => { const data = snap.val(); document.getElementById('form-ikon-tambahan').style.display = 'grid'; document.getElementById('ikon-tambahan-id').value = key; document.getElementById('ikon-tambahan-info').value = data.info || ''; document.getElementById('btn-hapus-ikon-tambahan').style.display = 'block'; }); };
+        document.getElementById('btn-hapus-ikon-tambahan').addEventListener('click', async () => { if(!currentMobilId) return; const key = document.getElementById('ikon-tambahan-id').value; if(confirm("Hapus ikon ini?")) { const snap = await db.ref(`spesifikasi/${currentMobilId}/ikon_tambahan/${key}/imgId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); await db.ref(`spesifikasi/${currentMobilId}/ikon_tambahan/${key}`).remove(); showToast("Ikon Tambahan Dihapus!", "success"); document.getElementById('form-ikon-tambahan').style.display = 'none'; } });
+
+        // Listener Warna
+        function listenWarna(mobilId) {
+            db.ref(`spesifikasi/${mobilId}/warna`).on('value', snap => {
+                const list = document.getElementById('list-warna-container'); if(!list) return; list.innerHTML = '';
+                snap.forEach(child => {
+                    const data = child.val();
+                    list.innerHTML += `<div class="list-item"><span class="list-item-text"><b>${data.nama || 'Warna'}</b> - Rp ${data.harga || 'Standar'}</span><div><button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="editWarna('${child.key}')">Edit</button></div></div>`;
+                });
+            });
+        }
+        window.editWarna = function(key) { db.ref(`spesifikasi/${currentMobilId}/warna/` + key).once('value', snap => { const data = snap.val(); document.getElementById('form-warna-container').style.display = 'grid'; document.getElementById('warna-edit-id').value = key; document.getElementById('warna-nama').value = data.nama || ''; document.getElementById('warna-harga').value = data.harga || ''; document.getElementById('btn-hapus-warna').style.display = 'block'; }); };
+        document.getElementById('btn-hapus-warna').addEventListener('click', async () => { if(!currentMobilId) return; const key = document.getElementById('warna-edit-id').value; if(confirm("Hapus warna ini?")) { const snap1 = await db.ref(`spesifikasi/${currentMobilId}/warna/${key}/imgMobilId`).once('value'); const snap2 = await db.ref(`spesifikasi/${currentMobilId}/warna/${key}/imgBulatId`).once('value'); if(snap1.val()) await deleteMedia(snap1.val()); if(snap2.val()) await deleteMedia(snap2.val()); await db.ref(`spesifikasi/${currentMobilId}/warna/${key}`).remove(); showToast("Warna Dihapus!", "success"); document.getElementById('form-warna-container').style.display = 'none'; } });
+
+        // Listener Varian
+        function listenVarian(mobilId) {
+            db.ref(`spesifikasi/${mobilId}/varian`).on('value', snap => {
+                const list = document.getElementById('list-varian-container'); if(!list) return; list.innerHTML = '';
+                snap.forEach(child => {
+                    const data = child.val();
+                    list.innerHTML += `<div class="list-item"><span class="list-item-text"><b>${data.nama || 'Varian'}</b> - Rp ${data.harga || '0'}</span><div><button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="editVarian('${child.key}')">Edit</button></div></div>`;
+                });
+            });
+        }
+        window.editVarian = function(key) { db.ref(`spesifikasi/${currentMobilId}/varian/` + key).once('value', snap => { const data = snap.val(); document.getElementById('form-varian-container').style.display = 'grid'; document.getElementById('varian-edit-id').value = key; document.getElementById('varian-nama').value = data.nama || ''; document.getElementById('varian-harga').value = data.harga || ''; document.getElementById('btn-hapus-varian').style.display = 'block'; }); };
+        document.getElementById('btn-hapus-varian').addEventListener('click', async () => { if(!currentMobilId) return; const key = document.getElementById('varian-edit-id').value; if(confirm("Hapus varian ini?")) { await db.ref(`spesifikasi/${currentMobilId}/varian/${key}`).remove(); showToast("Varian Dihapus!", "success"); document.getElementById('form-varian-container').style.display = 'none'; } });
+
+        // Listener Fitur Spesifikasi
+        function listenFitur(mobilId) {
+            db.ref(`spesifikasi/${mobilId}/fitur`).on('value', snap => {
+                const list = document.getElementById('list-fitur-container'); if(!list) return; list.innerHTML = '';
+                snap.forEach(child => {
+                    const data = child.val();
+                    list.innerHTML += `<div class="list-item"><span class="list-item-text">[${data.kategori || 'Umum'}] <b>${data.judul || 'Fitur'}</b></span><div><button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="editFitur('${child.key}')">Edit</button></div></div>`;
+                });
+            });
+        }
+        window.editFitur = function(key) { db.ref(`spesifikasi/${currentMobilId}/fitur/` + key).once('value', snap => { const data = snap.val(); document.getElementById('form-fitur-container').style.display = 'grid'; document.getElementById('fitur-edit-id').value = key; document.getElementById('fitur-kategori').value = data.kategori || ''; document.getElementById('fitur-judul').value = data.judul || ''; document.getElementById('fitur-deskripsi').value = data.deskripsi || ''; document.getElementById('btn-hapus-fitur').style.display = 'block'; }); };
+        document.getElementById('btn-hapus-fitur').addEventListener('click', async () => { if(!currentMobilId) return; const key = document.getElementById('fitur-edit-id').value; if(confirm("Hapus fitur ini?")) { const snap = await db.ref(`spesifikasi/${currentMobilId}/fitur/${key}/imgId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); await db.ref(`spesifikasi/${currentMobilId}/fitur/${key}`).remove(); showToast("Fitur Dihapus!", "success"); document.getElementById('form-fitur-container').style.display = 'none'; } });
+
+
         /* =========================================
            6. EKSEKUSI TOMBOL GLOBAL
            ========================================= */
@@ -724,10 +1051,8 @@
                 try { await db.ref('global_data/alamat').update({ last_update: firebase.database.ServerValue.TIMESTAMP, gmaps: document.getElementById('alamat-gmaps').value, teks_alamat: document.getElementById('alamat-teks').value, jam_buka: document.getElementById('alamat-buka').value, jam_tutup: document.getElementById('alamat-tutup').value }); showToast("Alamat Global Diperbarui!", "success"); } catch(err) { showToast("Gagal perbarui", "error"); } finally { btn.innerText = "Update Data Global"; btn.disabled = false; }
             });
 
-
             // --- EKSEKUSI BERITA & ACARA ---
             
-            // 1. Hero Berita
             document.getElementById('btn-save-hero-berita').addEventListener('click', async () => {
                 const btn = document.getElementById('btn-save-hero-berita'); btn.innerText = "Menyimpan..."; btn.disabled = true;
                 try {
@@ -759,7 +1084,6 @@
                 }
             });
 
-            // 2. Kategori Berita
             document.getElementById('btn-save-kategori').addEventListener('click', async () => {
                 const input = document.getElementById('kategori-baru-input'); const nilai = input.value.trim();
                 if(!nilai) { showToast("Nama kategori tidak boleh kosong!", "error"); return; }
@@ -768,7 +1092,6 @@
                 catch(err) { showToast("Gagal menambah kategori", "error"); } finally { btn.innerText = "Simpan Kategori Baru"; btn.disabled = false; }
             });
 
-            // 3. Simpan/Edit Tulis Berita
             window.simpanDataBerita = async function() {
                 const isEdit = document.getElementById('btn-edit-berita-form').style.display === 'block';
                 const btn = isEdit ? document.getElementById('btn-edit-berita-form') : document.getElementById('btn-publish-berita');
@@ -780,21 +1103,11 @@
                 btn.innerText = "Memproses..."; btn.disabled = true; btn.style.opacity = "0.7";
                 try {
                     const editId = document.getElementById('berita-edit-id').value;
-                    let obj = {
-                        kategori: kategori,
-                        tanggal: document.getElementById('berita-tanggal').value || new Date().toISOString().split('T')[0],
-                        judul: judul,
-                        konten: document.getElementById('berita-konten').value.trim(),
-                        timestamp: firebase.database.ServerValue.TIMESTAMP
-                    };
-
+                    let obj = { kategori: kategori, tanggal: document.getElementById('berita-tanggal').value || new Date().toISOString().split('T')[0], judul: judul, konten: document.getElementById('berita-konten').value.trim(), timestamp: firebase.database.ServerValue.TIMESTAMP };
                     const file = document.getElementById('berita-thumbnail-file').files[0];
                     if (file) {
                         const media = await uploadMedia(file);
-                        if (media) {
-                            obj.imgUrl = media.url; obj.imgId = media.fileId;
-                            if(editId) { const snap = await db.ref('berita_list/' + editId + '/imgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); }
-                        }
+                        if (media) { obj.imgUrl = media.url; obj.imgId = media.fileId; if(editId) { const snap = await db.ref('berita_list/' + editId + '/imgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); } }
                     }
                     if(editId) { await db.ref('berita_list/' + editId).update(obj); showToast("Berita di-Update!", "success"); } 
                     else { await db.ref('berita_list').push(obj); showToast("Berita Tayang!", "success"); }
@@ -803,25 +1116,113 @@
                 finally { btn.innerText = isEdit ? "Edit Berita" : "Publish Berita"; btn.disabled = false; btn.style.opacity = "1"; }
             };
 
-            // 4. Hapus Berita
             window.prosesHapusBeritaForm = async function() {
                 const editId = document.getElementById('berita-edit-id').value; if(!editId) return;
                 if(confirm("Yakin hapus berita ini secara permanen?")) {
                     const btn = document.getElementById('btn-hapus-berita-form'); btn.innerText = "Menghapus..."; btn.disabled = true;
-                    try {
-                        const snap = await db.ref('berita_list/' + editId + '/imgId').once('value');
-                        if(snap.val()) await deleteMedia(snap.val());
-                        await db.ref('berita_list/' + editId).remove(); showToast("Berita dihapus!", "success"); tutupFormBerita();
-                    } catch(err) { showToast("Gagal menghapus", "error"); } finally { btn.innerText = "Hapus"; btn.disabled = false; }
+                    try { const snap = await db.ref('berita_list/' + editId + '/imgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); await db.ref('berita_list/' + editId).remove(); showToast("Berita dihapus!", "success"); tutupFormBerita(); } catch(err) { showToast("Gagal menghapus", "error"); } finally { btn.innerText = "Hapus"; btn.disabled = false; }
                 }
             };
+            window.hapusBeritaList = async function(key, imgId) { if(confirm("Tarik dan hapus berita ini dari website?")) { if(imgId && imgId !== 'undefined') await deleteMedia(imgId); await db.ref('berita_list/' + key).remove(); showToast("Berita ditarik/dihapus!", "success"); } };
 
-            window.hapusBeritaList = async function(key, imgId) {
-                if(confirm("Tarik dan hapus berita ini dari website?")) {
-                    if(imgId && imgId !== 'undefined') await deleteMedia(imgId);
-                    await db.ref('berita_list/' + key).remove(); showToast("Berita ditarik/dihapus!", "success");
-                }
-            };
+            
+            // --- EKSEKUSI SPESIFIKASI & HARGA (BARU) ---
+
+            // A. Hero Spesifikasi
+            document.getElementById('btn-save-hero-spesifikasi').addEventListener('click', async () => {
+                if(!currentMobilId) return;
+                const btn = document.getElementById('btn-save-hero-spesifikasi'); btn.innerText = "Menyimpan..."; btn.disabled = true;
+                try {
+                    let obj = { nama: document.getElementById('spesifikasi-hero-nama').value.trim(), slogan: document.getElementById('spesifikasi-hero-slogan').value.trim() };
+                    const file = document.getElementById('spesifikasi-hero-file').files[0];
+                    if (file) {
+                        const media = await uploadMedia(file);
+                        if (media) { 
+                            obj.bgUrl = media.url; obj.bgId = media.fileId; 
+                            const snap = await db.ref(`spesifikasi/${currentMobilId}/hero/bgId`).once('value');
+                            if(snap.val()) await deleteMedia(snap.val()); 
+                        }
+                    }
+                    await db.ref(`spesifikasi/${currentMobilId}/hero`).update(obj); showToast("Hero Spesifikasi disimpan!", "success");
+                } catch (err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan Hero Spesifikasi"; btn.disabled = false; }
+            });
+
+            // B. 5 Icon Default
+            document.getElementById('btn-save-icon-default').addEventListener('click', async () => {
+                if(!currentMobilId) return;
+                const btn = document.getElementById('btn-save-icon-default'); btn.innerText = "Menyimpan..."; btn.disabled = true;
+                try {
+                    let obj = {};
+                    for(let i=1; i<=5; i++) { obj[`icon${i}`] = document.getElementById(`icon-default-${i}`).value.trim(); }
+                    await db.ref(`spesifikasi/${currentMobilId}/icon_default`).set(obj); showToast("5 Ikon Default Disimpan!", "success");
+                } catch (err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan 5 Icon Default"; btn.disabled = false; }
+            });
+
+            // C. Icon Tambahan
+            document.getElementById('btn-simpan-ikon-tambahan').addEventListener('click', async () => {
+                if(!currentMobilId) return;
+                const btn = document.getElementById('btn-simpan-ikon-tambahan'); btn.innerText = "Menyimpan..."; btn.disabled = true;
+                try {
+                    const editId = document.getElementById('ikon-tambahan-id').value;
+                    let obj = { info: document.getElementById('ikon-tambahan-info').value.trim() };
+                    const file = document.getElementById('ikon-tambahan-file').files[0];
+                    if (file) {
+                        const media = await uploadMedia(file);
+                        if (media) { obj.imgUrl = media.url; obj.imgId = media.fileId; if(editId) { const snap = await db.ref(`spesifikasi/${currentMobilId}/ikon_tambahan/${editId}/imgId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); } }
+                    }
+                    if(editId) { await db.ref(`spesifikasi/${currentMobilId}/ikon_tambahan/${editId}`).update(obj); } else { await db.ref(`spesifikasi/${currentMobilId}/ikon_tambahan`).push(obj); }
+                    showToast("Ikon Tambahan Disimpan!", "success"); document.getElementById('form-ikon-tambahan').style.display = 'none';
+                } catch(err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan Ikon Tambahan"; btn.disabled = false; }
+            });
+
+            // D. Warna Mobil
+            document.getElementById('btn-simpan-warna').addEventListener('click', async () => {
+                if(!currentMobilId) return;
+                const btn = document.getElementById('btn-simpan-warna'); btn.innerText = "Menyimpan..."; btn.disabled = true;
+                try {
+                    const editId = document.getElementById('warna-edit-id').value;
+                    let obj = { nama: document.getElementById('warna-nama').value.trim(), harga: document.getElementById('warna-harga').value.trim() };
+                    
+                    const fileMobil = document.getElementById('warna-foto-mobil').files[0];
+                    if (fileMobil) { const media = await uploadMedia(fileMobil); if (media) { obj.imgMobilUrl = media.url; obj.imgMobilId = media.fileId; if(editId) { const snap = await db.ref(`spesifikasi/${currentMobilId}/warna/${editId}/imgMobilId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); } } }
+                    
+                    const fileBulat = document.getElementById('warna-foto-bulat').files[0];
+                    if (fileBulat) { const media = await uploadMedia(fileBulat); if (media) { obj.imgBulatUrl = media.url; obj.imgBulatId = media.fileId; if(editId) { const snap = await db.ref(`spesifikasi/${currentMobilId}/warna/${editId}/imgBulatId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); } } }
+
+                    if(editId) { await db.ref(`spesifikasi/${currentMobilId}/warna/${editId}`).update(obj); } else { await db.ref(`spesifikasi/${currentMobilId}/warna`).push(obj); }
+                    showToast("Warna Disimpan!", "success"); document.getElementById('form-warna-container').style.display = 'none';
+                } catch(err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Update Warna"; btn.disabled = false; }
+            });
+
+            // E. Varian
+            document.getElementById('btn-simpan-varian').addEventListener('click', async () => {
+                if(!currentMobilId) return;
+                const btn = document.getElementById('btn-simpan-varian'); btn.innerText = "Menyimpan..."; btn.disabled = true;
+                try {
+                    const editId = document.getElementById('varian-edit-id').value;
+                    let obj = { nama: document.getElementById('varian-nama').value.trim(), harga: document.getElementById('varian-harga').value.trim() };
+                    if(editId) { await db.ref(`spesifikasi/${currentMobilId}/varian/${editId}`).update(obj); } else { await db.ref(`spesifikasi/${currentMobilId}/varian`).push(obj); }
+                    showToast("Varian Disimpan!", "success"); document.getElementById('form-varian-container').style.display = 'none';
+                } catch(err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan Harga Varian"; btn.disabled = false; }
+            });
+
+            // F. Fitur Produk
+            document.getElementById('btn-simpan-fitur').addEventListener('click', async () => {
+                if(!currentMobilId) return;
+                const btn = document.getElementById('btn-simpan-fitur'); btn.innerText = "Menyimpan..."; btn.disabled = true;
+                try {
+                    const editId = document.getElementById('fitur-edit-id').value;
+                    let obj = { kategori: document.getElementById('fitur-kategori').value, judul: document.getElementById('fitur-judul').value.trim(), deskripsi: document.getElementById('fitur-deskripsi').value.trim() };
+                    const file = document.getElementById('fitur-foto').files[0];
+                    if (file) {
+                        const media = await uploadMedia(file);
+                        if (media) { obj.imgUrl = media.url; obj.imgId = media.fileId; if(editId) { const snap = await db.ref(`spesifikasi/${currentMobilId}/fitur/${editId}/imgId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); } }
+                    }
+                    if(editId) { await db.ref(`spesifikasi/${currentMobilId}/fitur/${editId}`).update(obj); } else { await db.ref(`spesifikasi/${currentMobilId}/fitur`).push(obj); }
+                    showToast("Fitur Disimpan!", "success"); document.getElementById('form-fitur-container').style.display = 'none';
+                } catch(err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan Fitur"; btn.disabled = false; }
+            });
+
         });
     </script>
 </body>
