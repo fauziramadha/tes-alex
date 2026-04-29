@@ -512,7 +512,7 @@
                     const imgUrl = data.imgUrl || 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?q=80&w=800&auto=format&fit=crop';
                     const badgeHtml = data.label_promo ? `<span class="car-badge">${data.label_promo}</span>` : '';
                     
-                    // Template Kartu Mobil Terhubung ke Database
+                    // Template Kartu Mobil Terhubung ke Database (Link Spesifikasi diperbaiki ke detail.html)
                     container.innerHTML += `
                     <div class="car-card reveal-up" data-category="${data.kategori || 'Umum'}">
                         <div class="car-img-wrapper">
@@ -533,7 +533,7 @@
                             </div>
 
                             <div class="car-actions">
-                                <a href="harga.html" class="btn-outline">Spesifikasi</a>
+                                <a href="detail.html?id=${child.key}" class="btn-outline">Spesifikasi</a>
                                 <a href="https://wa.me/628123456789?text=Halo%20Mitsubishi%20Batam,%20saya%20tertarik%20dengan%20mobil%20${encodeURIComponent(data.nama_mobil)}.%20Bisa%20minta%20info%20lebih%20lanjut?" target="_blank" class="btn-fill">Pesan</a>
                             </div>
                         </div>
@@ -666,7 +666,6 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    // Biarkan observer mengawasi, agar jika ditimpa firebase tetap terefek animasi
                 }
             });
         }, revealOptions);
