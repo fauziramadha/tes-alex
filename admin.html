@@ -157,6 +157,7 @@
                 <a class="nav-item" onclick="switchPanel('panel-berita', this, 'Manajemen Berita & Acara')">Berita & Acara</a>
                 <a class="nav-item" onclick="switchPanel('panel-katalog', this, 'Manajemen Katalog Kendaraan')">Katalog Kendaraan</a>
                 <a class="nav-item" onclick="switchPanel('panel-spesifikasi', this, 'Manajemen Spesifikasi & Harga')">Spesifikasi & Harga</a>
+                <a class="nav-item" onclick="switchPanel('panel-harga', this, 'Manajemen Daftar Harga')">Daftar Harga</a>
             </nav>
             
             <div class="sidebar-footer">
@@ -178,7 +179,7 @@
                     <div class="section-card">
                         <h3 class="section-title">Informasi Sistem</h3>
                         <p class="alur-text">
-                            Silakan pilih menu di sebelah kiri untuk mengatur konten Website Anda. (Landing Page, Berita & Acara, Katalog Kendaraan, atau Spesifikasi & Harga).
+                            Silakan pilih menu di sebelah kiri untuk mengatur konten Website Anda. (Landing Page, Berita & Acara, Katalog Kendaraan, Spesifikasi & Harga, atau Daftar Harga).
                         </p>
                     </div>
                 </div>
@@ -739,6 +740,94 @@
 
                     </div>
                 </div>
+
+                <div id="panel-harga" class="data-panel">
+                    
+                    <div class="section-card">
+                        <div class="section-header"><h3 class="section-title">1. HERO DAFTAR HARGA</h3></div>
+                        <div class="form-grid">
+                            <div class="input-group form-full">
+                                <label>FOTO LATAR BELAKANG HERO</label>
+                                <div class="file-upload-wrapper">
+                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
+                                    <span class="file-upload-text">Ketuk untuk Pilih Foto Latar</span>
+                                    <input type="file" id="harga-hero-file" accept=".png, .jpg, .jpeg, .webp">
+                                </div>
+                            </div>
+                            <div class="input-group form-full">
+                                <label>TULISAN ATAS</label>
+                                <input type="text" id="harga-hero-teks-atas" class="input-control" placeholder="Contoh: DAFTAR HARGA MITSUBISHI">
+                            </div>
+                            <div class="input-group form-full">
+                                <label>TULISAN BAWAH</label>
+                                <textarea id="harga-hero-teks-bawah" class="input-control" rows="2" placeholder="Contoh: Temukan penawaran terbaik..."></textarea>
+                            </div>
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn-delete" id="btn-delete-hero-harga">Hapus Hero (Default)</button>
+                            <button class="btn-save" id="btn-save-hero-harga">Simpan Hero</button>
+                        </div>
+                    </div>
+
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h3 class="section-title">2. VISUAL KARTU DAFTAR HARGA</h3>
+                            <button class="btn-add" onclick="bukaFormVisualHarga()">+ Atur Visual Baru</button>
+                        </div>
+                        <p class="alur-text">Data varian mobil dan harganya diambil dari menu Spesifikasi. Untuk Nama Kendaraannya diambil dari Katalog kendaraan. Di sini Anda hanya mengatur visual kartunya (Foto Mobil & Logo Nama).</p>
+                        
+                        <div class="list-manager" id="list-visual-harga-container" style="margin-bottom: 16px;"></div>
+
+                        <div class="form-grid" id="form-visual-harga-container" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; border: 1px solid var(--color-border); display: none;">
+                            <input type="hidden" id="visual-harga-edit-id">
+                            
+                            <div class="input-group form-full">
+                                <label>PILIH KENDARAAN UNTUK DIATUR VISUALNYA</label>
+                                <select id="visual-harga-mobil-id" class="input-control" style="cursor: pointer;">
+                                    <option value="" disabled selected>-- Memuat Data Kendaraan... --</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group form-full">
+                                <label>FOTO MOBIL TRANSPARAN (PNG/WEBP)</label>
+                                <div class="file-upload-wrapper">
+                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
+                                    <span class="file-upload-text">Ketuk untuk Pilih Foto Transparan Mobil</span>
+                                    <input type="file" id="visual-harga-foto-mobil" accept=".png, .webp">
+                                </div>
+                            </div>
+
+                            <div class="input-group form-full">
+                                <label>FORMAT NAMA MOBIL</label>
+                                <select id="visual-harga-format" class="input-control" style="cursor: pointer;" onchange="toggleFormatNamaMobil()">
+                                    <option value="teks">Gunakan Teks Biasa</option>
+                                    <option value="logo">Gunakan Gambar Logo</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group form-full" id="container-visual-teks">
+                                <label>TEKS NAMA MOBIL</label>
+                                <input type="text" id="visual-harga-teks" class="input-control" placeholder="Contoh: NEW XPANDER">
+                            </div>
+
+                            <div class="input-group form-full" id="container-visual-logo" style="display: none;">
+                                <label>GAMBAR LOGO NAMA MOBIL</label>
+                                <div class="file-upload-wrapper" style="height: 100px;">
+                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
+                                    <span class="file-upload-text">Ketuk untuk Pilih Logo</span>
+                                    <input type="file" id="visual-harga-logo-file" accept=".png, .webp, .svg">
+                                </div>
+                            </div>
+
+                            <div class="action-bar form-full">
+                                <button class="btn-delete" onclick="document.getElementById('form-visual-harga-container').style.display='none'">Batalkan</button>
+                                <button class="btn-save" id="btn-simpan-visual-harga">Update Visual Kartu</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
         </main>
     </div>
@@ -948,8 +1037,17 @@
             listenKatalogMobil();
             listenBrosurGlobal();
 
-            // [D] Muat Dropdown Mobil untuk Spesifikasi
+            // [D] Muat Dropdown Mobil untuk Spesifikasi & Harga
             loadDropdownMobilSpesifikasi();
+
+            // [E] Data Harga
+            db.ref('halaman/harga/hero').once('value', snap => {
+                if(snap.val()) {
+                    document.getElementById('harga-hero-teks-atas').value = snap.val().teks_atas || '';
+                    document.getElementById('harga-hero-teks-bawah').value = snap.val().teks_bawah || '';
+                }
+            });
+            listenVisualHarga();
         }
 
         // --- 5A. LISTENER LANDING PAGE ---
@@ -1031,9 +1129,7 @@
         window.editBerita = function(key) { db.ref('berita_list/' + key).once('value', snap => { const data = snap.val(); document.getElementById('form-berita-container').style.display = 'grid'; document.getElementById('berita-edit-id').value = key; document.getElementById('berita-kategori').value = data.kategori || ''; document.getElementById('berita-tanggal').value = data.tanggal || ''; document.getElementById('berita-judul').value = data.judul || ''; document.getElementById('berita-konten').value = data.konten || ''; if(data.imgUrl) { const wrapper = document.querySelector('#form-berita-container .file-upload-wrapper'); wrapper.style.backgroundImage = `url('${data.imgUrl}')`; wrapper.querySelector('.file-upload-text').innerText = 'Thumbnail Tersimpan (Ketuk ganti)'; } document.getElementById('btn-publish-berita').style.display = 'none'; document.getElementById('btn-hapus-berita-form').style.display = 'block'; document.getElementById('btn-edit-berita-form').style.display = 'block'; document.querySelector('.main-content').scrollTop = document.getElementById('form-berita-container').offsetTop; showToast("Mode Edit Berita Aktif", "info"); }); };
 
 
-        // --- 5C. LISTENER MENU KATALOG KENDARAAN (BARU) ---
-
-        // Kategori Katalog
+        // --- 5C. LISTENER MENU KATALOG KENDARAAN ---
         function listenKategoriKatalog() {
             db.ref('katalog_kategori').on('value', (snap) => {
                 const list = document.getElementById('list-kategori-katalog-container');
@@ -1061,7 +1157,6 @@
         window.editKategoriKatalog = function(key) { db.ref('katalog_kategori/' + key).once('value', snap => { document.getElementById('form-kategori-katalog').style.display = 'grid'; document.getElementById('kategori-katalog-edit-id').value = key; document.getElementById('kategori-katalog-nama').value = snap.val().nama || ''; }); };
         window.hapusKategoriKatalog = async function(key) { if(confirm("Yakin hapus kategori ini? Pastikan kategori ini tidak dipakai di kendaraan manapun.")) { await db.ref('katalog_kategori/' + key).remove(); showToast("Kategori dihapus!", "success"); } };
 
-        // Katalog Mobil
         function listenKatalogMobil() {
             db.ref('katalog_mobil').on('value', (snap) => {
                 const list = document.getElementById('list-katalog-mobil-container'); if(!list) return; list.innerHTML = '';
@@ -1118,13 +1213,12 @@
             if(confirm("Yakin hapus kendaraan ini dari katalog?")) { 
                 if(imgId && imgId !== 'undefined') await deleteMedia(imgId); 
                 await db.ref('katalog_mobil/' + key).remove(); 
-                // Hapus juga data spesifikasinya agar tidak menumpuk di database
                 await db.ref(`spesifikasi/${key}`).remove();
+                await db.ref(`visual_harga/${key}`).remove(); // hapus visual harganya juga
                 showToast("Kendaraan dihapus!", "success"); 
             } 
         };
 
-        // Brosur Global
         function listenBrosurGlobal() {
             db.ref('global_data/brosur').on('value', snap => {
                 const list = document.getElementById('list-brosur-container');
@@ -1153,24 +1247,29 @@
                 document.getElementById('brosur-teks-bawah').value = data.teks_bawah || '';
             });
         };
-        window.hapusBrosur = async function() { if(confirm("Hapus link brosur global? Tombol download akan hilang di katalog.")) { await db.ref('global_data/brosur').remove(); showToast("Brosur dihapus", "success"); document.getElementById('form-brosur-global').style.display='none'; } };
+        window.hapusBrosur = async function() { if(confirm("Hapus link brosur global?")) { await db.ref('global_data/brosur').remove(); showToast("Brosur dihapus", "success"); document.getElementById('form-brosur-global').style.display='none'; } };
 
 
         // --- 5D. LISTENER MENU SPESIFIKASI & HARGA ---
         let currentMobilId = ""; 
 
-        // Fungsi Load Kendaraan dari Katalog Mobil ke Dropdown Spesifikasi
         function loadDropdownMobilSpesifikasi() {
             db.ref('katalog_mobil').on('value', snap => {
-                const selectEl = document.getElementById('pilih-mobil-spesifikasi');
-                selectEl.innerHTML = '<option value="" disabled selected>-- Pilih Kendaraan Terlebih Dahulu --</option>';
+                const selectSpesifikasi = document.getElementById('pilih-mobil-spesifikasi');
+                const selectVisualHarga = document.getElementById('visual-harga-mobil-id');
+                
+                selectSpesifikasi.innerHTML = '<option value="" disabled selected>-- Pilih Kendaraan Terlebih Dahulu --</option>';
+                selectVisualHarga.innerHTML = '<option value="" disabled selected>-- Pilih Kendaraan Terlebih Dahulu --</option>';
+                
                 if(snap.exists()) {
                     snap.forEach(child => {
                         const data = child.val();
-                        selectEl.innerHTML += `<option value="${child.key}">${data.nama_mobil || child.key}</option>`;
+                        selectSpesifikasi.innerHTML += `<option value="${child.key}">${data.nama_mobil || child.key}</option>`;
+                        selectVisualHarga.innerHTML += `<option value="${child.key}">${data.nama_mobil || child.key}</option>`;
                     });
                 } else {
-                    selectEl.innerHTML = '<option value="" disabled selected>-- Belum ada data di Katalog Kendaraan --</option>';
+                    selectSpesifikasi.innerHTML = '<option value="" disabled selected>-- Belum ada data di Katalog --</option>';
+                    selectVisualHarga.innerHTML = '<option value="" disabled selected>-- Belum ada data di Katalog --</option>';
                 }
             });
         }
@@ -1251,7 +1350,7 @@
         window.editWarna = function(key) { db.ref(`spesifikasi/${currentMobilId}/warna/` + key).once('value', snap => { const data = snap.val(); document.getElementById('form-warna-container').style.display = 'grid'; document.getElementById('warna-edit-id').value = key; document.getElementById('warna-varian').value = data.varian || 'all'; document.getElementById('warna-nama').value = data.nama || ''; document.getElementById('warna-harga').value = data.harga || ''; document.getElementById('btn-hapus-warna').style.display = 'block'; document.getElementById('btn-simpan-warna').innerText = 'Update Warna'; }); };
         document.getElementById('btn-hapus-warna').addEventListener('click', async () => { if(!currentMobilId) return; const key = document.getElementById('warna-edit-id').value; if(confirm("Hapus warna ini?")) { const snap1 = await db.ref(`spesifikasi/${currentMobilId}/warna/${key}/imgMobilId`).once('value'); const snap2 = await db.ref(`spesifikasi/${currentMobilId}/warna/${key}/imgBulatId`).once('value'); if(snap1.val()) await deleteMedia(snap1.val()); if(snap2.val()) await deleteMedia(snap2.val()); await db.ref(`spesifikasi/${currentMobilId}/warna/${key}`).remove(); showToast("Warna Dihapus!", "success"); document.getElementById('form-warna-container').style.display = 'none'; } });
 
-        // Listener Ikon Tambahan (Spesifikasi)
+        // Listener Ikon Tambahan & Fitur Spesifikasi
         function listenIkonTambahan(mobilId) {
             db.ref(`spesifikasi/${mobilId}/ikon_tambahan`).on('value', snap => {
                 const list = document.getElementById('list-ikon-tambahan'); if(!list) return; list.innerHTML = '';
@@ -1265,7 +1364,6 @@
         window.editIkonTambahan = function(key) { db.ref(`spesifikasi/${currentMobilId}/ikon_tambahan/` + key).once('value', snap => { const data = snap.val(); document.getElementById('form-ikon-tambahan').style.display = 'grid'; document.getElementById('ikon-tambahan-id').value = key; document.getElementById('ikon-tambahan-info').value = data.info || ''; document.getElementById('btn-hapus-ikon-tambahan').style.display = 'block'; document.getElementById('btn-simpan-ikon-tambahan').innerText = 'Update Ikon Tambahan'; }); };
         document.getElementById('btn-hapus-ikon-tambahan').addEventListener('click', async () => { if(!currentMobilId) return; const key = document.getElementById('ikon-tambahan-id').value; if(confirm("Hapus ikon ini?")) { const snap = await db.ref(`spesifikasi/${currentMobilId}/ikon_tambahan/${key}/imgId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); await db.ref(`spesifikasi/${currentMobilId}/ikon_tambahan/${key}`).remove(); showToast("Ikon Tambahan Dihapus!", "success"); document.getElementById('form-ikon-tambahan').style.display = 'none'; } });
 
-        // Listener Fitur Spesifikasi (Spesifikasi)
         function listenFitur(mobilId) {
             db.ref(`spesifikasi/${mobilId}/fitur`).on('value', snap => {
                 const list = document.getElementById('list-fitur-container'); if(!list) return; list.innerHTML = '';
@@ -1280,12 +1378,90 @@
         document.getElementById('btn-hapus-fitur').addEventListener('click', async () => { if(!currentMobilId) return; const key = document.getElementById('fitur-edit-id').value; if(confirm("Hapus fitur ini?")) { const snap = await db.ref(`spesifikasi/${currentMobilId}/fitur/${key}/imgId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); await db.ref(`spesifikasi/${currentMobilId}/fitur/${key}`).remove(); showToast("Fitur Dihapus!", "success"); document.getElementById('form-fitur-container').style.display = 'none'; } });
 
 
+        // --- 5E. LISTENER MENU DAFTAR HARGA (BARU) ---
+        window.toggleFormatNamaMobil = function() {
+            const format = document.getElementById('visual-harga-format').value;
+            if (format === 'logo') {
+                document.getElementById('container-visual-teks').style.display = 'none';
+                document.getElementById('container-visual-logo').style.display = 'block';
+            } else {
+                document.getElementById('container-visual-teks').style.display = 'block';
+                document.getElementById('container-visual-logo').style.display = 'none';
+            }
+        };
+
+        function listenVisualHarga() {
+            db.ref('visual_harga').on('value', snap => {
+                const list = document.getElementById('list-visual-harga-container');
+                if(!list) return; list.innerHTML = '';
+                
+                snap.forEach(child => {
+                    const data = child.val();
+                    // Cari nama mobil asli dari katalog_mobil (sekadar untuk tampilan list)
+                    db.ref('katalog_mobil/' + child.key).once('value', mobilSnap => {
+                        const namaMobil = mobilSnap.val() ? mobilSnap.val().nama_mobil : child.key;
+                        list.innerHTML += `
+                        <div class="list-item">
+                            <span class="list-item-text">Visual Kartu: <b>${namaMobil}</b></span>
+                            <div>
+                                <button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="editVisualHarga('${child.key}')">Edit</button>
+                                <button class="btn-delete" style="padding: 4px 10px; font-size:0.75rem;" onclick="hapusVisualHarga('${child.key}', '${data.imgMobilId}', '${data.logoId}')">Hapus</button>
+                            </div>
+                        </div>`;
+                    });
+                });
+            });
+        }
+        
+        window.bukaFormVisualHarga = function() {
+            document.getElementById('form-visual-harga-container').style.display = 'grid';
+            document.getElementById('visual-harga-mobil-id').value = '';
+            document.getElementById('visual-harga-mobil-id').disabled = false; // Bisa pilih mobil jika baru
+            document.getElementById('visual-harga-foto-mobil').value = '';
+            document.getElementById('visual-harga-format').value = 'teks';
+            document.getElementById('visual-harga-teks').value = '';
+            document.getElementById('visual-harga-logo-file').value = '';
+            toggleFormatNamaMobil();
+            document.querySelectorAll('#form-visual-harga-container .file-upload-wrapper').forEach(el => el.style.backgroundImage = 'none');
+        };
+
+        window.editVisualHarga = function(key) {
+            db.ref('visual_harga/' + key).once('value', snap => {
+                const data = snap.val();
+                document.getElementById('form-visual-harga-container').style.display = 'grid';
+                document.getElementById('visual-harga-mobil-id').value = key;
+                document.getElementById('visual-harga-mobil-id').disabled = true; // Kunci agar id mobil tidak berubah saat edit
+                document.getElementById('visual-harga-format').value = data.format_nama || 'teks';
+                document.getElementById('visual-harga-teks').value = data.teks_nama || '';
+                
+                if(data.imgMobilUrl) {
+                    document.getElementById('visual-harga-foto-mobil').parentElement.style.backgroundImage = `url('${data.imgMobilUrl}')`;
+                }
+                if(data.logoUrl) {
+                    document.getElementById('visual-harga-logo-file').parentElement.style.backgroundImage = `url('${data.logoUrl}')`;
+                }
+                
+                toggleFormatNamaMobil();
+                document.querySelector('.main-content').scrollTop = document.getElementById('form-visual-harga-container').offsetTop;
+            });
+        };
+
+        window.hapusVisualHarga = async function(key, imgMobilId, logoId) {
+            if(confirm("Yakin hapus pengaturan visual kartu untuk kendaraan ini? Tampilan akan kembali menjadi default teks dan tanpa foto transparan.")) {
+                if(imgMobilId && imgMobilId !== 'undefined') await deleteMedia(imgMobilId);
+                if(logoId && logoId !== 'undefined') await deleteMedia(logoId);
+                await db.ref('visual_harga/' + key).remove();
+                showToast("Visual kartu dihapus!", "success");
+            }
+        };
+
+
         /* =========================================
            6. EKSEKUSI TOMBOL GLOBAL (SIMPAN DATA)
            ========================================= */
         document.addEventListener('DOMContentLoaded', () => {
 
-            // --- EKSEKUSI LANDING PAGE & BERITA (Sama seperti sebelumnya) ---
+            // --- EKSEKUSI LANDING PAGE, BERITA, KATALOG, SPESIFIKASI (Kode Sebelumnya) ---
             document.getElementById('btn-save-hero-landing').addEventListener('click', async () => { const btn = document.getElementById('btn-save-hero-landing'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { let obj = { teks_atas: document.getElementById('landing-hero-teks1').value.trim(), teks_aksen: document.getElementById('landing-hero-teks-aksen').value.trim(), teks_bawah: document.getElementById('landing-hero-teks2').value.trim() }; const file = document.getElementById('landing-hero-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.bgUrl = media.url; obj.bgId = media.fileId; const snap = await db.ref('halaman/landing/hero/bgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); } } await db.ref('halaman/landing/hero').update(obj); showToast("Hero Landing Berhasil!", "success"); } catch (err) { showToast("Error simpan hero", "error"); } finally { btn.innerText = "Simpan Hero"; btn.disabled = false; } });
             document.getElementById('btn-delete-hero-landing').addEventListener('click', async () => { if(confirm("Yakin hapus Hero Landing?")) { const btn = document.getElementById('btn-delete-hero-landing'); btn.innerText = "Menghapus..."; btn.disabled = true; try { const snap = await db.ref('halaman/landing/hero/bgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); await db.ref('halaman/landing/hero').remove(); showToast("Hero dihapus.", "success"); document.getElementById('landing-hero-teks1').value = ""; document.getElementById('landing-hero-teks-aksen').value = ""; document.getElementById('landing-hero-teks2').value = ""; document.querySelector('#landing-hero-file').parentElement.style.backgroundImage = 'none'; } catch(err) { showToast("Gagal hapus", "error"); } finally { btn.innerText = "Hapus Hero (Default)"; btn.disabled = false; } } });
             document.getElementById('btn-save-promo').addEventListener('click', async () => { const btn = document.getElementById('btn-save-promo'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { const editId = document.getElementById('promo-edit-id').value; let obj = { label: document.getElementById('promo-label').value.trim(), judul: document.getElementById('promo-judul').value.trim(), info: document.getElementById('promo-info').value.trim(), tombol: document.getElementById('promo-tombol').value.trim(), timestamp: firebase.database.ServerValue.TIMESTAMP }; const file = document.getElementById('promo-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.imgUrl = media.url; obj.imgId = media.fileId; if(editId) { const snap = await db.ref('promo_list/' + editId + '/imgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); } } } if(editId) { await db.ref('promo_list/' + editId).update(obj); showToast("Promo diubah!", "success"); } else { await db.ref('promo_list').push(obj); showToast("Promo terbit!", "success"); } document.getElementById('form-promo-container').style.display = 'none'; } catch(err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan Kartu Promo"; btn.disabled = false; } });
@@ -1295,120 +1471,12 @@
             document.getElementById('btn-delete-hero-berita').addEventListener('click', async () => { if(confirm("Yakin hapus Hero Berita?")) { const btn = document.getElementById('btn-delete-hero-berita'); btn.innerText = "Menghapus..."; btn.disabled = true; try { const snap = await db.ref('halaman/berita/hero/bgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); await db.ref('halaman/berita/hero').remove(); showToast("Hero dihapus.", "success"); document.getElementById('berita-hero-label').value = ""; document.getElementById('berita-hero-teks-atas').value = ""; document.getElementById('berita-hero-teks-bawah').value = ""; document.querySelector('#berita-hero-file').parentElement.style.backgroundImage = 'none'; } catch(err) { showToast("Gagal hapus", "error"); } finally { btn.innerText = "Hapus Hero (Default)"; btn.disabled = false; } } });
             document.getElementById('btn-save-kategori').addEventListener('click', async () => { const input = document.getElementById('kategori-baru-input'); const nilai = input.value.trim(); if(!nilai) { showToast("Nama kategori tidak boleh kosong!", "error"); return; } const btn = document.getElementById('btn-save-kategori'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { await db.ref('kategori_berita').push({ nama: nilai, timestamp: firebase.database.ServerValue.TIMESTAMP }); showToast(`Kategori '${nilai}' ditambahkan!`, "success"); input.value = ""; } catch(err) { showToast("Gagal menambah kategori", "error"); } finally { btn.innerText = "Simpan Kategori Baru"; btn.disabled = false; } });
 
+            document.getElementById('btn-save-hero-katalog').addEventListener('click', async () => { const btn = document.getElementById('btn-save-hero-katalog'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { let obj = { teks_atas: document.getElementById('katalog-hero-teks-atas').value.trim(), teks_bawah: document.getElementById('katalog-hero-teks-bawah').value.trim() }; const file = document.getElementById('katalog-hero-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.bgUrl = media.url; obj.bgId = media.fileId; const snap = await db.ref('halaman/katalog/hero/bgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); } } await db.ref('halaman/katalog/hero').update(obj); showToast("Hero Katalog diperbarui!", "success"); } catch (err) { showToast("Error menyimpan hero.", "error"); } finally { btn.innerText = "Simpan Hero"; btn.disabled = false; } });
+            document.getElementById('btn-delete-hero-katalog').addEventListener('click', async () => { if(confirm("Yakin hapus Hero Katalog?")) { const btn = document.getElementById('btn-delete-hero-katalog'); btn.innerText = "Menghapus..."; btn.disabled = true; try { const snap = await db.ref('halaman/katalog/hero/bgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); await db.ref('halaman/katalog/hero').remove(); showToast("Hero Katalog dihapus.", "success"); document.getElementById('katalog-hero-teks-atas').value = ""; document.getElementById('katalog-hero-teks-bawah').value = ""; document.querySelector('#katalog-hero-file').parentElement.style.backgroundImage = 'none'; } catch(err) { showToast("Gagal hapus", "error"); } finally { btn.innerText = "Hapus Hero (Default)"; btn.disabled = false; } } });
+            document.getElementById('btn-simpan-kategori-katalog').addEventListener('click', async () => { const editId = document.getElementById('kategori-katalog-edit-id').value; const nama = document.getElementById('kategori-katalog-nama').value.trim(); if(!nama) { showToast("Ketik kategori terlebih dahulu!", "error"); return; } const btn = document.getElementById('btn-simpan-kategori-katalog'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { if(editId) { await db.ref('katalog_kategori/' + editId).update({ nama: nama }); showToast("Kategori diubah!", "success"); } else { await db.ref('katalog_kategori').push({ nama: nama }); showToast("Kategori ditambah!", "success"); } document.getElementById('form-kategori-katalog').style.display = 'none'; } catch(err) { showToast("Gagal memproses", "error"); } finally { btn.innerText = "Simpan Kategori"; btn.disabled = false; } });
+            document.getElementById('btn-simpan-katalog-mobil').addEventListener('click', async () => { const kategori = document.getElementById('katalog-mobil-kategori').value; const nama = document.getElementById('katalog-mobil-nama').value.trim(); if(!kategori || !nama) { showToast("Kategori dan Nama Mobil wajib diisi!", "error"); return; } const btn = document.getElementById('btn-simpan-katalog-mobil'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { const editId = document.getElementById('katalog-mobil-edit-id').value; let obj = { kategori: kategori, nama_mobil: nama, label_promo: document.getElementById('katalog-mobil-label').value.trim(), harga: document.getElementById('katalog-mobil-harga').value.trim(), ikon1: document.getElementById('katalog-mobil-ikon1').value.trim(), ikon2: document.getElementById('katalog-mobil-ikon2').value.trim(), ikon3: document.getElementById('katalog-mobil-ikon3').value.trim(), ikon4: document.getElementById('katalog-mobil-ikon4').value.trim(), timestamp: firebase.database.ServerValue.TIMESTAMP }; const file = document.getElementById('katalog-mobil-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.imgUrl = media.url; obj.imgId = media.fileId; if(editId) { const snap = await db.ref('katalog_mobil/' + editId + '/imgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); } } } let mobilKey = editId; if(!editId) { mobilKey = nama.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''); await db.ref('katalog_mobil/' + mobilKey).set(obj); } else { await db.ref('katalog_mobil/' + mobilKey).update(obj); } showToast("Kendaraan berhasil disimpan!", "success"); document.getElementById('form-katalog-mobil').style.display = 'none'; } catch(err) { showToast("Gagal memproses", "error"); } finally { btn.innerText = "Update Kendaraan"; btn.disabled = false; } });
+            document.getElementById('btn-simpan-brosur').addEventListener('click', async () => { const btn = document.getElementById('btn-simpan-brosur'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { let obj = { link: document.getElementById('brosur-link').value.trim(), teks_atas: document.getElementById('brosur-teks-atas').value.trim(), teks_bawah: document.getElementById('brosur-teks-bawah').value.trim() }; await db.ref('global_data/brosur').set(obj); showToast("Brosur Global Diperbarui!", "success"); document.getElementById('form-brosur-global').style.display = 'none'; } catch(err) { showToast("Gagal menyimpan brosur", "error"); } finally { btn.innerText = "Update Link Brosur"; btn.disabled = false; } });
 
-            // --- EKSEKUSI KATALOG KENDARAAN (BARU) ---
-
-            // 1. Simpan Hero Katalog
-            document.getElementById('btn-save-hero-katalog').addEventListener('click', async () => {
-                const btn = document.getElementById('btn-save-hero-katalog'); btn.innerText = "Menyimpan..."; btn.disabled = true;
-                try {
-                    let obj = { teks_atas: document.getElementById('katalog-hero-teks-atas').value.trim(), teks_bawah: document.getElementById('katalog-hero-teks-bawah').value.trim() };
-                    const file = document.getElementById('katalog-hero-file').files[0];
-                    if (file) {
-                        const media = await uploadMedia(file);
-                        if (media) { 
-                            obj.bgUrl = media.url; obj.bgId = media.fileId; 
-                            const snap = await db.ref('halaman/katalog/hero/bgId').once('value');
-                            if(snap.val()) await deleteMedia(snap.val()); 
-                        }
-                    }
-                    await db.ref('halaman/katalog/hero').update(obj); showToast("Hero Katalog diperbarui!", "success");
-                } catch (err) { showToast("Error menyimpan hero.", "error"); } 
-                finally { btn.innerText = "Simpan Hero"; btn.disabled = false; }
-            });
-
-            // 2. Hapus Hero Katalog
-            document.getElementById('btn-delete-hero-katalog').addEventListener('click', async () => {
-                if(confirm("Yakin hapus Hero Katalog?")) {
-                    const btn = document.getElementById('btn-delete-hero-katalog'); btn.innerText = "Menghapus..."; btn.disabled = true;
-                    try {
-                        const snap = await db.ref('halaman/katalog/hero/bgId').once('value');
-                        if(snap.val()) await deleteMedia(snap.val());
-                        await db.ref('halaman/katalog/hero').remove(); showToast("Hero Katalog dihapus.", "success");
-                        document.getElementById('katalog-hero-teks-atas').value = ""; document.getElementById('katalog-hero-teks-bawah').value = ""; document.querySelector('#katalog-hero-file').parentElement.style.backgroundImage = 'none';
-                    } catch(err) { showToast("Gagal hapus", "error"); } 
-                    finally { btn.innerText = "Hapus Hero (Default)"; btn.disabled = false; }
-                }
-            });
-
-            // 3. Simpan Kategori Katalog
-            document.getElementById('btn-simpan-kategori-katalog').addEventListener('click', async () => {
-                const editId = document.getElementById('kategori-katalog-edit-id').value;
-                const nama = document.getElementById('kategori-katalog-nama').value.trim();
-                if(!nama) { showToast("Ketik kategori terlebih dahulu!", "error"); return; }
-                const btn = document.getElementById('btn-simpan-kategori-katalog'); btn.innerText = "Menyimpan..."; btn.disabled = true;
-                try {
-                    if(editId) { await db.ref('katalog_kategori/' + editId).update({ nama: nama }); showToast("Kategori diubah!", "success"); } 
-                    else { await db.ref('katalog_kategori').push({ nama: nama }); showToast("Kategori ditambah!", "success"); }
-                    document.getElementById('form-kategori-katalog').style.display = 'none';
-                } catch(err) { showToast("Gagal memproses", "error"); } 
-                finally { btn.innerText = "Simpan Kategori"; btn.disabled = false; }
-            });
-
-            // 4. Simpan Katalog Mobil
-            document.getElementById('btn-simpan-katalog-mobil').addEventListener('click', async () => {
-                const kategori = document.getElementById('katalog-mobil-kategori').value;
-                const nama = document.getElementById('katalog-mobil-nama').value.trim();
-                
-                if(!kategori || !nama) { showToast("Kategori dan Nama Mobil wajib diisi!", "error"); return; }
-                
-                const btn = document.getElementById('btn-simpan-katalog-mobil'); btn.innerText = "Menyimpan..."; btn.disabled = true;
-                try {
-                    const editId = document.getElementById('katalog-mobil-edit-id').value;
-                    let obj = {
-                        kategori: kategori,
-                        nama_mobil: nama,
-                        label_promo: document.getElementById('katalog-mobil-label').value.trim(),
-                        harga: document.getElementById('katalog-mobil-harga').value.trim(),
-                        ikon1: document.getElementById('katalog-mobil-ikon1').value.trim(),
-                        ikon2: document.getElementById('katalog-mobil-ikon2').value.trim(),
-                        ikon3: document.getElementById('katalog-mobil-ikon3').value.trim(),
-                        ikon4: document.getElementById('katalog-mobil-ikon4').value.trim(),
-                        timestamp: firebase.database.ServerValue.TIMESTAMP
-                    };
-
-                    const file = document.getElementById('katalog-mobil-file').files[0];
-                    if (file) {
-                        const media = await uploadMedia(file);
-                        if (media) { 
-                            obj.imgUrl = media.url; obj.imgId = media.fileId; 
-                            if(editId) { const snap = await db.ref('katalog_mobil/' + editId + '/imgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); } 
-                        }
-                    }
-
-                    // Tentukan ID kustom (slug) berdasarkan nama mobil jika baru (agar rapi URL nya)
-                    let mobilKey = editId;
-                    if(!editId) {
-                        mobilKey = nama.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-                        await db.ref('katalog_mobil/' + mobilKey).set(obj);
-                    } else {
-                        await db.ref('katalog_mobil/' + mobilKey).update(obj);
-                    }
-                    
-                    showToast("Kendaraan berhasil disimpan!", "success"); 
-                    document.getElementById('form-katalog-mobil').style.display = 'none';
-                } catch(err) { showToast("Gagal memproses", "error"); } 
-                finally { btn.innerText = "Update Kendaraan"; btn.disabled = false; }
-            });
-
-            // 5. Simpan Link Brosur Global
-            document.getElementById('btn-simpan-brosur').addEventListener('click', async () => {
-                const btn = document.getElementById('btn-simpan-brosur'); btn.innerText = "Menyimpan..."; btn.disabled = true;
-                try {
-                    let obj = { 
-                        link: document.getElementById('brosur-link').value.trim(),
-                        teks_atas: document.getElementById('brosur-teks-atas').value.trim(),
-                        teks_bawah: document.getElementById('brosur-teks-bawah').value.trim()
-                    };
-                    await db.ref('global_data/brosur').set(obj); 
-                    showToast("Brosur Global Diperbarui!", "success");
-                    document.getElementById('form-brosur-global').style.display = 'none';
-                } catch(err) { showToast("Gagal menyimpan brosur", "error"); } 
-                finally { btn.innerText = "Update Link Brosur"; btn.disabled = false; }
-            });
-
-
-            // --- EKSEKUSI SPESIFIKASI & HARGA (Sama seperti sebelumnya) ---
             document.getElementById('btn-save-hero-spesifikasi').addEventListener('click', async () => { if(!currentMobilId) return; const btn = document.getElementById('btn-save-hero-spesifikasi'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { let obj = { nama: document.getElementById('spesifikasi-hero-nama').value.trim(), slogan: document.getElementById('spesifikasi-hero-slogan').value.trim() }; const file = document.getElementById('spesifikasi-hero-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.bgUrl = media.url; obj.bgId = media.fileId; const snap = await db.ref(`spesifikasi/${currentMobilId}/hero/bgId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); } } await db.ref(`spesifikasi/${currentMobilId}/hero`).update(obj); showToast("Hero Spesifikasi disimpan!", "success"); } catch (err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan Hero Spesifikasi"; btn.disabled = false; } });
             document.getElementById('btn-delete-hero-spesifikasi').addEventListener('click', async () => { if(!currentMobilId) return; if(confirm("Yakin hapus Hero Spesifikasi ini?")) { const btn = document.getElementById('btn-delete-hero-spesifikasi'); btn.innerText = "Menghapus..."; btn.disabled = true; try { const snap = await db.ref(`spesifikasi/${currentMobilId}/hero/bgId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); await db.ref(`spesifikasi/${currentMobilId}/hero`).remove(); showToast("Hero dihapus.", "success"); document.getElementById('spesifikasi-hero-nama').value = ""; document.getElementById('spesifikasi-hero-slogan').value = ""; document.querySelector('#spesifikasi-hero-file').parentElement.style.backgroundImage = 'none'; } catch(err) { showToast("Gagal hapus", "error"); } finally { btn.innerText = "Hapus Hero (Default)"; btn.disabled = false; } } });
             document.getElementById('btn-save-icon-default').addEventListener('click', async () => { if(!currentMobilId) return; const btn = document.getElementById('btn-save-icon-default'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { let obj = {}; for(let i=1; i<=5; i++) { obj[`icon${i}`] = document.getElementById(`icon-default-${i}`).value.trim(); } await db.ref(`spesifikasi/${currentMobilId}/icon_default`).set(obj); showToast("5 Ikon Default Disimpan!", "success"); } catch (err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan 5 Icon Default"; btn.disabled = false; } });
@@ -1416,6 +1484,86 @@
             document.getElementById('btn-simpan-varian').addEventListener('click', async () => { if(!currentMobilId) return; const btn = document.getElementById('btn-simpan-varian'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { const editId = document.getElementById('varian-edit-id').value; let obj = { nama: document.getElementById('varian-nama').value.trim(), harga: document.getElementById('varian-harga').value.trim() }; if(editId) { await db.ref(`spesifikasi/${currentMobilId}/varian/${editId}`).update(obj); } else { await db.ref(`spesifikasi/${currentMobilId}/varian`).push(obj); } showToast("Varian Disimpan!", "success"); document.getElementById('form-varian-container').style.display = 'none'; } catch(err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan Harga Varian"; btn.disabled = false; } });
             document.getElementById('btn-simpan-warna').addEventListener('click', async () => { if(!currentMobilId) return; const varianValue = document.getElementById('warna-varian').value; if(!varianValue) { showToast("Pilih kategori varian terlebih dahulu!", "error"); return; } const btn = document.getElementById('btn-simpan-warna'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { const editId = document.getElementById('warna-edit-id').value; let obj = { nama: document.getElementById('warna-nama').value.trim(), harga: document.getElementById('warna-harga').value.trim(), varian: varianValue }; const fileMobil = document.getElementById('warna-foto-mobil').files[0]; if (fileMobil) { const media = await uploadMedia(fileMobil); if (media) { obj.imgMobilUrl = media.url; obj.imgMobilId = media.fileId; if(editId) { const snap = await db.ref(`spesifikasi/${currentMobilId}/warna/${editId}/imgMobilId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); } } } const fileBulat = document.getElementById('warna-foto-bulat').files[0]; if (fileBulat) { const media = await uploadMedia(fileBulat); if (media) { obj.imgBulatUrl = media.url; obj.imgBulatId = media.fileId; if(editId) { const snap = await db.ref(`spesifikasi/${currentMobilId}/warna/${editId}/imgBulatId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); } } } if(editId) { await db.ref(`spesifikasi/${currentMobilId}/warna/${editId}`).update(obj); } else { await db.ref(`spesifikasi/${currentMobilId}/warna`).push(obj); } showToast("Warna Disimpan!", "success"); document.getElementById('form-warna-container').style.display = 'none'; } catch(err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Update Warna"; btn.disabled = false; } });
             document.getElementById('btn-simpan-fitur').addEventListener('click', async () => { if(!currentMobilId) return; const btn = document.getElementById('btn-simpan-fitur'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { const editId = document.getElementById('fitur-edit-id').value; let obj = { kategori: document.getElementById('fitur-kategori').value, judul: document.getElementById('fitur-judul').value.trim(), deskripsi: document.getElementById('fitur-deskripsi').value.trim() }; const file = document.getElementById('fitur-foto').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.imgUrl = media.url; obj.imgId = media.fileId; if(editId) { const snap = await db.ref(`spesifikasi/${currentMobilId}/fitur/${editId}/imgId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); } } } if(editId) { await db.ref(`spesifikasi/${currentMobilId}/fitur/${editId}`).update(obj); } else { await db.ref(`spesifikasi/${currentMobilId}/fitur`).push(obj); } showToast("Fitur Disimpan!", "success"); document.getElementById('form-fitur-container').style.display = 'none'; } catch(err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan Fitur"; btn.disabled = false; } });
+
+
+            // --- EKSEKUSI DAFTAR HARGA (BARU) ---
+            
+            // 1. Simpan Hero Daftar Harga
+            document.getElementById('btn-save-hero-harga').addEventListener('click', async () => {
+                const btn = document.getElementById('btn-save-hero-harga'); btn.innerText = "Menyimpan..."; btn.disabled = true;
+                try {
+                    let obj = { teks_atas: document.getElementById('harga-hero-teks-atas').value.trim(), teks_bawah: document.getElementById('harga-hero-teks-bawah').value.trim() };
+                    const file = document.getElementById('harga-hero-file').files[0];
+                    if (file) {
+                        const media = await uploadMedia(file);
+                        if (media) { 
+                            obj.bgUrl = media.url; obj.bgId = media.fileId; 
+                            const snap = await db.ref('halaman/harga/hero/bgId').once('value');
+                            if(snap.val()) await deleteMedia(snap.val()); 
+                        }
+                    }
+                    await db.ref('halaman/harga/hero').update(obj); showToast("Hero Harga diperbarui!", "success");
+                } catch (err) { showToast("Error menyimpan hero.", "error"); } 
+                finally { btn.innerText = "Simpan Hero"; btn.disabled = false; }
+            });
+
+            // 2. Hapus Hero Daftar Harga
+            document.getElementById('btn-delete-hero-harga').addEventListener('click', async () => {
+                if(confirm("Yakin hapus Hero Daftar Harga?")) {
+                    const btn = document.getElementById('btn-delete-hero-harga'); btn.innerText = "Menghapus..."; btn.disabled = true;
+                    try {
+                        const snap = await db.ref('halaman/harga/hero/bgId').once('value');
+                        if(snap.val()) await deleteMedia(snap.val());
+                        await db.ref('halaman/harga/hero').remove(); showToast("Hero Harga dihapus.", "success");
+                        document.getElementById('harga-hero-teks-atas').value = ""; document.getElementById('harga-hero-teks-bawah').value = ""; document.querySelector('#harga-hero-file').parentElement.style.backgroundImage = 'none';
+                    } catch(err) { showToast("Gagal hapus", "error"); } 
+                    finally { btn.innerText = "Hapus Hero (Default)"; btn.disabled = false; }
+                }
+            });
+
+            // 3. Simpan Visual Kartu Harga
+            document.getElementById('btn-simpan-visual-harga').addEventListener('click', async () => {
+                const mobilId = document.getElementById('visual-harga-mobil-id').value;
+                if(!mobilId) { showToast("Pilih kendaraan terlebih dahulu!", "error"); return; }
+                
+                const formatNama = document.getElementById('visual-harga-format').value;
+                const btn = document.getElementById('btn-simpan-visual-harga'); btn.innerText = "Menyimpan..."; btn.disabled = true;
+                
+                try {
+                    let obj = {
+                        format_nama: formatNama,
+                        teks_nama: document.getElementById('visual-harga-teks').value.trim()
+                    };
+
+                    const fileMobil = document.getElementById('visual-harga-foto-mobil').files[0];
+                    if (fileMobil) {
+                        const mediaMobil = await uploadMedia(fileMobil);
+                        if (mediaMobil) {
+                            obj.imgMobilUrl = mediaMobil.url; obj.imgMobilId = mediaMobil.fileId;
+                            const snap = await db.ref(`visual_harga/${mobilId}/imgMobilId`).once('value');
+                            if(snap.val()) await deleteMedia(snap.val());
+                        }
+                    }
+
+                    if (formatNama === 'logo') {
+                        const fileLogo = document.getElementById('visual-harga-logo-file').files[0];
+                        if (fileLogo) {
+                            const mediaLogo = await uploadMedia(fileLogo);
+                            if (mediaLogo) {
+                                obj.logoUrl = mediaLogo.url; obj.logoId = mediaLogo.fileId;
+                                const snap = await db.ref(`visual_harga/${mobilId}/logoId`).once('value');
+                                if(snap.val()) await deleteMedia(snap.val());
+                            }
+                        }
+                    }
+
+                    // Simpan ke node khusus visual_harga menggunakan ID kendaraan yang sama dengan katalog
+                    await db.ref(`visual_harga/${mobilId}`).update(obj);
+                    showToast("Visual kartu berhasil diupdate!", "success");
+                    document.getElementById('form-visual-harga-container').style.display = 'none';
+                } catch(err) { showToast("Gagal memproses", "error"); } 
+                finally { btn.innerText = "Update Visual Kartu"; btn.disabled = false; }
+            });
 
         });
     </script>
