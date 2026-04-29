@@ -11,6 +11,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
 
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
     <style>
         /* =========================================
            CSS VARIABLES & GLOBALS
@@ -151,7 +154,7 @@
         .visualizer-color-name { font-size: 1.2rem; font-weight: 700; color: var(--color-secondary); margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1px; }
 
         .color-swatches-container { display: flex; justify-content: center; gap: 16px; margin-bottom: 50px; flex-wrap: wrap; }
-        .color-swatch { width: 40px; height: 40px; border-radius: 8px; cursor: pointer; transition: var(--transition-smooth); position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid transparent; }
+        .color-swatch { width: 40px; height: 40px; border-radius: 8px; cursor: pointer; transition: var(--transition-smooth); position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid transparent; background-size: cover !important; background-position: center !important; }
         .color-swatch::after { content: ''; position: absolute; top: -6px; left: -6px; width: calc(100% + 12px); height: calc(100% + 12px); border: 2px solid var(--color-accent); border-radius: 12px; opacity: 0; transition: var(--transition-smooth); transform: scale(0.8); }
         .color-swatch.active::after { opacity: 1; transform: scale(1); }
 
@@ -326,13 +329,13 @@
             
             <nav class="nav-links">
                 <a href="index.html">Beranda</a>
-                <a href="katalog.html">Daftar Harga</a>
+                <a href="harga.html">Daftar Harga</a>
                 <a href="index.html#berita">Berita</a>
                 <a href="index.html#testimoni">Testimoni</a>
             </nav>
 
             <div class="nav-actions">
-                <a href="https://wa.me/628123456789" target="_blank" class="btn-primary">Pesan Sekarang</a>
+                <a href="https://wa.me/628123456789" target="_blank" class="btn-primary link-wa-global">Pesan Sekarang</a>
                 <button class="menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu">
                     <span></span><span></span><span></span>
                 </button>
@@ -349,31 +352,31 @@
         </div>
         
         <a href="index.html" class="menu-item">Beranda</a>
-        <a href="katalog.html" class="menu-item">Daftar Harga</a>
+        <a href="harga.html" class="menu-item">Daftar Harga</a>
         <a href="index.html#promo" class="menu-item">Promo Terbaru</a>
         <a href="index.html#testimoni" class="menu-item">Testimonial Gallery</a>
         <a href="index.html#berita" class="menu-item">Berita & Acara</a>
         <a href="index.html#layanan" class="menu-item">Layanan Purna Jual</a>
         <a href="index.html#lokasi" class="menu-item">Lokasi Dealer</a>
 
-        <a href="https://wa.me/628123456789" target="_blank" class="btn-primary" style="margin-top: auto; text-align: center; width: 100%;">Hubungi Sales</a>
+        <a href="https://wa.me/628123456789" target="_blank" class="btn-primary link-wa-global" style="margin-top: auto; text-align: center; width: 100%;">Hubungi Sales</a>
     </div>
 
     <main class="app-wrapper">
         
         <section class="detail-hero">
-            <img src="https://i.ibb.co.com/FLv257nt/IMG-3299.webp" alt="Background Xpander" class="detail-hero-bg">
+            <img src="https://i.ibb.co.com/FLv257nt/IMG-3299.webp" alt="Background Spesifikasi" class="detail-hero-bg" id="hero-spesifikasi-bg">
             
             <div class="detail-hero-overlay"></div>
 
             <div class="hero-center-wrapper reveal-up">
                 
                 <div class="detail-hero-content">
-                    <h1 class="car-logo-text">XPANDER</h1>
-                    <p class="car-tagline">Premium Family SUV</p>
+                    <h1 class="car-logo-text" id="hero-spesifikasi-nama">XPANDER</h1>
+                    <p class="car-tagline" id="hero-spesifikasi-slogan">Premium Family SUV</p>
                 </div>
 
-                <div class="hero-features-grid reveal-up delay-1">
+                <div class="hero-features-grid reveal-up delay-1" id="hero-features-container">
                     <div class="feature-item">
                         <img src="https://i.ibb.co.com/MKS5kty/IMG-3293.png" alt="Keamanan" class="feature-img">
                         <span class="feature-label">Teknologi<br>Keamanan Terkini</span>
@@ -428,29 +431,8 @@
                 <h3 class="variants-title">Pilih Varian</h3>
                 <div class="variant-hint-mobile">← Geser & Pilih Varian Untuk Mengubah Detail →</div>
                 
-                <div class="variants-grid">
-                    <div class="variant-item active" data-variant="ultimate">
-                        <img src="https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=200&auto=format&fit=crop" alt="Ultimate CVT" class="variant-item-img">
-                        <div class="variant-item-info">
-                            <h4>Ultimate CVT</h4>
-                            <p>Flagship Model</p>
-                        </div>
+                <div class="variants-grid" id="variants-grid-container">
                     </div>
-                    <div class="variant-item" data-variant="sport">
-                        <img src="https://images.unsplash.com/photo-1609521263047-f8f205293f24?q=80&w=200&auto=format&fit=crop" alt="Sport CVT" class="variant-item-img">
-                        <div class="variant-item-info">
-                            <h4>Sport CVT</h4>
-                            <p>Sporty Design</p>
-                        </div>
-                    </div>
-                    <div class="variant-item" data-variant="exceed">
-                        <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?q=80&w=200&auto=format&fit=crop" alt="Exceed CVT" class="variant-item-img">
-                        <div class="variant-item-info">
-                            <h4>Exceed CVT</h4>
-                            <p>Premium Comfort</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -463,14 +445,14 @@
                 
                 <div class="swipe-hint">← Geser Kategori Untuk Melihat →</div>
 
-                <div class="gallery-tabs">
+                <div class="gallery-tabs" id="gallery-tabs-container">
                     <button class="tab-btn active" data-tab="eksterior">Eksterior</button>
                     <button class="tab-btn" data-tab="interior">Interior</button>
                     <button class="tab-btn" data-tab="keamanan">Keamanan</button>
                     <button class="tab-btn" data-tab="performa">Performa</button>
                 </div>
 
-                <div class="gallery-viewer">
+                <div class="gallery-viewer" id="gallery-viewer-box">
                     <button class="gallery-nav-btn gallery-prev" id="btn-prev" aria-label="Sebelumnya"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
                     <img src="" alt="Gallery Image" id="gallery-main-img" class="gallery-img">
                     <button class="gallery-nav-btn gallery-next" id="btn-next" aria-label="Selanjutnya"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
@@ -482,8 +464,8 @@
                 </div>
 
                 <div class="bottom-action-buttons">
-                    <a href="katalog.html" class="btn-outline">Kembali</a>
-                    <a href="https://wa.me/628123456789?text=Halo%20kak%2C%20saya%20tertarik%20dengan%20mobil%20Xpander.%20Boleh%20minta%20infonya%20lebih%20lanjut%3F" target="_blank" class="btn-fill">Pesan Sekarang</a>
+                    <a href="harga.html" class="btn-outline">Kembali</a>
+                    <a href="#" target="_blank" class="btn-fill link-wa-global">Pesan Sekarang</a>
                 </div>
 
             </div>
@@ -495,10 +477,10 @@
                     <img src="https://i.ibb.co.com/84Ss5Bjy/IMG-3284.png" alt="Mitsubishi Motors" class="footer-logo">
                     <p>Dealer Resmi Mitsubishi Batam. Menghadirkan layanan premium dan pengalaman berkendara kelas dunia untuk Anda dan keluarga.</p>
                     <div class="footer-socials">
-                        <a href="https://facebook.com" target="_blank" class="social-link-icon" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
-                        <a href="https://instagram.com" target="_blank" class="social-link-icon" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-                        <a href="https://wa.me/628123456789" target="_blank" class="social-link-icon" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
-                        <a href="mailto:info@mitsubishi.com" class="social-link-icon" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg></a>
+                        <a href="https://facebook.com" target="_blank" class="social-link-icon link-fb-global" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
+                        <a href="https://instagram.com" target="_blank" class="social-link-icon link-ig-global" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                        <a href="#" target="_blank" class="social-link-icon link-wa-global" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+                        <a href="#" class="social-link-icon" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg></a>
                     </div>
                 </div>
                 <div class="footer-col">
@@ -506,21 +488,21 @@
                     <ul>
                         <li><a href="index.html">Beranda</a></li>
                         <li><a href="index.html#promo">Promo Terbaru</a></li>
-                        <li><a href="katalog.html">Daftar Harga</a></li>
+                        <li><a href="harga.html">Daftar Harga</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Layanan</h4>
                     <ul>
                         <li><a href="index.html#layanan">Purna Jual</a></li>
-                        <li><a href="https://wa.me/628123456789">Test Drive</a></li>
+                        <li><a href="#" class="link-wa-global">Test Drive</a></li>
                         <li><a href="index.html#lokasi">Lokasi Dealer</a></li>
                     </ul>
                 </div>
                 <div class="footer-contact">
                     <h4>Kontak Kami</h4>
-                    <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Jl. Raden Patah, Lubuk Baja, Kota Batam, Kepulauan Riau</p>
-                    <p><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> +62 812-3456-7890</p>
+                    <p id="footer-alamat-text"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Jl. Raden Patah, Lubuk Baja, Kota Batam, Kepulauan Riau</p>
+                    <p id="footer-telepon-text"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> +62 812-3456-7890</p>
                 </div>
             </div>
             <div class="footer-bottom reveal-up delay-2">
@@ -530,13 +512,12 @@
         </footer>
 
         <nav class="mobile-bottom-nav">
-            <a href="katalog.html" class="bottom-nav-item" aria-label="Daftar Harga"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.41l9 9c.36.36.86.59 1.41.59s1.05-.22 1.41-.59l7-7c.36-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg><span class="bottom-nav-label">Harga</span></a>
-            <a href="tel:+6281234567890" class="bottom-nav-item" aria-label="Telepon Sales"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span class="bottom-nav-label">Telepon</span></a>
-            <a href="https://wa.me/628123456789" target="_blank" class="bottom-nav-item" aria-label="Chat WhatsApp"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span class="bottom-nav-label">WhatsApp</span></a>
+            <a href="harga.html" class="bottom-nav-item" aria-label="Daftar Harga"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.41l9 9c.36.36.86.59 1.41.59s1.05-.22 1.41-.59l7-7c.36-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg><span class="bottom-nav-label">Harga</span></a>
+            <a href="#" id="bottom-nav-telp" class="bottom-nav-item" aria-label="Telepon Sales"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span class="bottom-nav-label">Telepon</span></a>
+            <a href="#" target="_blank" class="bottom-nav-item link-wa-global" aria-label="Chat WhatsApp"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span class="bottom-nav-label">WhatsApp</span></a>
         </nav>
 
     </main>
-
     <script>
         // --- PRELOADER & NAVBAR SCROLL ---
         window.addEventListener('load', () => setTimeout(() => document.getElementById('preloader').classList.add('hide'), 1000));
@@ -546,7 +527,7 @@
             else navbar.classList.remove('scrolled');
         });
 
-        // --- UX MENU MOBILE (SIDEBAR & OVERLAY DIPERBAIKI) ---
+        // --- UX MENU MOBILE ---
         const menuBtn = document.getElementById('mobile-menu-btn');
         const closeBtn = document.getElementById('close-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -556,7 +537,6 @@
             const isOpen = mobileMenu.classList.contains('active');
             mobileMenu.classList.toggle('active');
             menuOverlay.classList.toggle('active');
-            // Kunci scroll layar utama saat menu terbuka
             document.body.style.overflow = isOpen ? 'auto' : 'hidden'; 
         }
         
@@ -576,7 +556,7 @@
         }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
         revealElements.forEach(el => revealObserver.observe(el));
 
-        // --- SMOOTH SCROLL ANCHOR (Untuk Tombol "Detail Produk") ---
+        // --- SMOOTH SCROLL ANCHOR ---
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -590,161 +570,393 @@
         });
 
         // =========================================
-        // DATA DUMMY: VARIAN & WARNA
+        // INISIALISASI FIREBASE & AMBIL PARAMETER URL
         // =========================================
-        const carData = {
-            "ultimate": {
-                price: "Rp 315.900.000",
-                colors: [
-                    { name: "Quartz White Pearl", hex: "#EBEBEB", img: "https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=1000" },
-                    { name: "Jet Black Mica", hex: "#1A1A1A", img: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?q=80&w=1000" },
-                    { name: "Blade Silver Metallic", hex: "#A0A0A0", img: "https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?q=80&w=1000" }
-                ]
-            },
-            "sport": {
-                price: "Rp 312.500.000",
-                colors: [
-                    { name: "Graphite Gray", hex: "#2B3A42", img: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=1000" },
-                    { name: "Quartz White Pearl", hex: "#EBEBEB", img: "https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=1000" }
-                ]
-            },
-            "exceed": {
-                price: "Rp 283.700.000",
-                colors: [
-                    { name: "Jet Black Mica", hex: "#1A1A1A", img: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?q=80&w=1000" },
-                    { name: "Blade Silver Metallic", hex: "#A0A0A0", img: "https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?q=80&w=1000" }
-                ]
-            }
+        const firebaseConfig = {
+            apiKey: "AIzaSyBrNnp8PJiKYATH-1ie67aq9WqESpIXBus",
+            authDomain: "landing-page-alex.firebaseapp.com",
+            databaseURL: "https://landing-page-alex-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "landing-page-alex",
+            storageBucket: "landing-page-alex.firebasestorage.app",
+            messagingSenderId: "164638589744",
+            appId: "1:164638589744:web:8470111cc7c41696887ef5"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Mengambil ID mobil dari URL (contoh: detail.html?id=xpander)
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentMobilId = urlParams.get('id') || 'xpander'; // Default ke xpander jika URL kosong
+
+        // Format Uang Rupiah
+        const formatRupiah = (angka) => {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
         };
 
-        const variantItems = document.querySelectorAll('.variant-item');
-        const colorSwatchesWrapper = document.getElementById('color-swatches-wrapper');
-        const carMainImg = document.getElementById('car-main-img');
-        const carColorName = document.getElementById('car-color-name');
-        const carPriceDisplay = document.getElementById('car-price-display');
 
-        function loadVariantData(variantKey) {
-            const data = carData[variantKey];
-            
-            carPriceDisplay.textContent = data.price;
-            colorSwatchesWrapper.innerHTML = '';
-            
-            data.colors.forEach((colorObj, index) => {
-                const swatch = document.createElement('div');
-                swatch.className = `color-swatch ${index === 0 ? 'active' : ''}`;
-                swatch.style.background = colorObj.hex;
+        // =========================================
+        // SINKRONISASI DATA GLOBAL (Kontak & Alamat)
+        // =========================================
+        function loadGlobalData() {
+            db.ref('global_data/kontak').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if(data) {
+                    if(data.fb) document.querySelectorAll('.link-fb-global').forEach(link => link.href = `https://facebook.com/${data.fb}`);
+                    if(data.ig) document.querySelectorAll('.link-ig-global').forEach(link => link.href = `https://instagram.com/${data.ig}`);
+                    if(data.telepon) {
+                        document.getElementById('bottom-nav-telp').href = `tel:${data.telepon}`;
+                        const teksTelp = document.getElementById('footer-telepon-text');
+                        if(teksTelp) teksTelp.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> ${data.telepon}`;
+                    }
+                    if(data.whatsapp) {
+                        const teksUmum = encodeURIComponent("Halo Kak, saya tertarik dengan informasi dari website Mitsubishi Motors Batam. Boleh minta informasinya lebih lanjut?");
+                        document.querySelectorAll('.link-wa-global').forEach(link => link.href = `https://wa.me/${data.whatsapp}?text=${teksUmum}`);
+                    }
+                }
+            });
+
+            db.ref('global_data/alamat').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if(data && data.teks_alamat) {
+                    const footerAlamat = document.getElementById('footer-alamat-text');
+                    if(footerAlamat) footerAlamat.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> ${data.teks_alamat}`;
+                }
+            });
+        }
+
+        // =========================================
+        // SINKRONISASI DATA SPESIFIKASI MOBIL (DENGAN PROTEKSI DUMMY)
+        // =========================================
+
+        // 1. HERO SPESIFIKASI
+        db.ref(`spesifikasi/${currentMobilId}/hero`).on('value', snap => {
+            const data = snap.val();
+            // Jika ada data di firebase, ganti tampilan. Jika kosong, biarkan HTML dummy jalan.
+            if(data) {
+                if(data.bgUrl) document.getElementById('hero-spesifikasi-bg').src = data.bgUrl;
+                if(data.nama) document.getElementById('hero-spesifikasi-nama').textContent = data.nama;
+                if(data.slogan) document.getElementById('hero-spesifikasi-slogan').textContent = data.slogan;
+            }
+        });
+
+        // 2. FITUR UTAMA (5 ICON DEFAULT)
+        db.ref(`spesifikasi/${currentMobilId}/icon_default`).on('value', snap => {
+            const data = snap.val();
+            if(data) {
+                const container = document.getElementById('hero-features-container');
+                const items = container.querySelectorAll('.feature-item');
                 
-                swatch.addEventListener('click', () => {
-                    document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
-                    swatch.classList.add('active');
+                // Cek masing-masing icon. Jika diisi, tampilkan. Jika kosong, sembunyikan.
+                if(data.icon1) { items[0].style.display = 'flex'; items[0].querySelector('.feature-label').innerHTML = data.icon1; } else { items[0].style.display = 'none'; }
+                if(data.icon2) { items[1].style.display = 'flex'; items[1].querySelector('.feature-label').innerHTML = data.icon2; } else { items[1].style.display = 'none'; }
+                if(data.icon3) { items[2].style.display = 'flex'; items[2].querySelector('.feature-label').innerHTML = data.icon3; } else { items[2].style.display = 'none'; }
+                if(data.icon4) { items[3].style.display = 'flex'; items[3].querySelector('.feature-label').innerHTML = data.icon4; } else { items[3].style.display = 'none'; }
+                if(data.icon5) { items[4].style.display = 'flex'; items[4].querySelector('.feature-label').innerHTML = data.icon5; } else { items[4].style.display = 'none'; }
+            }
+        });
+
+        // 3. VARIAN & WARNA (SISTEM TERINTEGRASI)
+        let currentBasePrice = "Rp 0";
+        let isWarnaLoaded = false;
+        let isVarianLoaded = false;
+
+        function checkVisualizerFallback() {
+            // Jika keduanya kosong dari Firebase, panggil dummy
+            if(!isWarnaLoaded && !isVarianLoaded) {
+                jalankanDummyVisualizer();
+            }
+        }
+
+        // Listener Varian dari Firebase
+        db.ref(`spesifikasi/${currentMobilId}/varian`).on('value', snap => {
+            if(snap.exists()) {
+                isVarianLoaded = true;
+                const container = document.getElementById('variants-grid-container');
+                container.innerHTML = '';
+                let isFirst = true;
+
+                snap.forEach(child => {
+                    const v = child.val();
+                    const priceFormatted = formatRupiah(v.harga || 0);
                     
-                    carMainImg.classList.add('fade-out');
-                    setTimeout(() => {
-                        carMainImg.src = colorObj.img;
-                        carColorName.textContent = colorObj.name;
-                        carMainImg.classList.remove('fade-out');
-                    }, 400); 
+                    const div = document.createElement('div');
+                    div.className = `variant-item ${isFirst ? 'active' : ''}`;
+                    // Tampilan disesuaikan agar rapi walau tanpa gambar spesifik varian
+                    div.innerHTML = `
+                        <div class="variant-item-info" style="width:100%; text-align: left;">
+                            <h4>${v.nama}</h4>
+                            <p style="color: var(--color-accent);">${priceFormatted}</p>
+                        </div>
+                    `;
+                    
+                    div.addEventListener('click', () => {
+                        document.querySelectorAll('.variant-item').forEach(el => el.classList.remove('active'));
+                        div.classList.add('active');
+                        currentBasePrice = priceFormatted;
+                        document.getElementById('car-price-display').textContent = currentBasePrice;
+                        
+                        // Kembalikan ke warna default (pertama) jika ganti varian
+                        const firstColor = document.querySelector('.color-swatch');
+                        if(firstColor) firstColor.click();
+                    });
+
+                    container.appendChild(div);
+
+                    if(isFirst) {
+                        currentBasePrice = priceFormatted;
+                        document.getElementById('car-price-display').textContent = currentBasePrice;
+                        isFirst = false;
+                    }
                 });
-                
-                colorSwatchesWrapper.appendChild(swatch);
-            });
-
-            carMainImg.classList.add('fade-out');
-            setTimeout(() => {
-                carMainImg.src = data.colors[0].img;
-                carColorName.textContent = data.colors[0].name;
-                carMainImg.classList.remove('fade-out');
-            }, 400);
-        }
-
-        variantItems.forEach(item => {
-            item.addEventListener('click', () => {
-                variantItems.forEach(v => v.classList.remove('active'));
-                item.classList.add('active');
-                
-                const selectedVariant = item.getAttribute('data-variant');
-                loadVariantData(selectedVariant);
-            });
-        });
-
-        loadVariantData('ultimate');
-
-
-        // =========================================
-        // DATA DUMMY: INTERACTIVE GALLERY
-        // =========================================
-        const galleryData = {
-            eksterior: [
-                { img: "https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?q=80&w=1200", title: "Kaca Film V-Kool Premium", desc: "Dilengkapi dengan kaca film berkualitas tinggi yang menolak panas inframerah, menjaga kabin tetap sejuk dan melindungi privasi keluarga Anda dengan sempurna." },
-                { img: "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?q=80&w=1200", title: "T-Shape LED Headlight", desc: "Desain lampu depan ikonik T-Shape yang memberikan pencahayaan maksimal di malam hari sekaligus memancarkan aura futuristik dan agresif." }
-            ],
-            interior: [
-                { img: "https://images.unsplash.com/photo-1616423641405-824ecf55d7ad?q=80&w=1200", title: "Kabin Luas dan Ergonomis", desc: "Desain interior dengan material soft-touch premium. Memberikan kenyamanan ruang kaki dan kepala terbaik di kelasnya untuk 7 penumpang dewasa." },
-                { img: "https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=1200", title: "Sistem Hiburan Terpusat", desc: "Layar sentuh informatif yang terintegrasi penuh dengan sistem audio berkualitas tinggi, menjadikan setiap perjalanan tidak membosankan." }
-            ],
-            keamanan: [
-                { img: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?q=80&w=1200", title: "Teknologi Diamond Sense", desc: "Sistem sensor cerdas yang mendeteksi kendaraan di sekitar, otomatis melakukan pengereman darurat dan menjaga mobil tetap di jalurnya." },
-                { img: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=1200", title: "Rangka RISE Kokoh", desc: "Struktur bodi RISE (Reinforced Impact Safety Evolution) menyerap energi benturan secara efisien untuk melindungi ruang kabin dari segala arah." }
-            ],
-            performa: [
-                { img: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=1200", title: "Mesin MIVEC 1.5L", desc: "Perpaduan sempurna antara tenaga maksimal dan efisiensi bahan bakar tingkat tinggi, siap melibas jalanan menanjak maupun perkotaan." },
-                { img: "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?q=80&w=1200", title: "Suspensi Lancer Evolution", desc: "Mengadopsi DNA suspensi sport dari Lancer Evolution, memberikan kestabilan ekstra saat bermanuver di kecepatan tinggi." }
-            ]
-        };
-
-        const galleryTabs = document.querySelectorAll('.tab-btn');
-        const galleryImgEl = document.getElementById('gallery-main-img');
-        const galleryTitle = document.getElementById('gallery-title');
-        const galleryDesc = document.getElementById('gallery-desc');
-        const btnPrev = document.getElementById('btn-prev');
-        const btnNext = document.getElementById('btn-next');
-
-        let currentCategory = 'eksterior';
-        let currentIndex = 0;
-
-        function renderGallery(fade = true) {
-            const data = galleryData[currentCategory][currentIndex];
-            
-            if(fade) {
-                galleryImgEl.classList.add('fade');
-                setTimeout(() => {
-                    galleryImgEl.src = data.img;
-                    galleryTitle.textContent = data.title;
-                    galleryDesc.textContent = data.desc;
-                    galleryImgEl.classList.remove('fade');
-                }, 400);
             } else {
-                galleryImgEl.src = data.img;
-                galleryTitle.textContent = data.title;
-                galleryDesc.textContent = data.desc;
+                checkVisualizerFallback();
             }
+        });
+
+        // Listener Warna dari Firebase
+        db.ref(`spesifikasi/${currentMobilId}/warna`).on('value', snap => {
+            if(snap.exists()) {
+                isWarnaLoaded = true;
+                const container = document.getElementById('color-swatches-wrapper');
+                container.innerHTML = '';
+                let isFirst = true;
+                
+                snap.forEach(child => {
+                    const w = child.val();
+                    const div = document.createElement('div');
+                    div.className = `color-swatch ${isFirst ? 'active' : ''}`;
+                    div.style.backgroundImage = `url('${w.imgBulatUrl || ''}')`; 
+                    div.title = w.nama; // tooltip nama warna
+                    
+                    div.addEventListener('click', () => {
+                        document.querySelectorAll('.color-swatch').forEach(el => el.classList.remove('active'));
+                        div.classList.add('active');
+                        
+                        const imgEl = document.getElementById('car-main-img');
+                        imgEl.classList.add('fade-out');
+                        setTimeout(() => {
+                            if(w.imgMobilUrl) imgEl.src = w.imgMobilUrl;
+                            document.getElementById('car-color-name').textContent = w.nama;
+                            
+                            // Logika override Harga Khusus
+                            if(w.harga && Number(w.harga) > 0) {
+                                document.getElementById('car-price-display').textContent = formatRupiah(w.harga);
+                            } else {
+                                document.getElementById('car-price-display').textContent = currentBasePrice;
+                            }
+                            
+                            imgEl.classList.remove('fade-out');
+                        }, 400);
+                    });
+
+                    container.appendChild(div);
+
+                    // Set default display pertama kali diload
+                    if(isFirst) {
+                        if(w.imgMobilUrl) document.getElementById('car-main-img').src = w.imgMobilUrl;
+                        document.getElementById('car-color-name').textContent = w.nama;
+                        isFirst = false;
+                    }
+                });
+            } else {
+                checkVisualizerFallback();
+            }
+        });
+
+
+        // 4. GALERI FITUR INTERAKTIF
+        db.ref(`spesifikasi/${currentMobilId}/fitur`).on('value', snap => {
+            if(snap.exists()) {
+                let dynamicGalleryData = {};
+                
+                snap.forEach(child => {
+                    const f = child.val();
+                    const cat = f.kategori || 'Eksterior';
+                    if(!dynamicGalleryData[cat]) dynamicGalleryData[cat] = [];
+                    dynamicGalleryData[cat].push({ img: f.imgUrl, title: f.judul, desc: f.deskripsi });
+                });
+
+                // Re-render Tabs
+                const tabsContainer = document.getElementById('gallery-tabs-container');
+                tabsContainer.innerHTML = '';
+                let firstCat = null;
+
+                for(const cat in dynamicGalleryData) {
+                    if(dynamicGalleryData[cat].length > 0) {
+                        if(!firstCat) firstCat = cat;
+                        const btn = document.createElement('button');
+                        btn.className = `tab-btn ${cat === firstCat ? 'active' : ''}`;
+                        btn.setAttribute('data-tab', cat);
+                        btn.textContent = cat;
+                        tabsContainer.appendChild(btn);
+                    }
+                }
+
+                if(firstCat) {
+                    bindDynamicGallery(dynamicGalleryData, firstCat);
+                }
+
+            } else {
+                // JALANKAN DUMMY GALLERY
+                jalankanDummyGallery();
+            }
+        });
+
+
+        // =========================================
+        // FUNGSI FALLBACK DUMMY (PROTEKSI KOSONG)
+        // =========================================
+
+        function jalankanDummyVisualizer() {
+            const dummyCarData = {
+                "ultimate": {
+                    price: "Rp 315.900.000",
+                    colors: [
+                        { name: "Quartz White Pearl", hex: "#EBEBEB", img: "https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=1000" },
+                        { name: "Jet Black Mica", hex: "#1A1A1A", img: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?q=80&w=1000" },
+                        { name: "Blade Silver Metallic", hex: "#A0A0A0", img: "https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?q=80&w=1000" }
+                    ]
+                },
+                "sport": {
+                    price: "Rp 312.500.000",
+                    colors: [
+                        { name: "Graphite Gray", hex: "#2B3A42", img: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=1000" },
+                        { name: "Quartz White Pearl", hex: "#EBEBEB", img: "https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=1000" }
+                    ]
+                }
+            };
+
+            const variantItems = document.querySelectorAll('.variant-item');
+            const swatchesWrapper = document.getElementById('color-swatches-wrapper');
+            const mainImg = document.getElementById('car-main-img');
+            const colorName = document.getElementById('car-color-name');
+            const priceDisp = document.getElementById('car-price-display');
+
+            // Jika div belum diisi template dummy HTML
+            if(document.getElementById('variants-grid-container').innerHTML.trim() === '') {
+                 document.getElementById('variants-grid-container').innerHTML = `
+                    <div class="variant-item active" data-variant="ultimate">
+                        <div class="variant-item-info"><h4>Ultimate CVT</h4><p>Rp 315.900.000</p></div>
+                    </div>
+                    <div class="variant-item" data-variant="sport">
+                        <div class="variant-item-info"><h4>Sport CVT</h4><p>Rp 312.500.000</p></div>
+                    </div>`;
+            }
+
+            function loadDummyVariant(variantKey) {
+                const data = dummyCarData[variantKey];
+                if(!data) return;
+                priceDisp.textContent = data.price;
+                swatchesWrapper.innerHTML = '';
+                
+                data.colors.forEach((c, idx) => {
+                    const s = document.createElement('div');
+                    s.className = `color-swatch ${idx === 0 ? 'active' : ''}`;
+                    s.style.background = c.hex;
+                    s.addEventListener('click', () => {
+                        document.querySelectorAll('.color-swatch').forEach(x => x.classList.remove('active'));
+                        s.classList.add('active');
+                        mainImg.classList.add('fade-out');
+                        setTimeout(() => { mainImg.src = c.img; colorName.textContent = c.name; mainImg.classList.remove('fade-out'); }, 400); 
+                    });
+                    swatchesWrapper.appendChild(s);
+                });
+                mainImg.src = data.colors[0].img; colorName.textContent = data.colors[0].name;
+            }
+
+            document.querySelectorAll('.variant-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    document.querySelectorAll('.variant-item').forEach(v => v.classList.remove('active'));
+                    item.classList.add('active');
+                    loadDummyVariant(item.getAttribute('data-variant'));
+                });
+            });
+
+            loadDummyVariant('ultimate');
         }
 
-        galleryTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                galleryTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
+        function jalankanDummyGallery() {
+            const dummyGallery = {
+                Eksterior: [
+                    { img: "https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?q=80&w=1200", title: "Kaca Film V-Kool Premium", desc: "Dilengkapi dengan kaca film berkualitas tinggi yang menolak panas inframerah, menjaga kabin tetap sejuk." },
+                    { img: "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?q=80&w=1200", title: "T-Shape LED Headlight", desc: "Desain lampu depan ikonik T-Shape yang memberikan pencahayaan maksimal di malam hari." }
+                ],
+                Interior: [
+                    { img: "https://images.unsplash.com/photo-1616423641405-824ecf55d7ad?q=80&w=1200", title: "Kabin Luas dan Ergonomis", desc: "Desain interior dengan material soft-touch premium. Kenyamanan terbaik untuk 7 penumpang." }
+                ]
+            };
+
+            const tabsContainer = document.getElementById('gallery-tabs-container');
+            if(tabsContainer.innerHTML.trim() === '') {
+                 tabsContainer.innerHTML = `
+                    <button class="tab-btn active" data-tab="Eksterior">Eksterior</button>
+                    <button class="tab-btn" data-tab="Interior">Interior</button>
+                 `;
+            }
+            bindDynamicGallery(dummyGallery, 'Eksterior');
+        }
+
+        function bindDynamicGallery(dataObject, startCategory) {
+            const tabs = document.querySelectorAll('#gallery-tabs-container .tab-btn');
+            const imgEl = document.getElementById('gallery-main-img');
+            const titleEl = document.getElementById('gallery-title');
+            const descEl = document.getElementById('gallery-desc');
+            const btnP = document.getElementById('btn-prev');
+            const btnN = document.getElementById('btn-next');
+
+            let currentCat = startCategory;
+            let currentIdx = 0;
+
+            function render(fade = true) {
+                const data = dataObject[currentCat][currentIdx];
+                if(!data) return;
                 
-                currentCategory = tab.getAttribute('data-tab');
-                currentIndex = 0; 
-                renderGallery();
+                if(fade) {
+                    imgEl.classList.add('fade');
+                    setTimeout(() => {
+                        imgEl.src = data.img || '';
+                        titleEl.textContent = data.title;
+                        descEl.textContent = data.desc;
+                        imgEl.classList.remove('fade');
+                    }, 400);
+                } else {
+                    imgEl.src = data.img || '';
+                    titleEl.textContent = data.title;
+                    descEl.textContent = data.desc;
+                }
+            }
+
+            // Bersihkan event listener lama dengan cloneNode
+            const newBtnP = btnP.cloneNode(true); btnP.parentNode.replaceChild(newBtnP, btnP);
+            const newBtnN = btnN.cloneNode(true); btnN.parentNode.replaceChild(newBtnN, btnN);
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    currentCat = tab.getAttribute('data-tab');
+                    currentIdx = 0; 
+                    render();
+                });
             });
-        });
 
-        btnPrev.addEventListener('click', () => {
-            const categoryData = galleryData[currentCategory];
-            currentIndex = (currentIndex === 0) ? categoryData.length - 1 : currentIndex - 1;
-            renderGallery();
-        });
+            newBtnP.addEventListener('click', () => {
+                const catData = dataObject[currentCat];
+                currentIdx = (currentIdx === 0) ? catData.length - 1 : currentIdx - 1;
+                render();
+            });
 
-        btnNext.addEventListener('click', () => {
-            const categoryData = galleryData[currentCategory];
-            currentIndex = (currentIndex === categoryData.length - 1) ? 0 : currentIndex + 1;
-            renderGallery();
-        });
+            newBtnN.addEventListener('click', () => {
+                const catData = dataObject[currentCat];
+                currentIdx = (currentIdx === catData.length - 1) ? 0 : currentIdx + 1;
+                render();
+            });
 
-        renderGallery(false);
-        window.dispatchEvent(new Event('scroll'));
+            render(false);
+        }
+
+        // Jalankan global sync
+        loadGlobalData();
 
     </script>
 </body>
