@@ -79,17 +79,15 @@
         .btn-primary:hover { background: transparent; color: var(--color-accent) !important; }
 
         /* =========================================
-           MOBILE MENU & ANIMASI SIDEBAR (DIPERBAIKI)
+           MOBILE MENU & OVERLAY
            ========================================= */
         .menu-toggle { display: flex; flex-direction: column; gap: 5px; z-index: 1001; padding: 4px; }
         .menu-toggle span { display: block; width: 28px; height: 2px; background: var(--color-primary); transition: var(--transition-smooth); }
         .navbar.scrolled .menu-toggle span { background: var(--color-secondary); }
         
-        /* OVERLAY GELAP DAN BLUR (Z-INDEX 1004 menutupi Navbar) */
         .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 1004; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; }
         .menu-overlay.active { opacity: 1; visibility: visible; }
         
-        /* SIDEBAR PANEL (Z-INDEX 1005 paling atas) */
         .mobile-menu { position: fixed; top: 0; right: 0; width: 85%; max-width: 380px; height: 100vh; background: var(--color-primary); z-index: 1005; padding: 40px 32px 100px; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: -10px 0 40px rgba(0,0,0,0.3); overflow-y: auto; }
         .mobile-menu.active { transform: translateX(0); }
         
@@ -160,7 +158,7 @@
 
         .visualizer-price-box { margin: 0 auto 60px; padding: 24px 16px; max-width: 400px; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
         .visualizer-price-label { font-size: 0.85rem; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; font-weight: 500; }
-        .visualizer-price-value { font-size: 2rem; font-weight: 800; font-family: var(--font-heading); color: var(--color-accent); }
+        .visualizer-price-value { font-size: 2rem; font-weight: 800; font-family: var(--font-heading); color: var(--color-accent); transition: opacity 0.3s ease, transform 0.3s ease; }
 
         .variant-hint-mobile { display: none; font-size: 0.65rem; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; font-weight: 600; animation: slideHint 2s infinite ease-in-out; }
 
@@ -181,7 +179,6 @@
         .gallery-container { max-width: 1000px; margin: 0 auto; position: relative; background: var(--color-surface); border-radius: 24px; padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.05); }
         
         .swipe-hint { display: none; font-size: 0.7rem; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; font-weight: 600; animation: slideHint 2s infinite ease-in-out; }
-        @keyframes slideHint { 0%, 100% { transform: translateX(0); opacity: 0.5; } 50% { transform: translateX(8px); opacity: 1; } }
 
         .gallery-tabs { display: flex; justify-content: flex-start; gap: 32px; overflow-x: auto; scrollbar-width: none; border-bottom: 2px solid var(--color-border); margin-bottom: 32px; padding-bottom: 2px; scroll-snap-type: x mandatory; }
         .gallery-tabs::-webkit-scrollbar { display: none; }
@@ -206,7 +203,7 @@
         .bottom-action-buttons .btn-outline, .bottom-action-buttons .btn-fill { flex: 1; max-width: 250px; padding: 14px 24px; }
 
         /* =========================================
-           FOOTER (DIPERBAIKI)
+           FOOTER 
            ========================================= */
         .footer { background: #0A0A0A; color: var(--color-primary); padding: 80px 24px 40px; position: relative; z-index: 2; }
         .footer-container { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; max-width: 1200px; margin: 0 auto; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); }
@@ -302,9 +299,6 @@
             .bottom-action-buttons { flex-direction: row; gap: 10px; justify-content: center; margin-top: 24px; }
             .bottom-action-buttons .btn-outline, .bottom-action-buttons .btn-fill { padding: 12px 0; font-size: 0.7rem; }
 
-            /* =========================================
-               [DIKEMBALIKAN KE TENGAH/CENTER] FOOTER MOBILE 
-               ========================================= */
             .footer { padding: 60px 20px 100px; }
             .footer-container { grid-template-columns: 1fr; gap: 32px; text-align: center; } 
             .footer-brand .footer-logo { margin: 0 auto 16px; display: block; }
@@ -514,7 +508,7 @@
         <nav class="mobile-bottom-nav">
             <a href="harga.html" class="bottom-nav-item" aria-label="Daftar Harga"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.41l9 9c.36.36.86.59 1.41.59s1.05-.22 1.41-.59l7-7c.36-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg><span class="bottom-nav-label">Harga</span></a>
             <a href="#" id="bottom-nav-telp" class="bottom-nav-item" aria-label="Telepon Sales"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span class="bottom-nav-label">Telepon</span></a>
-            <a href="#" target="_blank" class="bottom-nav-item link-wa-global" aria-label="Chat WhatsApp"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span class="bottom-nav-label">WhatsApp</span></a>
+            <a href="#" target="_blank" class="bottom-nav-item link-wa-global" aria-label="Chat WhatsApp"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
         </nav>
 
     </main>
@@ -581,18 +575,16 @@
             messagingSenderId: "164638589744",
             appId: "1:164638589744:web:8470111cc7c41696887ef5"
         };
-        firebase.initializeApp(firebaseConfig);
+        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
         const db = firebase.database();
 
         // Mengambil ID mobil dari URL (contoh: detail.html?id=xpander)
         const urlParams = new URLSearchParams(window.location.search);
-        const currentMobilId = urlParams.get('id') || 'xpander'; // Default ke xpander jika URL kosong
+        const currentMobilId = urlParams.get('id') || 'xpander'; 
 
-        // Format Uang Rupiah
         const formatRupiah = (angka) => {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
         };
-
 
         // =========================================
         // SINKRONISASI DATA GLOBAL (Kontak & Alamat)
@@ -625,13 +617,11 @@
         }
 
         // =========================================
-        // SINKRONISASI DATA SPESIFIKASI MOBIL (DENGAN PROTEKSI DUMMY)
+        // SINKRONISASI DATA SPESIFIKASI MOBIL 
         // =========================================
 
-        // 1. HERO SPESIFIKASI
         db.ref(`spesifikasi/${currentMobilId}/hero`).on('value', snap => {
             const data = snap.val();
-            // Jika ada data di firebase, ganti tampilan. Jika kosong, biarkan HTML dummy jalan.
             if(data) {
                 if(data.bgUrl) document.getElementById('hero-spesifikasi-bg').src = data.bgUrl;
                 if(data.nama) document.getElementById('hero-spesifikasi-nama').textContent = data.nama;
@@ -639,14 +629,12 @@
             }
         });
 
-        // 2. FITUR UTAMA (5 ICON DEFAULT)
         db.ref(`spesifikasi/${currentMobilId}/icon_default`).on('value', snap => {
             const data = snap.val();
             if(data) {
                 const container = document.getElementById('hero-features-container');
                 const items = container.querySelectorAll('.feature-item');
                 
-                // Cek masing-masing icon. Jika diisi, tampilkan. Jika kosong, sembunyikan.
                 if(data.icon1) { items[0].style.display = 'flex'; items[0].querySelector('.feature-label').innerHTML = data.icon1; } else { items[0].style.display = 'none'; }
                 if(data.icon2) { items[1].style.display = 'flex'; items[1].querySelector('.feature-label').innerHTML = data.icon2; } else { items[1].style.display = 'none'; }
                 if(data.icon3) { items[2].style.display = 'flex'; items[2].querySelector('.feature-label').innerHTML = data.icon3; } else { items[2].style.display = 'none'; }
@@ -655,19 +643,31 @@
             }
         });
 
-        // 3. VARIAN & WARNA (SISTEM TERINTEGRASI)
+        // 3. VARIAN & WARNA (LOGIKA HARGA DINAMIS & TRANSISI)
         let currentBasePrice = "Rp 0";
+        let activeColorPrice = null; // Menyimpan harga khusus warna jika ada
         let isWarnaLoaded = false;
         let isVarianLoaded = false;
 
-        function checkVisualizerFallback() {
-            // Jika keduanya kosong dari Firebase, panggil dummy
-            if(!isWarnaLoaded && !isVarianLoaded) {
-                jalankanDummyVisualizer();
-            }
+        function updatePriceDisplay() {
+            const priceDisp = document.getElementById('car-price-display');
+            // Efek memudar dan turun (fade-out down)
+            priceDisp.style.opacity = '0';
+            priceDisp.style.transform = 'translateY(-10px)';
+            
+            setTimeout(() => {
+                // Jika warna yang dipilih punya harga khusus, pakai harga warna. Jika tidak, pakai harga varian dasar.
+                priceDisp.textContent = activeColorPrice ? formatRupiah(activeColorPrice) : currentBasePrice;
+                // Efek muncul kembali (fade-in up)
+                priceDisp.style.opacity = '1';
+                priceDisp.style.transform = 'translateY(0)';
+            }, 300);
         }
 
-        // Listener Varian dari Firebase
+        function checkVisualizerFallback() {
+            if(!isWarnaLoaded && !isVarianLoaded) { jalankanDummyVisualizer(); }
+        }
+
         db.ref(`spesifikasi/${currentMobilId}/varian`).on('value', snap => {
             if(snap.exists()) {
                 isVarianLoaded = true;
@@ -681,7 +681,6 @@
                     
                     const div = document.createElement('div');
                     div.className = `variant-item ${isFirst ? 'active' : ''}`;
-                    // Tampilan disesuaikan agar rapi walau tanpa gambar spesifik varian
                     div.innerHTML = `
                         <div class="variant-item-info" style="width:100%; text-align: left;">
                             <h4>${v.nama}</h4>
@@ -693,11 +692,7 @@
                         document.querySelectorAll('.variant-item').forEach(el => el.classList.remove('active'));
                         div.classList.add('active');
                         currentBasePrice = priceFormatted;
-                        document.getElementById('car-price-display').textContent = currentBasePrice;
-                        
-                        // Kembalikan ke warna default (pertama) jika ganti varian
-                        const firstColor = document.querySelector('.color-swatch');
-                        if(firstColor) firstColor.click();
+                        updatePriceDisplay();
                     });
 
                     container.appendChild(div);
@@ -708,12 +703,9 @@
                         isFirst = false;
                     }
                 });
-            } else {
-                checkVisualizerFallback();
-            }
+            } else { checkVisualizerFallback(); }
         });
 
-        // Listener Warna dari Firebase
         db.ref(`spesifikasi/${currentMobilId}/warna`).on('value', snap => {
             if(snap.exists()) {
                 isWarnaLoaded = true;
@@ -726,7 +718,7 @@
                     const div = document.createElement('div');
                     div.className = `color-swatch ${isFirst ? 'active' : ''}`;
                     div.style.backgroundImage = `url('${w.imgBulatUrl || ''}')`; 
-                    div.title = w.nama; // tooltip nama warna
+                    div.title = w.nama; 
                     
                     div.addEventListener('click', () => {
                         document.querySelectorAll('.color-swatch').forEach(el => el.classList.remove('active'));
@@ -734,37 +726,32 @@
                         
                         const imgEl = document.getElementById('car-main-img');
                         imgEl.classList.add('fade-out');
+                        
+                        // Set harga warna aktif (null jika kosong/sama dengan standar)
+                        activeColorPrice = (w.harga && Number(w.harga) > 0) ? w.harga : null;
+                        
                         setTimeout(() => {
                             if(w.imgMobilUrl) imgEl.src = w.imgMobilUrl;
                             document.getElementById('car-color-name').textContent = w.nama;
-                            
-                            // Logika override Harga Khusus
-                            if(w.harga && Number(w.harga) > 0) {
-                                document.getElementById('car-price-display').textContent = formatRupiah(w.harga);
-                            } else {
-                                document.getElementById('car-price-display').textContent = currentBasePrice;
-                            }
-                            
+                            updatePriceDisplay();
                             imgEl.classList.remove('fade-out');
                         }, 400);
                     });
 
                     container.appendChild(div);
 
-                    // Set default display pertama kali diload
                     if(isFirst) {
                         if(w.imgMobilUrl) document.getElementById('car-main-img').src = w.imgMobilUrl;
                         document.getElementById('car-color-name').textContent = w.nama;
+                        activeColorPrice = (w.harga && Number(w.harga) > 0) ? w.harga : null;
                         isFirst = false;
                     }
                 });
-            } else {
-                checkVisualizerFallback();
-            }
+            } else { checkVisualizerFallback(); }
         });
 
 
-        // 4. GALERI FITUR INTERAKTIF
+        // 4. GALERI FITUR INTERAKTIF (Dinamic Tabs Support "Keamanan")
         db.ref(`spesifikasi/${currentMobilId}/fitur`).on('value', snap => {
             if(snap.exists()) {
                 let dynamicGalleryData = {};
@@ -776,7 +763,6 @@
                     dynamicGalleryData[cat].push({ img: f.imgUrl, title: f.judul, desc: f.deskripsi });
                 });
 
-                // Re-render Tabs
                 const tabsContainer = document.getElementById('gallery-tabs-container');
                 tabsContainer.innerHTML = '';
                 let firstCat = null;
@@ -796,10 +782,7 @@
                     bindDynamicGallery(dynamicGalleryData, firstCat);
                 }
 
-            } else {
-                // JALANKAN DUMMY GALLERY
-                jalankanDummyGallery();
-            }
+            } else { jalankanDummyGallery(); }
         });
 
 
@@ -809,47 +792,32 @@
 
         function jalankanDummyVisualizer() {
             const dummyCarData = {
-                "ultimate": {
-                    price: "Rp 315.900.000",
-                    colors: [
-                        { name: "Quartz White Pearl", hex: "#EBEBEB", img: "https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=1000" },
-                        { name: "Jet Black Mica", hex: "#1A1A1A", img: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?q=80&w=1000" },
-                        { name: "Blade Silver Metallic", hex: "#A0A0A0", img: "https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?q=80&w=1000" }
-                    ]
-                },
-                "sport": {
-                    price: "Rp 312.500.000",
-                    colors: [
-                        { name: "Graphite Gray", hex: "#2B3A42", img: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=1000" },
-                        { name: "Quartz White Pearl", hex: "#EBEBEB", img: "https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=1000" }
-                    ]
-                }
+                "ultimate": { price: "Rp 315.900.000" },
+                "sport": { price: "Rp 312.500.000" }
             };
 
-            const variantItems = document.querySelectorAll('.variant-item');
+            const dummyColors = [
+                { name: "Quartz White Pearl", hex: "#EBEBEB", img: "https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=1000" },
+                { name: "Jet Black Mica", hex: "#1A1A1A", img: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?q=80&w=1000" }
+            ];
+
             const swatchesWrapper = document.getElementById('color-swatches-wrapper');
             const mainImg = document.getElementById('car-main-img');
             const colorName = document.getElementById('car-color-name');
             const priceDisp = document.getElementById('car-price-display');
 
-            // Jika div belum diisi template dummy HTML
             if(document.getElementById('variants-grid-container').innerHTML.trim() === '') {
                  document.getElementById('variants-grid-container').innerHTML = `
                     <div class="variant-item active" data-variant="ultimate">
-                        <div class="variant-item-info"><h4>Ultimate CVT</h4><p>Rp 315.900.000</p></div>
+                        <div class="variant-item-info" style="width:100%; text-align: left;"><h4>Ultimate CVT</h4><p style="color: var(--color-accent);">Rp 315.900.000</p></div>
                     </div>
                     <div class="variant-item" data-variant="sport">
-                        <div class="variant-item-info"><h4>Sport CVT</h4><p>Rp 312.500.000</p></div>
+                        <div class="variant-item-info" style="width:100%; text-align: left;"><h4>Sport CVT</h4><p style="color: var(--color-accent);">Rp 312.500.000</p></div>
                     </div>`;
             }
 
-            function loadDummyVariant(variantKey) {
-                const data = dummyCarData[variantKey];
-                if(!data) return;
-                priceDisp.textContent = data.price;
-                swatchesWrapper.innerHTML = '';
-                
-                data.colors.forEach((c, idx) => {
+            if(swatchesWrapper.innerHTML.trim() === '') {
+                dummyColors.forEach((c, idx) => {
                     const s = document.createElement('div');
                     s.className = `color-swatch ${idx === 0 ? 'active' : ''}`;
                     s.style.background = c.hex;
@@ -861,18 +829,25 @@
                     });
                     swatchesWrapper.appendChild(s);
                 });
-                mainImg.src = data.colors[0].img; colorName.textContent = data.colors[0].name;
+                mainImg.src = dummyColors[0].img; 
+                colorName.textContent = dummyColors[0].name;
             }
 
             document.querySelectorAll('.variant-item').forEach(item => {
                 item.addEventListener('click', () => {
                     document.querySelectorAll('.variant-item').forEach(v => v.classList.remove('active'));
                     item.classList.add('active');
-                    loadDummyVariant(item.getAttribute('data-variant'));
+                    
+                    const varKey = item.getAttribute('data-variant');
+                    priceDisp.style.opacity = '0';
+                    priceDisp.style.transform = 'translateY(-10px)';
+                    setTimeout(() => {
+                        priceDisp.textContent = dummyCarData[varKey].price;
+                        priceDisp.style.opacity = '1';
+                        priceDisp.style.transform = 'translateY(0)';
+                    }, 300);
                 });
             });
-
-            loadDummyVariant('ultimate');
         }
 
         function jalankanDummyGallery() {
@@ -883,6 +858,9 @@
                 ],
                 Interior: [
                     { img: "https://images.unsplash.com/photo-1616423641405-824ecf55d7ad?q=80&w=1200", title: "Kabin Luas dan Ergonomis", desc: "Desain interior dengan material soft-touch premium. Kenyamanan terbaik untuk 7 penumpang." }
+                ],
+                Keamanan: [
+                    { img: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?q=80&w=1200", title: "Teknologi Diamond Sense", desc: "Sistem sensor cerdas yang mendeteksi kendaraan di sekitar, otomatis melakukan pengereman darurat." }
                 ]
             };
 
@@ -891,6 +869,7 @@
                  tabsContainer.innerHTML = `
                     <button class="tab-btn active" data-tab="Eksterior">Eksterior</button>
                     <button class="tab-btn" data-tab="Interior">Interior</button>
+                    <button class="tab-btn" data-tab="Keamanan">Keamanan</button>
                  `;
             }
             bindDynamicGallery(dummyGallery, 'Eksterior');
@@ -926,7 +905,6 @@
                 }
             }
 
-            // Bersihkan event listener lama dengan cloneNode
             const newBtnP = btnP.cloneNode(true); btnP.parentNode.replaceChild(newBtnP, btnP);
             const newBtnN = btnN.cloneNode(true); btnN.parentNode.replaceChild(newBtnN, btnN);
 
@@ -955,7 +933,6 @@
             render(false);
         }
 
-        // Jalankan global sync
         loadGlobalData();
 
     </script>
