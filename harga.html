@@ -11,6 +11,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
 
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
     <style>
         /* =========================================
            CSS VARIABLES & GLOBALS
@@ -285,19 +288,19 @@
     <main class="app-wrapper">
 
         <section class="price-hero">
-            <img src="https://i.ibb.co.com/7d3vCpYk/IMG-3322.jpg" alt="Mitsubishi Price List" class="price-hero-bg">
+            <img src="https://i.ibb.co.com/7d3vCpYk/IMG-3322.jpg" alt="Mitsubishi Price List" class="price-hero-bg" id="harga-hero-bg">
             <div class="price-hero-overlay"></div>
             
             <div class="price-hero-content reveal-up">
-                <span class="price-hero-subtitle">Update Terbaru 2026</span>
-                <h1 class="price-hero-title">Daftar Harga</h1>
+                <span class="price-hero-subtitle" id="harga-hero-subtitle">Update Terbaru 2026</span>
+                <h1 class="price-hero-title" id="harga-hero-title">Daftar Harga</h1>
             </div>
         </section>
 
         <section class="price-main">
             <div class="price-container">
                 
-                <div class="price-grid">
+                <div class="price-grid" id="price-grid-container">
                     
                     <div class="price-card reveal-up delay-1">
                         <div class="price-img-wrapper">
@@ -411,14 +414,16 @@
                         </div>
                     </div>
 
-                </div> <div class="bottom-nav-action-wrapper reveal-up delay-1">
+                </div> 
+                
+                <div class="bottom-nav-action-wrapper reveal-up delay-1">
                     <a href="index.html" class="btn-outline">Kembali</a>
                     <a href="katalog.html" class="btn-fill">Lihat Menu Mobil</a>
                 </div>
 
             </div>
         </section>
-
+    </main>
         <footer class="footer" id="kontak">
             <div class="footer-container reveal-up delay-1">
                 <div class="footer-brand">
@@ -449,7 +454,7 @@
                 </div>
                 <div class="footer-contact">
                     <h4>Kontak Kami</h4>
-                    <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Jl. Raden Patah, Lubuk Baja, Kota Batam, Kepulauan Riau</p>
+                    <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5-2.5-1.12 2.5-2.5 2.5z"/></svg> Jl. Raden Patah, Lubuk Baja, Kota Batam, Kepulauan Riau</p>
                     <p><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> +62 812-3456-7890</p>
                 </div>
             </div>
@@ -462,13 +467,11 @@
         <nav class="mobile-bottom-nav">
             <a href="katalog.html" class="bottom-nav-item active" aria-label="Daftar Harga"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.41l9 9c.36.36.86.59 1.41.59s1.05-.22 1.41-.59l7-7c.36-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg><span class="bottom-nav-label">Harga</span></a>
             <a href="tel:+6281234567890" class="bottom-nav-item" aria-label="Telepon Sales"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span class="bottom-nav-label">Telepon</span></a>
-            <a href="https://wa.me/628123456789" target="_blank" class="bottom-nav-item" aria-label="Chat WhatsApp"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span class="bottom-nav-label">WhatsApp</span></a>
+            <a href="https://wa.me/628123456789" target="_blank" class="bottom-nav-item" aria-label="Chat WhatsApp"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
         </nav>
 
-    </main>
-
     <script>
-        // --- PRELOADER & NAVBAR SCROLL ---
+        // --- UX MENU MOBILE & PRELOADER ---
         window.addEventListener('load', () => setTimeout(() => document.getElementById('preloader').classList.add('hide'), 1000));
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
@@ -476,7 +479,6 @@
             else navbar.classList.remove('scrolled');
         });
 
-        // --- UX MENU MOBILE (SIDEBAR & OVERLAY) ---
         const menuBtn = document.getElementById('mobile-menu-btn');
         const closeBtn = document.getElementById('close-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -486,7 +488,6 @@
             const isOpen = mobileMenu.classList.contains('active');
             mobileMenu.classList.toggle('active');
             menuOverlay.classList.toggle('active');
-            // Kunci scroll layar utama saat menu terbuka
             document.body.style.overflow = isOpen ? 'auto' : 'hidden'; 
         }
         
@@ -494,7 +495,126 @@
         closeBtn.addEventListener('click', toggleMenu);
         menuOverlay.addEventListener('click', toggleMenu);
 
-        // --- REVEAL ANIMASI (SCROLL TRIGGER) ---
+        // --- 1. INISIALISASI FIREBASE ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyBrNnp8PJiKYATH-1ie67aq9WqESpIXBus",
+            authDomain: "landing-page-alex.firebaseapp.com",
+            databaseURL: "https://landing-page-alex-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "landing-page-alex",
+            storageBucket: "landing-page-alex.firebasestorage.app",
+            messagingSenderId: "164638589744",
+            appId: "1:164638589744:web:8470111cc7c41696887ef5"
+        };
+
+        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+        const db = firebase.database();
+
+        // FUNGSI KONVERSI RUPIAH OTOMATIS
+        function formatRupiah(angka) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka).replace('Rp', 'Rp ');
+        }
+
+        // --- 2. SINKRONISASI DATA DARI DATABASE ---
+        
+        // A. Sinkronisasi Hero Daftar Harga
+        db.ref('halaman/harga/hero').on('value', snap => {
+            if(snap.exists()) {
+                const data = snap.val();
+                if(data.teks_atas) document.getElementById('harga-hero-title').innerText = data.teks_atas;
+                if(data.teks_bawah) document.getElementById('harga-hero-subtitle').innerText = data.teks_bawah;
+                if(data.bgUrl) document.getElementById('harga-hero-bg').src = data.bgUrl;
+            }
+        });
+
+        // B. Sinkronisasi Grid Kartu Harga (Perpaduan 3 Data: Katalog, Spesifikasi, Visual Harga)
+        db.ref('spesifikasi').on('value', async (snap) => {
+            if(snap.exists()) {
+                const container = document.getElementById('price-grid-container');
+                let htmlContent = '';
+                
+                const spesifikasiData = snap.val();
+                
+                for (const mobilId in spesifikasiData) {
+                    const spec = spesifikasiData[mobilId];
+                    // Skip jika mobil ini belum diisikan data varian harga
+                    if (!spec.varian) continue; 
+
+                    // 1. Ambil nama asli dari Katalog Mobil
+                    const katalogSnap = await db.ref(`katalog_mobil/${mobilId}`).once('value');
+                    const katalogData = katalogSnap.val() || {};
+                    const defaultName = katalogData.nama_mobil || 'Kendaraan Mitsubishi';
+
+                    // 2. Ambil pengaturan visual dari panel Visual Harga
+                    const visualSnap = await db.ref(`visual_harga/${mobilId}`).once('value');
+                    const visualData = visualSnap.val() || {};
+                    
+                    // Prioritas Foto Mobil Transparan: (1) Visual Harga, (2) Katalog, (3) Dummy
+                    const imgMobil = visualData.imgMobilUrl || katalogData.imgUrl || 'https://images.unsplash.com/photo-1632823471565-3cefedebef26?q=80&w=800&auto=format&fit=crop';
+
+                    // Tentukan Format Judul Kartu (Teks Biasa vs Logo Gambar)
+                    let titleHtml = '';
+                    if (visualData.format_nama === 'logo' && visualData.logoUrl) {
+                        titleHtml = `<img src="${visualData.logoUrl}" alt="Logo ${defaultName}" style="max-height: 40px; object-fit: contain; margin: 0 auto 24px; display: block;">`;
+                    } else {
+                        const teksName = visualData.teks_nama || defaultName;
+                        titleHtml = `<h2 class="price-car-name">${teksName}</h2>`;
+                    }
+
+                    // 3. Susun List HTML untuk Varian & Harga
+                    let varianHtml = '';
+                    const varians = spec.varian;
+                    for (const varId in varians) {
+                        const v = varians[varId];
+                        varianHtml += `
+                        <li class="price-list-item">
+                            <span class="variant-name">${v.nama}</span>
+                            <span class="variant-price">${formatRupiah(v.harga)}</span>
+                        </li>`;
+                    }
+
+                    // 4. Bangun Template Kartu Utuh
+                    htmlContent += `
+                    <div class="price-card reveal-up active" style="opacity:1; transform:translateY(0);">
+                        <div class="price-img-wrapper">
+                            <img src="${imgMobil}" alt="${defaultName}" class="price-img">
+                        </div>
+                        <div class="price-body">
+                            ${titleHtml}
+                            <ul class="price-list">
+                                ${varianHtml}
+                            </ul>
+                            <div class="card-actions">
+                                <a href="detail.html?id=${mobilId}" class="btn-card btn-card-full">Spesifikasi Selengkapnya</a>
+                                <a href="katalog.html" class="btn-card btn-card-outline">Katalog Mobil Lainnya</a>
+                                <a href="https://wa.me/628123456789?text=Halo%20Mitsubishi%20Batam,%20saya%20tertarik%20dengan%20mobil%20${encodeURIComponent(defaultName)}%20tolong%20infonya%20lebih%20lanjut" target="_blank" class="btn-card btn-card-primary">Pesan Sekarang</a>
+                            </div>
+                        </div>
+                    </div>`;
+                }
+                
+                // Jika ada data varian yang berhasil dirender, hapus Xpander dummy dan timpa dengan data asli
+                if(htmlContent !== '') {
+                    container.innerHTML = htmlContent;
+                }
+            }
+        });
+        
+        // C. Sinkronisasi Alamat Global (Footer)
+        db.ref('global_data/alamat').on('value', snap => {
+            if(snap.exists()) {
+                const data = snap.val();
+                const footerContact = document.querySelector('.footer-contact');
+                if (footerContact && data.teks_alamat) {
+                    footerContact.innerHTML = `
+                        <h4>Kontak Kami</h4>
+                        <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5-2.5-1.12 2.5-2.5 2.5z"/></svg> ${data.teks_alamat}</p>
+                        <p><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> +62 812-3456-7890</p>
+                    `;
+                }
+            }
+        });
+
+        // --- Trigger Animasi Reveal Awal ---
         const revealElements = document.querySelectorAll('.reveal-up');
         const revealObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
