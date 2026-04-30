@@ -160,6 +160,7 @@
                 <a class="nav-item" onclick="switchPanel('panel-harga', this, 'Manajemen Daftar Harga')">Daftar Harga</a>
                 <a class="nav-item" onclick="switchPanel('panel-biodata', this, 'Manajemen Biodata Sales')">Biodata Sales</a>
                 <a class="nav-item" onclick="switchPanel('panel-layanan', this, 'Layanan Purna Jual')">Layanan Purna Jual</a>
+                <a class="nav-item" onclick="switchPanel('panel-testimoni', this, 'Gallery Testimoni')">Gallery Testimoni</a>
             </nav>
             
             <div class="sidebar-footer">
@@ -181,7 +182,7 @@
                     <div class="section-card">
                         <h3 class="section-title">Informasi Sistem</h3>
                         <p class="alur-text">
-                            Silakan pilih menu di sebelah kiri untuk mengatur konten Website Anda. (Landing Page, Berita & Acara, Katalog Kendaraan, Spesifikasi & Harga, Daftar Harga, Biodata Sales, atau Layanan Purna Jual).
+                            Silakan pilih menu di sebelah kiri untuk mengatur konten Website Anda. (Landing Page, Berita & Acara, Katalog Kendaraan, Spesifikasi & Harga, Daftar Harga, Biodata Sales, Layanan Purna Jual, atau Gallery Testimoni).
                         </p>
                     </div>
                 </div>
@@ -813,7 +814,7 @@
                             </div>
 
                             <div class="input-group form-full" id="container-visual-logo" style="display: none;">
-                                <label>GAMBAR LOGO NAMA MOBIL</label>
+                                <label>GAMGAMBAR LOGO NAMA MOBIL</label>
                                 <div class="file-upload-wrapper" style="height: 100px;">
                                     <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
                                     <span class="file-upload-text">Ketuk untuk Pilih Logo</span>
@@ -1111,6 +1112,90 @@
                             <button class="btn-delete" id="btn-delete-fitur-lain" style="display:none;">Hapus Fitur (Default)</button>
                             <button class="btn-add" id="btn-edit-fitur-lain" style="display:none;">Edit Fitur</button>
                             <button class="btn-save" id="btn-save-fitur-lain">Simpan Semua Fitur</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="panel-testimoni" class="data-panel">
+                    
+                    <div class="section-card">
+                        <div class="section-header"><h3 class="section-title">1. HERO TESTIMONI</h3></div>
+                        <div class="form-grid">
+                            <div class="input-group form-full">
+                                <label>FOTO BACKGROUND</label>
+                                <div class="file-upload-wrapper">
+                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
+                                    <span class="file-upload-text">Ketuk untuk Pilih Foto Latar</span>
+                                    <input type="file" id="testimoni-hero-file" accept=".png, .jpg, .jpeg, .webp">
+                                </div>
+                            </div>
+                            <div class="input-group form-full">
+                                <label>TULISAN ATAS</label>
+                                <input type="text" id="testimoni-hero-teks-atas" class="input-control" placeholder="Contoh: GALLERY TESTIMONI">
+                            </div>
+                            <div class="input-group form-full">
+                                <label>TULISAN BAWAH</label>
+                                <textarea id="testimoni-hero-teks-bawah" class="input-control" rows="2" placeholder="Contoh: Lihat apa kata mereka yang sudah membuktikan pelayanan terbaik kami."></textarea>
+                            </div>
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn-delete" id="btn-delete-hero-testimoni" style="display:none;">Hapus Hero (Default)</button>
+                            <button class="btn-save" id="btn-save-hero-testimoni">Simpan Hero</button>
+                        </div>
+                    </div>
+
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h3 class="section-title">2. KARTU TESTIMONI PELANGGAN</h3>
+                            <button class="btn-add" onclick="bukaFormTestimoni()">+ Tambah Testimoni</button>
+                        </div>
+                        <p class="alur-text">Tambahkan ulasan pelanggan yang sudah melakukan pembelian. Data yang disimpan akan langsung tampil di halaman testimoni dan beranda secara berurutan tanpa menumpuk.</p>
+                        
+                        <div class="list-manager" id="list-testimoni-container" style="margin-bottom: 16px;"></div>
+
+                        <div class="form-grid" id="form-testimoni-container" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; border: 1px solid var(--color-border); display: none;">
+                            <input type="hidden" id="testimoni-edit-id">
+                            
+                            <div class="input-group form-full">
+                                <label>FOTO PENYERAHAN KENDARAAN</label>
+                                <div class="file-upload-wrapper">
+                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
+                                    <span class="file-upload-text">Ketuk untuk Pilih Foto Penyerahan</span>
+                                    <input type="file" id="testimoni-foto" accept=".png, .jpg, .jpeg, .webp">
+                                </div>
+                            </div>
+
+                            <div class="input-group form-full">
+                                <label>RATING BINTANG</label>
+                                <select id="testimoni-rating" class="input-control" style="cursor: pointer;">
+                                    <option value="5">5 Bintang (⭐⭐⭐⭐⭐)</option>
+                                    <option value="4">4 Bintang (⭐⭐⭐⭐)</option>
+                                    <option value="3">3 Bintang (⭐⭐⭐)</option>
+                                    <option value="2">2 Bintang (⭐⭐)</option>
+                                    <option value="1">1 Bintang (⭐)</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group form-full">
+                                <label>TULISAN ATAS (KOMENTAR/ISI)</label>
+                                <textarea id="testimoni-komentar" class="input-control" rows="3" placeholder="Contoh: Pelayanan sangat memuaskan, proses cepat dan dibantu sampai tuntas!"></textarea>
+                            </div>
+
+                            <div class="input-group">
+                                <label>TULISAN TENGAH (NAMA)</label>
+                                <input type="text" id="testimoni-nama" class="input-control" placeholder="Contoh: Bpk. Budi Santoso">
+                            </div>
+
+                            <div class="input-group">
+                                <label>TULISAN BAWAH (UNIT MOBIL)</label>
+                                <input type="text" id="testimoni-unit" class="input-control" placeholder="contoh : temukan penawaran terbaik...">
+                            </div>
+
+                            <div class="action-bar form-full">
+                                <button class="btn-delete" onclick="document.getElementById('form-testimoni-container').style.display='none'">Batal</button>
+                                <button class="btn-save" id="btn-simpan-testimoni">Publish Testimoni</button>
+                            </div>
                         </div>
                     </div>
 
@@ -1422,6 +1507,19 @@
                     document.getElementById('btn-edit-fitur-lain').style.display = 'inline-block';
                 }
             });
+
+            // [H] Data Gallery Testimoni (BARU)
+            db.ref('halaman/testimoni/hero').once('value', snap => {
+                if(snap.val()) {
+                    document.getElementById('testimoni-hero-teks-atas').value = snap.val().teks_atas || '';
+                    document.getElementById('testimoni-hero-teks-bawah').value = snap.val().teks_bawah || '';
+                    if(snap.val().bgUrl) {
+                        document.querySelector('#testimoni-hero-file').parentElement.style.backgroundImage = `url('${snap.val().bgUrl}')`;
+                        document.getElementById('btn-delete-hero-testimoni').style.display = 'inline-block';
+                    }
+                }
+            });
+            listenTestimoni();
         }
 
         // --- 5A. LISTENER LANDING PAGE ---
@@ -1883,6 +1981,60 @@
             }
         };
 
+        // --- 5F. LISTENER MENU GALLERY TESTIMONI (BARU) ---
+        function listenTestimoni() {
+            db.ref('testimoni_list').on('value', (snap) => {
+                const list = document.getElementById('list-testimoni-container'); if(!list) return; list.innerHTML = '';
+                snap.forEach(child => {
+                    const data = child.val();
+                    list.innerHTML += `
+                    <div class="list-item">
+                        <span class="list-item-text"><b>${data.nama || 'Tanpa Nama'}</b> - ${data.unit || 'Unit'}</span>
+                        <div>
+                            <button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="editTestimoni('${child.key}')">Edit</button> 
+                            <button class="btn-delete" style="padding: 4px 10px; font-size:0.75rem;" onclick="hapusTestimoni('${child.key}', '${data.imgId}')">Hapus</button>
+                        </div>
+                    </div>`;
+                });
+            });
+        }
+        window.bukaFormTestimoni = function() { 
+            document.getElementById('form-testimoni-container').style.display = 'grid'; 
+            document.getElementById('testimoni-edit-id').value = ''; 
+            document.getElementById('testimoni-foto').value = ''; 
+            document.querySelector('#form-testimoni-container .file-upload-wrapper').style.backgroundImage = 'none'; 
+            document.querySelector('#form-testimoni-container .file-upload-text').innerText = 'Ketuk untuk Pilih Foto Penyerahan'; 
+            document.getElementById('testimoni-rating').value = '5'; 
+            document.getElementById('testimoni-komentar').value = ''; 
+            document.getElementById('testimoni-nama').value = ''; 
+            document.getElementById('testimoni-unit').value = ''; 
+            document.querySelector('.main-content').scrollTop = document.getElementById('form-testimoni-container').offsetTop;
+        };
+        window.editTestimoni = function(key) { 
+            db.ref('testimoni_list/' + key).once('value', snap => { 
+                const data = snap.val(); 
+                document.getElementById('form-testimoni-container').style.display = 'grid'; 
+                document.getElementById('testimoni-edit-id').value = key; 
+                document.getElementById('testimoni-rating').value = data.rating || '5'; 
+                document.getElementById('testimoni-komentar').value = data.komentar || ''; 
+                document.getElementById('testimoni-nama').value = data.nama || ''; 
+                document.getElementById('testimoni-unit').value = data.unit || ''; 
+                if(data.imgUrl) { 
+                    const wrapper = document.querySelector('#form-testimoni-container .file-upload-wrapper'); 
+                    wrapper.style.backgroundImage = `url('${data.imgUrl}')`; 
+                    wrapper.querySelector('.file-upload-text').innerText = 'Foto Tersimpan (Ketuk ganti)'; 
+                } 
+                document.querySelector('.main-content').scrollTop = document.getElementById('form-testimoni-container').offsetTop; 
+            }); 
+        };
+        window.hapusTestimoni = async function(key, imgId) { 
+            if(confirm("Hapus testimoni ini dari gallery?")) { 
+                if(imgId && imgId !== 'undefined') await deleteMedia(imgId); 
+                await db.ref('testimoni_list/' + key).remove(); 
+                showToast("Testimoni dihapus!", "success"); 
+            } 
+        };
+
 
         /* =========================================
            6. EKSEKUSI TOMBOL GLOBAL (SIMPAN DATA)
@@ -2070,7 +2222,7 @@
                 showToast("Dibatalkan, data form telah direfresh.", "info");
             });
 
-            // --- EKSEKUSI LAYANAN PURNA JUAL (BARU) ---
+            // --- EKSEKUSI LAYANAN PURNA JUAL ---
             
             // 1. Hero Layanan
             document.getElementById('btn-save-hero-layanan').addEventListener('click', async () => {
@@ -2258,6 +2410,84 @@
 
             document.getElementById('btn-edit-fitur-lain').addEventListener('click', () => {
                 showToast("Fitur siap diedit. Silakan ubah data pada form dan tekan 'Simpan Semua Fitur'.", "info");
+            });
+
+            // --- EKSEKUSI MENU GALLERY TESTIMONI (BARU) ---
+
+            // 1. Simpan Hero Testimoni
+            document.getElementById('btn-save-hero-testimoni').addEventListener('click', async () => {
+                const btn = document.getElementById('btn-save-hero-testimoni'); btn.innerText = "Menyimpan..."; btn.disabled = true;
+                try {
+                    let obj = { 
+                        teks_atas: document.getElementById('testimoni-hero-teks-atas').value.trim(), 
+                        teks_bawah: document.getElementById('testimoni-hero-teks-bawah').value.trim() 
+                    };
+                    const file = document.getElementById('testimoni-hero-file').files[0];
+                    if (file) {
+                        const media = await uploadMedia(file);
+                        if (media) {
+                            obj.bgUrl = media.url; obj.bgId = media.fileId;
+                            const snap = await db.ref('halaman/testimoni/hero/bgId').once('value');
+                            if(snap.val()) await deleteMedia(snap.val());
+                        }
+                    }
+                    await db.ref('halaman/testimoni/hero').update(obj); 
+                    document.getElementById('btn-delete-hero-testimoni').style.display = 'inline-block';
+                    showToast("Hero Testimoni diperbarui!", "success");
+                } catch (err) { showToast("Error menyimpan hero.", "error"); }
+                finally { btn.innerText = "Simpan Hero"; btn.disabled = false; }
+            });
+
+            // 2. Hapus Hero Testimoni
+            document.getElementById('btn-delete-hero-testimoni').addEventListener('click', async () => {
+                if(confirm("Yakin hapus Hero Testimoni?")) {
+                    const btn = document.getElementById('btn-delete-hero-testimoni'); btn.innerText = "Menghapus..."; btn.disabled = true;
+                    try {
+                        const snap = await db.ref('halaman/testimoni/hero/bgId').once('value');
+                        if(snap.val()) await deleteMedia(snap.val());
+                        await db.ref('halaman/testimoni/hero').remove(); showToast("Hero dihapus.", "success");
+                        document.getElementById('testimoni-hero-teks-atas').value = ""; document.getElementById('testimoni-hero-teks-bawah').value = ""; document.querySelector('#testimoni-hero-file').parentElement.style.backgroundImage = 'none';
+                        btn.style.display = 'none';
+                    } catch(err) { showToast("Gagal hapus", "error"); }
+                    finally { btn.innerText = "Hapus Hero (Default)"; btn.disabled = false; }
+                }
+            });
+
+            // 3. Publish & Edit Testimoni Pelanggan
+            document.getElementById('btn-simpan-testimoni').addEventListener('click', async () => {
+                const btn = document.getElementById('btn-simpan-testimoni'); btn.innerText = "Menyimpan..."; btn.disabled = true;
+                try {
+                    const editId = document.getElementById('testimoni-edit-id').value;
+                    let obj = { 
+                        rating: document.getElementById('testimoni-rating').value, 
+                        komentar: document.getElementById('testimoni-komentar').value.trim(), 
+                        nama: document.getElementById('testimoni-nama').value.trim(), 
+                        unit: document.getElementById('testimoni-unit').value.trim(), 
+                        timestamp: firebase.database.ServerValue.TIMESTAMP 
+                    };
+
+                    const file = document.getElementById('testimoni-foto').files[0];
+                    if (file) {
+                        const media = await uploadMedia(file);
+                        if (media) {
+                            obj.imgUrl = media.url; obj.imgId = media.fileId;
+                            if(editId) {
+                                const snap = await db.ref('testimoni_list/' + editId + '/imgId').once('value');
+                                if(snap.val()) await deleteMedia(snap.val());
+                            }
+                        }
+                    }
+
+                    if(editId) { 
+                        await db.ref('testimoni_list/' + editId).update(obj); 
+                        showToast("Testimoni diupdate!", "success"); 
+                    } else { 
+                        await db.ref('testimoni_list').push(obj); 
+                        showToast("Testimoni dipublish!", "success"); 
+                    }
+                    document.getElementById('form-testimoni-container').style.display = 'none';
+                } catch(err) { showToast("Gagal menyimpan.", "error"); }
+                finally { btn.innerText = "Publish Testimoni"; btn.disabled = false; }
             });
 
         });
