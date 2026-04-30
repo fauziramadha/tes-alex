@@ -9,7 +9,10 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
     <style>
         /* =========================================
@@ -56,7 +59,7 @@
         @keyframes pulseGlow { 0% { transform: scale(0.95); opacity: 0.8; } 100% { transform: scale(1.05); opacity: 1; } }
 
         /* =========================================
-           NAVBAR (IDENTIK INDEX)
+           NAVBAR
            ========================================= */
         .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 24px 0; z-index: 1000; transition: var(--transition-smooth); background: transparent; }
         .navbar.scrolled { padding: 16px 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); }
@@ -76,7 +79,7 @@
         .btn-primary:hover { background: transparent; color: var(--color-accent) !important; }
 
         /* =========================================
-           MOBILE MENU & OVERLAY (IDENTIK INDEX)
+           MOBILE MENU & OVERLAY
            ========================================= */
         .menu-toggle { display: flex; flex-direction: column; gap: 5px; z-index: 1001; padding: 4px; }
         .menu-toggle span { display: block; width: 28px; height: 2px; background: var(--color-primary); transition: var(--transition-smooth); }
@@ -102,26 +105,24 @@
         .btn-fill:hover { background: transparent; color: var(--color-accent); box-shadow: none; }
 
         /* =========================================
-           HERO TESTIMONI (DIPERBAIKI)
+           HERO TESTIMONI
            ========================================= */
         .testi-hero { position: relative; width: 100%; height: 50vh; min-height: 400px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #000; text-align: center; }
         .testi-hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; filter: contrast(1.2); }
         .testi-hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%); }
         .testi-hero-content { position: relative; z-index: 5; padding: 0 24px; width: 100%; }
         
-        /* Ukuran font diperkecil secara keseluruhan */
         .testi-hero-title { font-size: clamp(1.8rem, 4vw, 3.5rem); font-family: var(--font-heading); font-weight: 800; color: #FFF; text-transform: uppercase; letter-spacing: 1px; line-height: 1.2; margin-bottom: 16px; word-wrap: break-word; }
         .testi-hero-subtitle { font-size: 1rem; color: var(--color-accent); font-weight: 800; text-transform: uppercase; letter-spacing: 5px; display: block; margin-bottom: 12px; }
 
         /* =========================================
-           TESTIMONI GALLERY GRID (AUTENTIK)
+           TESTIMONI GALLERY GRID
            ========================================= */
         .testi-main { padding: 100px 24px; background: var(--color-surface); }
         .testi-container { max-width: 1200px; margin: 0 auto; }
         
         .testi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 40px; }
         
-        /* Desain Kartu Autentik: Foto Besar di Atas */
         .testi-card { background: var(--color-primary); border-radius: 24px; overflow: hidden; border: 1px solid var(--color-border); box-shadow: var(--shadow-premium); transition: var(--transition-smooth); display: flex; flex-direction: column; }
         .testi-card:hover { transform: translateY(-12px); box-shadow: var(--shadow-hover); border-color: rgba(230,0,0,0.1); }
         
@@ -137,7 +138,6 @@
 
         .testi-text { font-size: 1.05rem; color: #444; line-height: 1.8; font-style: italic; margin-bottom: 24px; flex-grow: 1; position: relative; z-index: 2; }
         
-        /* Tanda Kutip Background Halus */
         .testi-body::before { content: '"'; position: absolute; top: 10px; right: 24px; font-family: var(--font-heading); font-size: 8rem; color: var(--color-border); opacity: 0.3; line-height: 1; z-index: 1; transition: var(--transition-smooth); }
         .testi-card:hover .testi-body::before { color: var(--color-accent); opacity: 0.1; transform: translateY(-10px); }
         
@@ -157,7 +157,7 @@
         .delay-2 { transition-delay: 0.2s; }
 
         /* =========================================
-           FOOTER (DIKEMBALIKAN 100% SEPERTI ASLI)
+           FOOTER
            ========================================= */
         .footer { background: #0A0A0A; color: var(--color-primary); padding: 80px 24px 40px; position: relative; z-index: 2; }
         .footer-container { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; max-width: 1200px; margin: 0 auto; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); }
@@ -182,7 +182,7 @@
         .footer-copy { font-size: 0.85rem; color: #666; font-weight: 500; }
         .footer-dev { font-size: 0.75rem; color: #555; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* MOBILE BOTTOM NAV (SAMA PERSIS DENGAN INDEX) */
+        /* MOBILE BOTTOM NAV */
         .mobile-bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-top: 1px solid rgba(255, 255, 255, 0.1); display: none; justify-content: space-around; align-items: center; padding: 12px 16px; z-index: 1000; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
         .bottom-nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #888; transition: var(--transition-smooth); text-decoration: none; width: 30%; cursor: pointer; }
         .bottom-nav-icon { width: 22px; height: 22px; fill: currentColor; transition: var(--transition-smooth); }
@@ -201,7 +201,6 @@
             .footer { padding-bottom: 120px; }
         }
         @media (max-width: 767px) { 
-            /* Perbaikan Hero Mobile: Ukuran font sangat dikecilkan agar tidak meluber */
             .testi-hero { min-height: 350px; }
             .testi-hero-title { font-size: 1.4rem; letter-spacing: 0px; margin-bottom: 10px; }
             .testi-hero-subtitle { font-size: 0.8rem; letter-spacing: 2px; }
@@ -209,14 +208,12 @@
             .testi-main { padding: 60px 16px; }
             .testi-grid { grid-template-columns: 1fr; gap: 24px; }
             
-            /* Penyesuaian tinggi foto di HP */
             .testi-img-wrapper { height: 220px; }
             .testi-body { padding: 24px; }
             
             .bottom-nav-action-wrapper { flex-direction: column; gap: 16px; align-items: stretch; margin-top: 40px; }
             .bottom-nav-action-wrapper > * { max-width: 100%; padding: 16px 0; }
             
-            /* FOOTER MOBILE (DIKEMBALIKAN 100% SEPERTI ASLI) */
             .footer { padding: 60px 20px 100px; }
             .footer-container { grid-template-columns: 1fr; gap: 32px; text-align: center; } 
             .footer-brand .footer-logo { margin: 0 auto 16px; display: block; }
@@ -241,13 +238,13 @@
             
             <nav class="nav-links">
                 <a href="index.html">Beranda</a>
-                <a href="katalog.html">Daftar Harga</a>
+                <a href="harga.html">Daftar Harga</a>
                 <a href="berita.html">Berita</a>
-                <a href="testimoni.html" class="active">Testimoni</a>
+                <a href="index.html#testimoni">Testimoni</a>
             </nav>
 
             <div class="nav-actions">
-                <a href="https://wa.me/628123456789" target="_blank" class="btn-primary">Pesan Sekarang</a>
+                <a href="https://wa.me/628123456789" id="wa-btn-nav" target="_blank" class="btn-primary">Pesan Sekarang</a>
                 <button class="menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu">
                     <span></span><span></span><span></span>
                 </button>
@@ -264,38 +261,37 @@
         </div>
         
         <a href="index.html" class="menu-item">Beranda</a>
-        <a href="katalog.html" class="menu-item">Daftar Harga</a>
+        <a href="harga.html" class="menu-item">Daftar Harga</a>
         <a href="index.html#promo" class="menu-item">Promo Terbaru</a>
-        <a href="testimoni.html" class="menu-item active">Testimonial Gallery</a>
+        <a href="index.html#testimoni" class="menu-item">Testimonial Gallery</a>
         <a href="berita.html" class="menu-item">Berita & Acara</a>
         <a href="layanan.html" class="menu-item">Layanan Purna Jual</a>
         <a href="index.html#lokasi" class="menu-item">Lokasi Dealer</a>
 
-        <a href="https://wa.me/628123456789" target="_blank" class="btn-primary" style="margin-top: auto; text-align: center; width: 100%;">Hubungi Sales</a>
+        <a href="https://wa.me/628123456789" id="wa-btn-sidebar" target="_blank" class="btn-primary" style="margin-top: auto; text-align: center; width: 100%;">Hubungi Sales</a>
     </div>
 
     <main class="app-wrapper">
 
         <section class="testi-hero">
-            <img src="https://i.ibb.co.com/RGV9x23j/IMG-3323.png" alt="Premium Showroom" class="testi-hero-bg">
+            <img src="https://i.ibb.co.com/RGV9x23j/IMG-3323.png" id="testi-hero-bg" alt="Premium Showroom" class="testi-hero-bg">
             <div class="testi-hero-overlay"></div>
             
             <div class="testi-hero-content reveal-up">
-                <span class="testi-hero-subtitle">Galeri Serah Terima</span>
-                <h1 class="testi-hero-title">Testimonial</h1>
+                <span class="testi-hero-subtitle" id="testi-hero-subtitle">Galeri Serah Terima</span>
+                <h1 class="testi-hero-title" id="testi-hero-title">Testimonial</h1>
             </div>
         </section>
 
         <section class="testi-main">
             <div class="testi-container">
                 
-                <div class="testi-grid">
+                <div class="testi-grid" id="testi-grid-container">
                     
-                    <div class="testi-card reveal-up delay-1">
+                    <div class="testi-card reveal-up active" style="opacity:1; transform:translateY(0);">
                         <div class="testi-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=800&auto=format&fit=crop" alt="Serah Terima Pajero Sport" class="testi-img">
+                            <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=800&auto=format&fit=crop" alt="Serah Terima" class="testi-img">
                         </div>
-                        
                         <div class="testi-body">
                             <div class="testi-rating">
                                 <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
@@ -304,9 +300,7 @@
                                 <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
                                 <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
                             </div>
-                            
-                            <p class="testi-text">"Proses pembelian Pajero Sport Dakar di sini sangat luar biasa. Mulai dari konsultasi, test drive, hingga serah terima unit di dealer, pelayanannya benar-benar layaknya tamu VIP. Terima kasih atas profesionalismenya!"</p>
-                            
+                            <p class="testi-text">"Proses pembelian di sini sangat luar biasa. Mulai dari konsultasi hingga serah terima unit di dealer, pelayanannya benar-benar memuaskan."</p>
                             <div class="testi-user-info">
                                 <h4>Keluarga Bpk. Hendra</h4>
                                 <p>Pajero Sport Dakar Ultimate</p>
@@ -314,76 +308,9 @@
                         </div>
                     </div>
 
-                    <div class="testi-card reveal-up delay-2">
-                        <div class="testi-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1605816988019-32fb1c49666d?q=80&w=800&auto=format&fit=crop" alt="Serah Terima Xpander" class="testi-img">
-                        </div>
-                        
-                        <div class="testi-body">
-                            <div class="testi-rating">
-                                <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                            </div>
-                            
-                            <p class="testi-text">"Keputusan mengambil Xpander Ultimate sangat tepat untuk keluarga kami. Salesnya komunikatif dan membantu proses dari awal hingga mobil dikirim langsung ke garasi rumah dengan presentasi yang sangat elegan."</p>
-                            
-                            <div class="testi-user-info">
-                                <h4>Ibu Ratna & Keluarga</h4>
-                                <p>Xpander Ultimate CVT</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testi-card reveal-up delay-1">
-                        <div class="testi-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=800&auto=format&fit=crop" alt="Serah Terima XForce" class="testi-img">
-                        </div>
-                        
-                        <div class="testi-body">
-                            <div class="testi-rating">
-                                <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                            </div>
-                            
-                            <p class="testi-text">"Kesan pertama masuk ke dealer Mitsubishi Batam adalah mewah. Serah terima Mitsubishi XForce saya disiapkan dengan unveiling kain hitam yang berkesan. Senang sekali dengan pengalaman berbelanja di sini!"</p>
-                            
-                            <div class="testi-user-info">
-                                <h4>Bpk. Kevin</h4>
-                                <p>XForce Ultimate</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testi-card reveal-up delay-2">
-                        <div class="testi-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?q=80&w=800&auto=format&fit=crop" alt="Serah Terima L300" class="testi-img">
-                        </div>
-                        
-                        <div class="testi-body">
-                            <div class="testi-rating">
-                                <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                            </div>
-                            
-                            <p class="testi-text">"Sangat puas dengan pelayanan dealernya. Pengadaan unit armada operasional perusahaan sangat cepat, dokumen transparan, dan jaminan purna jualnya terbukti sangat bisa diandalkan kapan saja."</p>
-                            
-                            <div class="testi-user-info">
-                                <h4>PT. Sukses Makmur</h4>
-                                <p>Fleet - Mitsubishi L300 & Triton</p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div> <div class="bottom-nav-action-wrapper reveal-up delay-1">
+                </div> 
+                
+                <div class="bottom-nav-action-wrapper reveal-up delay-1">
                     <a href="index.html" class="btn-outline">Kembali</a>
                     <a href="katalog.html" class="btn-fill">Menu Kendaraan</a>
                 </div>
@@ -398,9 +325,9 @@
                     <p>Dealer Resmi Mitsubishi Batam. Menghadirkan layanan premium dan pengalaman berkendara kelas dunia untuk Anda dan keluarga.</p>
                     <div class="footer-socials">
                         <a href="https://facebook.com" target="_blank" class="social-link-icon" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
-                        <a href="https://instagram.com" target="_blank" class="social-link-icon" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-                        <a href="https://wa.me/628123456789" target="_blank" class="social-link-icon" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
-                        <a href="mailto:info@mitsubishi.com" class="social-link-icon" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg></a>
+                        <a href="https://instagram.com" id="footer-ig" target="_blank" class="social-link-icon" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                        <a href="https://wa.me/628123456789" id="footer-wa" target="_blank" class="social-link-icon" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+                        <a href="mailto:info@mitsubishi.com" id="footer-email" class="social-link-icon" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg></a>
                     </div>
                 </div>
                 <div class="footer-col">
@@ -408,39 +335,167 @@
                     <ul>
                         <li><a href="index.html">Beranda</a></li>
                         <li><a href="index.html#promo">Promo Terbaru</a></li>
-                        <li><a href="katalog.html">Daftar Harga</a></li>
+                        <li><a href="harga.html">Daftar Harga</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Layanan</h4>
                     <ul>
                         <li><a href="layanan.html">Purna Jual</a></li>
-                        <li><a href="https://wa.me/628123456789">Test Drive</a></li>
+                        <li><a href="https://wa.me/628123456789" id="footer-test-drive">Test Drive</a></li>
                         <li><a href="index.html#lokasi">Lokasi Dealer</a></li>
                     </ul>
                 </div>
                 <div class="footer-contact">
                     <h4>Kontak Kami</h4>
-                    <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Jl. Raden Patah, Lubuk Baja, Kota Batam, Kepulauan Riau</p>
-                    <p><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> +62 812-3456-7890</p>
+                    <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> <span id="footer-alamat">Jl. Raden Patah, Lubuk Baja, Kota Batam, Kepulauan Riau</span></p>
+                    <p><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> <span id="footer-telp">+62 812-3456-7890</span></p>
                 </div>
             </div>
             <div class="footer-bottom reveal-up delay-2">
-                <div class="footer-copy">©2026. Official Mitsubishi motors Batam Aldiansyah Sales</div>
+                <div class="footer-copy">©2026. Official Mitsubishi motors Batam <span id="footer-copy-nama">Aldiansyah Sales</span></div>
                 <div class="footer-dev">Developed by @zee_radhan</div>
             </div>
         </footer>
 
         <nav class="mobile-bottom-nav">
-            <a href="katalog.html" class="bottom-nav-item" aria-label="Daftar Harga"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.41l9 9c.36.36.86.59 1.41.59s1.05-.22 1.41-.59l7-7c.36-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg><span class="bottom-nav-label">Harga</span></a>
-            <a href="tel:+6281234567890" class="bottom-nav-item" aria-label="Telepon Sales"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span class="bottom-nav-label">Telepon</span></a>
-            <a href="https://wa.me/628123456789" target="_blank" class="bottom-nav-item" aria-label="Chat WhatsApp"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span class="bottom-nav-label">WhatsApp</span></a>
+            <a href="harga.html" class="bottom-nav-item" aria-label="Daftar Harga"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.41l9 9c.36.36.86.59 1.41.59s1.05-.22 1.41-.59l7-7c.36-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg><span class="bottom-nav-label">Harga</span></a>
+            <a href="tel:+6281234567890" id="bottom-nav-telp" class="bottom-nav-item" aria-label="Telepon Sales"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span class="bottom-nav-label">Telepon</span></a>
+            <a href="https://wa.me/628123456789" id="bottom-nav-wa" target="_blank" class="bottom-nav-item" aria-label="Chat WhatsApp"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span class="bottom-nav-label">WhatsApp</span></a>
         </nav>
 
     </main>
-
     <script>
-        // --- PRELOADER & NAVBAR SCROLL ---
+        /* =========================================
+           1. INISIALISASI FIREBASE
+           ========================================= */
+        const firebaseConfig = {
+            apiKey: "AIzaSyBrNnp8PJiKYATH-1ie67aq9WqESpIXBus",
+            authDomain: "landing-page-alex.firebaseapp.com",
+            databaseURL: "https://landing-page-alex-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "landing-page-alex",
+            storageBucket: "landing-page-alex.firebasestorage.app",
+            messagingSenderId: "164638589744",
+            appId: "1:164638589744:web:8470111cc7c41696887ef5"
+        };
+
+        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+        const db = firebase.database();
+
+        /* =========================================
+           2. FORMATTING GLOBALS (WA & BINTANG RATING)
+           ========================================= */
+        function formatWA(nomor) {
+            if (!nomor) return "https://wa.me/628123456789";
+            let formatted = nomor.replace(/\D/g, '');
+            if (formatted.startsWith('0')) formatted = '62' + formatted.substring(1);
+            return `https://wa.me/${formatted}`;
+        }
+
+        function generateStars(ratingStr) {
+            const count = parseInt(ratingStr) || 5;
+            let stars = '';
+            for(let i = 0; i < count; i++) {
+                stars += '<svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>';
+            }
+            return stars;
+        }
+
+        /* =========================================
+           3. LOAD DATA DARI FIREBASE (PROTEKSI AKTIF)
+           ========================================= */
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // --- A. DATA BIODATA & KONTAK GLOBAL ---
+            db.ref('global_data/biodata').once('value', snap => {
+                if(snap.exists()) {
+                    const data = snap.val();
+                    const waLink = formatWA(data.wa);
+                    
+                    // Sinkronisasi Link WA
+                    document.getElementById('wa-btn-nav').href = waLink;
+                    document.getElementById('wa-btn-sidebar').href = waLink;
+                    document.getElementById('footer-wa').href = waLink;
+                    document.getElementById('bottom-nav-wa').href = waLink;
+                    if (document.getElementById('footer-test-drive')) document.getElementById('footer-test-drive').href = waLink;
+                    
+                    // Sinkronisasi Telepon
+                    if(data.telp) {
+                        const telpClean = data.telp.replace(/\D/g, '');
+                        document.getElementById('bottom-nav-telp').href = `tel:+${telpClean}`;
+                        document.getElementById('footer-telp').innerText = data.telp;
+                    }
+                    
+                    // Sinkronisasi Sosial Media & Nama
+                    if(data.ig) document.getElementById('footer-ig').href = data.ig;
+                    if(data.email) document.getElementById('footer-email').href = `mailto:${data.email}`;
+                    if(data.nama) document.getElementById('footer-copy-nama').innerText = data.nama;
+                }
+            });
+
+            db.ref('global_data/alamat').once('value', snap => {
+                if(snap.exists() && snap.val().teks_alamat) {
+                    document.getElementById('footer-alamat').innerText = snap.val().teks_alamat;
+                }
+            });
+
+            // --- B. DATA HERO TESTIMONI ---
+            db.ref('halaman/testimoni/hero').once('value', snap => {
+                if(snap.exists()) {
+                    const data = snap.val();
+                    if(data.teks_atas) document.getElementById('testi-hero-subtitle').innerText = data.teks_atas;
+                    if(data.teks_bawah) document.getElementById('testi-hero-title').innerText = data.teks_bawah;
+                    if(data.bgUrl) document.getElementById('testi-hero-bg').src = data.bgUrl;
+                }
+            });
+
+            // --- C. RENDER GALLERY TESTIMONI ---
+            db.ref('testimoni_list').on('value', snap => {
+                const container = document.getElementById('testi-grid-container');
+                
+                // SISTEM PROTEKSI: Hanya akan mengganti susunan HTML jika data benar-benar ada di database
+                if(snap.exists() && snap.hasChildren()) {
+                    container.innerHTML = ''; // Kosongkan dummy text karena ada data sah dari Admin
+                    let delay = 1;
+                    
+                    snap.forEach(child => {
+                        const data = child.val();
+                        const delayClass = delay % 2 === 0 ? 'delay-2' : 'delay-1';
+                        
+                        // Gambar fallback opsional jika upload gagal namun data teks masuk
+                        const imgSrc = data.imgUrl ? data.imgUrl : 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=800&auto=format&fit=crop';
+                        
+                        const cardHTML = `
+                            <div class="testi-card reveal-up active ${delayClass}" style="opacity:1; transform:translateY(0);">
+                                <div class="testi-img-wrapper">
+                                    <img src="${imgSrc}" alt="Serah Terima ${data.unit}" class="testi-img">
+                                </div>
+                                
+                                <div class="testi-body">
+                                    <div class="testi-rating">
+                                        ${generateStars(data.rating)}
+                                    </div>
+                                    
+                                    <p class="testi-text">"${data.komentar || 'Pelayanan sangat memuaskan!'}"</p>
+                                    
+                                    <div class="testi-user-info">
+                                        <h4>${data.nama || 'Pelanggan Setia'}</h4>
+                                        <p>${data.unit || 'Mitsubishi Motors'}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        container.innerHTML += cardHTML;
+                        delay++;
+                    });
+                }
+                // Jika 'testimoni_list' kosong, script akan diam, HTML Dummy Bawaan tetap di layar.
+            });
+        });
+
+        /* =========================================
+           4. PRELOADER & NAVBAR SCROLL
+           ========================================= */
         window.addEventListener('load', () => setTimeout(() => document.getElementById('preloader').classList.add('hide'), 1000));
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
@@ -448,7 +503,9 @@
             else navbar.classList.remove('scrolled');
         });
 
-        // --- UX MENU MOBILE (SIDEBAR & OVERLAY) ---
+        /* =========================================
+           5. UX MENU MOBILE (SIDEBAR & OVERLAY)
+           ========================================= */
         const menuBtn = document.getElementById('mobile-menu-btn');
         const closeBtn = document.getElementById('close-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -458,7 +515,7 @@
             const isOpen = mobileMenu.classList.contains('active');
             mobileMenu.classList.toggle('active');
             menuOverlay.classList.toggle('active');
-            // Kunci scroll layar utama saat menu terbuka
+            // Kunci scroll layar saat menu aktif
             document.body.style.overflow = isOpen ? 'auto' : 'hidden'; 
         }
         
@@ -466,7 +523,9 @@
         closeBtn.addEventListener('click', toggleMenu);
         menuOverlay.addEventListener('click', toggleMenu);
 
-        // --- REVEAL ANIMASI (SCROLL TRIGGER) ---
+        /* =========================================
+           6. REVEAL ANIMASI (SCROLL TRIGGER)
+           ========================================= */
         const revealElements = document.querySelectorAll('.reveal-up');
         const revealObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
