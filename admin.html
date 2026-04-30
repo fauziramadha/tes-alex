@@ -159,6 +159,7 @@
                 <a class="nav-item" onclick="switchPanel('panel-spesifikasi', this, 'Manajemen Spesifikasi & Harga')">Spesifikasi & Harga</a>
                 <a class="nav-item" onclick="switchPanel('panel-harga', this, 'Manajemen Daftar Harga')">Daftar Harga</a>
                 <a class="nav-item" onclick="switchPanel('panel-biodata', this, 'Manajemen Biodata Sales')">Biodata Sales</a>
+                <a class="nav-item" onclick="switchPanel('panel-layanan', this, 'Layanan Purna Jual')">Layanan Purna Jual</a>
             </nav>
             
             <div class="sidebar-footer">
@@ -180,7 +181,7 @@
                     <div class="section-card">
                         <h3 class="section-title">Informasi Sistem</h3>
                         <p class="alur-text">
-                            Silakan pilih menu di sebelah kiri untuk mengatur konten Website Anda. (Landing Page, Berita & Acara, Katalog Kendaraan, Spesifikasi & Harga, Daftar Harga, atau Biodata Sales).
+                            Silakan pilih menu di sebelah kiri untuk mengatur konten Website Anda. (Landing Page, Berita & Acara, Katalog Kendaraan, Spesifikasi & Harga, Daftar Harga, Biodata Sales, atau Layanan Purna Jual).
                         </p>
                     </div>
                 </div>
@@ -910,6 +911,211 @@
                     </div>
                 </div>
 
+                <div id="panel-layanan" class="data-panel">
+                    
+                    <div class="section-card">
+                        <div class="section-header"><h3 class="section-title">1. HERO LAYANAN</h3></div>
+                        <div class="form-grid">
+                            <div class="input-group form-full">
+                                <label>FOTO BACKGROUND</label>
+                                <div class="file-upload-wrapper">
+                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
+                                    <span class="file-upload-text">Ketuk untuk Pilih Foto Latar</span>
+                                    <input type="file" id="layanan-hero-file" accept=".png, .jpg, .jpeg, .webp">
+                                </div>
+                            </div>
+                            <div class="input-group form-full">
+                                <label>TULISAN ATAS</label>
+                                <input type="text" id="layanan-hero-teks-atas" class="input-control" placeholder="Contoh: LAYANAN PURNA JUAL">
+                            </div>
+                            <div class="input-group form-full">
+                                <label>TULISAN BAWAH</label>
+                                <textarea id="layanan-hero-teks-bawah" class="input-control" rows="2" placeholder="Contoh: Temukan penawaran terbaik untuk perawatan mobil Anda..."></textarea>
+                            </div>
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn-delete" id="btn-delete-hero-layanan" style="display:none;">Hapus Profil (Default)</button>
+                            <button class="btn-save" id="btn-save-hero-layanan">Update Profil</button>
+                        </div>
+                    </div>
+
+                    <div class="section-card">
+                        <div class="section-header"><h3 class="section-title">2. KARTU LAYANAN DASAR</h3></div>
+                        <p class="alur-text">Apabila ada layanan yang dikosongkan (tidak diisi), maka sistem tetap akan menyimpannya dan bagian tersebut tidak akan ditampilkan di website.</p>
+                        
+                        <div class="form-grid" style="border-bottom: 1px solid var(--color-border); padding-bottom: 24px; margin-bottom: 24px;">
+                            <div class="input-group form-full"><label style="color:var(--color-accent); font-size:0.9rem;">C.1 JAMINAN KEASLIAN</label></div>
+                            <div class="input-group form-full">
+                                <label>FOTO LAYANAN</label>
+                                <div class="file-upload-wrapper" style="height: 120px;">
+                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
+                                    <span class="file-upload-text">Ketuk Upload Foto</span>
+                                    <input type="file" id="layanan-dasar-1-file" accept=".png, .jpg, .jpeg, .webp, .svg">
+                                </div>
+                            </div>
+                            <div class="input-group"><label>Tulisan Atas</label><input type="text" id="layanan-dasar-1-atas" class="input-control" placeholder="Contoh: Jaminan Keaslian"></div>
+                            <div class="input-group"><label>Tulisan Bawah</label><input type="text" id="layanan-dasar-1-bawah" class="input-control" placeholder="Contoh: Kami menjamin suku cadang asli..."></div>
+                        </div>
+
+                        <div class="form-grid" style="border-bottom: 1px solid var(--color-border); padding-bottom: 24px; margin-bottom: 24px;">
+                            <div class="input-group form-full"><label style="color:var(--color-accent); font-size:0.9rem;">C.2 BERKOMITMEN DENGAN WAKTU</label></div>
+                            <div class="input-group form-full">
+                                <label>FOTO LAYANAN</label>
+                                <div class="file-upload-wrapper" style="height: 120px;">
+                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
+                                    <span class="file-upload-text">Ketuk Upload Foto</span>
+                                    <input type="file" id="layanan-dasar-2-file" accept=".png, .jpg, .jpeg, .webp, .svg">
+                                </div>
+                            </div>
+                            <div class="input-group"><label>Tulisan Atas</label><input type="text" id="layanan-dasar-2-atas" class="input-control" placeholder="Contoh: Berkomitmen dengan Waktu"></div>
+                            <div class="input-group"><label>Tulisan Bawah</label><input type="text" id="layanan-dasar-2-bawah" class="input-control" placeholder="Contoh: Pelayanan cepat dan tepat waktu..."></div>
+                        </div>
+
+                        <div class="form-grid" style="border-bottom: 1px solid var(--color-border); padding-bottom: 24px; margin-bottom: 24px;">
+                            <div class="input-group form-full"><label style="color:var(--color-accent); font-size:0.9rem;">C.3 SUKU CADANG TERJAMIN</label></div>
+                            <div class="input-group form-full">
+                                <label>FOTO LAYANAN</label>
+                                <div class="file-upload-wrapper" style="height: 120px;">
+                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
+                                    <span class="file-upload-text">Ketuk Upload Foto</span>
+                                    <input type="file" id="layanan-dasar-3-file" accept=".png, .jpg, .jpeg, .webp, .svg">
+                                </div>
+                            </div>
+                            <div class="input-group"><label>Tulisan Atas</label><input type="text" id="layanan-dasar-3-atas" class="input-control" placeholder="Contoh: Suku Cadang Terjamin"></div>
+                            <div class="input-group"><label>Tulisan Bawah</label><input type="text" id="layanan-dasar-3-bawah" class="input-control" placeholder="Contoh: Kualitas tinggi dan bergaransi..."></div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="input-group form-full"><label style="color:var(--color-accent); font-size:0.9rem;">C.4 DUKUNGAN DI SELURUH INDONESIA</label></div>
+                            <div class="input-group form-full">
+                                <label>FOTO LAYANAN</label>
+                                <div class="file-upload-wrapper" style="height: 120px;">
+                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
+                                    <span class="file-upload-text">Ketuk Upload Foto</span>
+                                    <input type="file" id="layanan-dasar-4-file" accept=".png, .jpg, .jpeg, .webp, .svg">
+                                </div>
+                            </div>
+                            <div class="input-group"><label>Tulisan Atas</label><input type="text" id="layanan-dasar-4-atas" class="input-control" placeholder="Contoh: Dukungan Seluruh Indonesia"></div>
+                            <div class="input-group"><label>Tulisan Bawah</label><input type="text" id="layanan-dasar-4-bawah" class="input-control" placeholder="Contoh: Layanan bengkel resmi tersebar..."></div>
+                        </div>
+
+                        <div class="action-bar">
+                            <button class="btn-delete" id="btn-delete-layanan-dasar" style="display:none;">Hapus Perubahan (Default)</button>
+                            <button class="btn-save" id="btn-save-layanan-dasar">Simpan Perubahan C-F</button>
+                        </div>
+                    </div>
+
+                    <div class="section-card">
+                        <div class="section-header"><h3 class="section-title">3. PELAYANAN TERBAIK KAMI (DENGAN POP-UP SPA)</h3></div>
+                        <p class="alur-text">Khusus untuk bagian ini, Anda dapat mengisi informasi tambahan yang akan muncul ketika pelanggan menekan tombol "Selengkapnya".</p>
+                        
+                        <div class="form-grid">
+                            <div class="input-group form-full">
+                                <label>Upload Foto Pelayanan Terbaik</label>
+                                <div class="file-upload-wrapper">
+                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
+                                    <span class="file-upload-text">Ketuk untuk Pilih Foto SPA</span>
+                                    <input type="file" id="layanan-spa-file" accept=".png, .jpg, .jpeg, .webp">
+                                </div>
+                            </div>
+                            
+                            <div class="input-group form-full" style="margin-top: 10px;">
+                                <label style="color:var(--color-accent); font-size:0.8rem; border-bottom:1px solid var(--color-border); padding-bottom:5px;">TULISAN TAMPILAN AWAL (SEBELUM DIKLIK):</label>
+                            </div>
+                            <div class="input-group"><label>Tulisan Atas</label><input type="text" id="layanan-spa-atas" class="input-control" placeholder="Contoh: Layanan SPA Eksklusif"></div>
+                            <div class="input-group"><label>Tulisan Bawah</label><input type="text" id="layanan-spa-bawah" class="input-control" placeholder="Contoh: Manjakan kendaraan Anda dengan..."></div>
+                            <div class="input-group form-full"><label>Tulisan Tombol Selengkapnya</label><input type="text" id="layanan-spa-tombol" class="input-control" placeholder="Contoh: Lihat Detail SPA"></div>
+
+                            <div class="input-group form-full" style="margin-top: 10px;">
+                                <label style="color:var(--color-accent); font-size:0.8rem; border-bottom:1px solid var(--color-border); padding-bottom:5px;">INFORMASI SPA (SETELAH TOMBOL DIKLIK):</label>
+                            </div>
+                            <div class="input-group form-full"><label>Judul Detail (Pop-Up)</label><input type="text" id="layanan-spa-judul-pop" class="input-control" placeholder="Contoh: Detail Layanan SPA Premium"></div>
+                            <div class="input-group form-full"><label>Isikan Informasinya</label><textarea id="layanan-spa-info-pop" class="input-control" rows="4" placeholder="Contoh: Layanan ini mencakup poles bodi menyeluruh, interior detailing..."></textarea></div>
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn-delete" id="btn-delete-layanan-spa" style="display:none;">Hapus Layanan (Default)</button>
+                            <button class="btn-save" id="btn-save-layanan-spa">Simpan Layanan</button>
+                        </div>
+                    </div>
+
+                    <div class="section-card">
+                        <div class="section-header"><h3 class="section-title">4. MANAJEMEN FITUR LAINNYA (TANPA SPA)</h3></div>
+                        <p class="alur-text">Di bawah ini adalah 5 katalog fitur terpisah. Isi masing-masing sesuai dengan kebutuhan tanpa ada informasi pop-up (SPA) tambahan. Apabila ada layanan yang dikosongkan (tidak diisi), maka sistem tetap akan menyimpannya dan bagian tersebut tidak akan ditampilkan di website.</p>
+                        
+                        <div class="form-grid" style="border-bottom: 1px solid var(--color-border); padding-bottom: 24px; margin-bottom: 24px;">
+                            <div class="input-group form-full"><label style="color:var(--color-accent); font-size:0.9rem;">F.1 CUSTOMER SUPPORT</label></div>
+                            <div class="input-group form-full">
+                                <label>FOTO LAYANAN</label>
+                                <div class="file-upload-wrapper" style="height: 120px;">
+                                    <span class="file-upload-text">Ketuk Upload Foto</span>
+                                    <input type="file" id="fitur-lain-1-file" accept=".png, .jpg, .jpeg, .webp">
+                                </div>
+                            </div>
+                            <div class="input-group"><label>Tulisan Atas</label><input type="text" id="fitur-lain-1-atas" class="input-control" placeholder="Contoh: Customer Support 24/7"></div>
+                            <div class="input-group"><label>Tulisan Bawah</label><input type="text" id="fitur-lain-1-bawah" class="input-control" placeholder="Contoh: Siap membantu kendala Anda..."></div>
+                        </div>
+
+                        <div class="form-grid" style="border-bottom: 1px solid var(--color-border); padding-bottom: 24px; margin-bottom: 24px;">
+                            <div class="input-group form-full"><label style="color:var(--color-accent); font-size:0.9rem;">F.2 PERAWATAN KENDARAAN</label></div>
+                            <div class="input-group form-full">
+                                <label>FOTO LAYANAN</label>
+                                <div class="file-upload-wrapper" style="height: 120px;">
+                                    <span class="file-upload-text">Ketuk Upload Foto</span>
+                                    <input type="file" id="fitur-lain-2-file" accept=".png, .jpg, .jpeg, .webp">
+                                </div>
+                            </div>
+                            <div class="input-group"><label>Tulisan Atas</label><input type="text" id="fitur-lain-2-atas" class="input-control" placeholder="Contoh: Perawatan Rutin"></div>
+                            <div class="input-group"><label>Tulisan Bawah</label><input type="text" id="fitur-lain-2-bawah" class="input-control" placeholder="Contoh: Jaga performa kendaraan dengan..."></div>
+                        </div>
+
+                        <div class="form-grid" style="border-bottom: 1px solid var(--color-border); padding-bottom: 24px; margin-bottom: 24px;">
+                            <div class="input-group form-full"><label style="color:var(--color-accent); font-size:0.9rem;">F.3 SUKU CADANG</label></div>
+                            <div class="input-group form-full">
+                                <label>FOTO LAYANAN</label>
+                                <div class="file-upload-wrapper" style="height: 120px;">
+                                    <span class="file-upload-text">Ketuk Upload Foto</span>
+                                    <input type="file" id="fitur-lain-3-file" accept=".png, .jpg, .jpeg, .webp">
+                                </div>
+                            </div>
+                            <div class="input-group"><label>Tulisan Atas</label><input type="text" id="fitur-lain-3-atas" class="input-control" placeholder="Contoh: Katalog Suku Cadang"></div>
+                            <div class="input-group"><label>Tulisan Bawah</label><input type="text" id="fitur-lain-3-bawah" class="input-control" placeholder="Contoh: Tersedia lengkap untuk semua tipe..."></div>
+                        </div>
+
+                        <div class="form-grid" style="border-bottom: 1px solid var(--color-border); padding-bottom: 24px; margin-bottom: 24px;">
+                            <div class="input-group form-full"><label style="color:var(--color-accent); font-size:0.9rem;">F.4 AKSESORIS</label></div>
+                            <div class="input-group form-full">
+                                <label>FOTO LAYANAN</label>
+                                <div class="file-upload-wrapper" style="height: 120px;">
+                                    <span class="file-upload-text">Ketuk Upload Foto</span>
+                                    <input type="file" id="fitur-lain-4-file" accept=".png, .jpg, .jpeg, .webp">
+                                </div>
+                            </div>
+                            <div class="input-group"><label>Tulisan Atas</label><input type="text" id="fitur-lain-4-atas" class="input-control" placeholder="Contoh: Aksesoris Resmi"></div>
+                            <div class="input-group"><label>Tulisan Bawah</label><input type="text" id="fitur-lain-4-bawah" class="input-control" placeholder="Contoh: Tampil lebih gaya dengan..."></div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="input-group form-full"><label style="color:var(--color-accent); font-size:0.9rem;">F.5 BODI & CAT</label></div>
+                            <div class="input-group form-full">
+                                <label>FOTO LAYANAN</label>
+                                <div class="file-upload-wrapper" style="height: 120px;">
+                                    <span class="file-upload-text">Ketuk Upload Foto</span>
+                                    <input type="file" id="fitur-lain-5-file" accept=".png, .jpg, .jpeg, .webp">
+                                </div>
+                            </div>
+                            <div class="input-group"><label>Tulisan Atas</label><input type="text" id="fitur-lain-5-atas" class="input-control" placeholder="Contoh: Bodi & Cat Original"></div>
+                            <div class="input-group"><label>Tulisan Bawah</label><input type="text" id="fitur-lain-5-bawah" class="input-control" placeholder="Contoh: Kembalikan kondisi mobil seperti baru..."></div>
+                        </div>
+
+                        <div class="action-bar">
+                            <button class="btn-delete" id="btn-delete-fitur-lain" style="display:none;">Hapus Fitur (Default)</button>
+                            <button class="btn-add" id="btn-edit-fitur-lain" style="display:none;">Edit Fitur</button>
+                            <button class="btn-save" id="btn-save-fitur-lain">Simpan Semua Fitur</button>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
         </main>
     </div>
@@ -1157,6 +1363,65 @@
                     }
                 }
             });
+
+            // [G] Data Layanan Purna Jual
+            db.ref('halaman/layanan/hero').once('value', snap => {
+                if(snap.val()) {
+                    document.getElementById('layanan-hero-teks-atas').value = snap.val().teks_atas || '';
+                    document.getElementById('layanan-hero-teks-bawah').value = snap.val().teks_bawah || '';
+                    if(snap.val().bgUrl) {
+                        document.querySelector('#layanan-hero-file').parentElement.style.backgroundImage = `url('${snap.val().bgUrl}')`;
+                        document.getElementById('btn-delete-hero-layanan').style.display = 'inline-block';
+                    }
+                }
+            });
+
+            db.ref('halaman/layanan/dasar').once('value', snap => {
+                if(snap.val()) {
+                    for(let i=1; i<=4; i++) {
+                        let data = snap.val()[`item${i}`];
+                        if(data) {
+                            document.getElementById(`layanan-dasar-${i}-atas`).value = data.atas || '';
+                            document.getElementById(`layanan-dasar-${i}-bawah`).value = data.bawah || '';
+                            if(data.imgUrl) {
+                                document.querySelector(`#layanan-dasar-${i}-file`).parentElement.style.backgroundImage = `url('${data.imgUrl}')`;
+                            }
+                        }
+                    }
+                    document.getElementById('btn-delete-layanan-dasar').style.display = 'inline-block';
+                }
+            });
+
+            db.ref('halaman/layanan/spa').once('value', snap => {
+                if(snap.val()) {
+                    document.getElementById('layanan-spa-atas').value = snap.val().atas || '';
+                    document.getElementById('layanan-spa-bawah').value = snap.val().bawah || '';
+                    document.getElementById('layanan-spa-tombol').value = snap.val().tombol || '';
+                    document.getElementById('layanan-spa-judul-pop').value = snap.val().judul_pop || '';
+                    document.getElementById('layanan-spa-info-pop').value = snap.val().info_pop || '';
+                    if(snap.val().imgUrl) {
+                        document.querySelector('#layanan-spa-file').parentElement.style.backgroundImage = `url('${snap.val().imgUrl}')`;
+                    }
+                    document.getElementById('btn-delete-layanan-spa').style.display = 'inline-block';
+                }
+            });
+
+            db.ref('halaman/layanan/fitur_lain').once('value', snap => {
+                if(snap.val()) {
+                    for(let i=1; i<=5; i++) {
+                        let data = snap.val()[`item${i}`];
+                        if(data) {
+                            document.getElementById(`fitur-lain-${i}-atas`).value = data.atas || '';
+                            document.getElementById(`fitur-lain-${i}-bawah`).value = data.bawah || '';
+                            if(data.imgUrl) {
+                                document.querySelector(`#fitur-lain-${i}-file`).parentElement.style.backgroundImage = `url('${data.imgUrl}')`;
+                            }
+                        }
+                    }
+                    document.getElementById('btn-delete-fitur-lain').style.display = 'inline-block';
+                    document.getElementById('btn-edit-fitur-lain').style.display = 'inline-block';
+                }
+            });
         }
 
         // --- 5A. LISTENER LANDING PAGE ---
@@ -1378,7 +1643,7 @@
                 if(imgId && imgId !== 'undefined') await deleteMedia(imgId); 
                 await db.ref('katalog_mobil/' + key).remove(); 
                 await db.ref(`spesifikasi/${key}`).remove();
-                await db.ref(`visual_harga/${key}`).remove(); // hapus visual harganya juga
+                await db.ref(`visual_harga/${key}`).remove();
                 showToast("Kendaraan dihapus!", "success"); 
             } 
         };
@@ -1542,7 +1807,7 @@
         document.getElementById('btn-hapus-fitur').addEventListener('click', async () => { if(!currentMobilId) return; const key = document.getElementById('fitur-edit-id').value; if(confirm("Hapus fitur ini?")) { const snap = await db.ref(`spesifikasi/${currentMobilId}/fitur/${key}/imgId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); await db.ref(`spesifikasi/${currentMobilId}/fitur/${key}`).remove(); showToast("Fitur Dihapus!", "success"); document.getElementById('form-fitur-container').style.display = 'none'; } });
 
 
-        // --- 5E. LISTENER MENU DAFTAR HARGA (BARU) ---
+        // --- 5E. LISTENER MENU DAFTAR HARGA ---
         window.toggleFormatNamaMobil = function() {
             const format = document.getElementById('visual-harga-format').value;
             if (format === 'logo') {
@@ -1723,7 +1988,7 @@
                 finally { btn.innerText = "Update Visual Kartu"; btn.disabled = false; }
             });
 
-            // --- EKSEKUSI BIODATA & KONTAK (BARU) ---
+            // --- EKSEKUSI BIODATA & KONTAK ---
             document.getElementById('btn-save-hero-kontak').addEventListener('click', async () => {
                 const btn = document.getElementById('btn-save-hero-kontak'); btn.innerText = "Menyimpan..."; btn.disabled = true;
                 try {
@@ -1803,6 +2068,196 @@
             document.getElementById('btn-batal-biodata').addEventListener('click', () => {
                 loadInitialData();
                 showToast("Dibatalkan, data form telah direfresh.", "info");
+            });
+
+            // --- EKSEKUSI LAYANAN PURNA JUAL (BARU) ---
+            
+            // 1. Hero Layanan
+            document.getElementById('btn-save-hero-layanan').addEventListener('click', async () => {
+                const btn = document.getElementById('btn-save-hero-layanan'); btn.innerText = "Menyimpan..."; btn.disabled = true;
+                try {
+                    let obj = { teks_atas: document.getElementById('layanan-hero-teks-atas').value.trim(), teks_bawah: document.getElementById('layanan-hero-teks-bawah').value.trim() };
+                    const file = document.getElementById('layanan-hero-file').files[0];
+                    if (file) {
+                        const media = await uploadMedia(file);
+                        if (media) {
+                            obj.bgUrl = media.url; obj.bgId = media.fileId;
+                            const snap = await db.ref('halaman/layanan/hero/bgId').once('value');
+                            if(snap.val()) await deleteMedia(snap.val());
+                        }
+                    }
+                    await db.ref('halaman/layanan/hero').update(obj); 
+                    document.getElementById('btn-delete-hero-layanan').style.display = 'inline-block';
+                    showToast("Hero Layanan diperbarui!", "success");
+                } catch (err) { showToast("Error menyimpan hero.", "error"); }
+                finally { btn.innerText = "Update Profil"; btn.disabled = false; }
+            });
+
+            document.getElementById('btn-delete-hero-layanan').addEventListener('click', async () => {
+                if(confirm("Yakin hapus Hero Layanan?")) {
+                    const btn = document.getElementById('btn-delete-hero-layanan'); btn.innerText = "Menghapus..."; btn.disabled = true;
+                    try {
+                        const snap = await db.ref('halaman/layanan/hero/bgId').once('value');
+                        if(snap.val()) await deleteMedia(snap.val());
+                        await db.ref('halaman/layanan/hero').remove(); showToast("Hero dihapus.", "success");
+                        document.getElementById('layanan-hero-teks-atas').value = ""; document.getElementById('layanan-hero-teks-bawah').value = ""; document.querySelector('#layanan-hero-file').parentElement.style.backgroundImage = 'none';
+                        btn.style.display = 'none';
+                    } catch(err) { showToast("Gagal hapus", "error"); }
+                    finally { btn.innerText = "Hapus Profil (Default)"; btn.disabled = false; }
+                }
+            });
+
+            // 2. Kartu Layanan Dasar (C1-C4)
+            document.getElementById('btn-save-layanan-dasar').addEventListener('click', async () => {
+                const btn = document.getElementById('btn-save-layanan-dasar'); btn.innerText = "Menyimpan..."; btn.disabled = true;
+                try {
+                    let obj = {};
+                    for(let i=1; i<=4; i++) {
+                        let atas = document.getElementById(`layanan-dasar-${i}-atas`).value.trim();
+                        let bawah = document.getElementById(`layanan-dasar-${i}-bawah`).value.trim();
+                        let file = document.getElementById(`layanan-dasar-${i}-file`).files[0];
+                        obj[`item${i}`] = { atas, bawah };
+                        
+                        if (file) {
+                            const media = await uploadMedia(file);
+                            if (media) {
+                                obj[`item${i}`].imgUrl = media.url;
+                                obj[`item${i}`].imgId = media.fileId;
+                                const snap = await db.ref(`halaman/layanan/dasar/item${i}/imgId`).once('value');
+                                if(snap.val()) await deleteMedia(snap.val());
+                            }
+                        } else {
+                            const snapUrl = await db.ref(`halaman/layanan/dasar/item${i}/imgUrl`).once('value');
+                            const snapId = await db.ref(`halaman/layanan/dasar/item${i}/imgId`).once('value');
+                            if(snapUrl.val()) obj[`item${i}`].imgUrl = snapUrl.val();
+                            if(snapId.val()) obj[`item${i}`].imgId = snapId.val();
+                        }
+                    }
+                    await db.ref('halaman/layanan/dasar').set(obj);
+                    document.getElementById('btn-delete-layanan-dasar').style.display = 'inline-block';
+                    showToast("Layanan Dasar disimpan!", "success");
+                } catch (err) { showToast("Gagal menyimpan.", "error"); }
+                finally { btn.innerText = "Simpan Perubahan C-F"; btn.disabled = false; }
+            });
+
+            document.getElementById('btn-delete-layanan-dasar').addEventListener('click', async () => {
+                if(confirm("Yakin hapus Layanan Dasar (C1-C4)?")) {
+                    const btn = document.getElementById('btn-delete-layanan-dasar'); btn.innerText = "Menghapus..."; btn.disabled = true;
+                    try {
+                        for(let i=1; i<=4; i++) {
+                            const snap = await db.ref(`halaman/layanan/dasar/item${i}/imgId`).once('value');
+                            if(snap.val()) await deleteMedia(snap.val());
+                            document.getElementById(`layanan-dasar-${i}-atas`).value = '';
+                            document.getElementById(`layanan-dasar-${i}-bawah`).value = '';
+                            document.querySelector(`#layanan-dasar-${i}-file`).parentElement.style.backgroundImage = 'none';
+                        }
+                        await db.ref('halaman/layanan/dasar').remove();
+                        btn.style.display = 'none';
+                        showToast("Layanan Dasar dihapus.", "success");
+                    } catch(err) { showToast("Gagal hapus", "error"); }
+                    finally { btn.innerText = "Hapus Perubahan (Default)"; btn.disabled = false; }
+                }
+            });
+
+            // 3. Pelayanan SPA
+            document.getElementById('btn-save-layanan-spa').addEventListener('click', async () => {
+                const btn = document.getElementById('btn-save-layanan-spa'); btn.innerText = "Menyimpan..."; btn.disabled = true;
+                try {
+                    let obj = {
+                        atas: document.getElementById('layanan-spa-atas').value.trim(),
+                        bawah: document.getElementById('layanan-spa-bawah').value.trim(),
+                        tombol: document.getElementById('layanan-spa-tombol').value.trim(),
+                        judul_pop: document.getElementById('layanan-spa-judul-pop').value.trim(),
+                        info_pop: document.getElementById('layanan-spa-info-pop').value.trim()
+                    };
+                    const file = document.getElementById('layanan-spa-file').files[0];
+                    if (file) {
+                        const media = await uploadMedia(file);
+                        if (media) {
+                            obj.imgUrl = media.url; obj.imgId = media.fileId;
+                            const snap = await db.ref('halaman/layanan/spa/imgId').once('value');
+                            if(snap.val()) await deleteMedia(snap.val());
+                        }
+                    }
+                    await db.ref('halaman/layanan/spa').update(obj);
+                    document.getElementById('btn-delete-layanan-spa').style.display = 'inline-block';
+                    showToast("Layanan SPA disimpan!", "success");
+                } catch (err) { showToast("Gagal menyimpan.", "error"); }
+                finally { btn.innerText = "Simpan Layanan"; btn.disabled = false; }
+            });
+
+            document.getElementById('btn-delete-layanan-spa').addEventListener('click', async () => {
+                if(confirm("Yakin hapus Layanan SPA?")) {
+                    const btn = document.getElementById('btn-delete-layanan-spa'); btn.innerText = "Menghapus..."; btn.disabled = true;
+                    try {
+                        const snap = await db.ref('halaman/layanan/spa/imgId').once('value');
+                        if(snap.val()) await deleteMedia(snap.val());
+                        await db.ref('halaman/layanan/spa').remove();
+                        ['atas', 'bawah', 'tombol', 'judul-pop', 'info-pop'].forEach(id => document.getElementById(`layanan-spa-${id}`).value = '');
+                        document.querySelector('#layanan-spa-file').parentElement.style.backgroundImage = 'none';
+                        btn.style.display = 'none';
+                        showToast("Layanan SPA dihapus.", "success");
+                    } catch(err) { showToast("Gagal hapus", "error"); }
+                    finally { btn.innerText = "Hapus Layanan (Default)"; btn.disabled = false; }
+                }
+            });
+
+            // 4. Fitur Lainnya (F1-F5)
+            document.getElementById('btn-save-fitur-lain').addEventListener('click', async () => {
+                const btn = document.getElementById('btn-save-fitur-lain'); btn.innerText = "Menyimpan..."; btn.disabled = true;
+                try {
+                    let obj = {};
+                    for(let i=1; i<=5; i++) {
+                        let atas = document.getElementById(`fitur-lain-${i}-atas`).value.trim();
+                        let bawah = document.getElementById(`fitur-lain-${i}-bawah`).value.trim();
+                        let file = document.getElementById(`fitur-lain-${i}-file`).files[0];
+                        obj[`item${i}`] = { atas, bawah };
+                        
+                        if (file) {
+                            const media = await uploadMedia(file);
+                            if (media) {
+                                obj[`item${i}`].imgUrl = media.url;
+                                obj[`item${i}`].imgId = media.fileId;
+                                const snap = await db.ref(`halaman/layanan/fitur_lain/item${i}/imgId`).once('value');
+                                if(snap.val()) await deleteMedia(snap.val());
+                            }
+                        } else {
+                            const snapUrl = await db.ref(`halaman/layanan/fitur_lain/item${i}/imgUrl`).once('value');
+                            const snapId = await db.ref(`halaman/layanan/fitur_lain/item${i}/imgId`).once('value');
+                            if(snapUrl.val()) obj[`item${i}`].imgUrl = snapUrl.val();
+                            if(snapId.val()) obj[`item${i}`].imgId = snapId.val();
+                        }
+                    }
+                    await db.ref('halaman/layanan/fitur_lain').set(obj);
+                    document.getElementById('btn-delete-fitur-lain').style.display = 'inline-block';
+                    document.getElementById('btn-edit-fitur-lain').style.display = 'inline-block';
+                    showToast("Fitur Lainnya disimpan!", "success");
+                } catch (err) { showToast("Gagal menyimpan.", "error"); }
+                finally { btn.innerText = "Simpan Semua Fitur"; btn.disabled = false; }
+            });
+
+            document.getElementById('btn-delete-fitur-lain').addEventListener('click', async () => {
+                if(confirm("Yakin hapus Fitur Lainnya (F1-F5)?")) {
+                    const btn = document.getElementById('btn-delete-fitur-lain'); btn.innerText = "Menghapus..."; btn.disabled = true;
+                    try {
+                        for(let i=1; i<=5; i++) {
+                            const snap = await db.ref(`halaman/layanan/fitur_lain/item${i}/imgId`).once('value');
+                            if(snap.val()) await deleteMedia(snap.val());
+                            document.getElementById(`fitur-lain-${i}-atas`).value = '';
+                            document.getElementById(`fitur-lain-${i}-bawah`).value = '';
+                            document.querySelector(`#fitur-lain-${i}-file`).parentElement.style.backgroundImage = 'none';
+                        }
+                        await db.ref('halaman/layanan/fitur_lain').remove();
+                        btn.style.display = 'none';
+                        document.getElementById('btn-edit-fitur-lain').style.display = 'none';
+                        showToast("Fitur Lainnya dihapus.", "success");
+                    } catch(err) { showToast("Gagal hapus", "error"); }
+                    finally { btn.innerText = "Hapus Fitur (Default)"; btn.disabled = false; }
+                }
+            });
+
+            document.getElementById('btn-edit-fitur-lain').addEventListener('click', () => {
+                showToast("Fitur siap diedit. Silakan ubah data pada form dan tekan 'Simpan Semua Fitur'.", "info");
             });
 
         });
