@@ -158,6 +158,7 @@
                 <a class="nav-item" onclick="switchPanel('panel-katalog', this, 'Manajemen Katalog Kendaraan')">Katalog Kendaraan</a>
                 <a class="nav-item" onclick="switchPanel('panel-spesifikasi', this, 'Manajemen Spesifikasi & Harga')">Spesifikasi & Harga</a>
                 <a class="nav-item" onclick="switchPanel('panel-harga', this, 'Manajemen Daftar Harga')">Daftar Harga</a>
+                <a class="nav-item" onclick="switchPanel('panel-biodata', this, 'Manajemen Biodata Sales')">Biodata Sales</a>
             </nav>
             
             <div class="sidebar-footer">
@@ -179,7 +180,7 @@
                     <div class="section-card">
                         <h3 class="section-title">Informasi Sistem</h3>
                         <p class="alur-text">
-                            Silakan pilih menu di sebelah kiri untuk mengatur konten Website Anda. (Landing Page, Berita & Acara, Katalog Kendaraan, Spesifikasi & Harga, atau Daftar Harga).
+                            Silakan pilih menu di sebelah kiri untuk mengatur konten Website Anda. (Landing Page, Berita & Acara, Katalog Kendaraan, Spesifikasi & Harga, Daftar Harga, atau Biodata Sales).
                         </p>
                     </div>
                 </div>
@@ -728,7 +729,7 @@
                                 </div>
                                 <div class="input-group form-full">
                                     <label>KOLOM 2: PENJELASAN FITUR</label>
-                                    <textarea id="fitur-deskripsi" class="input-control" rows="3" placeholder="Penjelasan singkat mengenai fitur ini..."></textarea>
+                                    <textarea id="fitur-deskripsi" class="input-control" rows="3" placeholder="Contoh: Penjelasan singkat mengenai fitur ini..."></textarea>
                                 </div>
                                 <div class="action-bar form-full">
                                     <button class="btn-delete" onclick="document.getElementById('form-fitur-container').style.display='none'">Batal</button>
@@ -826,6 +827,87 @@
                         </div>
                     </div>
 
+                </div>
+
+                <div id="panel-biodata" class="data-panel">
+                    
+                    <div class="section-card">
+                        <div class="section-header"><h3 class="section-title">1. HERO KONTAK VIP</h3></div>
+                        <div class="form-grid">
+                            <div class="input-group form-full">
+                                <label>FOTO LATAR BELAKANG</label>
+                                <div class="file-upload-wrapper">
+                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
+                                    <span class="file-upload-text">Ketuk untuk Pilih Foto Latar</span>
+                                    <input type="file" id="kontak-hero-file" accept=".png, .jpg, .jpeg, .webp">
+                                </div>
+                            </div>
+                            <div class="input-group form-full">
+                                <label>TULISAN ATAS</label>
+                                <input type="text" id="kontak-hero-teks-atas" class="input-control" placeholder="Contoh: HUBUNGI KAMI">
+                            </div>
+                            <div class="input-group form-full">
+                                <label>TULISAN BAWAH</label>
+                                <textarea id="kontak-hero-teks-bawah" class="input-control" rows="2" placeholder="Contoh: Kami siap membantu Anda..."></textarea>
+                            </div>
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn-delete" id="btn-delete-hero-kontak">Hapus Hero (Default)</button>
+                            <button class="btn-save" id="btn-save-hero-kontak">Simpan Hero</button>
+                        </div>
+                    </div>
+
+                    <div class="section-card">
+                        <div class="section-header"><h3 class="section-title">PROFIL & LINK SOSIAL (AUTO-UPDATE GLOBAL)</h3></div>
+                        <p class="alur-text">Mengubah nomor Whatsapp, Telepon, dan Instagram di bawah ini akan otomatis merubah seluruh link tombol Whatsapp dan sosial media di SEMUA halaman web Anda.</p>
+                        <div class="form-grid">
+                            <div class="input-group form-full">
+                                <label>FOTO PROFIL ANDA</label>
+                                <div class="file-upload-wrapper" style="height: 150px; border-radius: 50%; width: 150px; margin: 0 auto;">
+                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                    <span class="file-upload-text" style="font-size: 0.7rem;">Ketuk Pilih Foto</span>
+                                    <input type="file" id="biodata-foto" accept=".png, .jpg, .jpeg, .webp">
+                                </div>
+                            </div>
+                            <div class="input-group form-full">
+                                <label>NAMA LENGKAP</label>
+                                <input type="text" id="biodata-nama" class="input-control" placeholder="Contoh: Budi Santoso">
+                            </div>
+                            <div class="input-group">
+                                <label>JABATAN</label>
+                                <input type="text" id="biodata-jabatan" class="input-control" placeholder="Contoh: Senior Sales Executive">
+                            </div>
+                            <div class="input-group form-full">
+                                <label>BIO PROFIL (TENTANG ANDA)</label>
+                                <textarea id="biodata-bio" class="input-control" rows="3" placeholder="Contoh: Saya adalah sales executive berpengalaman yang siap membantu mewujudkan mobil impian Anda..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label>NO. WHATSAPP (GUNAKAN 62)</label>
+                                <input type="tel" id="biodata-wa" class="input-control" placeholder="Contoh: 6281234567890">
+                            </div>
+                            <div class="input-group form-full">
+                                <label>PESAN DEFAULT WHATSAAP</label>
+                                <textarea id="biodata-pesan" class="input-control" rows="2" placeholder="Contoh: Halo, saya ingin bertanya tentang promo Mitsubishi terbaru..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label>NO. TELEPON PANGGILAN</label>
+                                <input type="tel" id="biodata-telp" class="input-control" placeholder="Contoh: 081234567890">
+                            </div>
+                            <div class="input-group">
+                                <label>USERNAME INSTAGRAM (TANPA @)</label>
+                                <input type="text" id="biodata-ig" class="input-control" placeholder="Contoh: mitsubishibatam">
+                            </div>
+                            <div class="input-group form-full">
+                                <label>EMAIL SALES</label>
+                                <input type="email" id="biodata-email" class="input-control" placeholder="Contoh: sales@mitsubishibatam.com">
+                            </div>
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn-delete" id="btn-batal-biodata">BATAL</button>
+                            <button class="btn-delete" id="btn-delete-profil">Hapus Profil (Default)</button>
+                            <button class="btn-save" id="btn-update-profil">Update Profil Global</button>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -1048,6 +1130,33 @@
                 }
             });
             listenVisualHarga();
+
+            // [F] Data Kontak & Biodata Sales
+            db.ref('halaman/kontak/hero').once('value', snap => {
+                if(snap.val()) {
+                    document.getElementById('kontak-hero-teks-atas').value = snap.val().teks_atas || '';
+                    document.getElementById('kontak-hero-teks-bawah').value = snap.val().teks_bawah || '';
+                }
+            });
+            
+            db.ref('global_data/biodata').once('value', snap => {
+                if(snap.val()) {
+                    document.getElementById('biodata-nama').value = snap.val().nama || '';
+                    document.getElementById('biodata-jabatan').value = snap.val().jabatan || '';
+                    document.getElementById('biodata-bio').value = snap.val().bio || '';
+                    document.getElementById('biodata-wa').value = snap.val().wa || '';
+                    document.getElementById('biodata-pesan').value = snap.val().pesan || '';
+                    document.getElementById('biodata-telp').value = snap.val().telp || '';
+                    document.getElementById('biodata-ig').value = snap.val().ig || '';
+                    document.getElementById('biodata-email').value = snap.val().email || '';
+                    if(snap.val().fotoUrl) {
+                        const wrapper = document.querySelector('#biodata-foto').parentElement;
+                        wrapper.style.backgroundImage = `url('${snap.val().fotoUrl}')`;
+                        const textSpan = wrapper.querySelector('.file-upload-text');
+                        if (textSpan) textSpan.innerText = 'Foto Profil Tersimpan';
+                    }
+                }
+            });
         }
 
         // --- 5A. LISTENER LANDING PAGE ---
@@ -1127,6 +1236,61 @@
         window.bukaFormBerita = function() { document.getElementById('form-berita-container').style.display = 'grid'; document.getElementById('berita-edit-id').value = ''; document.getElementById('berita-kategori').value = ''; document.getElementById('berita-tanggal').value = ''; document.getElementById('berita-judul').value = ''; document.getElementById('berita-konten').value = ''; document.getElementById('berita-thumbnail-file').value = ''; document.querySelector('#form-berita-container .file-upload-wrapper').style.backgroundImage = 'none'; document.querySelector('#form-berita-container .file-upload-text').innerText = 'Ketuk untuk Upload Thumbnail Berita'; document.getElementById('btn-hapus-berita-form').style.display = 'none'; document.getElementById('btn-edit-berita-form').style.display = 'none'; document.getElementById('btn-publish-berita').style.display = 'block'; document.querySelector('.main-content').scrollTop = document.getElementById('form-berita-container').offsetTop; };
         window.tutupFormBerita = function() { document.getElementById('form-berita-container').style.display = 'none'; };
         window.editBerita = function(key) { db.ref('berita_list/' + key).once('value', snap => { const data = snap.val(); document.getElementById('form-berita-container').style.display = 'grid'; document.getElementById('berita-edit-id').value = key; document.getElementById('berita-kategori').value = data.kategori || ''; document.getElementById('berita-tanggal').value = data.tanggal || ''; document.getElementById('berita-judul').value = data.judul || ''; document.getElementById('berita-konten').value = data.konten || ''; if(data.imgUrl) { const wrapper = document.querySelector('#form-berita-container .file-upload-wrapper'); wrapper.style.backgroundImage = `url('${data.imgUrl}')`; wrapper.querySelector('.file-upload-text').innerText = 'Thumbnail Tersimpan (Ketuk ganti)'; } document.getElementById('btn-publish-berita').style.display = 'none'; document.getElementById('btn-hapus-berita-form').style.display = 'block'; document.getElementById('btn-edit-berita-form').style.display = 'block'; document.querySelector('.main-content').scrollTop = document.getElementById('form-berita-container').offsetTop; showToast("Mode Edit Berita Aktif", "info"); }); };
+
+        window.simpanDataBerita = async function() {
+            const kategori = document.getElementById('berita-kategori').value;
+            const tanggal = document.getElementById('berita-tanggal').value;
+            const judul = document.getElementById('berita-judul').value.trim();
+            const konten = document.getElementById('berita-konten').value.trim();
+            if(!kategori || !tanggal || !judul || !konten) { showToast("Lengkapi semua form berita!", "error"); return; }
+            
+            const btnPublish = document.getElementById('btn-publish-berita');
+            const btnEdit = document.getElementById('btn-edit-berita-form');
+            const isEdit = document.getElementById('berita-edit-id').value !== '';
+            
+            if(isEdit) { btnEdit.innerText = "Memproses..."; btnEdit.disabled = true; } 
+            else { btnPublish.innerText = "Memproses..."; btnPublish.disabled = true; }
+
+            try {
+                const editId = document.getElementById('berita-edit-id').value;
+                let obj = { kategori, tanggal, judul, konten, timestamp: firebase.database.ServerValue.TIMESTAMP };
+                const file = document.getElementById('berita-thumbnail-file').files[0];
+                if (file) {
+                    const media = await uploadMedia(file);
+                    if (media) {
+                        obj.imgUrl = media.url; obj.imgId = media.fileId;
+                        if(editId) { const snap = await db.ref('berita_list/' + editId + '/imgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); }
+                    }
+                }
+                if(editId) { await db.ref('berita_list/' + editId).update(obj); showToast("Berita diupdate!", "success"); } 
+                else { await db.ref('berita_list').push(obj); showToast("Berita diterbitkan!", "success"); }
+                tutupFormBerita();
+            } catch(err) { showToast("Gagal menyimpan berita", "error"); }
+            finally { 
+                btnEdit.innerText = "Edit Berita"; btnEdit.disabled = false; 
+                btnPublish.innerText = "Publish Berita"; btnPublish.disabled = false; 
+            }
+        };
+
+        window.prosesHapusBeritaForm = async function() {
+            const key = document.getElementById('berita-edit-id').value;
+            if(!key) return;
+            if(confirm("Yakin hapus berita ini?")) {
+                const snap = await db.ref('berita_list/' + key + '/imgId').once('value');
+                if(snap.val()) await deleteMedia(snap.val());
+                await db.ref('berita_list/' + key).remove();
+                showToast("Berita Dihapus!", "success");
+                tutupFormBerita();
+            }
+        };
+
+        window.hapusBeritaList = async function(key, imgId) {
+            if(confirm("Yakin hapus berita ini?")) {
+                if(imgId && imgId !== 'undefined') await deleteMedia(imgId);
+                await db.ref('berita_list/' + key).remove();
+                showToast("Berita Dihapus!", "success");
+            }
+        };
 
 
         // --- 5C. LISTENER MENU KATALOG KENDARAAN ---
@@ -1397,7 +1561,6 @@
                 
                 snap.forEach(child => {
                     const data = child.val();
-                    // Cari nama mobil asli dari katalog_mobil (sekadar untuk tampilan list)
                     db.ref('katalog_mobil/' + child.key).once('value', mobilSnap => {
                         const namaMobil = mobilSnap.val() ? mobilSnap.val().nama_mobil : child.key;
                         list.innerHTML += `
@@ -1416,7 +1579,7 @@
         window.bukaFormVisualHarga = function() {
             document.getElementById('form-visual-harga-container').style.display = 'grid';
             document.getElementById('visual-harga-mobil-id').value = '';
-            document.getElementById('visual-harga-mobil-id').disabled = false; // Bisa pilih mobil jika baru
+            document.getElementById('visual-harga-mobil-id').disabled = false;
             document.getElementById('visual-harga-foto-mobil').value = '';
             document.getElementById('visual-harga-format').value = 'teks';
             document.getElementById('visual-harga-teks').value = '';
@@ -1430,7 +1593,7 @@
                 const data = snap.val();
                 document.getElementById('form-visual-harga-container').style.display = 'grid';
                 document.getElementById('visual-harga-mobil-id').value = key;
-                document.getElementById('visual-harga-mobil-id').disabled = true; // Kunci agar id mobil tidak berubah saat edit
+                document.getElementById('visual-harga-mobil-id').disabled = true;
                 document.getElementById('visual-harga-format').value = data.format_nama || 'teks';
                 document.getElementById('visual-harga-teks').value = data.teks_nama || '';
                 
@@ -1461,7 +1624,7 @@
            ========================================= */
         document.addEventListener('DOMContentLoaded', () => {
 
-            // --- EKSEKUSI LANDING PAGE, BERITA, KATALOG, SPESIFIKASI (Kode Sebelumnya) ---
+            // --- EKSEKUSI LANDING PAGE, BERITA, KATALOG, SPESIFIKASI ---
             document.getElementById('btn-save-hero-landing').addEventListener('click', async () => { const btn = document.getElementById('btn-save-hero-landing'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { let obj = { teks_atas: document.getElementById('landing-hero-teks1').value.trim(), teks_aksen: document.getElementById('landing-hero-teks-aksen').value.trim(), teks_bawah: document.getElementById('landing-hero-teks2').value.trim() }; const file = document.getElementById('landing-hero-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.bgUrl = media.url; obj.bgId = media.fileId; const snap = await db.ref('halaman/landing/hero/bgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); } } await db.ref('halaman/landing/hero').update(obj); showToast("Hero Landing Berhasil!", "success"); } catch (err) { showToast("Error simpan hero", "error"); } finally { btn.innerText = "Simpan Hero"; btn.disabled = false; } });
             document.getElementById('btn-delete-hero-landing').addEventListener('click', async () => { if(confirm("Yakin hapus Hero Landing?")) { const btn = document.getElementById('btn-delete-hero-landing'); btn.innerText = "Menghapus..."; btn.disabled = true; try { const snap = await db.ref('halaman/landing/hero/bgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); await db.ref('halaman/landing/hero').remove(); showToast("Hero dihapus.", "success"); document.getElementById('landing-hero-teks1').value = ""; document.getElementById('landing-hero-teks-aksen').value = ""; document.getElementById('landing-hero-teks2').value = ""; document.querySelector('#landing-hero-file').parentElement.style.backgroundImage = 'none'; } catch(err) { showToast("Gagal hapus", "error"); } finally { btn.innerText = "Hapus Hero (Default)"; btn.disabled = false; } } });
             document.getElementById('btn-save-promo').addEventListener('click', async () => { const btn = document.getElementById('btn-save-promo'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { const editId = document.getElementById('promo-edit-id').value; let obj = { label: document.getElementById('promo-label').value.trim(), judul: document.getElementById('promo-judul').value.trim(), info: document.getElementById('promo-info').value.trim(), tombol: document.getElementById('promo-tombol').value.trim(), timestamp: firebase.database.ServerValue.TIMESTAMP }; const file = document.getElementById('promo-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.imgUrl = media.url; obj.imgId = media.fileId; if(editId) { const snap = await db.ref('promo_list/' + editId + '/imgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); } } } if(editId) { await db.ref('promo_list/' + editId).update(obj); showToast("Promo diubah!", "success"); } else { await db.ref('promo_list').push(obj); showToast("Promo terbit!", "success"); } document.getElementById('form-promo-container').style.display = 'none'; } catch(err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan Kartu Promo"; btn.disabled = false; } });
@@ -1486,9 +1649,7 @@
             document.getElementById('btn-simpan-fitur').addEventListener('click', async () => { if(!currentMobilId) return; const btn = document.getElementById('btn-simpan-fitur'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { const editId = document.getElementById('fitur-edit-id').value; let obj = { kategori: document.getElementById('fitur-kategori').value, judul: document.getElementById('fitur-judul').value.trim(), deskripsi: document.getElementById('fitur-deskripsi').value.trim() }; const file = document.getElementById('fitur-foto').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.imgUrl = media.url; obj.imgId = media.fileId; if(editId) { const snap = await db.ref(`spesifikasi/${currentMobilId}/fitur/${editId}/imgId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); } } } if(editId) { await db.ref(`spesifikasi/${currentMobilId}/fitur/${editId}`).update(obj); } else { await db.ref(`spesifikasi/${currentMobilId}/fitur`).push(obj); } showToast("Fitur Disimpan!", "success"); document.getElementById('form-fitur-container').style.display = 'none'; } catch(err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan Fitur"; btn.disabled = false; } });
 
 
-            // --- EKSEKUSI DAFTAR HARGA (BARU) ---
-            
-            // 1. Simpan Hero Daftar Harga
+            // --- EKSEKUSI DAFTAR HARGA ---
             document.getElementById('btn-save-hero-harga').addEventListener('click', async () => {
                 const btn = document.getElementById('btn-save-hero-harga'); btn.innerText = "Menyimpan..."; btn.disabled = true;
                 try {
@@ -1507,7 +1668,6 @@
                 finally { btn.innerText = "Simpan Hero"; btn.disabled = false; }
             });
 
-            // 2. Hapus Hero Daftar Harga
             document.getElementById('btn-delete-hero-harga').addEventListener('click', async () => {
                 if(confirm("Yakin hapus Hero Daftar Harga?")) {
                     const btn = document.getElementById('btn-delete-hero-harga'); btn.innerText = "Menghapus..."; btn.disabled = true;
@@ -1521,7 +1681,6 @@
                 }
             });
 
-            // 3. Simpan Visual Kartu Harga
             document.getElementById('btn-simpan-visual-harga').addEventListener('click', async () => {
                 const mobilId = document.getElementById('visual-harga-mobil-id').value;
                 if(!mobilId) { showToast("Pilih kendaraan terlebih dahulu!", "error"); return; }
@@ -1557,12 +1716,93 @@
                         }
                     }
 
-                    // Simpan ke node khusus visual_harga menggunakan ID kendaraan yang sama dengan katalog
                     await db.ref(`visual_harga/${mobilId}`).update(obj);
                     showToast("Visual kartu berhasil diupdate!", "success");
                     document.getElementById('form-visual-harga-container').style.display = 'none';
                 } catch(err) { showToast("Gagal memproses", "error"); } 
                 finally { btn.innerText = "Update Visual Kartu"; btn.disabled = false; }
+            });
+
+            // --- EKSEKUSI BIODATA & KONTAK (BARU) ---
+            document.getElementById('btn-save-hero-kontak').addEventListener('click', async () => {
+                const btn = document.getElementById('btn-save-hero-kontak'); btn.innerText = "Menyimpan..."; btn.disabled = true;
+                try {
+                    let obj = { teks_atas: document.getElementById('kontak-hero-teks-atas').value.trim(), teks_bawah: document.getElementById('kontak-hero-teks-bawah').value.trim() };
+                    const file = document.getElementById('kontak-hero-file').files[0];
+                    if (file) {
+                        const media = await uploadMedia(file);
+                        if (media) {
+                            obj.bgUrl = media.url; obj.bgId = media.fileId;
+                            const snap = await db.ref('halaman/kontak/hero/bgId').once('value');
+                            if(snap.val()) await deleteMedia(snap.val());
+                        }
+                    }
+                    await db.ref('halaman/kontak/hero').update(obj); showToast("Hero Kontak diperbarui!", "success");
+                } catch (err) { showToast("Error menyimpan hero.", "error"); }
+                finally { btn.innerText = "Simpan Hero"; btn.disabled = false; }
+            });
+
+            document.getElementById('btn-delete-hero-kontak').addEventListener('click', async () => {
+                if(confirm("Yakin hapus Hero Kontak?")) {
+                    const btn = document.getElementById('btn-delete-hero-kontak'); btn.innerText = "Menghapus..."; btn.disabled = true;
+                    try {
+                        const snap = await db.ref('halaman/kontak/hero/bgId').once('value');
+                        if(snap.val()) await deleteMedia(snap.val());
+                        await db.ref('halaman/kontak/hero').remove(); showToast("Hero Kontak dihapus.", "success");
+                        document.getElementById('kontak-hero-teks-atas').value = ""; document.getElementById('kontak-hero-teks-bawah').value = ""; document.querySelector('#kontak-hero-file').parentElement.style.backgroundImage = 'none';
+                    } catch(err) { showToast("Gagal hapus", "error"); }
+                    finally { btn.innerText = "Hapus Hero (Default)"; btn.disabled = false; }
+                }
+            });
+
+            document.getElementById('btn-update-profil').addEventListener('click', async () => {
+                const btn = document.getElementById('btn-update-profil'); btn.innerText = "Menyimpan..."; btn.disabled = true;
+                try {
+                    let obj = {
+                        nama: document.getElementById('biodata-nama').value.trim(),
+                        jabatan: document.getElementById('biodata-jabatan').value.trim(),
+                        bio: document.getElementById('biodata-bio').value.trim(),
+                        wa: document.getElementById('biodata-wa').value.trim(),
+                        pesan: document.getElementById('biodata-pesan').value.trim(),
+                        telp: document.getElementById('biodata-telp').value.trim(),
+                        ig: document.getElementById('biodata-ig').value.trim(),
+                        email: document.getElementById('biodata-email').value.trim()
+                    };
+                    
+                    const file = document.getElementById('biodata-foto').files[0];
+                    if (file) {
+                        const media = await uploadMedia(file);
+                        if (media) {
+                            obj.fotoUrl = media.url; obj.fotoId = media.fileId;
+                            const snap = await db.ref('global_data/biodata/fotoId').once('value');
+                            if(snap.val()) await deleteMedia(snap.val());
+                        }
+                    }
+                    
+                    await db.ref('global_data/biodata').update(obj); showToast("Profil Global berhasil disimpan!", "success");
+                } catch (err) { showToast("Error menyimpan profil.", "error"); } 
+                finally { btn.innerText = "Update Profil Global"; btn.disabled = false; }
+            });
+
+            document.getElementById('btn-delete-profil').addEventListener('click', async () => {
+                if(confirm("Yakin hapus data Profil Global?")) {
+                    const btn = document.getElementById('btn-delete-profil'); btn.innerText = "Menghapus..."; btn.disabled = true;
+                    try {
+                        const snap = await db.ref('global_data/biodata/fotoId').once('value');
+                        if(snap.val()) await deleteMedia(snap.val());
+                        await db.ref('global_data/biodata').remove(); showToast("Profil Global dihapus.", "success");
+                        ['nama', 'jabatan', 'bio', 'wa', 'pesan', 'telp', 'ig', 'email'].forEach(id => document.getElementById('biodata-' + id).value = "");
+                        const wrapper = document.querySelector('#biodata-foto').parentElement;
+                        wrapper.style.backgroundImage = 'none';
+                        wrapper.querySelector('.file-upload-text').innerText = 'Ketuk Pilih Foto';
+                    } catch(err) { showToast("Gagal hapus profil", "error"); }
+                    finally { btn.innerText = "Hapus Profil (Default)"; btn.disabled = false; }
+                }
+            });
+
+            document.getElementById('btn-batal-biodata').addEventListener('click', () => {
+                loadInitialData();
+                showToast("Dibatalkan, data form telah direfresh.", "info");
             });
 
         });
