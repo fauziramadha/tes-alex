@@ -905,9 +905,13 @@
                             </div>
                             
                             <!-- TAMBAHAN FITUR FACEBOOK -->
-                            <div class="input-group form-full">
-                                <label>LINK / USERNAME FACEBOOK</label>
-                                <input type="text" id="biodata-fb" class="input-control" placeholder="Contoh: mitsubishibatam atau url lengkap">
+                            <div class="input-group">
+                                <label>NAMA TAMPILAN FACEBOOK</label>
+                                <input type="text" id="biodata-fb-nama" class="input-control" placeholder="Contoh: Mitsubishi Batam">
+                            </div>
+                            <div class="input-group">
+                                <label>LINK / URL PROFIL FACEBOOK</label>
+                                <input type="url" id="biodata-fb-link" class="input-control" placeholder="Contoh: https://www.facebook.com/profile.php?id=...">
                             </div>
 
                         </div>
@@ -918,7 +922,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div id="panel-layanan" class="data-panel">
                     
                     <div class="section-card">
@@ -1447,7 +1450,11 @@
                     document.getElementById('biodata-telp').value = snap.val().telp || '';
                     document.getElementById('biodata-ig').value = snap.val().ig || '';
                     document.getElementById('biodata-email').value = snap.val().email || '';
-                    document.getElementById('biodata-fb').value = snap.val().fb || ''; // LOAD DATA FACEBOOK
+                    
+                    // LOAD DATA FACEBOOK YANG BARU (2 KOLOM)
+                    document.getElementById('biodata-fb-nama').value = snap.val().fb_nama || ''; 
+                    document.getElementById('biodata-fb-link').value = snap.val().fb_link || ''; 
+                    
                     if(snap.val().fotoUrl) {
                         const wrapper = document.querySelector('#biodata-foto').parentElement;
                         wrapper.style.backgroundImage = `url('${snap.val().fotoUrl}')`;
@@ -1456,7 +1463,6 @@
                     }
                 }
             });
-
             // [G] Data Layanan Purna Jual
             db.ref('halaman/layanan/hero').once('value', snap => {
                 if(snap.val()) {
@@ -2180,6 +2186,7 @@
                 }
             });
 
+            // MODIFIKASI: PENYIMPANAN DATA FACEBOOK 2 KOLOM
             document.getElementById('btn-update-profil').addEventListener('click', async () => {
                 const btn = document.getElementById('btn-update-profil'); btn.innerText = "Menyimpan..."; btn.disabled = true;
                 try {
@@ -2192,7 +2199,8 @@
                         telp: document.getElementById('biodata-telp').value.trim(),
                         ig: document.getElementById('biodata-ig').value.trim(),
                         email: document.getElementById('biodata-email').value.trim(),
-                        fb: document.getElementById('biodata-fb').value.trim() // SIMPAN DATA FACEBOOK
+                        fb_nama: document.getElementById('biodata-fb-nama').value.trim(), // SIMPAN NAMA FB
+                        fb_link: document.getElementById('biodata-fb-link').value.trim()  // SIMPAN LINK FB
                     };
                     
                     const file = document.getElementById('biodata-foto').files[0];
@@ -2210,6 +2218,7 @@
                 finally { btn.innerText = "Update Profil Global"; btn.disabled = false; }
             });
 
+            // MODIFIKASI: PENGHAPUSAN DATA FACEBOOK 2 KOLOM
             document.getElementById('btn-delete-profil').addEventListener('click', async () => {
                 if(confirm("Yakin hapus data Profil Global?")) {
                     const btn = document.getElementById('btn-delete-profil'); btn.innerText = "Menghapus..."; btn.disabled = true;
@@ -2217,8 +2226,8 @@
                         const snap = await db.ref('global_data/biodata/fotoId').once('value');
                         if(snap.val()) await deleteMedia(snap.val());
                         await db.ref('global_data/biodata').remove(); showToast("Profil Global dihapus.", "success");
-                        // CLEAR DATA FACEBOOK JUGA DI SINI
-                        ['nama', 'jabatan', 'bio', 'wa', 'pesan', 'telp', 'ig', 'email', 'fb'].forEach(id => document.getElementById('biodata-' + id).value = "");
+                        // KOSONGKAN KOLOM NAMA DAN LINK FB
+                        ['nama', 'jabatan', 'bio', 'wa', 'pesan', 'telp', 'ig', 'email', 'fb-nama', 'fb-link'].forEach(id => document.getElementById('biodata-' + id).value = "");
                         const wrapper = document.querySelector('#biodata-foto').parentElement;
                         wrapper.style.backgroundImage = 'none';
                         wrapper.querySelector('.file-upload-text').innerText = 'Ketuk Pilih Foto';
