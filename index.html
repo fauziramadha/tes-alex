@@ -123,7 +123,7 @@
         /* =========================================
            BIODATA SALES
            ========================================= */
-        .sales-bio { background-color: var(--color-primary); padding: 40px 24px 80px; display: flex; justify-content: center; position: relative; z-index: 2; margin-top: -1px; /* Kompensasi Garis Hitam */ }
+        .sales-bio { background-color: var(--color-primary); padding: 40px 24px 80px; display: flex; justify-content: center; position: relative; z-index: 2; margin-top: -1px; }
         .bio-card-wrapper { width: 100%; max-width: 950px; will-change: transform; }
         .bio-card { background: var(--color-primary); width: 100%; border-radius: 8px; padding: 48px; box-shadow: var(--shadow-premium); display: flex; align-items: center; gap: 48px; border: 1px solid var(--color-border); border-top: 3px solid var(--color-accent); position: relative; overflow: hidden; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .bio-card:hover { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.1); }
@@ -144,14 +144,14 @@
         /* =========================================
            DEALER INFO SECTION
            ========================================= */
-        .dealer-info { padding: 20px 24px 160px; background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary) 50%, #050505 100%); text-align: center; position: relative; z-index: 2; margin-top: -1px; /* Kompensasi Garis Hitam */ }
+        .dealer-info { padding: 20px 24px 160px; background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary) 50%, #050505 100%); text-align: center; position: relative; z-index: 2; margin-top: -1px; }
         .dealer-title { font-size: clamp(1.8rem, 5vw, 2.5rem); color: var(--color-secondary); letter-spacing: -0.5px; margin-bottom: 16px; text-transform: uppercase; }
         .dealer-desc { max-width: 700px; margin: 0 auto; color: #555; font-size: 1.1rem; line-height: 1.8; }
 
         /* =========================================
            PROMO SECTION
            ========================================= */
-        .promo-section { background-color: #050505; padding: 0 0 60px 0; position: relative; overflow: hidden; color: var(--color-primary); margin-top: -1px; /* Kompensasi Garis Hitam */ }
+        .promo-section { background-color: #050505; padding: 0 0 60px 0; position: relative; overflow: hidden; color: var(--color-primary); margin-top: -1px; }
         .promo-section::before { content: ''; position: absolute; top: 10%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(230,0,0,0.15) 0%, transparent 60%); filter: blur(80px); z-index: 0; pointer-events: none; }
         .promo-header { text-align: center; margin-bottom: 60px; padding: 0 24px; position: relative; z-index: 1; }
         .promo-header h2 { font-size: clamp(2.2rem, 6vw, 3.5rem); letter-spacing: 1px; text-transform: uppercase; }
@@ -189,7 +189,7 @@
         /* =========================================
            ADS / IKLAN SECTION 
            ========================================= */
-        .ads-section { background-color: #050505; padding-bottom: 100px; margin-top: -1px; /* Kompensasi Garis Hitam */ }
+        .ads-section { background-color: #050505; padding-bottom: 100px; margin-top: -1px; }
         .ads-grid-container { padding: 0 24px; position: relative; z-index: 1; margin-top: 0; }
         .ads-grid { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 1200px; margin: 0 auto; }
         .luxury-ad-space { width: 100%; height: 420px; border-radius: 24px; overflow: hidden; position: relative; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 30px 60px rgba(0,0,0,0.6); transform: translateZ(0); }
@@ -207,7 +207,7 @@
         /* =========================================
            KATALOG SECTION
            ========================================= */
-        .katalog-section { padding: 100px 24px; background: var(--color-surface); position: relative; z-index: 2; margin-top: -1px; /* Kompensasi Garis Hitam */ border-top: 1px solid var(--color-border); }
+        .katalog-section { padding: 100px 24px; background: var(--color-surface); position: relative; z-index: 2; margin-top: -1px; border-top: 1px solid var(--color-border); }
         .katalog-header { text-align: center; margin-bottom: 48px; }
         .katalog-title { font-size: clamp(2rem, 5vw, 3rem); text-transform: uppercase; color: var(--color-secondary); letter-spacing: -0.5px; }
         .katalog-subtitle { color: #666; margin-top: 12px; font-size: 1.1rem; }
@@ -290,7 +290,8 @@
         .testi-name { font-weight: 800; font-family: var(--font-heading); color: var(--color-secondary); font-size: 1.2rem; }
         .testi-role { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
         .testi-stars { color: #FFD700; margin-bottom: 16px; font-size: 1.1rem; letter-spacing: 2px; }
-        .testi-text { font-style: italic; color: #555; line-height: 1.7; font-size: 0.95rem; flex-grow: 1; }
+        /* Pembatasan baris (clamp) agar layout UX rapi tidak panjang ke bawah */
+        .testi-text { font-style: italic; color: #555; line-height: 1.7; font-size: 0.95rem; flex-grow: 1; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
         
         .btn-luxury-outline { display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 16px 40px; border-radius: 50px; background: transparent; border: 1px solid var(--color-secondary); color: var(--color-secondary); font-weight: 700; font-family: var(--font-heading); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; transition: var(--transition-smooth); position: relative; overflow: hidden; z-index: 1; cursor: pointer; }
         .btn-luxury-outline::before { content: ''; position: absolute; top: 0; left: 0; width: 0%; height: 100%; background: var(--color-secondary); transition: var(--transition-smooth); z-index: -1; }
@@ -304,7 +305,7 @@
         /* =========================================
            LAYANAN PURNA JUAL SECTION 
            ========================================= */
-        .service-section { position: relative; padding: 160px 24px 120px; background: #050505; color: var(--color-primary); overflow: hidden; text-align: center; display: flex; align-items: center; justify-content: center; margin-top: -1px; /* Kompensasi Garis Hitam */ }
+        .service-section { position: relative; padding: 160px 24px 120px; background: #050505; color: var(--color-primary); overflow: hidden; text-align: center; display: flex; align-items: center; justify-content: center; margin-top: -1px; }
         .service-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 180px; background: linear-gradient(to bottom, var(--color-surface) 0%, transparent 100%); z-index: 2; pointer-events: none; }
         .service-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4) grayscale(0.2); transition: transform 10s ease; z-index: 0; }
         .service-section:hover .service-bg { transform: scale(1.05); }
@@ -324,7 +325,7 @@
         /* =========================================
            MEGA FOOTER
            ========================================= */
-        .footer { background: #050505; color: var(--color-primary); padding: 100px 24px 40px; position: relative; z-index: 2; margin-top: -1px; /* Kompensasi Garis Hitam */ }
+        .footer { background: #050505; color: var(--color-primary); padding: 100px 24px 40px; position: relative; z-index: 2; margin-top: -1px; }
         .footer-container { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; max-width: 1200px; margin: 0 auto; padding-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .footer-brand .footer-logo { height: 50px; filter: brightness(0) invert(1); margin-bottom: 24px; }
         .footer-brand p { color: #888; font-size: 0.95rem; line-height: 1.8; max-width: 300px; margin-bottom: 32px; }
@@ -474,7 +475,6 @@
                     </button>
                     <div class="accordion-content">
                         <div class="accordion-inner" id="sidebar-model-list">
-                            <!-- Data akan dimuat secara otomatis dari katalog.html / katalog_mobil -->
                             <div style="margin-bottom: 16px; margin-top: 8px;">
                                 <span style="font-size: 0.75rem; color: var(--color-accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Memuat Data...</span>
                             </div>
@@ -555,25 +555,15 @@
                 <div class="slider-btn-nav prev" id="promo-prev" aria-label="Geser Kiri"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></div>
                 
                 <div class="promo-slider smooth-scroll" id="promo-slider">
+                    <!-- Fallback Dummy Promo (Hanya muncul jika DB Kosong) -->
                     <div class="promo-card dummy-promo">
                         <div class="promo-card-inner">
                             <img src="https://images.unsplash.com/photo-1605810730836-474be6843477?q=80&w=800&auto=format&fit=crop" alt="Promo XFORCE" class="promo-card-bg">
                             <div class="promo-card-content">
                                 <span class="promo-badge">HOT PROMO</span>
-                                <h3>Bunga 0% XFORCE</h3>
+                                <h3 style="color:#FFF;">Bunga 0% XFORCE</h3>
                                 <p>DP ringan dan bunga 0% hingga 2 tahun eksklusif bulan ini.</p>
                                 <a href="#" class="btn-text-promo wa-promo" data-promo="Bunga 0% XFORCE">Klaim Promo <span>→</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="promo-card dummy-promo">
-                        <div class="promo-card-inner">
-                            <img src="https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=800&auto=format&fit=crop" alt="Promo Pajero" class="promo-card-bg">
-                            <div class="promo-card-content">
-                                <span class="promo-badge">CASHBACK</span>
-                                <h3>Pajero Special</h3>
-                                <p>Cashback puluhan juta rupiah dan free asuransi 1 tahun.</p>
-                                <a href="#" class="btn-text-promo wa-promo" data-promo="Pajero Special">Lihat Detail <span>→</span></a>
                             </div>
                         </div>
                     </div>
@@ -586,22 +576,14 @@
         <section class="ads-section" id="iklan-banner">
             <div class="ads-grid-container reveal-up delay-1">
                 <div class="ads-grid" id="iklan-grid-container">
+                    <!-- Fallback Dummy Iklan -->
                     <div class="luxury-ad-space dummy-iklan">
                         <video class="luxury-media" autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=800&auto=format&fit=crop">
                             <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" type="video/mp4">
                         </video>
                         <div class="ad-content">
-                            <h3>Drive Your Ambition</h3>
+                            <h3 style="color:#FFF;">Drive Your Ambition</h3>
                             <a href="#" class="btn-glass-ad wa-iklan" data-iklan="Video Drive Your Ambition"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Hubungi Kami</a>
-                        </div>
-                    </div>
-
-                    <div class="luxury-ad-space dummy-iklan">
-                        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=800&auto=format&fit=crop" alt="Layanan Eksklusif" class="luxury-media">
-                        <div class="ad-content">
-                            <h3>Layanan VVIP</h3>
-                            <p>Prioritas servis tanpa antre khusus bulan ini.</p>
-                            <a href="#" class="btn-glass-ad wa-iklan" data-iklan="Layanan VVIP">Daftar Sekarang <svg viewBox="0 0 24 24" style="margin-left:4px;"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></a>
                         </div>
                     </div>
                 </div>
@@ -616,13 +598,12 @@
 
             <div class="katalog-filters reveal-up delay-2">
                 <button class="filter-btn active" data-filter="all">Semua Model</button>
-                <button class="filter-btn" data-filter="passenger">Passenger Car</button>
-                <button class="filter-btn" data-filter="commercial">Commercial Vehicle</button>
+                <button class="filter-btn" data-filter="passenger-car">Passenger Car</button>
+                <button class="filter-btn" data-filter="commercial-vehicle">Commercial Vehicle</button>
             </div>
 
             <div class="katalog-grid reveal-up delay-2" id="katalog-grid-container">
-                <!-- Data ini akan diganti oleh sinkronisasi database dari katalog_mobil -->
-                <div class="car-card" data-category="passenger" style="display: flex; justify-content: center; padding: 40px; color: #888;">
+                <div class="car-card" data-category="passenger-car" style="display: flex; justify-content: center; padding: 40px; color: #888;">
                     Memuat data kendaraan...
                 </div>
             </div>
@@ -649,14 +630,7 @@
             </div>
 
             <div class="news-grid reveal-up delay-2" id="news-grid-container">
-                <div class="news-card" data-category="berita" onclick="window.location.href='berita.html?id=rekor-xforce'">
-                    <div class="news-img-wrapper"><span class="news-category-badge">Berita</span><img src="https://images.unsplash.com/photo-1517524206127-48bbd363f3d7?q=80&w=800&auto=format&fit=crop" alt="Performa Kendaraan" class="news-img"></div>
-                    <div class="news-content">
-                        <div class="news-date">21 Apr 2026</div><h3 class="news-card-title">Mitsubishi Tembus Rekor Penjualan XFORCE Nasional Tahun Ini</h3>
-                        <p class="news-snippet">Antusiasme masyarakat yang tinggi terhadap desain futuristik dan fitur premium dari Mitsubishi XFORCE berhasil mencatatkan rekor penjualan tertinggi pada kuartal pertama tahun ini di Indonesia...</p>
-                        <a href="berita.html?id=rekor-xforce" class="btn-news-read">Klik Selengkapnya <span>→</span></a>
-                    </div>
-                </div>
+                 <!-- Digantikan Otomatis oleh JS -->
             </div>
 
             <div class="news-more-btn-wrapper reveal-up delay-2">
@@ -684,10 +658,11 @@
                         <div class="map-icon-circle"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></div>
                         <div class="map-text"><h4>Jam Operasional</h4><p id="jam-operasional-text">Senin - Minggu<br>08:00 - 17:00 WIB</p></div>
                     </div>
-                    <a href="https://maps.google.com" target="_blank" class="btn-map-nav">
+                    <a href="https://maps.google.com" target="_blank" class="btn-map-nav" id="btn-map-nav-dynamic">
                         Mulai Navigasi <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:white;"><path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z"/></svg>
                     </a>
                 </div>
+                <!-- Iframe default sebelum diganti admin -->
                 <iframe id="iframe-gmaps" class="google-map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127641.52382542488!2d103.95738870129759!3d1.0827292211606368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d98d75a133464b%3A0x280e5513813af814!2sBatam%2C%20Batam%20City%2C%20Riau%20Islands!5e0!3m2!1sen!2sid!4v1708684784746!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </section>
@@ -699,15 +674,13 @@
             </div>
             
             <div class="testi-grid reveal-up delay-2" id="testi-grid-container">
+                <!-- Data ini akan diganti oleh sinkronisasi JS -->
                 <div class="testi-card">
                     <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=600&auto=format&fit=crop" alt="Penyerahan Unit" class="testi-img-main">
                     <div class="testi-content">
                         <div class="testi-info">
-                            <span class="testi-name">Bpk. Hendra Gunawan</span>
-                            <span class="testi-role">Pengusaha</span>
+                            <span class="testi-name">Memuat Data...</span>
                         </div>
-                        <div class="testi-stars">★★★★★</div>
-                        <p class="testi-text">"Pelayanan sangat luar biasa! Proses pembelian Pajero Sport saya dibantu sampai tuntas dengan sangat transparan dan cepat."</p>
                     </div>
                 </div>
             </div>
@@ -825,6 +798,33 @@
             setTimeout(() => { preloader.classList.add('hide'); }, 1000); 
         });
 
+        // --- FUNGSI REFRESH ANIMASI ---
+        function refreshAnimations() {
+            setTimeout(() => {
+                const revealElements = document.querySelectorAll('.reveal-up:not(.active)');
+                const revealOptions = { threshold: 0.05, rootMargin: "0px 0px 50px 0px" };
+                const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('active');
+                            observer.unobserve(entry.target); 
+                        }
+                    });
+                }, revealOptions);
+                revealElements.forEach(el => revealOnScroll.observe(el));
+            }, 100);
+        }
+
+        // --- PERBAIKAN BUG: HERO VIDEO MUNCULKAN KEMBALI SAAT PINDAH TAB ---
+        document.addEventListener("visibilitychange", function() {
+            if (!document.hidden) {
+                const heroVideo = document.getElementById('hero-video-bg');
+                if(heroVideo) {
+                    heroVideo.play().catch(e => console.log("Auto-play hero video tertunda", e));
+                }
+            }
+        });
+
         // --- 1. KONFIGURASI API FIREBASE REALTIME DATABASE ---
         const firebaseConfig = {
             apiKey: "AIzaSyBrNnp8PJiKYATH-1ie67aq9WqESpIXBus",
@@ -838,10 +838,9 @@
         if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
         const db = firebase.database();
 
-        // Variabel global untuk menyimpan nomor WA
         let currentSalesWA = ""; 
 
-        // Fungsi khusus merakit link WhatsApp dinamis
+        // Fungsi merakit link WhatsApp dinamis
         function updateWhatsAppLinks(nomorWa) {
             if(!nomorWa) return;
             let cleanWa = nomorWa.replace(/\D/g, '');
@@ -880,7 +879,7 @@
         // --- 2. LOGIKA PEMBACA OTOMATIS (REALTIME SYNC) DARI ADMIN ---
         function sinkronisasiOtomatis() {
             
-            // A. Sinkronisasi Profil Sales & Sosial Media (Mengikuti kontak.html)
+            // A. Sinkronisasi Profil Sales & Sosial Media
             db.ref('global_data/biodata').on('value', (snapshot) => {
                 const data = snapshot.val();
                 if(data) {
@@ -910,13 +909,12 @@
                 }
             });
 
-            // B. Sinkronisasi Data Alamat & Peta
+            // B. Sinkronisasi Data Alamat & Peta (PERBAIKAN MAPS)
             db.ref('global_data/alamat').on('value', (snapshot) => {
                 const data = snapshot.val();
                 if(data) {
                     if(data.gmaps) {
                         let srcMap = data.gmaps;
-                        // PERBAIKAN: Gunakan DOM Parser agar lebih kebal dari error tanda kutip
                         if(srcMap.includes('<iframe')) {
                             const tempDiv = document.createElement('div');
                             tempDiv.innerHTML = srcMap;
@@ -926,8 +924,11 @@
                             }
                         }
                         const iframeGmaps = document.getElementById('iframe-gmaps');
-                        if(iframeGmaps && srcMap && srcMap.startsWith('http')) {
-                            iframeGmaps.src = srcMap;
+                        const btnMapNav = document.getElementById('btn-map-nav-dynamic');
+                        
+                        if(srcMap && srcMap.startsWith('http')) {
+                            if(iframeGmaps) iframeGmaps.src = srcMap;
+                            if(btnMapNav) btnMapNav.href = srcMap;
                         }
                     }
                     if(data.teks_alamat) {
@@ -940,7 +941,7 @@
                 }
             });
 
-            // C. Sinkronisasi Hero Beranda (Support Video)
+            // C. Sinkronisasi Hero Beranda (PERBAIKAN VIDEO NGE-BLANK)
             db.ref('halaman/landing/hero').on('value', (snapshot) => {
                 const data = snapshot.val();
                 if(data) {
@@ -959,7 +960,12 @@
                     if(bgUrl) {
                         const heroBgContainer = document.getElementById('hero-bg-container');
                         if (bgUrl.match(/\.(mp4|webm)$/i)) {
-                            heroBgContainer.innerHTML = `<video class="hero-img" autoplay loop muted playsinline><source src="${bgUrl}" type="video/mp4"></video><div class="hero-overlay"></div>`;
+                            heroBgContainer.innerHTML = `<video id="hero-video-bg" class="hero-img" autoplay loop muted playsinline><source src="${bgUrl}" type="video/mp4"></video><div class="hero-overlay"></div>`;
+                            // Force play after injection
+                            setTimeout(() => {
+                                const v = document.getElementById('hero-video-bg');
+                                if(v) v.play().catch(e => console.log(e));
+                            }, 500);
                         } else {
                             heroBgContainer.innerHTML = `<img src="${bgUrl}" alt="Hero" class="hero-img"><div class="hero-overlay"></div>`;
                         }
@@ -985,7 +991,7 @@
                             : `<img src="${img}" alt="${promo.judul || 'Promo'}" class="promo-card-bg" style="width:100%; height:100%; object-fit:cover;">`;
 
                         sliderContainer.innerHTML += `
-                        <div class="promo-card">
+                        <div class="promo-card reveal-up">
                             <div class="promo-card-inner">
                                 ${mediaElement}
                                 <div class="promo-card-content">
@@ -1000,9 +1006,8 @@
                         </div>`;
                     });
                     if(currentSalesWA) updateWhatsAppLinks(currentSalesWA);
-                    
-                    // Trigger center card logic again
                     setTimeout(() => updateCenterCard(), 100);
+                    refreshAnimations();
                 } 
             });
 
@@ -1024,7 +1029,7 @@
                             : `<img src="${img}" alt="${iklan.judul || 'Iklan'}" class="luxury-media" style="width:100%; height:100%; object-fit:cover;">`;
 
                         iklanContainer.innerHTML += `
-                        <div class="luxury-ad-space">
+                        <div class="luxury-ad-space reveal-up">
                             ${mediaElement}
                             <div class="ad-content">
                                 <h3 style="color: #FFF;">${iklan.judul || 'Iklan Spesial'}</h3>
@@ -1036,95 +1041,118 @@
                         </div>`;
                     });
                     if(currentSalesWA) updateWhatsAppLinks(currentSalesWA);
+                    refreshAnimations();
                 }
             });
 
-            // F. Sinkronisasi Data Mobil (PERBAIKAN: Mengikuti database katalog_mobil dari katalog.html)
+            // F. Sinkronisasi Data Mobil (PERBAIKAN: Kategori dinamis dan Batas 6 Katalog per kategori)
             db.ref('katalog_mobil').on('value', (snapshot) => {
                 const data = snapshot.val();
+                const katalogGrid = document.getElementById('katalog-grid-container');
+                const sidebarModelList = document.getElementById('sidebar-model-list');
+                
                 if(data) {
-                    const katalogGrid = document.getElementById('katalog-grid-container');
-                    const sidebarModelList = document.getElementById('sidebar-model-list');
-                    
                     let gridHTML = '';
-                    let passSidebarHTML = '';
-                    let commSidebarHTML = '';
+                    let sidebarHTML = '';
+                    let categoryCounts = {};
+                    let categoriesHTML = {};
 
                     Object.keys(data).forEach(key => {
                         const mobil = data[key];
-                        const kategori = mobil.kategori || 'passenger';
+                        const kategoriRaw = mobil.kategori || 'Passenger Car';
+                        // Mengubah nama kategori menjadi ID untuk filter misal "Passenger Car" -> "passenger-car"
+                        const kategoriId = kategoriRaw.toLowerCase().replace(/\s+/g, '-');
                         
-                        // Menyesuaikan dengan format label_promo dari katalog.html
-                        let badgeHTML = '';
-                        if(mobil.label_promo) {
-                            badgeHTML = `<span class="car-badge">${mobil.label_promo}</span>`;
-                        }
+                        if(!categoryCounts[kategoriId]) categoryCounts[kategoriId] = 0;
+                        if(!categoriesHTML[kategoriRaw]) categoriesHTML[kategoriRaw] = '';
 
-                        // Format Harga
-                        let hargaFormat = 'Harga Hubungi Sales';
-                        if (mobil.harga) {
-                            hargaFormat = `Mulai Rp ` + parseInt(mobil.harga).toLocaleString('id-ID');
-                        }
+                        // Perbaikan Batas: Cuma menampilkan 6 pertama di Beranda untuk tiap kategori
+                        if(categoryCounts[kategoriId] < 6) {
+                            let badgeHTML = '';
+                            if(mobil.label_promo) badgeHTML = `<span class="car-badge">${mobil.label_promo}</span>`;
 
-                        // Susun Grid Card HTML (Tetap mempertahankan gaya UI Index)
-                        gridHTML += `
-                        <div class="car-card" data-category="${kategori}">
-                            <div class="car-img-wrapper">${badgeHTML}<img src="${mobil.imgUrl || ''}" alt="${mobil.nama_mobil || 'Mobil'}" class="car-img"></div>
-                            <div class="car-info">
-                                <h3 class="car-name">${mobil.nama_mobil || 'Kendaraan Mitsubishi'}</h3>
-                                <div class="car-price">${hargaFormat}</div>
-                                <p class="car-desc">${mobil.deskripsiSingkat || 'Kendaraan dengan performa terbaik di kelasnya.'}</p>
-                                <div class="car-actions">
-                                    <a href="detail.html?id=${key}" class="btn-outline">Spesifikasi</a>
-                                    <a href="#" class="btn-fill wa-pesan-mobil" data-mobil="${mobil.nama_mobil}">Pesan</a>
+                            let hargaFormat = 'Harga Hubungi Sales';
+                            if (mobil.harga) hargaFormat = `Mulai Rp ` + parseInt(mobil.harga).toLocaleString('id-ID');
+
+                            gridHTML += `
+                            <div class="car-card reveal-up" data-category="${kategoriId}">
+                                <div class="car-img-wrapper">${badgeHTML}<img src="${mobil.imgUrl || ''}" alt="${mobil.nama_mobil || 'Mobil'}" class="car-img"></div>
+                                <div class="car-info">
+                                    <h3 class="car-name">${mobil.nama_mobil || 'Kendaraan Mitsubishi'}</h3>
+                                    <div class="car-price">${hargaFormat}</div>
+                                    <p class="car-desc">${mobil.deskripsiSingkat || 'Kendaraan dengan performa terbaik di kelasnya.'}</p>
+                                    <div class="car-actions">
+                                        <a href="detail.html?id=${key}" class="btn-outline">Spesifikasi</a>
+                                        <a href="#" class="btn-fill wa-pesan-mobil" data-mobil="${mobil.nama_mobil}">Pesan</a>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>`;
+                            </div>`;
 
-                        // Susun Sidebar Nav HTML
-                        if (kategori === 'passenger') {
-                            passSidebarHTML += `<a href="detail.html?id=${key}" class="sub-menu-item">${mobil.nama_mobil}</a>`;
-                        } else {
-                            commSidebarHTML += `<a href="detail.html?id=${key}" class="sub-menu-item">${mobil.nama_mobil}</a>`;
+                            categoriesHTML[kategoriRaw] += `<a href="detail.html?id=${key}" class="sub-menu-item">${mobil.nama_mobil}</a>`;
+                            categoryCounts[kategoriId]++;
                         }
                     });
 
-                    // Update DOM jika elemennya ada
-                    if(katalogGrid) katalogGrid.innerHTML = gridHTML;
-                    if(sidebarModelList) {
-                        sidebarModelList.innerHTML = `
+                    // Build dynamic sidebar
+                    for (const [catName, htmlContent] of Object.entries(categoriesHTML)) {
+                        sidebarHTML += `
                             <div style="margin-bottom: 16px; margin-top: 8px;">
-                                <span style="font-size: 0.75rem; color: var(--color-accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Passenger</span>
-                                ${passSidebarHTML}
-                            </div>
-                            <div style="margin-bottom: 8px;">
-                                <span style="font-size: 0.75rem; color: var(--color-accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Commercial</span>
-                                ${commSidebarHTML}
+                                <span style="font-size: 0.75rem; color: var(--color-accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">${catName}</span>
+                                ${htmlContent}
                             </div>
                         `;
                     }
+
+                    if(katalogGrid) katalogGrid.innerHTML = gridHTML;
+                    if(sidebarModelList) sidebarModelList.innerHTML = sidebarHTML || '<div class="sub-menu-item">Belum ada data model.</div>';
+
                     if(currentSalesWA) updateWhatsAppLinks(currentSalesWA);
-                    setupKatalogFilter(); // Re-init filter button
+                    setupKatalogFilter(); 
+                    refreshAnimations();
+                } else {
+                    // Fallback Dummy jika Database benar-benar Kosong (Proteksi Blank)
+                    if(katalogGrid) {
+                        katalogGrid.innerHTML = `
+                        <div class="car-card reveal-up" data-category="passenger-car">
+                            <div class="car-img-wrapper"><img src="https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=600" alt="Dummy Car" class="car-img"></div>
+                            <div class="car-info">
+                                <h3 class="car-name">Pajero Sport (Dummy)</h3>
+                                <div class="car-price">Mulai Rp 500.000.000</div>
+                                <p class="car-desc">Data simulasi ketika database kosong.</p>
+                                <div class="car-actions">
+                                    <a href="#" class="btn-outline">Spesifikasi</a>
+                                    <a href="#" class="btn-fill">Pesan</a>
+                                </div>
+                            </div>
+                        </div>`;
+                    }
+                    if(sidebarModelList) {
+                        sidebarModelList.innerHTML = `<a href="#" class="sub-menu-item">Pajero Sport (Dummy)</a>`;
+                    }
                 }
             });
 
-            // G. Sinkronisasi Data Berita & Acara
+            // G. Sinkronisasi Data Berita & Acara (PERBAIKAN SIARAN PERS)
             db.ref('berita_list').on('value', (snapshot) => {
                 const data = snapshot.val();
                 if(data) {
                     const newsGrid = document.getElementById('news-grid-container');
                     if(newsGrid) {
                         let newsHTML = '';
-                        // Mengambil maksimal 3-6 berita terbaru untuk index
                         const keys = Object.keys(data).reverse().slice(0, 6); 
                         keys.forEach(key => {
                             const berita = data[key];
-                            const badgeColor = (berita.kategori.toLowerCase() === 'exhibition') ? 'background:var(--color-accent);' : ((berita.kategori.toLowerCase() === 'lifestyle') ? 'background:#0A0A0A;' : '');
+                            const rawKategori = berita.kategori || 'Berita';
+                            
+                            // PERBAIKAN: Spasi pada Siaran Pers sekarang aman dikonversi menjadi ID untuk filter
+                            const formattedKategori = rawKategori.toLowerCase().replace(/\s+/g, '-');
+                            
+                            const badgeColor = (formattedKategori === 'exhibition') ? 'background:var(--color-accent);' : ((formattedKategori === 'lifestyle') ? 'background:#0A0A0A;' : '');
                             
                             newsHTML += `
-                            <div class="news-card" data-category="${berita.kategori.toLowerCase()}" onclick="window.location.href='berita.html?id=${key}'">
+                            <div class="news-card reveal-up" data-category="${formattedKategori}" onclick="window.location.href='berita.html?id=${key}'">
                                 <div class="news-img-wrapper">
-                                    <span class="news-category-badge" style="${badgeColor}">${berita.kategori}</span>
+                                    <span class="news-category-badge" style="${badgeColor}">${rawKategori}</span>
                                     <img src="${berita.imgUrl}" alt="${berita.judul}" class="news-img">
                                 </div>
                                 <div class="news-content">
@@ -1135,35 +1163,44 @@
                             </div>`;
                         });
                         newsGrid.innerHTML = newsHTML;
-                        setupBeritaFilter(); // Re-init filter button
+                        setupBeritaFilter();
+                        refreshAnimations();
                     }
                 }
             });
 
-            // H. Sinkronisasi Testimoni Pelanggan
+            // H. Sinkronisasi Testimoni Pelanggan (PERBAIKAN UX & UNDEFINED)
             db.ref('testimoni_list').on('value', (snapshot) => {
                 const data = snapshot.val();
                 if(data) {
                     const testiGrid = document.getElementById('testi-grid-container');
                     if(testiGrid) {
                         let testiHTML = '';
-                        const keys = Object.keys(data).reverse().slice(0, 4); // Ambil 4 terbaru untuk index
+                        const keys = Object.keys(data).reverse().slice(0, 4);
                         keys.forEach(key => {
                             const testi = data[key];
+                            
+                            // Fallback jika Admin lupa ngisi data sehingga tidak tertulis "undefined"
+                            const namaClient = testi.nama || 'Pelanggan Setia';
+                            const roleClient = testi.profesi || 'Konsumen';
+                            const pesanClient = testi.pesan || 'Layanan dari dealer ini sangat memuaskan, sangat direkomendasikan untuk Anda!';
+                            const imgClient = testi.imgUrl || 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=600&auto=format&fit=crop';
+
                             testiHTML += `
-                            <div class="testi-card">
-                                <img src="${testi.imgUrl}" alt="Penyerahan Unit" class="testi-img-main">
+                            <div class="testi-card reveal-up">
+                                <img src="${imgClient}" alt="Testimoni" class="testi-img-main">
                                 <div class="testi-content">
                                     <div class="testi-info">
-                                        <span class="testi-name">${testi.nama}</span>
-                                        <span class="testi-role">${testi.profesi || 'Pelanggan'}</span>
+                                        <span class="testi-name">${namaClient}</span>
+                                        <span class="testi-role">${roleClient}</span>
                                     </div>
                                     <div class="testi-stars">★★★★★</div>
-                                    <p class="testi-text">"${testi.pesan}"</p>
+                                    <p class="testi-text">"${pesanClient}"</p>
                                 </div>
                             </div>`;
                         });
                         testiGrid.innerHTML = testiHTML;
+                        refreshAnimations();
                     }
                 }
             });
@@ -1195,7 +1232,9 @@
 
         const accordionBtn = document.querySelector('.accordion-btn');
         const accordionItem = document.getElementById('accordion-model');
-        accordionBtn.addEventListener('click', () => accordionItem.classList.toggle('accordion-active'));
+        if(accordionBtn) {
+            accordionBtn.addEventListener('click', () => accordionItem.classList.toggle('accordion-active'));
+        }
         const normalLinks = document.querySelectorAll('.mobile-menu .menu-item, .mobile-menu .sub-menu-item');
         normalLinks.forEach(link => { link.addEventListener('click', () => { if(isMenuOpen) toggleMenu(); }); });
 
@@ -1257,7 +1296,7 @@
             }
         }
 
-        // --- 7. LOGIKA REVEAL UP (Animasi Muncul) ---
+        // --- 7. LOGIKA REVEAL UP MANUAL (Untuk element yang statis) ---
         const revealElements = document.querySelectorAll('.reveal-up');
         const revealOptions = { threshold: 0.05, rootMargin: "0px 0px 50px 0px" };
         const revealOnScroll = new IntersectionObserver(function(entries, observer) {
@@ -1326,7 +1365,7 @@
         }
         setupBeritaFilter();
 
-        // Trigger awal animasi
+        // Trigger awal animasi saat memuat
         window.dispatchEvent(new Event('scroll'));
     </script>
 </body>
