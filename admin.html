@@ -903,6 +903,13 @@
                                 <label>EMAIL SALES</label>
                                 <input type="email" id="biodata-email" class="input-control" placeholder="Contoh: sales@mitsubishibatam.com">
                             </div>
+                            
+                            <!-- TAMBAHAN FITUR FACEBOOK -->
+                            <div class="input-group form-full">
+                                <label>LINK / USERNAME FACEBOOK</label>
+                                <input type="text" id="biodata-fb" class="input-control" placeholder="Contoh: mitsubishibatam atau url lengkap">
+                            </div>
+
                         </div>
                         <div class="action-bar">
                             <button class="btn-delete" id="btn-batal-biodata">BATAL</button>
@@ -1440,6 +1447,7 @@
                     document.getElementById('biodata-telp').value = snap.val().telp || '';
                     document.getElementById('biodata-ig').value = snap.val().ig || '';
                     document.getElementById('biodata-email').value = snap.val().email || '';
+                    document.getElementById('biodata-fb').value = snap.val().fb || ''; // LOAD DATA FACEBOOK
                     if(snap.val().fotoUrl) {
                         const wrapper = document.querySelector('#biodata-foto').parentElement;
                         wrapper.style.backgroundImage = `url('${snap.val().fotoUrl}')`;
@@ -1508,7 +1516,7 @@
                 }
             });
 
-            // [H] Data Gallery Testimoni (BARU)
+            // [H] Data Gallery Testimoni
             db.ref('halaman/testimoni/hero').once('value', snap => {
                 if(snap.val()) {
                     document.getElementById('testimoni-hero-teks-atas').value = snap.val().teks_atas || '';
@@ -2183,7 +2191,8 @@
                         pesan: document.getElementById('biodata-pesan').value.trim(),
                         telp: document.getElementById('biodata-telp').value.trim(),
                         ig: document.getElementById('biodata-ig').value.trim(),
-                        email: document.getElementById('biodata-email').value.trim()
+                        email: document.getElementById('biodata-email').value.trim(),
+                        fb: document.getElementById('biodata-fb').value.trim() // SIMPAN DATA FACEBOOK
                     };
                     
                     const file = document.getElementById('biodata-foto').files[0];
@@ -2208,7 +2217,8 @@
                         const snap = await db.ref('global_data/biodata/fotoId').once('value');
                         if(snap.val()) await deleteMedia(snap.val());
                         await db.ref('global_data/biodata').remove(); showToast("Profil Global dihapus.", "success");
-                        ['nama', 'jabatan', 'bio', 'wa', 'pesan', 'telp', 'ig', 'email'].forEach(id => document.getElementById('biodata-' + id).value = "");
+                        // CLEAR DATA FACEBOOK JUGA DI SINI
+                        ['nama', 'jabatan', 'bio', 'wa', 'pesan', 'telp', 'ig', 'email', 'fb'].forEach(id => document.getElementById('biodata-' + id).value = "");
                         const wrapper = document.querySelector('#biodata-foto').parentElement;
                         wrapper.style.backgroundImage = 'none';
                         wrapper.querySelector('.file-upload-text').innerText = 'Ketuk Pilih Foto';
