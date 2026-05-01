@@ -474,20 +474,9 @@
                     </button>
                     <div class="accordion-content">
                         <div class="accordion-inner" id="sidebar-model-list">
+                            <!-- Data akan dimuat secara otomatis dari katalog.html / katalog_mobil -->
                             <div style="margin-bottom: 16px; margin-top: 8px;">
-                                <span style="font-size: 0.75rem; color: var(--color-accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Passenger</span>
-                                <a href="detail.html?mobil=xforce" class="sub-menu-item">XFORCE</a>
-                                <a href="detail.html?mobil=pajero-sport" class="sub-menu-item">NEW PAJERO SPORT</a>
-                                <a href="detail.html?mobil=xpander" class="sub-menu-item">NEW XPANDER</a>
-                                <a href="detail.html?mobil=xpander-cross" class="sub-menu-item">NEW XPANDER CROSS</a>
-                            </div>
-                            <div style="margin-bottom: 8px;">
-                                <span style="font-size: 0.75rem; color: var(--color-accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Commercial</span>
-                                <a href="detail.html?mobil=canter" class="sub-menu-item">FUSO CANTER</a>
-                                <a href="detail.html?mobil=ecanter" class="sub-menu-item">FUSO ECANTER</a>
-                                <a href="detail.html?mobil=l300" class="sub-menu-item">NEW COLT L300</a>
-                                <a href="detail.html?mobil=triton" class="sub-menu-item">ALL NEW TRITON</a>
-                                <a href="detail.html?mobil=l100" class="sub-menu-item">L100 EV</a>
+                                <span style="font-size: 0.75rem; color: var(--color-accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Memuat Data...</span>
                             </div>
                         </div>
                     </div>
@@ -632,38 +621,9 @@
             </div>
 
             <div class="katalog-grid reveal-up delay-2" id="katalog-grid-container">
-                <div class="car-card" data-category="passenger">
-                    <div class="car-img-wrapper"><span class="car-badge">NEW</span><img src="https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?q=80&w=600&auto=format&fit=crop" alt="XFORCE" class="car-img"></div>
-                    <div class="car-info">
-                        <h3 class="car-name">XFORCE</h3><div class="car-price">Mulai Rp 379.9 Juta</div>
-                        <p class="car-desc">Compact SUV 5-seater dengan desain futuristik dan mode berkendara adaptif.</p>
-                        <div class="car-actions">
-                            <a href="detail.html?mobil=xforce" class="btn-outline">Spesifikasi</a>
-                            <a href="#" class="btn-fill wa-pesan-mobil" data-mobil="XFORCE">Pesan</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="car-card" data-category="passenger">
-                    <div class="car-img-wrapper"><img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=600&auto=format&fit=crop" alt="Pajero Sport" class="car-img"></div>
-                    <div class="car-info">
-                        <h3 class="car-name">Pajero Sport</h3><div class="car-price">Mulai Rp 552.1 Juta</div>
-                        <p class="car-desc">SUV tangguh dengan performa buas dan kemewahan di setiap perjalanan.</p>
-                        <div class="car-actions">
-                            <a href="detail.html?mobil=pajero-sport" class="btn-outline">Spesifikasi</a>
-                            <a href="#" class="btn-fill wa-pesan-mobil" data-mobil="Pajero Sport">Pesan</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="car-card" data-category="passenger">
-                    <div class="car-img-wrapper"><span class="car-badge">FAVORIT</span><img src="https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=600&auto=format&fit=crop" alt="Xpander" class="car-img"></div>
-                    <div class="car-info">
-                        <h3 class="car-name">New Xpander</h3><div class="car-price">Mulai Rp 261.2 Juta</div>
-                        <p class="car-desc">MPV keluarga yang mengedepankan kenyamanan ekstra dan suspensi canggih.</p>
-                        <div class="car-actions">
-                            <a href="detail.html?mobil=xpander" class="btn-outline">Spesifikasi</a>
-                            <a href="#" class="btn-fill wa-pesan-mobil" data-mobil="New Xpander">Pesan</a>
-                        </div>
-                    </div>
+                <!-- Data ini akan diganti oleh sinkronisasi database dari katalog_mobil -->
+                <div class="car-card" data-category="passenger" style="display: flex; justify-content: center; padding: 40px; color: #888;">
+                    Memuat data kendaraan...
                 </div>
             </div>
 
@@ -956,12 +916,17 @@
                 if(data) {
                     if(data.gmaps) {
                         let srcMap = data.gmaps;
+                        // PERBAIKAN: Gunakan DOM Parser agar lebih kebal dari error tanda kutip
                         if(srcMap.includes('<iframe')) {
-                            const match = srcMap.match(/src="([^"]+)"/);
-                            if(match) srcMap = match[1];
+                            const tempDiv = document.createElement('div');
+                            tempDiv.innerHTML = srcMap;
+                            const iframeElement = tempDiv.querySelector('iframe');
+                            if(iframeElement && iframeElement.src) {
+                                srcMap = iframeElement.src;
+                            }
                         }
                         const iframeGmaps = document.getElementById('iframe-gmaps');
-                        if(iframeGmaps && srcMap.includes('http')) {
+                        if(iframeGmaps && srcMap && srcMap.startsWith('http')) {
                             iframeGmaps.src = srcMap;
                         }
                     }
@@ -1002,7 +967,7 @@
                 }
             });
 
-            // D. Sinkronisasi Kartu Promo Terbaru (Fix Glitch/Pause Video)
+            // D. Sinkronisasi Kartu Promo Terbaru
             db.ref('promo_list').on('value', (snapshot) => {
                 const data = snapshot.val();
                 const sliderContainer = document.getElementById('promo-slider');
@@ -1041,7 +1006,7 @@
                 } 
             });
 
-            // E. Sinkronisasi Iklan Banner / Video (Fix Glitch/Pause Video)
+            // E. Sinkronisasi Iklan Banner / Video
             db.ref('iklan_list').on('value', (snapshot) => {
                 const data = snapshot.val();
                 const iklanContainer = document.getElementById('iklan-grid-container');
@@ -1074,8 +1039,8 @@
                 }
             });
 
-            // F. Sinkronisasi Data Mobil (Untuk Grid Katalog & Menu Sidebar)
-            db.ref('mobil_list').on('value', (snapshot) => {
+            // F. Sinkronisasi Data Mobil (PERBAIKAN: Mengikuti database katalog_mobil dari katalog.html)
+            db.ref('katalog_mobil').on('value', (snapshot) => {
                 const data = snapshot.val();
                 if(data) {
                     const katalogGrid = document.getElementById('katalog-grid-container');
@@ -1089,32 +1054,38 @@
                         const mobil = data[key];
                         const kategori = mobil.kategori || 'passenger';
                         
-                        // Cek badging (NEW, FAVORIT, LEGEND)
+                        // Menyesuaikan dengan format label_promo dari katalog.html
                         let badgeHTML = '';
-                        if(mobil.badge) {
-                            const badgeColor = (mobil.badge.toUpperCase() === 'LEGEND') ? 'background:#0A0A0A;' : '';
-                            badgeHTML = `<span class="car-badge" style="${badgeColor}">${mobil.badge}</span>`;
+                        if(mobil.label_promo) {
+                            badgeHTML = `<span class="car-badge">${mobil.label_promo}</span>`;
                         }
 
-                        // Susun Grid Card HTML
+                        // Format Harga
+                        let hargaFormat = 'Harga Hubungi Sales';
+                        if (mobil.harga) {
+                            hargaFormat = `Mulai Rp ` + parseInt(mobil.harga).toLocaleString('id-ID');
+                        }
+
+                        // Susun Grid Card HTML (Tetap mempertahankan gaya UI Index)
                         gridHTML += `
                         <div class="car-card" data-category="${kategori}">
-                            <div class="car-img-wrapper">${badgeHTML}<img src="${mobil.imgUrl}" alt="${mobil.nama}" class="car-img"></div>
+                            <div class="car-img-wrapper">${badgeHTML}<img src="${mobil.imgUrl || ''}" alt="${mobil.nama_mobil || 'Mobil'}" class="car-img"></div>
                             <div class="car-info">
-                                <h3 class="car-name">${mobil.nama}</h3><div class="car-price">${mobil.hargaUtama || ''}</div>
-                                <p class="car-desc">${mobil.deskripsiSingkat || ''}</p>
+                                <h3 class="car-name">${mobil.nama_mobil || 'Kendaraan Mitsubishi'}</h3>
+                                <div class="car-price">${hargaFormat}</div>
+                                <p class="car-desc">${mobil.deskripsiSingkat || 'Kendaraan dengan performa terbaik di kelasnya.'}</p>
                                 <div class="car-actions">
-                                    <a href="detail.html?mobil=${key}" class="btn-outline">Spesifikasi</a>
-                                    <a href="#" class="btn-fill wa-pesan-mobil" data-mobil="${mobil.nama}">Pesan</a>
+                                    <a href="detail.html?id=${key}" class="btn-outline">Spesifikasi</a>
+                                    <a href="#" class="btn-fill wa-pesan-mobil" data-mobil="${mobil.nama_mobil}">Pesan</a>
                                 </div>
                             </div>
                         </div>`;
 
                         // Susun Sidebar Nav HTML
                         if (kategori === 'passenger') {
-                            passSidebarHTML += `<a href="detail.html?mobil=${key}" class="sub-menu-item">${mobil.nama}</a>`;
+                            passSidebarHTML += `<a href="detail.html?id=${key}" class="sub-menu-item">${mobil.nama_mobil}</a>`;
                         } else {
-                            commSidebarHTML += `<a href="detail.html?mobil=${key}" class="sub-menu-item">${mobil.nama}</a>`;
+                            commSidebarHTML += `<a href="detail.html?id=${key}" class="sub-menu-item">${mobil.nama_mobil}</a>`;
                         }
                     });
 
@@ -1302,9 +1273,7 @@
         // --- 8. LOGIKA FILTER KATALOG PRODUK ---
         function setupKatalogFilter() {
             const filterBtns = document.querySelectorAll('.filter-btn');
-            const carCards = document.querySelectorAll('.car-card');
             
-            // Remove old listeners to avoid stacking if DB updates
             const newFilterBtns = Array.from(filterBtns).map(btn => {
                 const clone = btn.cloneNode(true);
                 btn.parentNode.replaceChild(clone, btn);
