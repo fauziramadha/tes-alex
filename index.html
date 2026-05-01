@@ -909,31 +909,31 @@
                 }
             });
 
-            // B. Sinkronisasi Data Alamat & Peta (PERBAIKAN MAPS)
+                        // B. Sinkronisasi Data Alamat & Peta (PERBAIKAN MAPS)
             db.ref('global_data/alamat').on('value', (snapshot) => {
                 const data = snapshot.val();
                 if(data) {
                     if(data.gmaps) {
-                        let srcMap = data.gmaps;
-                        // Ekstrak URL src jika format yang diberikan adalah tag iframe HTML penuh
-                        if(srcMap.includes('<iframe')) {
-                            const tempDiv = document.createElement('div');
-                            tempDiv.innerHTML = srcMap;
-                            const iframeElement = tempDiv.querySelector('iframe');
-                            if(iframeElement && iframeElement.src) {
-                                srcMap = iframeElement.src;
-                            }
+                        let srcMap = data.gmaps.trim();
+                        
+                        // Ekstraktor super tangguh (kebal terhadap tanda kutip miring di HP)
+                        const match = srcMap.match(/src=["”'']([^"”'']+)["”'']/);
+                        if (match && match[1]) {
+                            srcMap = match[1]; // Mengambil link aslinya saja
                         }
                         
                         const iframeGmaps = document.getElementById('iframe-gmaps');
                         const btnMapNav = document.getElementById('btn-map-nav-dynamic');
                         
-                        if(srcMap && srcMap.startsWith('http')) {
-                            // Hanya masukkan link yang sudah diproses ini ke dalam atribut iframe src
+                        // Jika link mengandung kata google, anggap valid dan masukkan ke iframe
+                        if(srcMap && srcMap.includes('google')) {
+                            // Tambahkan https:// jika tidak sengaja terhapus dan hanya tersisa www.
+                            if(srcMap.startsWith('www.')) srcMap = 'https://' + srcMap;
+                            
                             if(iframeGmaps) iframeGmaps.src = srcMap;
                         }
 
-                        // Perbaikan: Ubah href tombol Mulai Navigasi untuk mencari alamat berdasarkan teks karena URL embed tidak bisa langsung dibuka di Google Maps App
+                        // Perbaikan: Ubah href tombol Mulai Navigasi untuk mencari alamat berdasarkan teks
                         if(btnMapNav) {
                             const searchKeyword = data.teks_alamat || "Mitsubishi Batam";
                             btnMapNav.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(searchKeyword);
