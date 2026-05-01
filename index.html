@@ -473,7 +473,7 @@
                         <span class="accordion-icon">▼</span>
                     </button>
                     <div class="accordion-content">
-                        <div class="accordion-inner">
+                        <div class="accordion-inner" id="sidebar-model-list">
                             <div style="margin-bottom: 16px; margin-top: 8px;">
                                 <span style="font-size: 0.75rem; color: var(--color-accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Passenger</span>
                                 <a href="detail.html?mobil=xforce" class="sub-menu-item">XFORCE</a>
@@ -507,7 +507,7 @@
         </header>
 
         <section class="hero" id="home">
-            <div class="hero-bg">
+            <div class="hero-bg" id="hero-bg-container">
                 <img src="https://images.unsplash.com/photo-1617531653332-bd46c24f2068?q=80&w=2000&auto=format&fit=crop" alt="Mitsubishi Motors Hero" class="hero-img">
                 <div class="hero-overlay"></div>
             </div>
@@ -665,39 +665,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="car-card" data-category="passenger">
-                    <div class="car-img-wrapper"><img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?q=80&w=600&auto=format&fit=crop" alt="Xpander Cross" class="car-img"></div>
-                    <div class="car-info">
-                        <h3 class="car-name">Xpander Cross</h3><div class="car-price">Mulai Rp 319.7 Juta</div>
-                        <p class="car-desc">Perpaduan gaya SUV yang kokoh dengan kenyamanan kabin MPV keluarga.</p>
-                        <div class="car-actions">
-                            <a href="detail.html?mobil=xpander-cross" class="btn-outline">Spesifikasi</a>
-                            <a href="#" class="btn-fill wa-pesan-mobil" data-mobil="Xpander Cross">Pesan</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="car-card" data-category="commercial">
-                    <div class="car-img-wrapper"><span class="car-badge" style="background:#0A0A0A;">LEGEND</span><img src="https://images.unsplash.com/photo-1609521263047-f8f205293f24?q=80&w=600&auto=format&fit=crop" alt="L300" class="car-img"></div>
-                    <div class="car-info">
-                        <h3 class="car-name">Colt L300</h3><div class="car-price">Mulai Rp 224.1 Juta</div>
-                        <p class="car-desc">Legenda bisnis andalan Indonesia dengan mesin Euro 4 yang tangguh dan irit.</p>
-                        <div class="car-actions">
-                            <a href="detail.html?mobil=colt-l300" class="btn-outline">Spesifikasi</a>
-                            <a href="#" class="btn-fill wa-pesan-mobil" data-mobil="Colt L300">Pesan</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="car-card" data-category="commercial">
-                    <div class="car-img-wrapper"><img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=600&auto=format&fit=crop" alt="Triton" class="car-img"></div>
-                    <div class="car-info">
-                        <h3 class="car-name">All New Triton</h3><div class="car-price">Mulai Rp 290.5 Juta</div>
-                        <p class="car-desc">Pick-up double cabin andalan di medan berat, siap diajak kerja keras.</p>
-                        <div class="car-actions">
-                            <a href="detail.html?mobil=triton" class="btn-outline">Spesifikasi</a>
-                            <a href="#" class="btn-fill wa-pesan-mobil" data-mobil="All New Triton">Pesan</a>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="katalog-more reveal-up delay-2" style="text-align: center; margin-top: 56px;">
@@ -728,22 +695,6 @@
                         <div class="news-date">21 Apr 2026</div><h3 class="news-card-title">Mitsubishi Tembus Rekor Penjualan XFORCE Nasional Tahun Ini</h3>
                         <p class="news-snippet">Antusiasme masyarakat yang tinggi terhadap desain futuristik dan fitur premium dari Mitsubishi XFORCE berhasil mencatatkan rekor penjualan tertinggi pada kuartal pertama tahun ini di Indonesia...</p>
                         <a href="berita.html?id=rekor-xforce" class="btn-news-read">Klik Selengkapnya <span>→</span></a>
-                    </div>
-                </div>
-                <div class="news-card" data-category="exhibition" onclick="window.location.href='berita.html?id=auto-show-2026'">
-                    <div class="news-img-wrapper"><span class="news-category-badge" style="background:var(--color-accent);">Exhibition</span><img src="https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?q=80&w=800&auto=format&fit=crop" alt="Pameran Otomotif" class="news-img"></div>
-                    <div class="news-content">
-                        <div class="news-date">18 Apr 2026</div><h3 class="news-card-title">Auto Show 2026: Sambut Peluncuran Varian Baru SUV Premium</h3>
-                        <p class="news-snippet">Kunjungi pameran eksklusif kami akhir pekan ini. Rasakan langsung kemewahan kabin dan uji coba langsung ketangguhan varian terbaru SUV yang dirancang khusus untuk memacu adrenalin Anda...</p>
-                        <a href="berita.html?id=auto-show-2026" class="btn-news-read">Klik Selengkapnya <span>→</span></a>
-                    </div>
-                </div>
-                <div class="news-card" data-category="lifestyle" onclick="window.location.href='berita.html?id=lifestyle-eksklusif'">
-                    <div class="news-img-wrapper"><span class="news-category-badge" style="background:#0A0A0A;">Lifestyle</span><img src="https://images.unsplash.com/photo-1616423641405-824ecf55d7ad?q=80&w=800&auto=format&fit=crop" alt="Gaya Hidup Eksklusif" class="news-img"></div>
-                    <div class="news-content">
-                        <div class="news-date">10 Apr 2026</div><h3 class="news-card-title">Eksklusivitas Berkendara: Paduan Desain Editorial dan Kecepatan</h3>
-                        <p class="news-snippet">Menggabungkan estetika mewah dengan performa buas. Pelajari bagaimana desain eksterior terbaru kami terinspirasi dari gaya hidup masyarakat urban kelas atas yang mengutamakan privilese dan gaya...</p>
-                        <a href="berita.html?id=lifestyle-eksklusif" class="btn-news-read">Klik Selengkapnya <span>→</span></a>
                     </div>
                 </div>
             </div>
@@ -787,7 +738,7 @@
                 <p class="news-subtitle">Kepercayaan dan kepuasan Anda adalah prioritas utama layanan kelas dunia kami.</p>
             </div>
             
-            <div class="testi-grid reveal-up delay-2">
+            <div class="testi-grid reveal-up delay-2" id="testi-grid-container">
                 <div class="testi-card">
                     <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=600&auto=format&fit=crop" alt="Penyerahan Unit" class="testi-img-main">
                     <div class="testi-content">
@@ -796,43 +747,7 @@
                             <span class="testi-role">Pengusaha</span>
                         </div>
                         <div class="testi-stars">★★★★★</div>
-                        <p class="testi-text">"Pelayanan Mas Budi sangat luar biasa! Proses pembelian Pajero Sport saya dibantu sampai tuntas dengan sangat transparan dan cepat. Unit diterima dalam kondisi prima."</p>
-                    </div>
-                </div>
-
-                <div class="testi-card">
-                    <img src="https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?q=80&w=600&auto=format&fit=crop" alt="Penyerahan Unit" class="testi-img-main">
-                    <div class="testi-content">
-                        <div class="testi-info">
-                            <span class="testi-name">Ibu Siska Amalia</span>
-                            <span class="testi-role">Eksekutif Muda</span>
-                        </div>
-                        <div class="testi-stars">★★★★★</div>
-                        <p class="testi-text">"XFORCE impian saya tiba tepat waktu! Detail penjelasannya sangat mudah dipahami. Pengalaman beli mobil yang paling VVIP dan menyenangkan yang pernah saya rasakan."</p>
-                    </div>
-                </div>
-
-                <div class="testi-card">
-                    <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=600&auto=format&fit=crop" alt="Penyerahan Unit" class="testi-img-main">
-                    <div class="testi-content">
-                        <div class="testi-info">
-                            <span class="testi-name">PT. Multi Konstruksi</span>
-                            <span class="testi-role">Corporate / Fleet</span>
-                        </div>
-                        <div class="testi-stars">★★★★★</div>
-                        <p class="testi-text">"Kami ambil 5 unit Triton untuk operasional pertambangan. Penawaran fleet-nya sangat menarik, dan layanan purna jual 24 jam menjamin operasional tidak terhambat."</p>
-                    </div>
-                </div>
-
-                <div class="testi-card">
-                    <img src="https://images.unsplash.com/photo-1503376710924-f725a3d75c61?q=80&w=600&auto=format&fit=crop" alt="Penyerahan Unit" class="testi-img-main">
-                    <div class="testi-content">
-                        <div class="testi-info">
-                            <span class="testi-name">Keluarga Bpk. Rizal</span>
-                            <span class="testi-role">Keluarga</span>
-                        </div>
-                        <div class="testi-stars">★★★★★</div>
-                        <p class="testi-text">"Beli Xpander untuk kendaraan keluarga. Kabin luas, suspensi empuk, dan hadiah langsungnya banyak sekali! Terima kasih atas layanan prioritasnya Mas Budi."</p>
+                        <p class="testi-text">"Pelayanan sangat luar biasa! Proses pembelian Pajero Sport saya dibantu sampai tuntas dengan sangat transparan dan cepat."</p>
                     </div>
                 </div>
             </div>
@@ -916,7 +831,7 @@
             </div>
 
             <div class="footer-bottom reveal-up delay-2">
-                <div class="footer-copy">©2026. Official Mitsubishi motors Batam Aldiansyah Sales</div>
+                <div class="footer-copy">©2026. Official Mitsubishi motors Batam <span id="footer-sales-name">Aldiansyah Sales</span></div>
                 <div class="footer-dev">Developed by @zee_radhan</div>
             </div>
         </footer>
@@ -960,7 +875,7 @@
             messagingSenderId: "164638589744",
             appId: "1:164638589744:web:8470111cc7c41696887ef5"
         };
-        firebase.initializeApp(firebaseConfig); 
+        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
         const db = firebase.database();
 
         // Variabel global untuk menyimpan nomor WA
@@ -969,56 +884,69 @@
         // Fungsi khusus merakit link WhatsApp dinamis
         function updateWhatsAppLinks(nomorWa) {
             if(!nomorWa) return;
+            let cleanWa = nomorWa.replace(/\D/g, '');
+            if (cleanWa.startsWith('0')) cleanWa = '62' + cleanWa.substring(1);
             
             const globalWaLinks = document.querySelectorAll('.link-wa-global');
             const teksUmum = encodeURIComponent("Halo Kak, saya tertarik dengan informasi Mitsubishi Motors dari website. Boleh minta informasinya lebih lanjut?");
-            globalWaLinks.forEach(link => link.href = `https://wa.me/${nomorWa}?text=${teksUmum}`);
+            globalWaLinks.forEach(link => link.href = `https://wa.me/${cleanWa}?text=${teksUmum}`);
 
             const testDriveLinks = document.querySelectorAll('.wa-test-drive');
             const teksTestDrive = encodeURIComponent("Halo Kak, saya tertarik dengan salah satu mobil di dealer, boleh minta informasi lebih detail untuk jadwal test drive mobilnya Kak?");
-            testDriveLinks.forEach(link => link.href = `https://wa.me/${nomorWa}?text=${teksTestDrive}`);
+            testDriveLinks.forEach(link => link.href = `https://wa.me/${cleanWa}?text=${teksTestDrive}`);
 
             const promoLinks = document.querySelectorAll('.wa-promo');
             promoLinks.forEach(link => {
                 const namaPromo = link.getAttribute('data-promo') || "Promo Spesial";
                 const teksPromo = encodeURIComponent(`Halo Kak, saya ingin bertanya dan mengklaim penawaran promo "${namaPromo}" yang ada di website. Mohon info lebih lanjut Kak.`);
-                link.href = `https://wa.me/${nomorWa}?text=${teksPromo}`;
+                link.href = `https://wa.me/${cleanWa}?text=${teksPromo}`;
             });
 
             const iklanLinks = document.querySelectorAll('.wa-iklan');
             iklanLinks.forEach(link => {
                 const namaIklan = link.getAttribute('data-iklan') || "Iklan";
                 const teksIklan = encodeURIComponent(`Halo Kak, saya tertarik dengan informasi dari banner "${namaIklan}" di website. Boleh minta detailnya?`);
-                link.href = `https://wa.me/${nomorWa}?text=${teksIklan}`;
+                link.href = `https://wa.me/${cleanWa}?text=${teksIklan}`;
             });
 
             const pesanMobilLinks = document.querySelectorAll('.wa-pesan-mobil');
             pesanMobilLinks.forEach(link => {
                 const namaMobil = link.getAttribute('data-mobil') || "Mobil Mitsubishi";
                 const teksPesanMobil = encodeURIComponent(`Halo Kak, saya tertarik dengan mobil "${namaMobil}". Boleh minta informasinya lebih lanjut Kak?`);
-                link.href = `https://wa.me/${nomorWa}?text=${teksPesanMobil}`;
+                link.href = `https://wa.me/${cleanWa}?text=${teksPesanMobil}`;
             });
         }
 
         // --- 2. LOGIKA PEMBACA OTOMATIS (REALTIME SYNC) DARI ADMIN ---
         function sinkronisasiOtomatis() {
             
-            // A. Sinkronisasi Profil Sales & Sosial Media
-            db.ref('global_data/kontak').on('value', (snapshot) => {
+            // A. Sinkronisasi Profil Sales & Sosial Media (Mengikuti kontak.html)
+            db.ref('global_data/biodata').on('value', (snapshot) => {
                 const data = snapshot.val();
                 if(data) {
-                    if(data.nama) document.querySelector('.bio-name').innerText = data.nama;
+                    if(data.nama) {
+                        document.querySelector('.bio-name').innerText = data.nama;
+                        const footerName = document.getElementById('footer-sales-name');
+                        if (footerName) footerName.innerText = data.nama;
+                    }
                     if(data.jabatan) document.querySelector('.bio-role').innerText = data.jabatan;
                     if(data.bio) document.querySelector('.bio-motto').innerText = `"${data.bio}"`;
                     if(data.fotoUrl) document.querySelector('.bio-img').src = data.fotoUrl;
 
-                    if(data.ig) { document.querySelectorAll('.link-ig-global').forEach(link => link.href = `https://instagram.com/${data.ig}`); }
-                    if(data.telepon) {
-                        document.getElementById('bottom-nav-telp').href = `tel:${data.telepon}`;
-                        const teksTelp = document.getElementById('footer-telepon-text');
-                        if(teksTelp) teksTelp.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> ${data.telepon}`;
+                    if(data.ig) { 
+                        const igUrl = data.ig.includes('http') ? data.ig : `https://instagram.com/${data.ig.replace('@', '')}`;
+                        document.querySelectorAll('.link-ig-global').forEach(link => link.href = igUrl); 
                     }
-                    if(data.whatsapp) { currentSalesWA = data.whatsapp; updateWhatsAppLinks(currentSalesWA); }
+                    if(data.fb_link) {
+                        document.querySelectorAll('.link-fb-global').forEach(link => link.href = data.fb_link);
+                    }
+                    if(data.telp) {
+                        const cleanTelp = data.telp.replace(/\D/g, '');
+                        document.getElementById('bottom-nav-telp').href = `tel:+${cleanTelp}`;
+                        const teksTelp = document.getElementById('footer-telepon-text');
+                        if(teksTelp) teksTelp.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> ${data.telp}`;
+                    }
+                    if(data.wa) { currentSalesWA = data.wa; updateWhatsAppLinks(currentSalesWA); }
                 }
             });
 
@@ -1027,10 +955,15 @@
                 const data = snapshot.val();
                 if(data) {
                     if(data.gmaps) {
-                        const tempDiv = document.createElement('div');
-                        tempDiv.innerHTML = data.gmaps;
-                        const iframe = tempDiv.querySelector('iframe');
-                        if(iframe && iframe.src) document.getElementById('iframe-gmaps').src = iframe.src;
+                        let srcMap = data.gmaps;
+                        if(srcMap.includes('<iframe')) {
+                            const match = srcMap.match(/src="([^"]+)"/);
+                            if(match) srcMap = match[1];
+                        }
+                        const iframeGmaps = document.getElementById('iframe-gmaps');
+                        if(iframeGmaps && srcMap.includes('http')) {
+                            iframeGmaps.src = srcMap;
+                        }
                     }
                     if(data.teks_alamat) {
                         document.getElementById('alamat-text').innerText = data.teks_alamat;
@@ -1042,32 +975,34 @@
                 }
             });
 
-            // C. Sinkronisasi Hero Beranda (SISTEM ANTI-GAGAL)
+            // C. Sinkronisasi Hero Beranda (Support Video)
             db.ref('halaman/landing/hero').on('value', (snapshot) => {
                 const data = snapshot.val();
-                
-                // Menarik data dari Firebase
-                let teksAtas = (data && data.teks_atas) ? data.teks_atas : "DRIVE YOUR";
-                const teksAksen = (data && data.teks_aksen) ? data.teks_aksen : "AMBITION"; 
-                const teksBawah = (data && data.teks_bawah) ? data.teks_bawah : "Rasakan harmoni sempurna antara performa mesin kelas dunia dan desain elegan masa depan. Mulai perjalanan Anda hari ini.";
-                const bgUrl = (data && data.bgUrl) ? data.bgUrl : "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?q=80&w=2000&auto=format&fit=crop";
+                if(data) {
+                    let teksAtas = data.teks_atas || "DRIVE YOUR";
+                    const teksAksen = data.teks_aksen || "AMBITION"; 
+                    const teksBawah = data.teks_bawah || document.querySelector('.hero-subtitle').innerText;
+                    const bgUrl = data.bgUrl;
 
-                // PENTING: Bersihkan teksAtas jika tidak sengaja menyimpan kode HTML <span...> dari database lama
-                if (teksAtas.includes('<span')) { 
-                    teksAtas = teksAtas.split('<span')[0].trim(); 
-                }
+                    if (teksAtas.includes('<span')) teksAtas = teksAtas.split('<span')[0].trim(); 
 
-                // Paksa cetak ulang HTML-nya agar aksen merah pasti keluar tanpa peduli struktur lawas
-                const heroTitleElement = document.querySelector('.hero-title');
-                if (heroTitleElement) {
-                    heroTitleElement.innerHTML = `${teksAtas} <span class="text-accent">${teksAksen}</span>`;
+                    const heroTitleElement = document.querySelector('.hero-title');
+                    if (heroTitleElement) heroTitleElement.innerHTML = `${teksAtas} <span class="text-accent">${teksAksen}</span>`;
+                    
+                    document.querySelector('.hero-subtitle').innerText = teksBawah;
+
+                    if(bgUrl) {
+                        const heroBgContainer = document.getElementById('hero-bg-container');
+                        if (bgUrl.match(/\.(mp4|webm)$/i)) {
+                            heroBgContainer.innerHTML = `<video class="hero-img" autoplay loop muted playsinline><source src="${bgUrl}" type="video/mp4"></video><div class="hero-overlay"></div>`;
+                        } else {
+                            heroBgContainer.innerHTML = `<img src="${bgUrl}" alt="Hero" class="hero-img"><div class="hero-overlay"></div>`;
+                        }
+                    }
                 }
-                
-                document.querySelector('.hero-subtitle').innerText = teksBawah;
-                document.querySelector('.hero-img').src = bgUrl;
             });
 
-            // D. Sinkronisasi Kartu Promo Terbaru
+            // D. Sinkronisasi Kartu Promo Terbaru (Fix Glitch/Pause Video)
             db.ref('promo_list').on('value', (snapshot) => {
                 const data = snapshot.val();
                 const sliderContainer = document.getElementById('promo-slider');
@@ -1079,10 +1014,15 @@
                         const promo = data[key];
                         const img = promo.imgUrl || "https://images.unsplash.com/photo-1605810730836-474be6843477?q=80&w=800&auto=format&fit=crop";
                         
+                        const isVideo = img.match(/\.(mp4|webm)$/i);
+                        let mediaElement = isVideo 
+                            ? `<video class="promo-card-bg" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="${img}" type="video/mp4"></video>`
+                            : `<img src="${img}" alt="${promo.judul || 'Promo'}" class="promo-card-bg" style="width:100%; height:100%; object-fit:cover;">`;
+
                         sliderContainer.innerHTML += `
                         <div class="promo-card">
                             <div class="promo-card-inner">
-                                <img src="${img}" alt="${promo.judul || 'Promo'}" class="promo-card-bg">
+                                ${mediaElement}
                                 <div class="promo-card-content">
                                     <span class="promo-badge">${promo.label || 'PROMO'}</span>
                                     <h3 style="color: #FFF;">${promo.judul || 'Penawaran Spesial'}</h3>
@@ -1095,10 +1035,13 @@
                         </div>`;
                     });
                     if(currentSalesWA) updateWhatsAppLinks(currentSalesWA);
+                    
+                    // Trigger center card logic again
+                    setTimeout(() => updateCenterCard(), 100);
                 } 
             });
 
-            // E. Sinkronisasi Iklan Banner / Video
+            // E. Sinkronisasi Iklan Banner / Video (Fix Glitch/Pause Video)
             db.ref('iklan_list').on('value', (snapshot) => {
                 const data = snapshot.val();
                 const iklanContainer = document.getElementById('iklan-grid-container');
@@ -1112,14 +1055,15 @@
                         
                         const isVideo = img.match(/\.(mp4|webm)$/i);
                         let mediaElement = isVideo 
-                            ? `<video class="luxury-media" autoplay loop muted playsinline><source src="${img}" type="video/mp4"></video>`
-                            : `<img src="${img}" alt="${iklan.judul || 'Iklan'}" class="luxury-media">`;
+                            ? `<video class="luxury-media" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="${img}" type="video/mp4"></video>`
+                            : `<img src="${img}" alt="${iklan.judul || 'Iklan'}" class="luxury-media" style="width:100%; height:100%; object-fit:cover;">`;
 
                         iklanContainer.innerHTML += `
                         <div class="luxury-ad-space">
                             ${mediaElement}
                             <div class="ad-content">
                                 <h3 style="color: #FFF;">${iklan.judul || 'Iklan Spesial'}</h3>
+                                <p style="display: ${iklan.deskripsi ? 'block' : 'none'};">${iklan.deskripsi || ''}</p>
                                 <a href="#" class="btn-glass-ad wa-iklan" data-iklan="${iklan.judul || 'Iklan Spesial'}">
                                     <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> ${iklan.tombol || 'Hubungi Kami'}
                                 </a>
@@ -1127,6 +1071,129 @@
                         </div>`;
                     });
                     if(currentSalesWA) updateWhatsAppLinks(currentSalesWA);
+                }
+            });
+
+            // F. Sinkronisasi Data Mobil (Untuk Grid Katalog & Menu Sidebar)
+            db.ref('mobil_list').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if(data) {
+                    const katalogGrid = document.getElementById('katalog-grid-container');
+                    const sidebarModelList = document.getElementById('sidebar-model-list');
+                    
+                    let gridHTML = '';
+                    let passSidebarHTML = '';
+                    let commSidebarHTML = '';
+
+                    Object.keys(data).forEach(key => {
+                        const mobil = data[key];
+                        const kategori = mobil.kategori || 'passenger';
+                        
+                        // Cek badging (NEW, FAVORIT, LEGEND)
+                        let badgeHTML = '';
+                        if(mobil.badge) {
+                            const badgeColor = (mobil.badge.toUpperCase() === 'LEGEND') ? 'background:#0A0A0A;' : '';
+                            badgeHTML = `<span class="car-badge" style="${badgeColor}">${mobil.badge}</span>`;
+                        }
+
+                        // Susun Grid Card HTML
+                        gridHTML += `
+                        <div class="car-card" data-category="${kategori}">
+                            <div class="car-img-wrapper">${badgeHTML}<img src="${mobil.imgUrl}" alt="${mobil.nama}" class="car-img"></div>
+                            <div class="car-info">
+                                <h3 class="car-name">${mobil.nama}</h3><div class="car-price">${mobil.hargaUtama || ''}</div>
+                                <p class="car-desc">${mobil.deskripsiSingkat || ''}</p>
+                                <div class="car-actions">
+                                    <a href="detail.html?mobil=${key}" class="btn-outline">Spesifikasi</a>
+                                    <a href="#" class="btn-fill wa-pesan-mobil" data-mobil="${mobil.nama}">Pesan</a>
+                                </div>
+                            </div>
+                        </div>`;
+
+                        // Susun Sidebar Nav HTML
+                        if (kategori === 'passenger') {
+                            passSidebarHTML += `<a href="detail.html?mobil=${key}" class="sub-menu-item">${mobil.nama}</a>`;
+                        } else {
+                            commSidebarHTML += `<a href="detail.html?mobil=${key}" class="sub-menu-item">${mobil.nama}</a>`;
+                        }
+                    });
+
+                    // Update DOM jika elemennya ada
+                    if(katalogGrid) katalogGrid.innerHTML = gridHTML;
+                    if(sidebarModelList) {
+                        sidebarModelList.innerHTML = `
+                            <div style="margin-bottom: 16px; margin-top: 8px;">
+                                <span style="font-size: 0.75rem; color: var(--color-accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Passenger</span>
+                                ${passSidebarHTML}
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <span style="font-size: 0.75rem; color: var(--color-accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Commercial</span>
+                                ${commSidebarHTML}
+                            </div>
+                        `;
+                    }
+                    if(currentSalesWA) updateWhatsAppLinks(currentSalesWA);
+                    setupKatalogFilter(); // Re-init filter button
+                }
+            });
+
+            // G. Sinkronisasi Data Berita & Acara
+            db.ref('berita_list').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if(data) {
+                    const newsGrid = document.getElementById('news-grid-container');
+                    if(newsGrid) {
+                        let newsHTML = '';
+                        // Mengambil maksimal 3-6 berita terbaru untuk index
+                        const keys = Object.keys(data).reverse().slice(0, 6); 
+                        keys.forEach(key => {
+                            const berita = data[key];
+                            const badgeColor = (berita.kategori.toLowerCase() === 'exhibition') ? 'background:var(--color-accent);' : ((berita.kategori.toLowerCase() === 'lifestyle') ? 'background:#0A0A0A;' : '');
+                            
+                            newsHTML += `
+                            <div class="news-card" data-category="${berita.kategori.toLowerCase()}" onclick="window.location.href='berita.html?id=${key}'">
+                                <div class="news-img-wrapper">
+                                    <span class="news-category-badge" style="${badgeColor}">${berita.kategori}</span>
+                                    <img src="${berita.imgUrl}" alt="${berita.judul}" class="news-img">
+                                </div>
+                                <div class="news-content">
+                                    <div class="news-date">${berita.tanggal}</div><h3 class="news-card-title">${berita.judul}</h3>
+                                    <p class="news-snippet">${berita.konten ? berita.konten.substring(0, 150) + '...' : ''}</p>
+                                    <a href="berita.html?id=${key}" class="btn-news-read">Klik Selengkapnya <span>→</span></a>
+                                </div>
+                            </div>`;
+                        });
+                        newsGrid.innerHTML = newsHTML;
+                        setupBeritaFilter(); // Re-init filter button
+                    }
+                }
+            });
+
+            // H. Sinkronisasi Testimoni Pelanggan
+            db.ref('testimoni_list').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if(data) {
+                    const testiGrid = document.getElementById('testi-grid-container');
+                    if(testiGrid) {
+                        let testiHTML = '';
+                        const keys = Object.keys(data).reverse().slice(0, 4); // Ambil 4 terbaru untuk index
+                        keys.forEach(key => {
+                            const testi = data[key];
+                            testiHTML += `
+                            <div class="testi-card">
+                                <img src="${testi.imgUrl}" alt="Penyerahan Unit" class="testi-img-main">
+                                <div class="testi-content">
+                                    <div class="testi-info">
+                                        <span class="testi-name">${testi.nama}</span>
+                                        <span class="testi-role">${testi.profesi || 'Pelanggan'}</span>
+                                    </div>
+                                    <div class="testi-stars">★★★★★</div>
+                                    <p class="testi-text">"${testi.pesan}"</p>
+                                </div>
+                            </div>`;
+                        });
+                        testiGrid.innerHTML = testiHTML;
+                    }
                 }
             });
         }
@@ -1188,29 +1255,32 @@
         const btnPrev = document.getElementById('promo-prev');
         const btnNext = document.getElementById('promo-next');
 
-        if (promoSlider) {
-            function updateCenterCard() {
-                const sliderCenter = promoSlider.scrollLeft + (promoSlider.clientWidth / 2);
-                let closestCard = null; let closestDistance = Infinity;
-                document.querySelectorAll('.promo-card').forEach(card => {
-                    const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
-                    const distance = Math.abs(sliderCenter - cardCenter);
-                    if (distance < closestDistance) { closestDistance = distance; closestCard = card; }
-                });
-                document.querySelectorAll('.promo-card').forEach(card => card.classList.remove('is-active'));
-                if (closestCard) closestCard.classList.add('is-active');
-            }
+        function updateCenterCard() {
+            if(!promoSlider) return;
+            const sliderCenter = promoSlider.scrollLeft + (promoSlider.clientWidth / 2);
+            let closestCard = null; let closestDistance = Infinity;
+            document.querySelectorAll('.promo-card').forEach(card => {
+                const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+                const distance = Math.abs(sliderCenter - cardCenter);
+                if (distance < closestDistance) { closestDistance = distance; closestCard = card; }
+            });
+            document.querySelectorAll('.promo-card').forEach(card => card.classList.remove('is-active'));
+            if (closestCard) closestCard.classList.add('is-active');
+        }
 
+        if (promoSlider) {
             promoSlider.addEventListener('scroll', () => window.requestAnimationFrame(updateCenterCard));
             updateCenterCard();
 
             if (btnNext && btnPrev) {
                 btnNext.addEventListener('click', () => { 
-                    const cardW = document.querySelector('.promo-card') ? document.querySelector('.promo-card').offsetWidth : 300;
+                    const cardElement = document.querySelector('.promo-card');
+                    const cardW = cardElement ? cardElement.offsetWidth : 300;
                     promoSlider.scrollBy({ left: cardW + 24 }); 
                 });
                 btnPrev.addEventListener('click', () => { 
-                    const cardW = document.querySelector('.promo-card') ? document.querySelector('.promo-card').offsetWidth : 300;
+                    const cardElement = document.querySelector('.promo-card');
+                    const cardW = cardElement ? cardElement.offsetWidth : 300;
                     promoSlider.scrollBy({ left: -(cardW + 24) }); 
                 });
             }
@@ -1230,42 +1300,62 @@
         revealElements.forEach(el => revealOnScroll.observe(el));
 
         // --- 8. LOGIKA FILTER KATALOG PRODUK ---
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const carCards = document.querySelectorAll('.car-card');
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active')); btn.classList.add('active');
-                const filterValue = btn.getAttribute('data-filter');
-                carCards.forEach(card => {
-                    card.style.transform = 'scale(0.95)'; card.style.opacity = '0';
-                    setTimeout(() => {
-                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
-                            card.style.display = 'flex';
-                            setTimeout(() => { card.style.transform = 'scale(1)'; card.style.opacity = '1'; }, 50);
-                        } else { card.style.display = 'none'; }
-                    }, 300); 
+        function setupKatalogFilter() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const carCards = document.querySelectorAll('.car-card');
+            
+            // Remove old listeners to avoid stacking if DB updates
+            const newFilterBtns = Array.from(filterBtns).map(btn => {
+                const clone = btn.cloneNode(true);
+                btn.parentNode.replaceChild(clone, btn);
+                return clone;
+            });
+
+            newFilterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    newFilterBtns.forEach(b => b.classList.remove('active')); btn.classList.add('active');
+                    const filterValue = btn.getAttribute('data-filter');
+                    document.querySelectorAll('.car-card').forEach(card => {
+                        card.style.transform = 'scale(0.95)'; card.style.opacity = '0';
+                        setTimeout(() => {
+                            if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                                card.style.display = 'flex';
+                                setTimeout(() => { card.style.transform = 'scale(1)'; card.style.opacity = '1'; }, 50);
+                            } else { card.style.display = 'none'; }
+                        }, 300); 
+                    });
                 });
             });
-        });
+        }
+        setupKatalogFilter();
 
         // --- 9. LOGIKA FILTER BERITA & ACARA ---
-        const newsTabs = document.querySelectorAll('.news-tab-btn');
-        const newsCards = document.querySelectorAll('.news-card');
-        newsTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                newsTabs.forEach(t => t.classList.remove('active')); tab.classList.add('active');
-                const newsFilterValue = tab.getAttribute('data-news');
-                newsCards.forEach(card => {
-                    card.style.transform = 'translateY(20px)'; card.style.opacity = '0';
-                    setTimeout(() => {
-                        if (newsFilterValue === 'semua' || card.getAttribute('data-category') === newsFilterValue) {
-                            card.style.display = 'flex';
-                            setTimeout(() => { card.style.transform = 'translateY(0)'; card.style.opacity = '1'; }, 50);
-                        } else { card.style.display = 'none'; }
-                    }, 300);
+        function setupBeritaFilter() {
+            const newsTabs = document.querySelectorAll('.news-tab-btn');
+            
+            const newNewsTabs = Array.from(newsTabs).map(tab => {
+                const clone = tab.cloneNode(true);
+                tab.parentNode.replaceChild(clone, tab);
+                return clone;
+            });
+
+            newNewsTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    newNewsTabs.forEach(t => t.classList.remove('active')); tab.classList.add('active');
+                    const newsFilterValue = tab.getAttribute('data-news');
+                    document.querySelectorAll('.news-card').forEach(card => {
+                        card.style.transform = 'translateY(20px)'; card.style.opacity = '0';
+                        setTimeout(() => {
+                            if (newsFilterValue === 'semua' || card.getAttribute('data-category') === newsFilterValue) {
+                                card.style.display = 'flex';
+                                setTimeout(() => { card.style.transform = 'translateY(0)'; card.style.opacity = '1'; }, 50);
+                            } else { card.style.display = 'none'; }
+                        }, 300);
+                    });
                 });
             });
-        });
+        }
+        setupBeritaFilter();
 
         // Trigger awal animasi
         window.dispatchEvent(new Event('scroll'));
