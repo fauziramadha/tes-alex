@@ -27,6 +27,7 @@
             --font-body: 'Inter', sans-serif;
             --transition-smooth: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
             --shadow-premium: 0 16px 40px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 30px 60px rgba(0, 0, 0, 0.12); /* Tambahan shadow hover dr testimoni */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -203,7 +204,6 @@
         .btn-glass-ad { pointer-events: auto; display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; border-radius: 30px; background: rgba(10, 10, 10, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.15); color: white; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition-smooth); }
         .btn-glass-ad svg { width: 18px; height: 18px; fill: currentColor; }
         .btn-glass-ad:hover { background: rgba(10, 10, 10, 0.7); border-color: var(--color-accent); transform: translateY(-4px); }
-
         /* =========================================
            KATALOG SECTION
            ========================================= */
@@ -219,7 +219,7 @@
         .car-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.08); }
         .car-img-wrapper { width: 100%; height: 220px; background: #EFEFEF; position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center; padding: 20px; }
         .car-img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15)); }
-        .car-card:hover .car-img { transform: scale(1.08); }
+        .car-card:hover .car-img { transform: scale(1.08); filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15)); }
         .car-badge { position: absolute; top: 16px; left: 16px; background: var(--color-accent); color: white; padding: 4px 12px; font-size: 0.65rem; font-weight: 800; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; z-index: 2; }
         .car-info { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; }
         .car-name { font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; color: var(--color-secondary); text-transform: uppercase; letter-spacing: -0.5px; }
@@ -276,23 +276,43 @@
         .btn-map-nav:hover { background: var(--color-accent); box-shadow: 0 10px 20px rgba(230,0,0,0.3); }
 
         /* =========================================
-           TESTIMONIAL GALLERY SECTION
+           TESTIMONIAL GALLERY SECTION (SINKRON DENGAN TESTIMONI.HTML)
            ========================================= */
         .testimonial-section { padding: 80px 24px 120px; background: var(--color-surface); position: relative; z-index: 2; border-bottom: none; }
         .testi-header { text-align: center; margin-bottom: 60px; }
-        .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; max-width: 1200px; margin: 0 auto 56px; }
-        .testi-card { background: var(--color-primary); padding: 0; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); border: 1px solid var(--color-border); transition: var(--transition-smooth); position: relative; overflow: hidden; display: flex; flex-direction: column; }
-        .testi-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0,0,0,0.08); border-color: var(--color-accent); }
-        .testi-img-main { width: 100%; height: 240px; object-fit: cover; border-bottom: 3px solid var(--color-accent); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        .testi-card:hover .testi-img-main { transform: scale(1.05); }
-        .testi-content { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; background: var(--color-primary); position: relative; z-index: 2; }
-        .testi-info { display: flex; flex-direction: column; margin-bottom: 12px; }
-        .testi-name { font-weight: 800; font-family: var(--font-heading); color: var(--color-secondary); font-size: 1.2rem; }
-        .testi-role { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
-        .testi-stars { color: #FFD700; margin-bottom: 16px; font-size: 1.1rem; letter-spacing: 2px; }
-        /* Pembatasan baris (clamp) agar layout UX rapi tidak panjang ke bawah */
-        .testi-text { font-style: italic; color: #555; line-height: 1.7; font-size: 0.95rem; flex-grow: 1; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
         
+        /* Sinkronisasi Grid */
+        .testi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto 56px; }
+        
+        /* Sinkronisasi Card */
+        .testi-card { background: var(--color-primary); border-radius: 24px; overflow: hidden; border: 1px solid var(--color-border); box-shadow: var(--shadow-premium); transition: var(--transition-smooth); display: flex; flex-direction: column; }
+        .testi-card:hover { transform: translateY(-12px); box-shadow: var(--shadow-hover); border-color: rgba(230,0,0,0.1); }
+        
+        /* Sinkronisasi Image */
+        .testi-img-wrapper { width: 100%; height: 260px; position: relative; overflow: hidden; }
+        .testi-img-wrapper::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, rgba(0,0,0,0.5), transparent); z-index: 1; }
+        .testi-img-main { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; } /* Ubah nama class jadi testi-img-main utk compability script */
+        .testi-card:hover .testi-img-main { transform: scale(1.05); }
+
+        /* Sinkronisasi Body Content */
+        .testi-content { padding: 32px; display: flex; flex-direction: column; flex-grow: 1; position: relative; z-index: 2; background: transparent;} /* Ubah class jadi testi-content */
+        
+        /* Rating Sinkron */
+        .testi-stars { display: flex; gap: 4px; margin-bottom: 16px; color: #FFB800; font-size:0; letter-spacing:0;} /* Reset font-size & letter-spacing krn diganti SVG */
+        .testi-stars svg { width: 18px; height: 18px; fill: currentColor; }
+        
+        /* Text Sinkron */
+        .testi-text { font-size: 1.05rem; color: #444; line-height: 1.8; font-style: italic; margin-bottom: 24px; flex-grow: 1; position: relative; z-index: 2; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        /* Quote Mark Sinkron */
+        .testi-content::before { content: '"'; position: absolute; top: 10px; right: 24px; font-family: var(--font-heading); font-size: 8rem; color: var(--color-border); opacity: 0.3; line-height: 1; z-index: 1; transition: var(--transition-smooth); }
+        .testi-card:hover .testi-content::before { color: var(--color-accent); opacity: 0.1; transform: translateY(-10px); }
+        
+        /* User Info Sinkron */
+        .testi-info { border-top: 1px solid var(--color-border); padding-top: 20px; position: relative; z-index: 2; display: block; margin-bottom:0;}
+        .testi-name { font-size: 1.2rem; font-family: var(--font-heading); color: var(--color-secondary); margin-bottom: 4px; text-transform: uppercase; font-weight: 800; display: block;}
+        .testi-role { font-size: 0.85rem; color: var(--color-accent); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: block;}
+
         .btn-luxury-outline { display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 16px 40px; border-radius: 50px; background: transparent; border: 1px solid var(--color-secondary); color: var(--color-secondary); font-weight: 700; font-family: var(--font-heading); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; transition: var(--transition-smooth); position: relative; overflow: hidden; z-index: 1; cursor: pointer; }
         .btn-luxury-outline::before { content: ''; position: absolute; top: 0; left: 0; width: 0%; height: 100%; background: var(--color-secondary); transition: var(--transition-smooth); z-index: -1; }
         .btn-luxury-outline:hover { color: var(--color-primary); border-color: var(--color-secondary); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
@@ -412,13 +432,16 @@
             .service-title { font-size: 2.5rem; }
             .service-desc { font-size: 1rem; }
             .btn-glass-service { padding: 16px 32px; font-size: 0.85rem; }
+            
+            /* Responsive Testimoni Sinkron */
             .testimonial-section { padding: 60px 16px 80px; }
-            .testi-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .testi-img-main { height: 140px; border-bottom: 2px solid var(--color-accent); }
-            .testi-content { padding: 16px; }
-            .testi-name { font-size: 0.95rem; }
-            .testi-text { font-size: 0.75rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
-            .testi-stars { font-size: 0.85rem; margin-bottom: 8px; }
+            .testi-grid { grid-template-columns: 1fr; gap: 24px; }
+            .testi-img-wrapper { height: 220px; border-bottom: none; }
+            .testi-content { padding: 24px; }
+            .testi-name { font-size: 1.1rem; }
+            .testi-text { font-size: 0.95rem; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+            .testi-stars { margin-bottom: 12px; }
+            
             .footer { padding: 80px 20px 120px; } 
             .footer-container { grid-template-columns: 1fr; gap: 40px; text-align: center; }
             .footer-brand .footer-logo { margin: 0 auto 24px; }
@@ -555,7 +578,6 @@
                 <div class="slider-btn-nav prev" id="promo-prev" aria-label="Geser Kiri"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></div>
                 
                 <div class="promo-slider smooth-scroll" id="promo-slider">
-                    <!-- Fallback Dummy Promo (Hanya muncul jika DB Kosong) -->
                     <div class="promo-card dummy-promo">
                         <div class="promo-card-inner">
                             <img src="https://images.unsplash.com/photo-1605810730836-474be6843477?q=80&w=800&auto=format&fit=crop" alt="Promo XFORCE" class="promo-card-bg">
@@ -576,7 +598,6 @@
         <section class="ads-section" id="iklan-banner">
             <div class="ads-grid-container reveal-up delay-1">
                 <div class="ads-grid" id="iklan-grid-container">
-                    <!-- Fallback Dummy Iklan -->
                     <div class="luxury-ad-space dummy-iklan">
                         <video class="luxury-media" autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=800&auto=format&fit=crop">
                             <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" type="video/mp4">
@@ -630,8 +651,7 @@
             </div>
 
             <div class="news-grid reveal-up delay-2" id="news-grid-container">
-                 <!-- Digantikan Otomatis oleh JS -->
-            </div>
+                 </div>
 
             <div class="news-more-btn-wrapper reveal-up delay-2">
                 <button class="btn-luxury-outline" onclick="window.location.href='berita.html'">
@@ -662,11 +682,13 @@
                         Mulai Navigasi <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:white;"><path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z"/></svg>
                     </a>
                 </div>
-                <!-- Iframe default sebelum diganti admin -->
-                <iframe id="iframe-gmaps" class="google-map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127641.52382542488!2d103.95738870129759!3d1.0827292211606368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d98d75a133464b%3A0x280e5513813af814!2sBatam%2C%20Batam%20City%2C%20Riau%20Islands!5e0!3m2!1sen!2sid!4v1708684784746!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe id="iframe-gmaps" class="google-map-iframe" src="" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </section>
-
+        
+        <!-- =========================================
+             TESTIMONIAL SECTION DENGAN STRUKTUR BARU
+             ========================================= -->
         <section class="testimonial-section reveal-up delay-1" id="testimoni">
             <div class="testi-header">
                 <h2 class="news-title">Testimoni Pelanggan</h2>
@@ -676,10 +698,22 @@
             <div class="testi-grid reveal-up delay-2" id="testi-grid-container">
                 <!-- Data ini akan diganti oleh sinkronisasi JS -->
                 <div class="testi-card">
-                    <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=600&auto=format&fit=crop" alt="Penyerahan Unit" class="testi-img-main">
+                    <div class="testi-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=600&auto=format&fit=crop" alt="Penyerahan Unit" class="testi-img-main">
+                    </div>
                     <div class="testi-content">
+                        <div class="testi-stars">
+                            <!-- Bintang Dummy -->
+                            <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                        </div>
+                        <p class="testi-text">"Memuat Data..."</p>
                         <div class="testi-info">
                             <span class="testi-name">Memuat Data...</span>
+                            <span class="testi-role"></span>
                         </div>
                     </div>
                 </div>
@@ -825,6 +859,16 @@
             }
         });
 
+        // --- FUNGSI BANTUAN GENERATE BINTANG RATING ---
+        function generateStars(ratingStr) {
+            const count = parseInt(ratingStr) || 5;
+            let stars = '';
+            for(let i = 0; i < count; i++) {
+                stars += '<svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>';
+            }
+            return stars;
+        }
+
         // --- 1. KONFIGURASI API FIREBASE REALTIME DATABASE ---
         const firebaseConfig = {
             apiKey: "AIzaSyBrNnp8PJiKYATH-1ie67aq9WqESpIXBus",
@@ -909,44 +953,44 @@
                 }
             });
 
-                 // B. Sinkronisasi Data Alamat & Peta (PERBAIKAN MAPS FINAL)
+            // B. Sinkronisasi Data Alamat & Peta (VERSI ANTI-REVERT)
             db.ref('global_data/alamat').on('value', (snapshot) => {
                 const data = snapshot.val();
-                if(data) {
-                    if(data.gmaps) {
-                        // 1. Terjemahkan kode rahasia (&quot;, &lt;) dari admin kembali ke teks normal
-                        let txt = document.createElement("textarea");
-                        txt.innerHTML = data.gmaps;
-                        let decodedString = txt.value;
-                        
-                        // 2. Langsung sedot link 'https://' nya saja, abaikan semua atribut iframe!
-                        let srcMap = "";
-                        let urlMatch = decodedString.match(/https?:\/\/[^"”'\s><]+/);
-                        
-                        if (urlMatch) {
-                            srcMap = urlMatch[0]; // Hasilnya link Google Maps yang bersih
-                        }
-                        
+                if(data && data.gmaps) {
+                    // 1. Dekode teks
+                    let txt = document.createElement("textarea");
+                    txt.innerHTML = data.gmaps;
+                    let decodedString = txt.value;
+                    
+                    // 2. Ambil link bersih
+                    let urlMatch = decodedString.match(/https?:\/\/[^"”'\s><]+/);
+                    if (urlMatch) {
+                        const newSrc = urlMatch[0];
                         const iframeGmaps = document.getElementById('iframe-gmaps');
-                        const btnMapNav = document.getElementById('btn-map-nav-dynamic');
                         
-                        // 3. Masukkan ke peta
-                        if(srcMap && srcMap.includes('google')) {
-                            if(iframeGmaps) iframeGmaps.src = srcMap;
-                        }
-
-                        // Perbaikan: Ubah href tombol Mulai Navigasi
-                        if(btnMapNav) {
-                            const searchKeyword = data.teks_alamat || "Mitsubishi Batam";
-                            btnMapNav.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(searchKeyword);
+                        // Cek: Hanya ganti jika src saat ini berbeda, untuk cegah flicker/revert saat scroll
+                        if(iframeGmaps && iframeGmaps.src !== newSrc) {
+                            iframeGmaps.src = newSrc;
+                            // Tambahkan atribut data agar tidak tertimpa animasi
+                            iframeGmaps.setAttribute('data-loaded', 'true');
                         }
                     }
+
+                    // Sinkronisasi teks alamat & tombol
                     if(data.teks_alamat) {
                         document.getElementById('alamat-text').innerText = data.teks_alamat;
-                        document.getElementById('footer-alamat-text').innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> ${data.teks_alamat}`;
+                        const btnMapNav = document.getElementById('btn-map-nav-dynamic');
+                        if(btnMapNav) {
+                            btnMapNav.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(data.teks_alamat);
+                        }
+                        const footerAlamat = document.getElementById('footer-alamat-text');
+                        if(footerAlamat) {
+                            footerAlamat.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> ${data.teks_alamat}`;
+                        }
                     }
                     if(data.jam_buka && data.jam_tutup) {
-                        document.getElementById('jam-operasional-text').innerHTML = `Senin - Minggu<br>${data.jam_buka} - ${data.jam_tutup} WIB`;
+                        const jamText = document.getElementById('jam-operasional-text');
+                        if(jamText) jamText.innerHTML = `Senin - Minggu<br>${data.jam_buka} - ${data.jam_tutup} WIB`;
                     }
                 }
             });
@@ -1179,39 +1223,44 @@
                 }
             });
 
-            // H. Sinkronisasi Testimoni Pelanggan (PERBAIKAN UX & UNDEFINED)
+            // H. Sinkronisasi Testimoni Pelanggan (SINKRON DENGAN TESTIMONI.HTML)
             db.ref('testimoni_list').on('value', (snapshot) => {
                 const data = snapshot.val();
-                if(data) {
-                    const testiGrid = document.getElementById('testi-grid-container');
-                    if(testiGrid) {
-                        let testiHTML = '';
-                        const keys = Object.keys(data).reverse().slice(0, 4);
-                        keys.forEach(key => {
-                            const testi = data[key];
-                            
-                            // Fallback jika Admin lupa ngisi data sehingga tidak tertulis "undefined"
-                            const namaClient = testi.nama || 'Pelanggan Setia';
-                            const roleClient = testi.profesi || 'Konsumen';
-                            const pesanClient = testi.pesan || 'Layanan dari dealer ini sangat memuaskan, sangat direkomendasikan untuk Anda!';
-                            const imgClient = testi.imgUrl || 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=600&auto=format&fit=crop';
+                const testiGrid = document.getElementById('testi-grid-container');
+                
+                if(data && testiGrid) {
+                    let testiHTML = '';
+                    const keys = Object.keys(data).reverse().slice(0, 4); // Batasi 4 di index.html
+                    
+                    keys.forEach(key => {
+                        const testi = data[key];
+                        const namaClient = testi.nama || 'Pelanggan Setia';
+                        // Gunakan 'unit' sebagai role jika ada, fallback ke 'profesi' atau default
+                        const roleClient = testi.unit || testi.profesi || 'Konsumen'; 
+                        const pesanClient = testi.komentar || testi.pesan || 'Layanan dari dealer ini sangat memuaskan, sangat direkomendasikan untuk Anda!';
+                        const imgClient = testi.imgUrl || 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=600&auto=format&fit=crop';
+                        // Rating dinamis
+                        const ratingBintang = generateStars(testi.rating || 5);
 
-                            testiHTML += `
-                            <div class="testi-card reveal-up">
+                        testiHTML += `
+                        <div class="testi-card reveal-up">
+                            <div class="testi-img-wrapper">
                                 <img src="${imgClient}" alt="Testimoni" class="testi-img-main">
-                                <div class="testi-content">
-                                    <div class="testi-info">
-                                        <span class="testi-name">${namaClient}</span>
-                                        <span class="testi-role">${roleClient}</span>
-                                    </div>
-                                    <div class="testi-stars">★★★★★</div>
-                                    <p class="testi-text">"${pesanClient}"</p>
+                            </div>
+                            <div class="testi-content">
+                                <div class="testi-stars">
+                                    ${ratingBintang}
                                 </div>
-                            </div>`;
-                        });
-                        testiGrid.innerHTML = testiHTML;
-                        refreshAnimations();
-                    }
+                                <p class="testi-text">"${pesanClient}"</p>
+                                <div class="testi-info">
+                                    <span class="testi-name">${namaClient}</span>
+                                    <span class="testi-role">${roleClient}</span>
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+                    testiGrid.innerHTML = testiHTML;
+                    refreshAnimations();
                 }
             });
         }
