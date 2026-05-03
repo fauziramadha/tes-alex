@@ -625,33 +625,51 @@
             });
         }
 
-        // =========================================
-        // 6. FUNGSI CERDAS PENYESUAI UKURAN TEKS HERO (V3)
+                // =========================================
+        // FUNGSI CERDAS PENYESUAI UKURAN TEKS HERO (V3 - Presisi Layar)
         // =========================================
         function sesuaikanUkuranTeks(textElement, namaMobil) {
             textElement.textContent = namaMobil;
+            
+            // Reset styling bawaan
             textElement.style.fontSize = "";
             textElement.style.whiteSpace = "";
+            textElement.style.letterSpacing = "";
             textElement.style.wordWrap = "normal";
             
+            // Hanya berlaku khusus layar HP (mobile) di bawah 768px
             if (window.innerWidth <= 767) {
                 const isSatuKata = !namaMobil.includes(' ');
+
                 if (isSatuKata) {
+                    // KASUS 1: 1 Kata (Otomatis menyesuaikan layar maksimal)
                     textElement.style.whiteSpace = "nowrap";
-                    let ukuranPx = 55; 
+                    textElement.style.letterSpacing = "2px";
+                    
+                    let ukuranPx = 55; // Mulai dari ukuran besar yang gagah
                     textElement.style.fontSize = ukuranPx + "px";
+                    
+                    // Sisa ruang kiri-kanan (padding) agar tidak nempel banget ke bezel HP
                     const batasAman = window.innerWidth - 48; 
+                    
+                    // SCRIPT PINTAR: Terus kecilkan font 1px sampai pas masuk ke batas layar
                     while (textElement.scrollWidth > batasAman && ukuranPx > 20) {
                         ukuranPx -= 1;
                         textElement.style.fontSize = ukuranPx + "px";
                     }
+                    
                 } else if (namaMobil.length > 15) {
-                    textElement.style.fontSize = "1.8rem";
+                    // KASUS 2: Beberapa kata dan panjang ("XPANDER CROSS ELITE")
+                    textElement.style.fontSize = "1.8rem"; // Sedikit dibesarkan dari sebelumnya
                     textElement.style.whiteSpace = "normal";
+                    textElement.style.letterSpacing = "1px";
                     textElement.style.wordWrap = "break-word";
+                    
                 } else {
+                    // KASUS 3: Beberapa kata tapi pendek ("NEW TRITON")
                     textElement.style.fontSize = "2.2rem";
                     textElement.style.whiteSpace = "nowrap";
+                    textElement.style.letterSpacing = "1px";
                 }
             }
         }
