@@ -116,13 +116,13 @@
         
         .hero-center-wrapper { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; padding: 0 24px; margin-top: 40px; }
 
-        .detail-hero-content { text-align: center; color: var(--color-primary); margin-bottom: 30px; }
+        .detail-hero-content { text-align: center; color: var(--color-primary); margin-bottom: 30px; width: 100%; }
         .car-logo-text { font-size: clamp(2.5rem, 8vw, 6rem); font-family: var(--font-heading); font-weight: 800; text-transform: uppercase; letter-spacing: 4px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); line-height: 1; margin-bottom: 12px; }
         .car-tagline { font-size: clamp(0.8rem, 2vw, 1.1rem); font-weight: 400; letter-spacing: 6px; text-transform: uppercase; color: rgba(255,255,255,0.9); text-shadow: 0 4px 10px rgba(0,0,0,0.8); }
 
-        .hero-features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 32px; max-width: 450px; margin: 0 auto; }
-        .feature-item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; }
-        .feature-item.center-bottom { grid-column: 1 / -1; margin-top: -10px; } 
+        /* PERBAIKAN GRID IKON HERO (FLEXBOX DINAMIS) */
+        .hero-features-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px 32px; max-width: 600px; margin: 0 auto; }
+        .feature-item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; flex: 0 0 calc(33.333% - 22px); max-width: 140px; }
         
         .feature-img { width: 44px; height: 44px; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)); transition: var(--transition-smooth); }
         .feature-item:hover .feature-img { transform: translateY(-3px) scale(1.1); filter: drop-shadow(0 15px 20px rgba(230,0,0,0.5)); }
@@ -253,10 +253,14 @@
         }
         @media (max-width: 767px) { 
             .detail-hero { min-height: 85vh; }
-            .car-logo-text { font-size: 2.2rem; margin-bottom: 8px; letter-spacing: 2px; }
+            
+            /* PERBAIKAN UKURAN TULISAN HERO MOBILE */
+            .car-logo-text { font-size: clamp(1.5rem, 8vw, 2.5rem); margin-bottom: 8px; letter-spacing: 2px; width: 100%; word-wrap: break-word; overflow-wrap: break-word; line-height: 1.2; }
             .car-tagline { font-size: 0.75rem; letter-spacing: 3px; }
             
-            .hero-features-grid { gap: 16px 12px; max-width: 300px; }
+            /* PERBAIKAN GRID IKON HERO MOBILE */
+            .hero-features-grid { gap: 16px 12px; max-width: 100%; }
+            .feature-item { flex: 0 0 calc(50% - 12px); max-width: 140px; }
             .feature-img { width: 32px; height: 32px; }
             .feature-label { font-size: 0.55rem; letter-spacing: 1px; }
             
@@ -329,7 +333,7 @@
             </nav>
 
             <div class="nav-actions">
-                <a href="https://wa.me/628123456789" target="_blank" class="btn-primary link-wa-global">Pesan Sekarang</a>
+                <a href="#" target="_blank" class="btn-primary link-wa-global">Pesan Sekarang</a>
                 <button class="menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu">
                     <span></span><span></span><span></span>
                 </button>
@@ -353,7 +357,7 @@
         <a href="index.html#layanan" class="menu-item">Layanan Purna Jual</a>
         <a href="index.html#lokasi" class="menu-item">Lokasi Dealer</a>
 
-        <a href="https://wa.me/628123456789" target="_blank" class="btn-primary link-wa-global" style="margin-top: auto; text-align: center; width: 100%;">Hubungi Sales</a>
+        <a href="#" target="_blank" class="btn-primary link-wa-global" style="margin-top: auto; text-align: center; width: 100%;">Hubungi Sales</a>
     </div>
 
     <main class="app-wrapper">
@@ -370,27 +374,8 @@
                     <p class="car-tagline" id="hero-spesifikasi-slogan">Premium Family SUV</p>
                 </div>
 
-                <div class="hero-features-grid reveal-up delay-1" id="hero-features-container">
-                    <div class="feature-item">
-                        <img src="https://i.ibb.co.com/MKS5kty/IMG-3293.png" alt="Keamanan" class="feature-img">
-                        <span class="feature-label">Teknologi<br>Keamanan Terkini</span>
-                    </div>
-                    <div class="feature-item">
-                        <img src="https://i.ibb.co.com/Q36yHbng/IMG-3294.png" alt="Kenyamanan" class="feature-img">
-                        <span class="feature-label">Kenyamanan<br>Premium Ekstra</span>
-                    </div>
-                    <div class="feature-item">
-                        <img src="https://i.ibb.co.com/GQhCyjYg/IMG-3296.png" alt="Performa" class="feature-img">
-                        <span class="feature-label">Performa<br>Mengemudi Gagah</span>
-                    </div>
-                    <div class="feature-item">
-                        <img src="https://i.ibb.co.com/k6HL158w/IMG-3297.png" alt="Mewah" class="feature-img">
-                        <span class="feature-label">Fitur Mewah<br>Kendaraan</span>
-                    </div>
-                    <div class="feature-item center-bottom">
-                        <img src="https://i.ibb.co.com/mCHqXZpq/IMG-3300.png" alt="Teknologi" class="feature-img">
-                        <span class="feature-label">Teknologi<br>Diamond Sense</span>
-                    </div>
+                <!-- WADAH IKON DIPROSES DINAMIS DARI JS -->
+                <div class="hero-features-grid" id="hero-features-container">
                 </div>
 
             </div>
@@ -466,9 +451,9 @@
                     <img src="https://i.ibb.co.com/84Ss5Bjy/IMG-3284.png" alt="Mitsubishi Motors" class="footer-logo">
                     <p>Dealer Resmi Mitsubishi Batam. Menghadirkan layanan premium dan pengalaman berkendara kelas dunia untuk Anda dan keluarga.</p>
                     <div class="footer-socials">
-                        <a href="https://facebook.com" target="_blank" class="social-link-icon link-fb-global" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
-                        <a href="https://instagram.com" target="_blank" class="social-link-icon link-ig-global" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-                        <a href="#" class="social-link-icon" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg></a>
+                        <a href="#" target="_blank" class="social-link-icon link-fb-global" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
+                        <a href="#" target="_blank" class="social-link-icon link-ig-global" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                        <a href="#" class="social-link-icon link-email-global" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg></a>
                     </div>
                 </div>
                 <div class="footer-col">
@@ -494,7 +479,7 @@
                 </div>
             </div>
             <div class="footer-bottom reveal-up delay-2">
-                <div class="footer-copy">©2026. Official Mitsubishi motors Batam Aldiansyah Sales</div>
+                <div class="footer-copy">©2026. Official Mitsubishi Motors Batam <span id="nama-sales-global">Sales</span></div>
                 <div class="footer-dev">Developed by @zee_radhan</div>
             </div>
         </footer>
@@ -580,22 +565,44 @@
         };
 
         // =========================================
+        // VARIABLE GLOBAL UNTUK SINKRONISASI WA + NAMA MOBIL
+        // =========================================
+        let globalWaNumber = '';
+        let globalCarName = '';
+
+        function updateWaLinks() {
+            if(globalWaNumber) {
+                const mobilText = globalCarName ? ` mobil ${globalCarName}` : ' informasi dari website';
+                const pesanTeks = encodeURIComponent(`Halo Kak, saya tertarik dengan${mobilText}. Boleh minta informasinya lebih lanjut?`);
+                document.querySelectorAll('.link-wa-global').forEach(link => {
+                    link.href = `https://wa.me/${globalWaNumber}?text=${pesanTeks}`;
+                });
+            }
+        }
+
+        // =========================================
         // SINKRONISASI DATA GLOBAL (Kontak & Alamat)
         // =========================================
         function loadGlobalData() {
-            db.ref('global_data/kontak').on('value', (snapshot) => {
+            db.ref('global_data/biodata').on('value', (snapshot) => {
                 const data = snapshot.val();
                 if(data) {
-                    if(data.fb) document.querySelectorAll('.link-fb-global').forEach(link => link.href = `https://facebook.com/${data.fb}`);
+                    if(data.fb_link) document.querySelectorAll('.link-fb-global').forEach(link => link.href = data.fb_link);
                     if(data.ig) document.querySelectorAll('.link-ig-global').forEach(link => link.href = `https://instagram.com/${data.ig}`);
-                    if(data.telepon) {
-                        document.getElementById('bottom-nav-telp').href = `tel:${data.telepon}`;
-                        const teksTelp = document.getElementById('footer-telepon-text');
-                        if(teksTelp) teksTelp.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> ${data.telepon}`;
+                    if(data.email) document.querySelectorAll('.link-email-global').forEach(link => link.href = `mailto:${data.email}`);
+                    if(data.nama) {
+                        const namaSalesEl = document.getElementById('nama-sales-global');
+                        if(namaSalesEl) namaSalesEl.textContent = data.nama;
                     }
-                    if(data.whatsapp) {
-                        const teksUmum = encodeURIComponent("Halo Kak, saya tertarik dengan informasi dari website Mitsubishi Motors Batam. Boleh minta informasinya lebih lanjut?");
-                        document.querySelectorAll('.link-wa-global').forEach(link => link.href = `https://wa.me/${data.whatsapp}?text=${teksUmum}`);
+                    if(data.telp) {
+                        const navTelp = document.getElementById('bottom-nav-telp');
+                        if(navTelp) navTelp.href = `tel:${data.telp}`;
+                        const teksTelp = document.getElementById('footer-telepon-text');
+                        if(teksTelp) teksTelp.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> ${data.telp}`;
+                    }
+                    if(data.wa) {
+                        globalWaNumber = data.wa.startsWith('0') ? '62' + data.wa.substring(1) : data.wa;
+                        updateWaLinks();
                     }
                 }
             });
@@ -617,23 +624,69 @@
             const data = snap.val();
             if(data) {
                 if(data.bgUrl) document.getElementById('hero-spesifikasi-bg').src = data.bgUrl;
-                if(data.nama) document.getElementById('hero-spesifikasi-nama').textContent = data.nama;
+                if(data.nama) {
+                    document.getElementById('hero-spesifikasi-nama').textContent = data.nama;
+                    globalCarName = data.nama;
+                    updateWaLinks();
+                }
                 if(data.slogan) document.getElementById('hero-spesifikasi-slogan').textContent = data.slogan;
             }
         });
 
+        // =========================================
+        // RENDER GABUNGAN IKON DEFAULT & TAMBAHAN
+        // =========================================
+        let defaultIconsData = [];
+        let customIconsData = [];
+
+        function renderHeroIcons() {
+            const container = document.getElementById('hero-features-container');
+            container.innerHTML = '';
+            
+            const allIcons = [...defaultIconsData, ...customIconsData];
+            
+            allIcons.forEach((iconData, index) => {
+                const delayClass = index % 2 === 0 ? 'delay-1' : 'delay-2';
+                const html = `
+                <div class="feature-item reveal-up active ${delayClass}">
+                    <img src="${iconData.img}" alt="Fitur" class="feature-img">
+                    <span class="feature-label">${iconData.label}</span>
+                </div>`;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
         db.ref(`spesifikasi/${currentMobilId}/icon_default`).on('value', snap => {
             const data = snap.val();
+            defaultIconsData = [];
             if(data) {
-                const container = document.getElementById('hero-features-container');
-                const items = container.querySelectorAll('.feature-item');
-                
-                if(data.icon1) { items[0].style.display = 'flex'; items[0].querySelector('.feature-label').innerHTML = data.icon1; } else { items[0].style.display = 'none'; }
-                if(data.icon2) { items[1].style.display = 'flex'; items[1].querySelector('.feature-label').innerHTML = data.icon2; } else { items[1].style.display = 'none'; }
-                if(data.icon3) { items[2].style.display = 'flex'; items[2].querySelector('.feature-label').innerHTML = data.icon3; } else { items[2].style.display = 'none'; }
-                if(data.icon4) { items[3].style.display = 'flex'; items[3].querySelector('.feature-label').innerHTML = data.icon4; } else { items[3].style.display = 'none'; }
-                if(data.icon5) { items[4].style.display = 'flex'; items[4].querySelector('.feature-label').innerHTML = data.icon5; } else { items[4].style.display = 'none'; }
+                const defaultImgs = [
+                    "https://i.ibb.co.com/MKS5kty/IMG-3293.png",
+                    "https://i.ibb.co.com/Q36yHbng/IMG-3294.png",
+                    "https://i.ibb.co.com/GQhCyjYg/IMG-3296.png",
+                    "https://i.ibb.co.com/k6HL158w/IMG-3297.png",
+                    "https://i.ibb.co.com/mCHqXZpq/IMG-3300.png"
+                ];
+                for(let i=1; i<=5; i++) {
+                    if(data[`icon${i}`]) {
+                        defaultIconsData.push({ img: defaultImgs[i-1], label: data[`icon${i}`] });
+                    }
+                }
             }
+            renderHeroIcons();
+        });
+
+        db.ref(`spesifikasi/${currentMobilId}/ikon_tambahan`).on('value', snap => {
+            customIconsData = [];
+            if(snap.exists()) {
+                snap.forEach(child => {
+                    const data = child.val();
+                    if(data.imgUrl && data.info) {
+                        customIconsData.push({ img: data.imgUrl, label: data.info });
+                    }
+                });
+            }
+            renderHeroIcons();
         });
 
 
