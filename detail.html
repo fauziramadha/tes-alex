@@ -574,23 +574,27 @@
         // VARIABLE GLOBAL UNTUK SINKRONISASI WA + NAMA MOBIL
         // =========================================
         
-        // PERBAIKAN: Berikan nilai fallback (sementara) agar tombol tidak mati sebelum data termuat
         let globalWaNumber = '6281234567890'; // Default sementara
-        let globalCarName = currentMobilId.toUpperCase(); // Ambil dari URL sebagai default sementara
+        let globalCarName = currentMobilId.toUpperCase(); // Ambil dari URL
         let globalTelpNumber = '+6281234567890'; // Default sementara
 
-        // PENAMBAHAN: Fungsi Pembersih Nomor (Regex Cerdas)
+        // Fungsi Pembersih Nomor (Regex Cerdas)
         function cleanNumber(num) {
             if(!num) return "";
-            let cleaned = num.toString().replace(/\D/g, ''); // Hapus spasi, strip, tanda kurung
-            if (cleaned.startsWith('0')) cleaned = '62' + cleaned.substring(1); // Ubah awalan 0 jadi 62
+            let cleaned = num.toString().replace(/\D/g, ''); 
+            if (cleaned.startsWith('0')) cleaned = '62' + cleaned.substring(1); 
             return cleaned;
         }
 
+        // =========================================
+        // FUNGSI UPDATE SINKRONISASI GLOBAL (DI-UPGRADE)
+        // =========================================
         function updateWaLinks() {
             if(globalWaNumber) {
                 const mobilText = globalCarName ? ` mobil ${globalCarName}` : ' informasi dari website';
                 const pesanTeks = encodeURIComponent(`Halo Kak, saya tertarik dengan${mobilText}. Boleh minta informasinya lebih lanjut?`);
+                
+                // Menyasar seluruh elemen class link-wa-global (Navbar, Sidebar, Button Bawah, Footer)
                 document.querySelectorAll('.link-wa-global').forEach(link => {
                     link.href = `https://wa.me/${globalWaNumber}?text=${pesanTeks}`;
                 });
@@ -599,57 +603,69 @@
 
         function updateTelpLinks() {
             if(globalTelpNumber) {
+                // Menyasar Navigasi Bawah khusus Telepon
                 const navTelp = document.getElementById('bottom-nav-telp');
-                // Pakai + agar format telepon internasional tetap jalan di semua device
                 if(navTelp) navTelp.href = `tel:+${globalTelpNumber}`;
             }
         }
 
-        // PERBAIKAN: Panggil fungsi update 1x saat halaman dimuat agar tombol langsung punya link
         updateWaLinks();
         updateTelpLinks();
 
-        // =========================================
-        // SINKRONISASI DATA GLOBAL (Kontak & Alamat)
-        // =========================================
         function loadGlobalData() {
+            // SINKRONISASI DATA BIODATA & SOSIAL MEDIA
             db.ref('global_data/biodata').on('value', (snapshot) => {
                 const data = snapshot.val();
                 if(data) {
-                    if(data.fb_link) document.querySelectorAll('.link-fb-global').forEach(link => link.href = data.fb_link);
+                    // 1. Sinkronisasi Facebook (Mencari semua class link-fb-global)
+                    if(data.fb_link) {
+                        document.querySelectorAll('.link-fb-global').forEach(link => link.href = data.fb_link);
+                    }
                     
-                    // PENAMBAHAN: Deteksi IG Cerdas
+                    // 2. Sinkronisasi Instagram (Mencari semua class link-ig-global)
                     if(data.ig) {
                         const igUrl = data.ig.includes('http') ? data.ig : `https://instagram.com/${data.ig.replace('@', '')}`;
                         document.querySelectorAll('.link-ig-global').forEach(link => link.href = igUrl);
                     }
                     
-                    if(data.email) document.querySelectorAll('.link-email-global').forEach(link => link.href = `mailto:${data.email}`);
+                    // 3. Sinkronisasi Email (Mencari semua class link-email-global)
+                    if(data.email) {
+                        document.querySelectorAll('.link-email-global').forEach(link => link.href = `mailto:${data.email}`);
+                    }
+                    
+                    // 4. Sinkronisasi Nama Sales di Footer
                     if(data.nama) {
                         const namaSalesEl = document.getElementById('nama-sales-global');
                         if(namaSalesEl) namaSalesEl.textContent = data.nama;
                     }
+                    
+                    // 5. Sinkronisasi Telepon (Teks Footer & Link Nav Bawah)
                     if(data.telp) {
-                        // PENAMBAHAN: Gunakan pembersih nomor
                         globalTelpNumber = cleanNumber(data.telp);
-                        updateTelpLinks(); // Update link telepon di navbar bawah
+                        updateTelpLinks(); 
                         
                         const teksTelp = document.getElementById('footer-telepon-text');
-                        if(teksTelp) teksTelp.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> ${data.telp}`;
+                        if(teksTelp) {
+                            teksTelp.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> ${data.telp}`;
+                        }
                     }
+                    
+                    // 6. Sinkronisasi WhatsApp Global
                     if(data.wa) {
-                        // PENAMBAHAN: Gunakan pembersih nomor
                         globalWaNumber = cleanNumber(data.wa);
-                        updateWaLinks(); // Update ulang link WA setelah nomor dari Firebase dapat
+                        updateWaLinks(); 
                     }
                 }
             });
 
+            // SINKRONISASI ALAMAT DEALER
             db.ref('global_data/alamat').on('value', (snapshot) => {
                 const data = snapshot.val();
                 if(data && data.teks_alamat) {
                     const footerAlamat = document.getElementById('footer-alamat-text');
-                    if(footerAlamat) footerAlamat.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> ${data.teks_alamat}`;
+                    if(footerAlamat) {
+                        footerAlamat.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> ${data.teks_alamat}`;
+                    }
                 }
             });
         }
@@ -658,10 +674,7 @@
         // FUNGSI CERDAS PENYESUAI UKURAN TEKS HERO (V10 - Final All Devices)
         // =========================================
         function sesuaikanUkuranTeks(textElement, namaMobil) {
-            // Bersihkan spasi berlebih di awal/akhir kata
             namaMobil = namaMobil.trim();
-            
-            // Reset semua styling JS
             textElement.style.fontSize = "";
             textElement.style.whiteSpace = "";
             textElement.style.letterSpacing = "";
@@ -670,50 +683,35 @@
             textElement.style.textWrap = "";
             
             if (window.innerWidth <= 767) {
-                // ==========================================
-                // 1. LOGIKA KHUSUS HP (MOBILE)
-                // ==========================================
                 let kata = namaMobil.split(' ');
-
                 if (kata.length <= 2) {
                     textElement.innerHTML = namaMobil;
                 } else {
-                    // Pasti 2 kata di atas, sisanya di bawah
                     let barisAtas = kata[0] + " " + kata[1];
                     let barisBawah = kata.slice(2).join(" ");
                     textElement.innerHTML = `${barisAtas}<br>${barisBawah}`;
                 }
-
                 textElement.style.whiteSpace = "nowrap"; 
                 textElement.style.letterSpacing = "2px";
                 textElement.style.lineHeight = "1.2";
                 
-                let ukuranPx = 55; // Max font HP
+                let ukuranPx = 55; 
                 textElement.style.fontSize = ukuranPx + "px";
-                const batasAman = window.innerWidth - 48; // Padding layar HP
+                const batasAman = window.innerWidth - 48; 
                 
-                // Shrink-to-fit HP
                 while (textElement.scrollWidth > batasAman && ukuranPx > 20) {
                     ukuranPx -= 1;
                     textElement.style.fontSize = ukuranPx + "px";
                 }
-
             } else {
-                // ==========================================
-                // 2. LOGIKA KHUSUS TABLET, PC, & LAPTOP
-                // ==========================================
                 textElement.innerHTML = namaMobil;
-                
-                // Paksa 1 baris lurus & matikan text-wrap CSS agar tampil gagah
                 textElement.style.whiteSpace = "nowrap"; 
                 textElement.style.letterSpacing = "4px"; 
                 
-                let ukuranPx = 90; // Max font Desktop (Sangat besar)
+                let ukuranPx = 90; 
                 textElement.style.fontSize = ukuranPx + "px";
+                const batasAman = window.innerWidth - 100; 
                 
-                const batasAman = window.innerWidth - 100; // Padding layar Desktop
-                
-                // Shrink-to-fit Desktop: Otomatis mengecil jika teksnya sangat panjang
                 while (textElement.scrollWidth > batasAman && ukuranPx > 30) {
                     ukuranPx -= 1;
                     textElement.style.fontSize = ukuranPx + "px";
@@ -724,22 +722,20 @@
         // =========================================
         // SINKRONISASI DATA SPESIFIKASI MOBIL 
         // =========================================
-
         db.ref(`spesifikasi/${currentMobilId}/hero`).on('value', snap => {
             const data = snap.val();
             if(data) {
                 if(data.bgUrl) document.getElementById('hero-spesifikasi-bg').src = data.bgUrl;
                 if(data.nama) {
                     const namaEl = document.getElementById('hero-spesifikasi-nama');
-                    sesuaikanUkuranTeks(namaEl, data.nama); // Panggil fungsi cerdas
+                    sesuaikanUkuranTeks(namaEl, data.nama); 
                     globalCarName = data.nama;
-                    updateWaLinks(); // Update ulang template WA setelah nama mobil aslinya dapat
+                    updateWaLinks(); 
                 }
                 if(data.slogan) document.getElementById('hero-spesifikasi-slogan').textContent = data.slogan;
             }
         });
 
-        // Pastikan ukuran teks disesuaikan ulang jika pengguna merotasi layar HP
         window.addEventListener('resize', () => {
             const namaEl = document.getElementById('hero-spesifikasi-nama');
             if (globalCarName) {
@@ -803,16 +799,13 @@
             renderHeroIcons();
         });
 
-
         // =========================================
         // LOGIKA FILTER VARIAN & WARNA (CERDAS)
         // =========================================
-        
-        let allColorsData = []; // Array untuk menyimpan semua warna mobil ini
+        let allColorsData = []; 
         let currentActiveVariantId = null; 
         let currentBasePrice = 0;
 
-        // 1. Ambil Data Warna Terlebih Dahulu dan Simpan ke Memori
         db.ref(`spesifikasi/${currentMobilId}/warna`).on('value', snap => {
             allColorsData = [];
             if(snap.exists()) {
@@ -820,11 +813,9 @@
                     allColorsData.push({ key: child.key, ...child.val() });
                 });
             }
-            // Render ulang warna jika varian sudah dipilih
             if(currentActiveVariantId) renderFilteredColors(currentActiveVariantId);
         });
 
-        // 2. Ambil Data Varian dan Buat Tombolnya
         db.ref(`spesifikasi/${currentMobilId}/varian`).on('value', snap => {
             const container = document.getElementById('variants-grid-container');
             container.innerHTML = '';
@@ -845,21 +836,17 @@
                         </div>
                     `;
                     
-                    // Ketika Varian diklik
                     div.addEventListener('click', () => {
                         document.querySelectorAll('.variant-item').forEach(el => el.classList.remove('active'));
                         div.classList.add('active');
                         
                         currentActiveVariantId = vId;
                         currentBasePrice = v.harga || 0;
-                        
-                        // Render ulang pilihan warna sesuai varian yang diklik
                         renderFilteredColors(vId);
                     });
 
                     container.appendChild(div);
 
-                    // Klik otomatis varian pertama saat halaman dimuat
                     if(isFirst) {
                         currentActiveVariantId = vId;
                         currentBasePrice = v.harga || 0;
@@ -872,12 +859,10 @@
             }
         });
 
-        // 3. Fungsi Render Warna berdasarkan Varian
         function renderFilteredColors(variantId) {
             const container = document.getElementById('color-swatches-wrapper');
             container.innerHTML = '';
             
-            // Logika Filter: Tampilkan jika varian='all', varian kosong (lama), atau varian sama persis dengan ID
             const filteredColors = allColorsData.filter(c => c.varian === 'all' || !c.varian || c.varian === variantId);
             
             if(filteredColors.length === 0) {
@@ -908,38 +893,31 @@
             });
         }
 
-        // 4. Fungsi Update Tampilan Utama Mobil & Harga
         function updateVisualizerDisplay(colorData) {
             const imgEl = document.getElementById('car-main-img');
             const priceDisp = document.getElementById('car-price-display');
             
-            // Animasi Keluar
             imgEl.classList.add('fade-out');
             priceDisp.style.opacity = '0';
             priceDisp.style.transform = 'translateY(-10px)';
             
             setTimeout(() => {
-                // Update Data
                 if(colorData.imgMobilUrl) imgEl.src = colorData.imgMobilUrl;
                 document.getElementById('car-color-name').textContent = colorData.nama || 'Warna Standard';
                 
-                // Jika warna punya harga khusus (> 0), gunakan harga warna. Jika tidak, gunakan harga varian dasar.
                 const finalPrice = (colorData.harga && Number(colorData.harga) > 0) ? colorData.harga : currentBasePrice;
                 priceDisp.textContent = formatRupiah(finalPrice);
                 
-                // Animasi Masuk
                 imgEl.classList.remove('fade-out');
                 priceDisp.style.opacity = '1';
                 priceDisp.style.transform = 'translateY(0)';
             }, 300);
         }
 
-
         // =========================================
-        // GALERI FITUR INTERAKTIF (PERBAIKAN FUNGSI KLIK)
+        // GALERI FITUR INTERAKTIF 
         // =========================================
-        
-        let galleryDataGlobal = {}; // Simpan data galeri
+        let galleryDataGlobal = {}; 
         let activeGalleryCat = '';
         let activeGalleryIdx = 0;
 
@@ -957,7 +935,6 @@
                 tabsContainer.innerHTML = '';
                 let firstCat = null;
 
-                // Buat Tombol Tab Otomatis berdasarkan Kategori
                 for(const cat in galleryDataGlobal) {
                     if(galleryDataGlobal[cat].length > 0) {
                         if(!firstCat) firstCat = cat;
@@ -989,7 +966,6 @@
             }
         });
 
-        // Event Listener untuk Tombol Navigasi Prev & Next (Aman dari bug double click)
         document.getElementById('btn-prev').addEventListener('click', () => {
             if(!galleryDataGlobal[activeGalleryCat]) return;
             const maxIdx = galleryDataGlobal[activeGalleryCat].length - 1;
@@ -1027,11 +1003,9 @@
             }
         }
 
-
         // =========================================
         // FUNGSI FALLBACK DUMMY (PROTEKSI DATA KOSONG)
         // =========================================
-
         function checkVisualizerFallback() {
             if(document.getElementById('variants-grid-container').innerHTML.trim() === '') { 
                 jalankanDummyVisualizer(); 
@@ -1057,6 +1031,7 @@
             document.getElementById('gallery-desc').textContent = "Anda belum memasukkan data fitur dari VIP CMS.";
         }
 
+        // JALANKAN SINKRONISASI DATA GLOBAL
         loadGlobalData();
 
     </script>
