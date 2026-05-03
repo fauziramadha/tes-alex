@@ -655,52 +655,51 @@
         }
 
         // =========================================
-        // FUNGSI CERDAS PENYESUAI UKURAN TEKS HERO (V8 - Final: Anti Potong Kata)
+        // FUNGSI CERDAS PENYESUAI UKURAN TEKS HERO (V9 - Final: Pasti 2 Kata di Atas)
         // =========================================
         function sesuaikanUkuranTeks(textElement, namaMobil) {
-            textElement.textContent = namaMobil;
-            
-            // Reset semua styling JS agar bersih
+            // Reset semua styling JS
             textElement.style.fontSize = "";
             textElement.style.whiteSpace = "";
             textElement.style.letterSpacing = "";
             textElement.style.wordWrap = "";
-            textElement.style.wordBreak = ""; 
             textElement.style.lineHeight = "";
-            textElement.style.textWrap = "";
             
             // Hanya berlaku khusus layar HP (mobile) di bawah 768px
             if (window.innerWidth <= 767) {
-                let jumlahKata = namaMobil.split(' ').length;
+                let kata = namaMobil.split(' ');
 
-                if (jumlahKata <= 2) {
-                    // KASUS 1: Jika 1 atau 2 Kata ("FUSO CANTER", "NEW XPANDER") -> SHRINK-TO-FIT 1 BARIS
-                    textElement.style.whiteSpace = "nowrap";
-                    textElement.style.letterSpacing = "2px";
-                    
-                    let ukuranPx = 55; // Font mulai dari ukuran besar
-                    textElement.style.fontSize = ukuranPx + "px";
-                    
-                    const batasAman = window.innerWidth - 48; // Sisakan ruang pinggir layar
-                    
-                    // Terus kecilkan font 1px sampai pas di layar
-                    while (textElement.scrollWidth > batasAman && ukuranPx > 20) {
-                        ukuranPx -= 1;
-                        textElement.style.fontSize = ukuranPx + "px";
-                    }
-                    
+                // 1. ATUR PEMISAHAN KATA
+                if (kata.length <= 2) {
+                    // Jika 1 atau 2 kata ("XPANDER" atau "NEW XPANDER") -> Tetap 1 baris
+                    textElement.innerHTML = namaMobil;
                 } else {
-                    // KASUS 2: Jika 3 Kata atau lebih ("NEW XPANDER CROSS", "NEW PAJERO SPORT") -> TEXT-WRAP BALANCE
-                    textElement.style.fontSize = "2.2rem"; // Ukuran ideal yang tegas
-                    textElement.style.letterSpacing = "1px";
-                    textElement.style.lineHeight = "1.2";
-                    
-                    // Ini kunci utamanya agar kata utuh dan terbungkus estetik:
-                    textElement.style.whiteSpace = "normal";
-                    textElement.style.wordWrap = "normal"; // Mencegah pemotongan paksa
-                    textElement.style.wordBreak = "keep-all"; // Menjaga kata tetap utuh (tidak ada lagi PAJER - O)
-                    textElement.style.textWrap = "balance"; // Membuat baris atas dan bawah seimbang cantiknya
+                    // Jika 3 kata atau lebih ("NEW PAJERO SPORT" atau "ALL NEW TRITON EXCEED")
+                    // Ambil persis 2 kata pertama untuk baris atas, sisanya di baris bawah
+                    let barisAtas = kata[0] + " " + kata[1];
+                    let barisBawah = kata.slice(2).join(" ");
+                    textElement.innerHTML = `${barisAtas}<br>${barisBawah}`;
                 }
+
+                // 2. MESIN PENGECIL OTOMATIS (Berlaku untuk semua kondisi)
+                // nowrap + <br> memastikan teks hanya turun di tempat yang kita suruh
+                textElement.style.whiteSpace = "nowrap"; 
+                textElement.style.letterSpacing = "2px";
+                textElement.style.lineHeight = "1.2";
+                
+                let ukuranPx = 55; // Ukuran font maksimal
+                textElement.style.fontSize = ukuranPx + "px";
+                
+                const batasAman = window.innerWidth - 48; // Sisakan ruang untuk jarak kiri-kanan layar
+                
+                // Cek elemen terlebar (baik baris 1 maupun baris 2), dan kecilkan sampai pas di layar
+                while (textElement.scrollWidth > batasAman && ukuranPx > 20) {
+                    ukuranPx -= 1;
+                    textElement.style.fontSize = ukuranPx + "px";
+                }
+            } else {
+                // Untuk versi Desktop/PC, kembalikan ke teks normal
+                textElement.textContent = namaMobil;
             }
         }
 
