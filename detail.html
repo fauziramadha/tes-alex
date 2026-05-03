@@ -618,41 +618,50 @@
         }
 
         // =========================================
-        // FUNGSI CERDAS PENYESUAI UKURAN TEKS HERO
+        // FUNGSI CERDAS PENYESUAI UKURAN TEKS HERO (V2 - Anti Gagal)
         // =========================================
         function sesuaikanUkuranTeks(textElement, namaMobil) {
             textElement.textContent = namaMobil;
             
-            // Reset styling bawaan yang ada di tag style inline (jika ada)
+            // Reset styling bawaan
             textElement.style.fontSize = "";
             textElement.style.whiteSpace = "";
             textElement.style.letterSpacing = "";
+            textElement.style.wordWrap = "normal";
             
             // Hanya berlaku khusus layar HP (mobile) di bawah 768px
             if (window.innerWidth <= 767) {
                 const isSatuKata = !namaMobil.includes(' ');
                 const jumlahKarakter = namaMobil.length;
 
-                if (isSatuKata && jumlahKarakter > 10) {
-                    // KASUS 1: 1 kata tapi sangat panjang (Contoh: "NEWDESTINATOR")
-                    // Paksa 1 baris (nowrap) & ukuran dinamis mengecil ikuti jumlah huruf
+                if (isSatuKata && jumlahKarakter > 8) {
+                    // KASUS 1: 1 kata panjang ("NEWDESTINATOR")
                     textElement.style.whiteSpace = "nowrap";
-                    // Rumus: Lebar layar aman (sekitar 80vw) dibagi jumlah karakter
-                    textElement.style.fontSize = `clamp(1rem, ${80 / jumlahKarakter}vw, 2.2rem)`; 
-                    textElement.style.letterSpacing = "1px";
+                    textElement.style.letterSpacing = "0px"; // Rapatkan huruf
+                    
+                    let ukuranPx = 40; // Mulai dari ukuran pixel besar
+                    textElement.style.fontSize = ukuranPx + "px";
+                    
+                    // Lebar maksimal aman (Lebar layar HP dikurangi padding kiri-kanan)
+                    const batasAman = window.innerWidth - 60; 
+                    
+                    // SCRIPT PINTAR: Mengecilkan font otomatis selama tulisan masih keluar batas layar
+                    while (textElement.scrollWidth > batasAman && ukuranPx > 10) {
+                        ukuranPx -= 1;
+                        textElement.style.fontSize = ukuranPx + "px";
+                    }
                     
                 } else if (jumlahKarakter > 15) {
-                    // KASUS 2: Beberapa kata dan panjang (Contoh: "MITSUBISHI XPANDER CROSS")
-                    // Biarkan turun baris dengan seimbang (CSS text-wrap: balance akan bekerja)
-                    textElement.style.fontSize = "1.6rem";
+                    // KASUS 2: Beberapa kata dan panjang ("XPANDER CROSS ELITE")
+                    textElement.style.fontSize = "1.5rem";
                     textElement.style.whiteSpace = "normal";
-                    textElement.style.letterSpacing = "2px";
-                    
+                    textElement.style.letterSpacing = "1px";
+                    textElement.style.wordWrap = "break-word";
                 } else {
-                    // KASUS 3: Kata pendek / Normal (Contoh: "PAJERO" atau "TRITON")
+                    // KASUS 3: Normal / Pendek ("PAJERO")
                     textElement.style.fontSize = "2.2rem";
                     textElement.style.whiteSpace = "nowrap";
-                    textElement.style.letterSpacing = "2px";
+                    textElement.style.letterSpacing = "1px";
                 }
             }
         }
