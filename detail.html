@@ -654,68 +654,53 @@
             });
         }
 
-                // =========================================
-        // FUNGSI CERDAS PENYESUAI UKURAN TEKS HERO (V7 - Smart Word Split Max 4 Huruf)
+        // =========================================
+        // FUNGSI CERDAS PENYESUAI UKURAN TEKS HERO (V8 - Final: Anti Potong Kata)
         // =========================================
         function sesuaikanUkuranTeks(textElement, namaMobil) {
-            // Reset styling bawaan JS
+            textElement.textContent = namaMobil;
+            
+            // Reset semua styling JS agar bersih
             textElement.style.fontSize = "";
             textElement.style.whiteSpace = "";
             textElement.style.letterSpacing = "";
             textElement.style.wordWrap = "";
+            textElement.style.wordBreak = ""; 
             textElement.style.lineHeight = "";
+            textElement.style.textWrap = "";
             
             // Hanya berlaku khusus layar HP (mobile) di bawah 768px
             if (window.innerWidth <= 767) {
-                let kata = namaMobil.split(' ');
-                let baris1 = "";
-                let sisaBaris = "";
+                let jumlahKata = namaMobil.split(' ').length;
 
-                if (kata.length === 1) {
-                    // Jika cuma 1 kata (misal: "XPANDER")
-                    baris1 = kata[0];
-                } else {
-                    // Jika kata pertama <= 4 huruf (misal: "NEW", "ALL", "FUSO"), gabung dengan kata kedua
-                    if (kata[0].length <= 4) {
-                        baris1 = kata[0] + " " + kata[1];
-                        sisaBaris = kata.slice(2).join(" ");
-                    } else {
-                        // Jika kata pertama > 4 huruf (misal: "PAJERO", "XPANDER"), letakkan di baris 1 sendiri
-                        baris1 = kata[0];
-                        sisaBaris = kata.slice(1).join(" ");
-                    }
-                }
-
-                // Masukkan ke dalam HTML
-                if (sisaBaris !== "") {
-                    // Jika ada sisa kata, paksa turun ke bawah dengan <br>
-                    textElement.innerHTML = `${baris1}<br>${sisaBaris}`;
-                    textElement.style.whiteSpace = "normal";
-                    textElement.style.wordWrap = "break-word";
-                    textElement.style.lineHeight = "1.2"; // Rapatkan jarak atas-bawah
-                } else {
-                    // Jika cuma 1 baris (seperti "NEW XPANDER" atau "FUSO CANTER")
-                    textElement.innerHTML = baris1;
+                if (jumlahKata <= 2) {
+                    // KASUS 1: Jika 1 atau 2 Kata ("FUSO CANTER", "NEW XPANDER") -> SHRINK-TO-FIT 1 BARIS
                     textElement.style.whiteSpace = "nowrap";
-                }
-
-                // ==========================================
-                // MESIN SHRINK-TO-FIT (Pengecil Otomatis)
-                // ==========================================
-                textElement.style.letterSpacing = "2px";
-                let ukuranPx = 55; // Font mulai dari ukuran besar & gagah
-                textElement.style.fontSize = ukuranPx + "px";
-                
-                const batasAman = window.innerWidth - 48; // Sisakan ruang pinggir layar
-                
-                // Terus kecilkan font 1px sampai elemen terlebar pas di dalam batas layar
-                while (textElement.scrollWidth > batasAman && ukuranPx > 20) {
-                    ukuranPx -= 1;
+                    textElement.style.letterSpacing = "2px";
+                    
+                    let ukuranPx = 55; // Font mulai dari ukuran besar
                     textElement.style.fontSize = ukuranPx + "px";
+                    
+                    const batasAman = window.innerWidth - 48; // Sisakan ruang pinggir layar
+                    
+                    // Terus kecilkan font 1px sampai pas di layar
+                    while (textElement.scrollWidth > batasAman && ukuranPx > 20) {
+                        ukuranPx -= 1;
+                        textElement.style.fontSize = ukuranPx + "px";
+                    }
+                    
+                } else {
+                    // KASUS 2: Jika 3 Kata atau lebih ("NEW XPANDER CROSS", "NEW PAJERO SPORT") -> TEXT-WRAP BALANCE
+                    textElement.style.fontSize = "2.2rem"; // Ukuran ideal yang tegas
+                    textElement.style.letterSpacing = "1px";
+                    textElement.style.lineHeight = "1.2";
+                    
+                    // Ini kunci utamanya agar kata utuh dan terbungkus estetik:
+                    textElement.style.whiteSpace = "normal";
+                    textElement.style.wordWrap = "normal"; // Mencegah pemotongan paksa
+                    textElement.style.wordBreak = "keep-all"; // Menjaga kata tetap utuh (tidak ada lagi PAJER - O)
+                    textElement.style.textWrap = "balance"; // Membuat baris atas dan bawah seimbang cantiknya
                 }
-            } else {
-                // Untuk versi PC/Tablet, tampilkan memanjang normal
-                textElement.textContent = namaMobil;
             }
         }
 
