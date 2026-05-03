@@ -618,7 +618,7 @@
         }
 
         // =========================================
-        // FUNGSI CERDAS PENYESUAI UKURAN TEKS HERO (V2 - Anti Gagal)
+        // FUNGSI CERDAS PENYESUAI UKURAN TEKS HERO (V3 - Presisi Layar)
         // =========================================
         function sesuaikanUkuranTeks(textElement, namaMobil) {
             textElement.textContent = namaMobil;
@@ -632,33 +632,33 @@
             // Hanya berlaku khusus layar HP (mobile) di bawah 768px
             if (window.innerWidth <= 767) {
                 const isSatuKata = !namaMobil.includes(' ');
-                const jumlahKarakter = namaMobil.length;
 
-                if (isSatuKata && jumlahKarakter > 8) {
-                    // KASUS 1: 1 kata panjang ("NEWDESTINATOR")
+                if (isSatuKata) {
+                    // KASUS 1: 1 Kata (Otomatis menyesuaikan layar maksimal)
                     textElement.style.whiteSpace = "nowrap";
-                    textElement.style.letterSpacing = "0px"; // Rapatkan huruf
+                    textElement.style.letterSpacing = "2px";
                     
-                    let ukuranPx = 40; // Mulai dari ukuran pixel besar
+                    let ukuranPx = 55; // Mulai dari ukuran besar yang gagah
                     textElement.style.fontSize = ukuranPx + "px";
                     
-                    // Lebar maksimal aman (Lebar layar HP dikurangi padding kiri-kanan)
-                    const batasAman = window.innerWidth - 60; 
+                    // Sisa ruang kiri-kanan (padding) agar tidak nempel banget ke bezel HP
+                    const batasAman = window.innerWidth - 48; 
                     
-                    // SCRIPT PINTAR: Mengecilkan font otomatis selama tulisan masih keluar batas layar
-                    while (textElement.scrollWidth > batasAman && ukuranPx > 10) {
+                    // SCRIPT PINTAR: Terus kecilkan font 1px sampai pas masuk ke batas layar
+                    while (textElement.scrollWidth > batasAman && ukuranPx > 20) {
                         ukuranPx -= 1;
                         textElement.style.fontSize = ukuranPx + "px";
                     }
                     
-                } else if (jumlahKarakter > 15) {
+                } else if (namaMobil.length > 15) {
                     // KASUS 2: Beberapa kata dan panjang ("XPANDER CROSS ELITE")
-                    textElement.style.fontSize = "1.5rem";
+                    textElement.style.fontSize = "1.8rem"; // Sedikit dibesarkan dari sebelumnya
                     textElement.style.whiteSpace = "normal";
                     textElement.style.letterSpacing = "1px";
                     textElement.style.wordWrap = "break-word";
+                    
                 } else {
-                    // KASUS 3: Normal / Pendek ("PAJERO")
+                    // KASUS 3: Beberapa kata tapi pendek ("NEW TRITON")
                     textElement.style.fontSize = "2.2rem";
                     textElement.style.whiteSpace = "nowrap";
                     textElement.style.letterSpacing = "1px";
