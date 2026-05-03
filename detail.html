@@ -654,52 +654,68 @@
             });
         }
 
-        // =========================================
-        // FUNGSI CERDAS PENYESUAI UKURAN TEKS HERO (V3 - Presisi Layar)
+                // =========================================
+        // FUNGSI CERDAS PENYESUAI UKURAN TEKS HERO (V7 - Smart Word Split Max 4 Huruf)
         // =========================================
         function sesuaikanUkuranTeks(textElement, namaMobil) {
-            textElement.textContent = namaMobil;
-            
-            // Reset styling bawaan
+            // Reset styling bawaan JS
             textElement.style.fontSize = "";
             textElement.style.whiteSpace = "";
             textElement.style.letterSpacing = "";
-            textElement.style.wordWrap = "normal";
+            textElement.style.wordWrap = "";
+            textElement.style.lineHeight = "";
             
             // Hanya berlaku khusus layar HP (mobile) di bawah 768px
             if (window.innerWidth <= 767) {
-                const isSatuKata = !namaMobil.includes(' ');
+                let kata = namaMobil.split(' ');
+                let baris1 = "";
+                let sisaBaris = "";
 
-                if (isSatuKata) {
-                    // KASUS 1: 1 Kata (Otomatis menyesuaikan layar maksimal)
-                    textElement.style.whiteSpace = "nowrap";
-                    textElement.style.letterSpacing = "2px";
-                    
-                    let ukuranPx = 55; // Mulai dari ukuran besar yang gagah
-                    textElement.style.fontSize = ukuranPx + "px";
-                    
-                    // Sisa ruang kiri-kanan (padding) agar tidak nempel banget ke bezel HP
-                    const batasAman = window.innerWidth - 48; 
-                    
-                    // SCRIPT PINTAR: Terus kecilkan font 1px sampai pas masuk ke batas layar
-                    while (textElement.scrollWidth > batasAman && ukuranPx > 20) {
-                        ukuranPx -= 1;
-                        textElement.style.fontSize = ukuranPx + "px";
-                    }
-                    
-                } else if (namaMobil.length > 15) {
-                    // KASUS 2: Beberapa kata dan panjang ("XPANDER CROSS ELITE")
-                    textElement.style.fontSize = "1.8rem"; 
-                    textElement.style.whiteSpace = "normal";
-                    textElement.style.letterSpacing = "1px";
-                    textElement.style.wordWrap = "break-word";
-                    
+                if (kata.length === 1) {
+                    // Jika cuma 1 kata (misal: "XPANDER")
+                    baris1 = kata[0];
                 } else {
-                    // KASUS 3: Beberapa kata tapi pendek ("NEW TRITON")
-                    textElement.style.fontSize = "2.2rem";
-                    textElement.style.whiteSpace = "nowrap";
-                    textElement.style.letterSpacing = "1px";
+                    // Jika kata pertama <= 4 huruf (misal: "NEW", "ALL", "FUSO"), gabung dengan kata kedua
+                    if (kata[0].length <= 4) {
+                        baris1 = kata[0] + " " + kata[1];
+                        sisaBaris = kata.slice(2).join(" ");
+                    } else {
+                        // Jika kata pertama > 4 huruf (misal: "PAJERO", "XPANDER"), letakkan di baris 1 sendiri
+                        baris1 = kata[0];
+                        sisaBaris = kata.slice(1).join(" ");
+                    }
                 }
+
+                // Masukkan ke dalam HTML
+                if (sisaBaris !== "") {
+                    // Jika ada sisa kata, paksa turun ke bawah dengan <br>
+                    textElement.innerHTML = `${baris1}<br>${sisaBaris}`;
+                    textElement.style.whiteSpace = "normal";
+                    textElement.style.wordWrap = "break-word";
+                    textElement.style.lineHeight = "1.2"; // Rapatkan jarak atas-bawah
+                } else {
+                    // Jika cuma 1 baris (seperti "NEW XPANDER" atau "FUSO CANTER")
+                    textElement.innerHTML = baris1;
+                    textElement.style.whiteSpace = "nowrap";
+                }
+
+                // ==========================================
+                // MESIN SHRINK-TO-FIT (Pengecil Otomatis)
+                // ==========================================
+                textElement.style.letterSpacing = "2px";
+                let ukuranPx = 55; // Font mulai dari ukuran besar & gagah
+                textElement.style.fontSize = ukuranPx + "px";
+                
+                const batasAman = window.innerWidth - 48; // Sisakan ruang pinggir layar
+                
+                // Terus kecilkan font 1px sampai elemen terlebar pas di dalam batas layar
+                while (textElement.scrollWidth > batasAman && ukuranPx > 20) {
+                    ukuranPx -= 1;
+                    textElement.style.fontSize = ukuranPx + "px";
+                }
+            } else {
+                // Untuk versi PC/Tablet, tampilkan memanjang normal
+                textElement.textContent = namaMobil;
             }
         }
 
