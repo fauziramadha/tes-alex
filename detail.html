@@ -655,51 +655,69 @@
         }
 
         // =========================================
-        // FUNGSI CERDAS PENYESUAI UKURAN TEKS HERO (V9 - Final: Pasti 2 Kata di Atas)
+        // FUNGSI CERDAS PENYESUAI UKURAN TEKS HERO (V10 - Final All Devices)
         // =========================================
         function sesuaikanUkuranTeks(textElement, namaMobil) {
+            // Bersihkan spasi berlebih di awal/akhir kata
+            namaMobil = namaMobil.trim();
+            
             // Reset semua styling JS
             textElement.style.fontSize = "";
             textElement.style.whiteSpace = "";
             textElement.style.letterSpacing = "";
             textElement.style.wordWrap = "";
             textElement.style.lineHeight = "";
+            textElement.style.textWrap = "";
             
-            // Hanya berlaku khusus layar HP (mobile) di bawah 768px
             if (window.innerWidth <= 767) {
+                // ==========================================
+                // 1. LOGIKA KHUSUS HP (MOBILE)
+                // ==========================================
                 let kata = namaMobil.split(' ');
 
-                // 1. ATUR PEMISAHAN KATA
                 if (kata.length <= 2) {
-                    // Jika 1 atau 2 kata ("XPANDER" atau "NEW XPANDER") -> Tetap 1 baris
                     textElement.innerHTML = namaMobil;
                 } else {
-                    // Jika 3 kata atau lebih ("NEW PAJERO SPORT" atau "ALL NEW TRITON EXCEED")
-                    // Ambil persis 2 kata pertama untuk baris atas, sisanya di baris bawah
+                    // Pasti 2 kata di atas, sisanya di bawah
                     let barisAtas = kata[0] + " " + kata[1];
                     let barisBawah = kata.slice(2).join(" ");
                     textElement.innerHTML = `${barisAtas}<br>${barisBawah}`;
                 }
 
-                // 2. MESIN PENGECIL OTOMATIS (Berlaku untuk semua kondisi)
-                // nowrap + <br> memastikan teks hanya turun di tempat yang kita suruh
                 textElement.style.whiteSpace = "nowrap"; 
                 textElement.style.letterSpacing = "2px";
                 textElement.style.lineHeight = "1.2";
                 
-                let ukuranPx = 55; // Ukuran font maksimal
+                let ukuranPx = 55; // Max font HP
                 textElement.style.fontSize = ukuranPx + "px";
+                const batasAman = window.innerWidth - 48; // Padding layar HP
                 
-                const batasAman = window.innerWidth - 48; // Sisakan ruang untuk jarak kiri-kanan layar
-                
-                // Cek elemen terlebar (baik baris 1 maupun baris 2), dan kecilkan sampai pas di layar
+                // Shrink-to-fit HP
                 while (textElement.scrollWidth > batasAman && ukuranPx > 20) {
                     ukuranPx -= 1;
                     textElement.style.fontSize = ukuranPx + "px";
                 }
+
             } else {
-                // Untuk versi Desktop/PC, kembalikan ke teks normal
-                textElement.textContent = namaMobil;
+                // ==========================================
+                // 2. LOGIKA KHUSUS TABLET, PC, & LAPTOP
+                // ==========================================
+                textElement.innerHTML = namaMobil;
+                
+                // Paksa 1 baris lurus & matikan text-wrap CSS agar tampil gagah
+                textElement.style.whiteSpace = "nowrap"; 
+                textElement.style.letterSpacing = "4px"; 
+                
+                let ukuranPx = 90; // Max font Desktop (Sangat besar)
+                textElement.style.fontSize = ukuranPx + "px";
+                
+                const batasAman = window.innerWidth - 100; // Padding layar Desktop
+                
+                // Shrink-to-fit Desktop: Otomatis mengecil jika teksnya sangat panjang
+                while (textElement.scrollWidth > batasAman && ukuranPx > 30) {
+                    ukuranPx -= 1;
+                    textElement.style.fontSize = ukuranPx + "px";
+                }
             }
         }
 
