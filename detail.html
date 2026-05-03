@@ -117,7 +117,8 @@
         .hero-center-wrapper { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; padding: 0 24px; margin-top: 40px; }
 
         .detail-hero-content { text-align: center; color: var(--color-primary); margin-bottom: 30px; width: 100%; }
-        .car-logo-text { font-size: clamp(2.5rem, 8vw, 6rem); font-family: var(--font-heading); font-weight: 800; text-transform: uppercase; letter-spacing: 4px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); line-height: 1; margin-bottom: 12px; }
+        /* DI SINI PERBAIKAN CSS DESKTOP DITAMBAHKAN */
+        .car-logo-text { font-size: clamp(2.5rem, 8vw, 6rem); font-family: var(--font-heading); font-weight: 800; text-transform: uppercase; letter-spacing: 4px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); line-height: 1.2; margin-bottom: 12px; width: 100%; text-wrap: balance; text-align: center; }
         .car-tagline { font-size: clamp(0.8rem, 2vw, 1.1rem); font-weight: 400; letter-spacing: 6px; text-transform: uppercase; color: rgba(255,255,255,0.9); text-shadow: 0 4px 10px rgba(0,0,0,0.8); }
 
         /* PERBAIKAN GRID IKON HERO (FLEXBOX DINAMIS) */
@@ -254,8 +255,8 @@
         @media (max-width: 767px) { 
             .detail-hero { min-height: 85vh; }
             
-            /* PERBAIKAN UKURAN TULISAN HERO MOBILE */
-            .car-logo-text { font-size: clamp(1.5rem, 8vw, 2.5rem); margin-bottom: 8px; letter-spacing: 2px; width: 100%; word-wrap: break-word; overflow-wrap: break-word; line-height: 1.2; }
+            /* DI SINI PERBAIKAN CSS MOBILE DITAMBAHKAN */
+            .car-logo-text { font-size: clamp(1.5rem, 8vw, 2.5rem); margin-bottom: 8px; letter-spacing: 2px; width: 100%; line-height: 1.2; text-wrap: balance; text-align: center; }
             .car-tagline { font-size: 0.75rem; letter-spacing: 3px; }
             
             /* PERBAIKAN GRID IKON HERO MOBILE */
@@ -617,6 +618,46 @@
         }
 
         // =========================================
+        // FUNGSI CERDAS PENYESUAI UKURAN TEKS HERO
+        // =========================================
+        function sesuaikanUkuranTeks(textElement, namaMobil) {
+            textElement.textContent = namaMobil;
+            
+            // Reset styling bawaan yang ada di tag style inline (jika ada)
+            textElement.style.fontSize = "";
+            textElement.style.whiteSpace = "";
+            textElement.style.letterSpacing = "";
+            
+            // Hanya berlaku khusus layar HP (mobile) di bawah 768px
+            if (window.innerWidth <= 767) {
+                const isSatuKata = !namaMobil.includes(' ');
+                const jumlahKarakter = namaMobil.length;
+
+                if (isSatuKata && jumlahKarakter > 10) {
+                    // KASUS 1: 1 kata tapi sangat panjang (Contoh: "NEWDESTINATOR")
+                    // Paksa 1 baris (nowrap) & ukuran dinamis mengecil ikuti jumlah huruf
+                    textElement.style.whiteSpace = "nowrap";
+                    // Rumus: Lebar layar aman (sekitar 80vw) dibagi jumlah karakter
+                    textElement.style.fontSize = `clamp(1rem, ${80 / jumlahKarakter}vw, 2.2rem)`; 
+                    textElement.style.letterSpacing = "1px";
+                    
+                } else if (jumlahKarakter > 15) {
+                    // KASUS 2: Beberapa kata dan panjang (Contoh: "MITSUBISHI XPANDER CROSS")
+                    // Biarkan turun baris dengan seimbang (CSS text-wrap: balance akan bekerja)
+                    textElement.style.fontSize = "1.6rem";
+                    textElement.style.whiteSpace = "normal";
+                    textElement.style.letterSpacing = "2px";
+                    
+                } else {
+                    // KASUS 3: Kata pendek / Normal (Contoh: "PAJERO" atau "TRITON")
+                    textElement.style.fontSize = "2.2rem";
+                    textElement.style.whiteSpace = "nowrap";
+                    textElement.style.letterSpacing = "2px";
+                }
+            }
+        }
+
+        // =========================================
         // SINKRONISASI DATA SPESIFIKASI MOBIL 
         // =========================================
 
@@ -625,11 +666,20 @@
             if(data) {
                 if(data.bgUrl) document.getElementById('hero-spesifikasi-bg').src = data.bgUrl;
                 if(data.nama) {
-                    document.getElementById('hero-spesifikasi-nama').textContent = data.nama;
+                    const namaEl = document.getElementById('hero-spesifikasi-nama');
+                    sesuaikanUkuranTeks(namaEl, data.nama); // Panggil fungsi cerdas
                     globalCarName = data.nama;
                     updateWaLinks();
                 }
                 if(data.slogan) document.getElementById('hero-spesifikasi-slogan').textContent = data.slogan;
+            }
+        });
+
+        // Pastikan ukuran teks disesuaikan ulang jika pengguna merotasi layar HP
+        window.addEventListener('resize', () => {
+            const namaEl = document.getElementById('hero-spesifikasi-nama');
+            if (globalCarName) {
+                sesuaikanUkuranTeks(namaEl, globalCarName);
             }
         });
 
