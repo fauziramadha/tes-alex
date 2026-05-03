@@ -498,7 +498,7 @@
 
     </main>
     <script>
-        // --- PRELOADER & NAVBAR SCROLL ---
+        // --- 0. PRELOADER & NAVBAR SCROLL ---
         window.addEventListener('load', () => setTimeout(() => document.getElementById('preloader').classList.add('hide'), 1000));
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
@@ -506,7 +506,7 @@
             else navbar.classList.remove('scrolled');
         });
 
-        // --- UX MENU MOBILE ---
+        // --- 1. UX MENU MOBILE ---
         const menuBtn = document.getElementById('mobile-menu-btn');
         const closeBtn = document.getElementById('close-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -523,7 +523,7 @@
         closeBtn.addEventListener('click', toggleMenu);
         menuOverlay.addEventListener('click', toggleMenu);
 
-        // --- REVEAL ANIMASI ---
+        // --- 2. REVEAL ANIMASI ---
         const revealElements = document.querySelectorAll('.reveal-up');
         const revealObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -535,21 +535,8 @@
         }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
         revealElements.forEach(el => revealObserver.observe(el));
 
-        // --- SMOOTH SCROLL ANCHOR ---
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if(targetId === "#") return;
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
         // =========================================
-        // INISIALISASI FIREBASE & AMBIL PARAMETER URL
+        // 3. INISIALISASI FIREBASE & PARAMETER URL
         // =========================================
         const firebaseConfig = {
             apiKey: "AIzaSyBrNnp8PJiKYATH-1ie67aq9WqESpIXBus",
@@ -566,64 +553,65 @@
         const urlParams = new URLSearchParams(window.location.search);
         const currentMobilId = urlParams.get('id') || 'xpander'; 
 
-        const formatRupiah = (angka) => {
-            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
-        };
+        // =========================================
+        // 4. VARIABLE GLOBAL & FUNGSI UPDATE LINK
+        // =========================================
+        let globalWaNumber = '';
+        let globalCarName = '';
+        let globalTelpNumber = '';
 
-        // =========================================
-        // VARIABLE GLOBAL UNTUK SINKRONISASI WA + NAMA MOBIL
-        // =========================================
-        
-        // PERBAIKAN: Berikan nilai fallback (sementara) agar tombol tidak mati sebelum data termuat
-        let globalWaNumber = '6281234567890'; // Default sementara
-        let globalCarName = currentMobilId.toUpperCase(); // Ambil dari URL sebagai default sementara
-        let globalTelpNumber = '+6281234567890'; // Default sementara
+        function cleanNumber(num) {
+            if(!num) return "";
+            let cleaned = num.replace(/\D/g, '');
+            if (cleaned.startsWith('0')) cleaned = '62' + cleaned.substring(1);
+            return cleaned;
+        }
 
         function updateWaLinks() {
             if(globalWaNumber) {
                 const mobilText = globalCarName ? ` mobil ${globalCarName}` : ' informasi dari website';
                 const pesanTeks = encodeURIComponent(`Halo Kak, saya tertarik dengan${mobilText}. Boleh minta informasinya lebih lanjut?`);
+                const waLink = `https://wa.me/${globalWaNumber}?text=${pesanTeks}`;
+                
                 document.querySelectorAll('.link-wa-global').forEach(link => {
-                    link.href = `https://wa.me/${globalWaNumber}?text=${pesanTeks}`;
+                    link.href = waLink;
                 });
             }
         }
 
-        function updateTelpLinks() {
-            if(globalTelpNumber) {
-                const navTelp = document.getElementById('bottom-nav-telp');
-                if(navTelp) navTelp.href = `tel:${globalTelpNumber}`;
-            }
-        }
-
-        // PERBAIKAN: Panggil fungsi update 1x saat halaman dimuat agar tombol langsung punya link
-        updateWaLinks();
-        updateTelpLinks();
-
         // =========================================
-        // SINKRONISASI DATA GLOBAL (Kontak & Alamat)
+        // 5. SINKRONISASI GLOBAL (BIODATA & ALAMAT)
         // =========================================
         function loadGlobalData() {
             db.ref('global_data/biodata').on('value', (snapshot) => {
                 const data = snapshot.val();
                 if(data) {
+                    // Update Nama Sales (Footer)
+                    const salesNameEl = document.getElementById('nama-sales-global');
+                    if(salesNameEl) salesNameEl.innerText = data.nama || "Sales";
+
+                    // Update Sosial Media
                     if(data.fb_link) document.querySelectorAll('.link-fb-global').forEach(link => link.href = data.fb_link);
-                    if(data.ig) document.querySelectorAll('.link-ig-global').forEach(link => link.href = `https://instagram.com/${data.ig}`);
-                    if(data.email) document.querySelectorAll('.link-email-global').forEach(link => link.href = `mailto:${data.email}`);
-                    if(data.nama) {
-                        const namaSalesEl = document.getElementById('nama-sales-global');
-                        if(namaSalesEl) namaSalesEl.textContent = data.nama;
+                    if(data.ig) {
+                        const igUrl = data.ig.includes('http') ? data.ig : `https://instagram.com/${data.ig.replace('@', '')}`;
+                        document.querySelectorAll('.link-ig-global').forEach(link => link.href = igUrl);
                     }
+                    if(data.email) document.querySelectorAll('.link-email-global').forEach(link => link.href = `mailto:${data.email}`);
+
+                    // Update Telepon
                     if(data.telp) {
-                        globalTelpNumber = data.telp;
-                        updateTelpLinks(); // Update link telepon di navbar bawah
-                        
+                        globalTelpNumber = cleanNumber(data.telp);
+                        const telpLink = `tel:+${globalTelpNumber}`;
+                        const navTelp = document.getElementById('bottom-nav-telp');
+                        if(navTelp) navTelp.href = telpLink;
                         const teksTelp = document.getElementById('footer-telepon-text');
                         if(teksTelp) teksTelp.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> ${data.telp}`;
                     }
+
+                    // Update WhatsApp
                     if(data.wa) {
-                        globalWaNumber = data.wa.startsWith('0') ? '62' + data.wa.substring(1) : data.wa;
-                        updateWaLinks(); // Update ulang link WA setelah nomor dari Firebase dapat
+                        globalWaNumber = cleanNumber(data.wa);
+                        updateWaLinks();
                     }
                 }
             });
@@ -638,82 +626,38 @@
         }
 
         // =========================================
-        // FUNGSI CERDAS PENYESUAI UKURAN TEKS HERO (V3 - Presisi Layar)
+        // 6. FUNGSI CERDAS PENYESUAI UKURAN TEKS HERO (V3)
         // =========================================
         function sesuaikanUkuranTeks(textElement, namaMobil) {
             textElement.textContent = namaMobil;
-            
-            // Reset styling bawaan
             textElement.style.fontSize = "";
             textElement.style.whiteSpace = "";
-            textElement.style.letterSpacing = "";
             textElement.style.wordWrap = "normal";
             
-            // Hanya berlaku khusus layar HP (mobile) di bawah 768px
             if (window.innerWidth <= 767) {
                 const isSatuKata = !namaMobil.includes(' ');
-
                 if (isSatuKata) {
-                    // KASUS 1: 1 Kata (Otomatis menyesuaikan layar maksimal)
                     textElement.style.whiteSpace = "nowrap";
-                    textElement.style.letterSpacing = "2px";
-                    
-                    let ukuranPx = 55; // Mulai dari ukuran besar yang gagah
+                    let ukuranPx = 55; 
                     textElement.style.fontSize = ukuranPx + "px";
-                    
-                    // Sisa ruang kiri-kanan (padding) agar tidak nempel banget ke bezel HP
                     const batasAman = window.innerWidth - 48; 
-                    
-                    // SCRIPT PINTAR: Terus kecilkan font 1px sampai pas masuk ke batas layar
                     while (textElement.scrollWidth > batasAman && ukuranPx > 20) {
                         ukuranPx -= 1;
                         textElement.style.fontSize = ukuranPx + "px";
                     }
-                    
                 } else if (namaMobil.length > 15) {
-                    // KASUS 2: Beberapa kata dan panjang ("XPANDER CROSS ELITE")
-                    textElement.style.fontSize = "1.8rem"; 
+                    textElement.style.fontSize = "1.8rem";
                     textElement.style.whiteSpace = "normal";
-                    textElement.style.letterSpacing = "1px";
                     textElement.style.wordWrap = "break-word";
-                    
                 } else {
-                    // KASUS 3: Beberapa kata tapi pendek ("NEW TRITON")
                     textElement.style.fontSize = "2.2rem";
                     textElement.style.whiteSpace = "nowrap";
-                    textElement.style.letterSpacing = "1px";
                 }
             }
         }
 
         // =========================================
-        // SINKRONISASI DATA SPESIFIKASI MOBIL 
-        // =========================================
-
-        db.ref(`spesifikasi/${currentMobilId}/hero`).on('value', snap => {
-            const data = snap.val();
-            if(data) {
-                if(data.bgUrl) document.getElementById('hero-spesifikasi-bg').src = data.bgUrl;
-                if(data.nama) {
-                    const namaEl = document.getElementById('hero-spesifikasi-nama');
-                    sesuaikanUkuranTeks(namaEl, data.nama); // Panggil fungsi cerdas
-                    globalCarName = data.nama;
-                    updateWaLinks(); // Update ulang template WA setelah nama mobil aslinya dapat
-                }
-                if(data.slogan) document.getElementById('hero-spesifikasi-slogan').textContent = data.slogan;
-            }
-        });
-
-        // Pastikan ukuran teks disesuaikan ulang jika pengguna merotasi layar HP
-        window.addEventListener('resize', () => {
-            const namaEl = document.getElementById('hero-spesifikasi-nama');
-            if (globalCarName) {
-                sesuaikanUkuranTeks(namaEl, globalCarName);
-            }
-        });
-
-        // =========================================
-        // RENDER GABUNGAN IKON DEFAULT & TAMBAHAN
+        // 7. RENDER IKON HERO DINAMIS (DEFAULT + OPSIONAL)
         // =========================================
         let defaultIconsData = [];
         let customIconsData = [];
@@ -721,9 +665,7 @@
         function renderHeroIcons() {
             const container = document.getElementById('hero-features-container');
             container.innerHTML = '';
-            
             const allIcons = [...defaultIconsData, ...customIconsData];
-            
             allIcons.forEach((iconData, index) => {
                 const delayClass = index % 2 === 0 ? 'delay-1' : 'delay-2';
                 const html = `
@@ -740,16 +682,12 @@
             defaultIconsData = [];
             if(data) {
                 const defaultImgs = [
-                    "https://i.ibb.co.com/MKS5kty/IMG-3293.png",
-                    "https://i.ibb.co.com/Q36yHbng/IMG-3294.png",
-                    "https://i.ibb.co.com/GQhCyjYg/IMG-3296.png",
-                    "https://i.ibb.co.com/k6HL158w/IMG-3297.png",
+                    "https://i.ibb.co.com/MKS5kty/IMG-3293.png", "https://i.ibb.co.com/Q36yHbng/IMG-3294.png",
+                    "https://i.ibb.co.com/GQhCyjYg/IMG-3296.png", "https://i.ibb.co.com/k6HL158w/IMG-3297.png",
                     "https://i.ibb.co.com/mCHqXZpq/IMG-3300.png"
                 ];
                 for(let i=1; i<=5; i++) {
-                    if(data[`icon${i}`]) {
-                        defaultIconsData.push({ img: defaultImgs[i-1], label: data[`icon${i}`] });
-                    }
+                    if(data[`icon${i}`]) { defaultIconsData.push({ img: defaultImgs[i-1], label: data[`icon${i}`] }); }
                 }
             }
             renderHeroIcons();
@@ -760,270 +698,145 @@
             if(snap.exists()) {
                 snap.forEach(child => {
                     const data = child.val();
-                    if(data.imgUrl && data.info) {
-                        customIconsData.push({ img: data.imgUrl, label: data.info });
-                    }
+                    if(data.imgUrl && data.info) { customIconsData.push({ img: data.imgUrl, label: data.info }); }
                 });
             }
             renderHeroIcons();
         });
 
+        // =========================================
+        // 8. SINKRONISASI DATA SPESIFIKASI MOBIL 
+        // =========================================
+        db.ref(`spesifikasi/${currentMobilId}/hero`).on('value', snap => {
+            const data = snap.val();
+            if(data) {
+                if(data.bgUrl) document.getElementById('hero-spesifikasi-bg').src = data.bgUrl;
+                if(data.nama) {
+                    const namaEl = document.getElementById('hero-spesifikasi-nama');
+                    sesuaikanUkuranTeks(namaEl, data.nama);
+                    globalCarName = data.nama;
+                    updateWaLinks();
+                }
+                if(data.slogan) document.getElementById('hero-spesifikasi-slogan').textContent = data.slogan;
+            }
+        });
 
         // =========================================
-        // LOGIKA FILTER VARIAN & WARNA (CERDAS)
+        // 9. LOGIKA FILTER VARIAN & WARNA
         // =========================================
-        
-        let allColorsData = []; // Array untuk menyimpan semua warna mobil ini
-        let currentActiveVariantId = null; 
-        let currentBasePrice = 0;
-
-        // 1. Ambil Data Warna Terlebih Dahulu dan Simpan ke Memori
+        let allColorsData = []; let currentActiveVariantId = null; let currentBasePrice = 0;
         db.ref(`spesifikasi/${currentMobilId}/warna`).on('value', snap => {
             allColorsData = [];
-            if(snap.exists()) {
-                snap.forEach(child => {
-                    allColorsData.push({ key: child.key, ...child.val() });
-                });
-            }
-            // Render ulang warna jika varian sudah dipilih
+            if(snap.exists()) { snap.forEach(child => { allColorsData.push({ key: child.key, ...child.val() }); }); }
             if(currentActiveVariantId) renderFilteredColors(currentActiveVariantId);
         });
 
-        // 2. Ambil Data Varian dan Buat Tombolnya
         db.ref(`spesifikasi/${currentMobilId}/varian`).on('value', snap => {
             const container = document.getElementById('variants-grid-container');
             container.innerHTML = '';
-            
             if(snap.exists()) {
                 let isFirst = true;
-
                 snap.forEach(child => {
-                    const v = child.val();
-                    const vId = child.key;
-                    
+                    const v = child.val(); const vId = child.key;
                     const div = document.createElement('div');
                     div.className = `variant-item ${isFirst ? 'active' : ''}`;
-                    div.innerHTML = `
-                        <div class="variant-item-info" style="width:100%; text-align: left;">
-                            <h4>${v.nama}</h4>
-                            <p style="color: var(--color-accent);">${formatRupiah(v.harga || 0)}</p>
-                        </div>
-                    `;
-                    
-                    // Ketika Varian diklik
+                    div.innerHTML = `<div class="variant-item-info" style="width:100%; text-align: left;"><h4>${v.nama}</h4><p style="color: var(--color-accent);">${formatRupiah(v.harga || 0)}</p></div>`;
                     div.addEventListener('click', () => {
                         document.querySelectorAll('.variant-item').forEach(el => el.classList.remove('active'));
                         div.classList.add('active');
-                        
-                        currentActiveVariantId = vId;
-                        currentBasePrice = v.harga || 0;
-                        
-                        // Render ulang pilihan warna sesuai varian yang diklik
+                        currentActiveVariantId = vId; currentBasePrice = v.harga || 0;
                         renderFilteredColors(vId);
                     });
-
                     container.appendChild(div);
-
-                    // Klik otomatis varian pertama saat halaman dimuat
-                    if(isFirst) {
-                        currentActiveVariantId = vId;
-                        currentBasePrice = v.harga || 0;
-                        renderFilteredColors(vId);
-                        isFirst = false;
-                    }
+                    if(isFirst) { currentActiveVariantId = vId; currentBasePrice = v.harga || 0; renderFilteredColors(vId); isFirst = false; }
                 });
-            } else { 
-                checkVisualizerFallback(); 
             }
         });
 
-        // 3. Fungsi Render Warna berdasarkan Varian
         function renderFilteredColors(variantId) {
             const container = document.getElementById('color-swatches-wrapper');
             container.innerHTML = '';
-            
-            // Logika Filter: Tampilkan jika varian='all', varian kosong (lama), atau varian sama persis dengan ID
             const filteredColors = allColorsData.filter(c => c.varian === 'all' || !c.varian || c.varian === variantId);
-            
             if(filteredColors.length === 0) {
-                container.innerHTML = '<span style="font-size:0.8rem; color:#888;">Belum ada pilihan warna untuk varian ini.</span>';
-                document.getElementById('car-price-display').textContent = formatRupiah(currentBasePrice);
-                return;
+                document.getElementById('car-price-display').textContent = formatRupiah(currentBasePrice); return;
             }
-
             let isFirst = true;
             filteredColors.forEach(w => {
                 const div = document.createElement('div');
                 div.className = `color-swatch ${isFirst ? 'active' : ''}`;
-                div.style.backgroundImage = `url('${w.imgBulatUrl || ''}')`; 
-                div.title = w.nama; 
-                
+                div.style.backgroundImage = `url('${w.imgBulatUrl || ''}')`;
                 div.addEventListener('click', () => {
                     document.querySelectorAll('.color-swatch').forEach(el => el.classList.remove('active'));
-                    div.classList.add('active');
-                    updateVisualizerDisplay(w);
+                    div.classList.add('active'); updateVisualizerDisplay(w);
                 });
-
                 container.appendChild(div);
-
-                if(isFirst) {
-                    updateVisualizerDisplay(w);
-                    isFirst = false;
-                }
+                if(isFirst) { updateVisualizerDisplay(w); isFirst = false; }
             });
         }
 
-        // 4. Fungsi Update Tampilan Utama Mobil & Harga
         function updateVisualizerDisplay(colorData) {
             const imgEl = document.getElementById('car-main-img');
             const priceDisp = document.getElementById('car-price-display');
-            
-            // Animasi Keluar
             imgEl.classList.add('fade-out');
-            priceDisp.style.opacity = '0';
-            priceDisp.style.transform = 'translateY(-10px)';
-            
             setTimeout(() => {
-                // Update Data
                 if(colorData.imgMobilUrl) imgEl.src = colorData.imgMobilUrl;
                 document.getElementById('car-color-name').textContent = colorData.nama || 'Warna Standard';
-                
-                // Jika warna punya harga khusus (> 0), gunakan harga warna. Jika tidak, gunakan harga varian dasar.
                 const finalPrice = (colorData.harga && Number(colorData.harga) > 0) ? colorData.harga : currentBasePrice;
                 priceDisp.textContent = formatRupiah(finalPrice);
-                
-                // Animasi Masuk
                 imgEl.classList.remove('fade-out');
-                priceDisp.style.opacity = '1';
-                priceDisp.style.transform = 'translateY(0)';
             }, 300);
         }
 
-
         // =========================================
-        // GALERI FITUR INTERAKTIF (PERBAIKAN FUNGSI KLIK)
+        // 10. GALERI FITUR INTERAKTIF
         // =========================================
-        
-        let galleryDataGlobal = {}; // Simpan data galeri
-        let activeGalleryCat = '';
-        let activeGalleryIdx = 0;
-
+        let galleryDataGlobal = {}; let activeGalleryCat = ''; let activeGalleryIdx = 0;
         db.ref(`spesifikasi/${currentMobilId}/fitur`).on('value', snap => {
             galleryDataGlobal = {};
             if(snap.exists()) {
                 snap.forEach(child => {
-                    const f = child.val();
-                    const cat = f.kategori || 'Eksterior';
+                    const f = child.val(); const cat = f.kategori || 'Eksterior';
                     if(!galleryDataGlobal[cat]) galleryDataGlobal[cat] = [];
                     galleryDataGlobal[cat].push({ img: f.imgUrl, title: f.judul, desc: f.deskripsi });
                 });
-
                 const tabsContainer = document.getElementById('gallery-tabs-container');
-                tabsContainer.innerHTML = '';
-                let firstCat = null;
-
-                // Buat Tombol Tab Otomatis berdasarkan Kategori
+                tabsContainer.innerHTML = ''; let firstCat = null;
                 for(const cat in galleryDataGlobal) {
-                    if(galleryDataGlobal[cat].length > 0) {
-                        if(!firstCat) firstCat = cat;
-                        const btn = document.createElement('button');
-                        btn.className = `tab-btn ${cat === firstCat ? 'active' : ''}`;
-                        btn.setAttribute('data-tab', cat);
-                        btn.textContent = cat;
-                        
-                        btn.addEventListener('click', () => {
-                            document.querySelectorAll('#gallery-tabs-container .tab-btn').forEach(t => t.classList.remove('active'));
-                            btn.classList.add('active');
-                            activeGalleryCat = cat;
-                            activeGalleryIdx = 0;
-                            renderGalleryItem(true);
-                        });
-
-                        tabsContainer.appendChild(btn);
-                    }
+                    if(!firstCat) firstCat = cat;
+                    const btn = document.createElement('button');
+                    btn.className = `tab-btn ${cat === firstCat ? 'active' : ''}`;
+                    btn.textContent = cat;
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+                        btn.classList.add('active'); activeGalleryCat = cat; activeGalleryIdx = 0; renderGalleryItem(true);
+                    });
+                    tabsContainer.appendChild(btn);
                 }
-
-                if(firstCat) {
-                    activeGalleryCat = firstCat;
-                    activeGalleryIdx = 0;
-                    renderGalleryItem(false);
-                }
-
-            } else { 
-                jalankanDummyGallery(); 
+                if(firstCat) { activeGalleryCat = firstCat; renderGalleryItem(false); }
             }
         });
 
-        // Event Listener untuk Tombol Navigasi Prev & Next (Aman dari bug double click)
         document.getElementById('btn-prev').addEventListener('click', () => {
-            if(!galleryDataGlobal[activeGalleryCat]) return;
             const maxIdx = galleryDataGlobal[activeGalleryCat].length - 1;
             activeGalleryIdx = (activeGalleryIdx === 0) ? maxIdx : activeGalleryIdx - 1;
             renderGalleryItem(true);
         });
-
         document.getElementById('btn-next').addEventListener('click', () => {
-            if(!galleryDataGlobal[activeGalleryCat]) return;
             const maxIdx = galleryDataGlobal[activeGalleryCat].length - 1;
             activeGalleryIdx = (activeGalleryIdx === maxIdx) ? 0 : activeGalleryIdx + 1;
             renderGalleryItem(true);
         });
 
         function renderGalleryItem(fade = true) {
-            if(!galleryDataGlobal[activeGalleryCat] || !galleryDataGlobal[activeGalleryCat][activeGalleryIdx]) return;
-            
             const data = galleryDataGlobal[activeGalleryCat][activeGalleryIdx];
             const imgEl = document.getElementById('gallery-main-img');
-            const titleEl = document.getElementById('gallery-title');
-            const descEl = document.getElementById('gallery-desc');
-
-            if(fade) {
-                imgEl.classList.add('fade');
-                setTimeout(() => {
-                    imgEl.src = data.img || '';
-                    titleEl.textContent = data.title || '';
-                    descEl.textContent = data.desc || '';
-                    imgEl.classList.remove('fade');
-                }, 300);
-            } else {
-                imgEl.src = data.img || '';
-                titleEl.textContent = data.title || '';
-                descEl.textContent = data.desc || '';
-            }
+            if(fade) { imgEl.classList.add('fade'); setTimeout(() => { imgEl.src = data.img; document.getElementById('gallery-title').textContent = data.title; document.getElementById('gallery-desc').textContent = data.desc; imgEl.classList.remove('fade'); }, 300); }
+            else { imgEl.src = data.img; document.getElementById('gallery-title').textContent = data.title; document.getElementById('gallery-desc').textContent = data.desc; }
         }
 
-
-        // =========================================
-        // FUNGSI FALLBACK DUMMY (PROTEKSI DATA KOSONG)
-        // =========================================
-
-        function checkVisualizerFallback() {
-            if(document.getElementById('variants-grid-container').innerHTML.trim() === '') { 
-                jalankanDummyVisualizer(); 
-            }
-        }
-
-        function jalankanDummyVisualizer() {
-            const container = document.getElementById('variants-grid-container');
-            container.innerHTML = `
-                <div class="variant-item active">
-                    <div class="variant-item-info" style="width:100%; text-align: left;"><h4>Contoh Varian</h4><p style="color: var(--color-accent);">Rp 300.000.000</p></div>
-                </div>`;
-            document.getElementById('car-price-display').textContent = 'Rp 300.000.000';
-            document.getElementById('car-color-name').textContent = 'Contoh Warna';
-        }
-
-        function jalankanDummyGallery() {
-            const tabsContainer = document.getElementById('gallery-tabs-container');
-            tabsContainer.innerHTML = `
-                <button class="tab-btn active">Contoh Eksterior</button>
-            `;
-            document.getElementById('gallery-title').textContent = "Contoh Judul Fitur";
-            document.getElementById('gallery-desc').textContent = "Anda belum memasukkan data fitur dari VIP CMS.";
-        }
+        function formatRupiah(angka) { return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka); }
 
         loadGlobalData();
-
     </script>
 </body>
 </html>
