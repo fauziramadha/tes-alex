@@ -132,13 +132,14 @@
         .price-card:hover .price-img { transform: scale(1.08); }
 
         .price-body { padding: 32px 28px; display: flex; flex-direction: column; flex-grow: 1; }
-        .price-car-name { font-size: 1.6rem; font-family: var(--font-heading); font-weight: 800; color: var(--color-secondary); margin-bottom: 24px; text-transform: uppercase; text-align: center; letter-spacing: 1px; }
+        .price-car-name { font-size: 1.8rem; font-family: var(--font-heading); font-weight: 800; color: var(--color-secondary); margin-bottom: 24px; text-transform: uppercase; text-align: center; letter-spacing: 2px; }
 
+        /* PERBAIKAN: List Varian dan Harga yang Lebih Rapi & Premium */
         .price-list { list-style: none; margin-bottom: 32px; flex-grow: 1; }
-        .price-list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--color-border); }
+        .price-list-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px dashed var(--color-border); }
         .price-list-item:last-child { border-bottom: none; }
-        .variant-name { font-size: 0.9rem; color: #555; font-weight: 500; }
-        .variant-price { font-size: 1rem; font-weight: 800; color: var(--color-secondary); font-family: var(--font-heading); }
+        .variant-name { font-size: 0.9rem; color: #555; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .variant-price { font-size: 1.05rem; font-weight: 800; color: var(--color-accent); font-family: var(--font-heading); font-variant-numeric: tabular-nums; text-align: right; }
 
         .card-actions { display: flex; flex-direction: column; gap: 12px; margin-top: auto; }
         .btn-card { display: block; width: 100%; padding: 14px 16px; border-radius: 8px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; text-align: center; letter-spacing: 0.5px; transition: var(--transition-smooth); cursor: pointer; }
@@ -215,11 +216,11 @@
             
             .price-img-wrapper { height: 180px; padding: 16px; }
             .price-body { padding: 24px 20px; }
-            .price-car-name { font-size: 1.4rem; margin-bottom: 16px; }
+            .price-car-name { font-size: 1.5rem; margin-bottom: 16px; }
             
-            .price-list-item { padding: 10px 0; }
+            .price-list-item { padding: 12px 0; }
             .variant-name { font-size: 0.8rem; }
-            .variant-price { font-size: 0.95rem; }
+            .variant-price { font-size: 1rem; }
             
             .card-actions { gap: 10px; }
             .btn-card { padding: 12px 10px; font-size: 0.7rem; border-radius: 6px; }
@@ -258,7 +259,8 @@
             </nav>
 
             <div class="nav-actions">
-                <a href="https://wa.me/628123456789" target="_blank" class="btn-primary">Pesan Sekarang</a>
+                <!-- PERBAIKAN: Penambahan class link-wa-global -->
+                <a href="#" target="_blank" class="btn-primary link-wa-global">Pesan Sekarang</a>
                 <button class="menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu">
                     <span></span><span></span><span></span>
                 </button>
@@ -282,7 +284,8 @@
         <a href="layanan.html" class="menu-item">Layanan Purna Jual</a>
         <a href="index.html#lokasi" class="menu-item">Lokasi Dealer</a>
 
-        <a href="https://wa.me/628123456789" target="_blank" class="btn-primary" style="margin-top: auto; text-align: center; width: 100%;">Hubungi Sales</a>
+        <!-- PERBAIKAN: Penambahan class link-wa-global -->
+        <a href="#" target="_blank" class="btn-primary link-wa-global" style="margin-top: auto; text-align: center; width: 100%;">Hubungi Sales</a>
     </div>
 
     <main class="app-wrapper">
@@ -301,7 +304,7 @@
             <div class="price-container">
                 
                 <div class="price-grid" id="price-grid-container">
-                    
+                    <!-- DUMMY DATA SEBELUM FIREBASE LOAD -->
                     <div class="price-card reveal-up delay-1">
                         <div class="price-img-wrapper">
                             <img src="https://images.unsplash.com/photo-1632823471565-3cefedebef26?q=80&w=800&auto=format&fit=crop" alt="Xpander" class="price-img">
@@ -327,7 +330,7 @@
                             <div class="card-actions">
                                 <a href="detail.html" class="btn-card btn-card-full">Spesifikasi Selengkapnya</a>
                                 <a href="katalog.html" class="btn-card btn-card-outline">Katalog Mobil Lainnya</a>
-                                <a href="https://wa.me/628123456789?text=Halo%20kak%2C%20saya%20tertarik%20dengan%20mobil%20Xpander%20tolong%20infonya%20lebih%20lanjut" target="_blank" class="btn-card btn-card-primary">Pesan Sekarang</a>
+                                <a href="#" target="_blank" class="btn-card btn-card-primary link-wa-global">Pesan Sekarang</a>
                             </div>
                         </div>
                     </div>
@@ -357,7 +360,7 @@
                             <div class="card-actions">
                                 <a href="detail.html" class="btn-card btn-card-full">Spesifikasi Selengkapnya</a>
                                 <a href="katalog.html" class="btn-card btn-card-outline">Katalog Mobil Lainnya</a>
-                                <a href="https://wa.me/628123456789?text=Halo%20kak%2C%20saya%20tertarik%20dengan%20mobil%20Pajero%20Sport%20tolong%20infonya%20lebih%20lanjut" target="_blank" class="btn-card btn-card-primary">Pesan Sekarang</a>
+                                <a href="#" target="_blank" class="btn-card btn-card-primary link-wa-global">Pesan Sekarang</a>
                             </div>
                         </div>
                     </div>
@@ -383,7 +386,7 @@
                             <div class="card-actions">
                                 <a href="detail.html" class="btn-card btn-card-full">Spesifikasi Selengkapnya</a>
                                 <a href="katalog.html" class="btn-card btn-card-outline">Katalog Mobil Lainnya</a>
-                                <a href="https://wa.me/628123456789?text=Halo%20kak%2C%20saya%20tertarik%20dengan%20mobil%20XForce%20tolong%20infonya%20lebih%20lanjut" target="_blank" class="btn-card btn-card-primary">Pesan Sekarang</a>
+                                <a href="#" target="_blank" class="btn-card btn-card-primary link-wa-global">Pesan Sekarang</a>
                             </div>
                         </div>
                     </div>
@@ -409,7 +412,7 @@
                             <div class="card-actions">
                                 <a href="detail.html" class="btn-card btn-card-full">Spesifikasi Selengkapnya</a>
                                 <a href="katalog.html" class="btn-card btn-card-outline">Katalog Mobil Lainnya</a>
-                                <a href="https://wa.me/628123456789?text=Halo%20kak%2C%20saya%20tertarik%20dengan%20mobil%20Xpander%20Cross%20tolong%20infonya%20lebih%20lanjut" target="_blank" class="btn-card btn-card-primary">Pesan Sekarang</a>
+                                <a href="#" target="_blank" class="btn-card btn-card-primary link-wa-global">Pesan Sekarang</a>
                             </div>
                         </div>
                     </div>
@@ -430,10 +433,10 @@
                     <img src="https://i.ibb.co.com/84Ss5Bjy/IMG-3284.png" alt="Mitsubishi Motors" class="footer-logo">
                     <p>Dealer Resmi Mitsubishi Batam. Menghadirkan layanan premium dan pengalaman berkendara kelas dunia untuk Anda dan keluarga.</p>
                     <div class="footer-socials">
-                        <a href="https://facebook.com" target="_blank" class="social-link-icon" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
-                        <a href="https://instagram.com" target="_blank" class="social-link-icon" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-                        <a href="https://wa.me/628123456789" target="_blank" class="social-link-icon" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
-                        <a href="mailto:info@mitsubishi.com" class="social-link-icon" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg></a>
+                        <a href="#" target="_blank" class="social-link-icon link-fb-global" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
+                        <a href="#" target="_blank" class="social-link-icon link-ig-global" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                        <a href="#" target="_blank" class="social-link-icon link-wa-global" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+                        <a href="#" class="social-link-icon link-email-global" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg></a>
                     </div>
                 </div>
                 <div class="footer-col">
@@ -448,26 +451,26 @@
                     <h4>Layanan</h4>
                     <ul>
                         <li><a href="layanan.html">Purna Jual</a></li>
-                        <li><a href="https://wa.me/628123456789">Test Drive</a></li>
+                        <li><a href="#" class="link-wa-global" target="_blank">Test Drive</a></li>
                         <li><a href="index.html#lokasi">Lokasi Dealer</a></li>
                     </ul>
                 </div>
                 <div class="footer-contact">
                     <h4>Kontak Kami</h4>
-                    <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5-2.5-1.12 2.5-2.5 2.5z"/></svg> Jl. Raden Patah, Lubuk Baja, Kota Batam, Kepulauan Riau</p>
-                    <p><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> +62 812-3456-7890</p>
+                    <p id="footer-alamat-text"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5-2.5-1.12 2.5-2.5 2.5z"/></svg> Memuat alamat...</p>
+                    <p id="footer-telepon-text"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> Memuat telepon...</p>
                 </div>
             </div>
             <div class="footer-bottom reveal-up delay-2">
-                <div class="footer-copy">©2026. Official Mitsubishi motors Batam Aldiansyah Sales</div>
+                <div class="footer-copy">©2026. Official Mitsubishi motors Batam <span class="nama-sales-global"></span></div>
                 <div class="footer-dev">Developed by @zee_radhan</div>
             </div>
         </footer>
 
         <nav class="mobile-bottom-nav">
             <a href="katalog.html" class="bottom-nav-item active" aria-label="Daftar Harga"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.41l9 9c.36.36.86.59 1.41.59s1.05-.22 1.41-.59l7-7c.36-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg><span class="bottom-nav-label">Harga</span></a>
-            <a href="tel:+6281234567890" class="bottom-nav-item" aria-label="Telepon Sales"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span class="bottom-nav-label">Telepon</span></a>
-            <a href="https://wa.me/628123456789" target="_blank" class="bottom-nav-item" aria-label="Chat WhatsApp"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+            <a href="#" class="bottom-nav-item link-telp-global" aria-label="Telepon Sales"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span class="bottom-nav-label">Telepon</span></a>
+            <a href="#" target="_blank" class="bottom-nav-item link-wa-global" aria-label="Chat WhatsApp"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span class="bottom-nav-label">WhatsApp</span></a>
         </nav>
 
     <script>
@@ -495,6 +498,33 @@
         closeBtn.addEventListener('click', toggleMenu);
         menuOverlay.addEventListener('click', toggleMenu);
 
+        // --- SMOOTH SCROLL ANCHOR (PERBAIKAN AGAR TIDAK BLOCK KLIK NORMAL) ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (!targetId.startsWith('#')) return; 
+
+                e.preventDefault();
+                if(targetId === "#") return;
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // --- REVEAL ANIMASI ---
+        const revealElements = document.querySelectorAll('.reveal-up');
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+        revealElements.forEach(el => revealObserver.observe(el));
+
         // --- 1. INISIALISASI FIREBASE ---
         const firebaseConfig = {
             apiKey: "AIzaSyBrNnp8PJiKYATH-1ie67aq9WqESpIXBus",
@@ -514,7 +544,74 @@
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka).replace('Rp', 'Rp ');
         }
 
-        // --- 2. SINKRONISASI DATA DARI DATABASE ---
+        // =========================================
+        // SINKRONISASI DATA GLOBAL (Biodata & Alamat)
+        // =========================================
+        let globalWaNumber = ''; 
+
+        function cleanNumber(num) {
+            if(!num) return "";
+            let cleaned = num.toString().replace(/\D/g, ''); 
+            if (cleaned.startsWith('0')) cleaned = '62' + cleaned.substring(1); 
+            return cleaned;
+        }
+
+        function updateAllWaLinks() {
+            if(!globalWaNumber) return;
+            document.querySelectorAll('.link-wa-global').forEach(link => {
+                const mobilName = link.getAttribute('data-mobil');
+                let teksPesan = "Halo Kak, saya tertarik dan ingin minta informasi lebih lanjut.";
+                
+                // Jika tombol WA ada di dalam kartu mobil, tambahkan nama mobilnya
+                if(mobilName) {
+                    teksPesan = `Halo Kak, saya tertarik dengan mobil ${mobilName}. Boleh minta informasinya lebih lanjut?`;
+                }
+                
+                link.href = `https://wa.me/${globalWaNumber}?text=${encodeURIComponent(teksPesan)}`;
+            });
+        }
+
+        function loadGlobalData() {
+            db.ref('global_data/biodata').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if(data) {
+                    if(data.fb_link) {
+                        document.querySelectorAll('.link-fb-global').forEach(link => link.href = data.fb_link);
+                    }
+                    if(data.ig) {
+                        const igUrl = data.ig.includes('http') ? data.ig : `https://instagram.com/${data.ig.replace('@', '')}`;
+                        document.querySelectorAll('.link-ig-global').forEach(link => link.href = igUrl);
+                    }
+                    if(data.email) {
+                        document.querySelectorAll('.link-email-global').forEach(link => link.href = `mailto:${data.email}`);
+                    }
+                    if(data.nama) {
+                        document.querySelectorAll('.nama-sales-global').forEach(el => el.textContent = data.nama);
+                    }
+                    if(data.telp) {
+                        const telpClean = cleanNumber(data.telp);
+                        document.querySelectorAll('.link-telp-global').forEach(link => link.href = `tel:+${telpClean}`);
+                        
+                        const teksTelp = document.getElementById('footer-telepon-text');
+                        if(teksTelp) teksTelp.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> ${data.telp}`;
+                    }
+                    if(data.wa) {
+                        globalWaNumber = cleanNumber(data.wa);
+                        updateAllWaLinks(); 
+                    }
+                }
+            });
+
+            db.ref('global_data/alamat').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if(data && data.teks_alamat) {
+                    const footerAlamat = document.getElementById('footer-alamat-text');
+                    if(footerAlamat) footerAlamat.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5-2.5-1.12 2.5-2.5 2.5z"/></svg> ${data.teks_alamat}`;
+                }
+            });
+        }
+
+        // --- 2. SINKRONISASI DATA HARGA DARI DATABASE ---
         
         // A. Sinkronisasi Hero Daftar Harga
         db.ref('halaman/harga/hero').on('value', snap => {
@@ -526,7 +623,7 @@
             }
         });
 
-        // B. Sinkronisasi Grid Kartu Harga (Perpaduan 3 Data: Katalog, Spesifikasi, Visual Harga)
+        // B. Sinkronisasi Grid Kartu Harga 
         db.ref('spesifikasi').on('value', async (snap) => {
             if(snap.exists()) {
                 const container = document.getElementById('price-grid-container');
@@ -536,22 +633,19 @@
                 
                 for (const mobilId in spesifikasiData) {
                     const spec = spesifikasiData[mobilId];
-                    // Skip jika mobil ini belum diisikan data varian harga
                     if (!spec.varian) continue; 
 
-                    // 1. Ambil nama asli dari Katalog Mobil
                     const katalogSnap = await db.ref(`katalog_mobil/${mobilId}`).once('value');
                     const katalogData = katalogSnap.val() || {};
-                    const defaultName = katalogData.nama_mobil || 'Kendaraan Mitsubishi';
+                    
+                    // PERBAIKAN: Hapus default "Kendaraan Mitsubishi", biarkan kosong jika tidak ada data
+                    const defaultName = katalogData.nama_mobil || ''; 
 
-                    // 2. Ambil pengaturan visual dari panel Visual Harga
                     const visualSnap = await db.ref(`visual_harga/${mobilId}`).once('value');
                     const visualData = visualSnap.val() || {};
                     
-                    // Prioritas Foto Mobil Transparan: (1) Visual Harga, (2) Katalog, (3) Dummy
                     const imgMobil = visualData.imgMobilUrl || katalogData.imgUrl || 'https://images.unsplash.com/photo-1632823471565-3cefedebef26?q=80&w=800&auto=format&fit=crop';
 
-                    // Tentukan Format Judul Kartu (Teks Biasa vs Logo Gambar)
                     let titleHtml = '';
                     if (visualData.format_nama === 'logo' && visualData.logoUrl) {
                         titleHtml = `<img src="${visualData.logoUrl}" alt="Logo ${defaultName}" style="max-height: 40px; object-fit: contain; margin: 0 auto 24px; display: block;">`;
@@ -560,7 +654,6 @@
                         titleHtml = `<h2 class="price-car-name">${teksName}</h2>`;
                     }
 
-                    // 3. Susun List HTML untuk Varian & Harga
                     let varianHtml = '';
                     const varians = spec.varian;
                     for (const varId in varians) {
@@ -572,7 +665,7 @@
                         </li>`;
                     }
 
-                    // 4. Bangun Template Kartu Utuh
+                    // PERBAIKAN: Tombol Pesan Sekarang kini membawa attribut data-mobil dan class link-wa-global
                     htmlContent += `
                     <div class="price-card reveal-up active" style="opacity:1; transform:translateY(0);">
                         <div class="price-img-wrapper">
@@ -586,45 +679,22 @@
                             <div class="card-actions">
                                 <a href="detail.html?id=${mobilId}" class="btn-card btn-card-full">Spesifikasi Selengkapnya</a>
                                 <a href="katalog.html" class="btn-card btn-card-outline">Katalog Mobil Lainnya</a>
-                                <a href="https://wa.me/628123456789?text=Halo%20Mitsubishi%20Batam,%20saya%20tertarik%20dengan%20mobil%20${encodeURIComponent(defaultName)}%20tolong%20infonya%20lebih%20lanjut" target="_blank" class="btn-card btn-card-primary">Pesan Sekarang</a>
+                                <a href="#" target="_blank" data-mobil="${defaultName}" class="btn-card btn-card-primary link-wa-global">Pesan Sekarang</a>
                             </div>
                         </div>
                     </div>`;
                 }
                 
-                // Jika ada data varian yang berhasil dirender, hapus Xpander dummy dan timpa dengan data asli
                 if(htmlContent !== '') {
                     container.innerHTML = htmlContent;
+                    updateAllWaLinks(); // Eksekusi update link WA setelah kartu selesai dibuat
                 }
             }
         });
         
-        // C. Sinkronisasi Alamat Global (Footer)
-        db.ref('global_data/alamat').on('value', snap => {
-            if(snap.exists()) {
-                const data = snap.val();
-                const footerContact = document.querySelector('.footer-contact');
-                if (footerContact && data.teks_alamat) {
-                    footerContact.innerHTML = `
-                        <h4>Kontak Kami</h4>
-                        <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5-2.5-1.12 2.5-2.5 2.5z"/></svg> ${data.teks_alamat}</p>
-                        <p><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> +62 812-3456-7890</p>
-                    `;
-                }
-            }
-        });
+        // Panggil fungsi global saat web dijalankan
+        loadGlobalData();
 
-        // --- Trigger Animasi Reveal Awal ---
-        const revealElements = document.querySelectorAll('.reveal-up');
-        const revealObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-        revealElements.forEach(el => revealObserver.observe(el));
     </script>
 </body>
 </html>
