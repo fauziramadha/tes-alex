@@ -139,7 +139,9 @@
         .price-list-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px dashed var(--color-border); }
         .price-list-item:last-child { border-bottom: none; }
         .variant-name { font-size: 0.9rem; color: #555; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .variant-price { font-size: 1.05rem; font-weight: 800; color: var(--color-accent); font-family: var(--font-heading); font-variant-numeric: tabular-nums; text-align: right; }
+        
+        /* WARNA HITAM & FONT INTER DITERAPKAN DI SINI */
+        .variant-price { font-size: 1.05rem; font-weight: 800; color: var(--color-secondary); font-family: var(--font-body); font-variant-numeric: tabular-nums; text-align: right; }
 
         .card-actions { display: flex; flex-direction: column; gap: 12px; margin-top: auto; }
         .btn-card { display: block; width: 100%; padding: 14px 16px; border-radius: 8px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; text-align: center; letter-spacing: 0.5px; transition: var(--transition-smooth); cursor: pointer; }
@@ -259,7 +261,6 @@
             </nav>
 
             <div class="nav-actions">
-                <!-- PERBAIKAN: Penambahan class link-wa-global -->
                 <a href="#" target="_blank" class="btn-primary link-wa-global">Pesan Sekarang</a>
                 <button class="menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu">
                     <span></span><span></span><span></span>
@@ -284,7 +285,6 @@
         <a href="layanan.html" class="menu-item">Layanan Purna Jual</a>
         <a href="index.html#lokasi" class="menu-item">Lokasi Dealer</a>
 
-        <!-- PERBAIKAN: Penambahan class link-wa-global -->
         <a href="#" target="_blank" class="btn-primary link-wa-global" style="margin-top: auto; text-align: center; width: 100%;">Hubungi Sales</a>
     </div>
 
@@ -304,120 +304,7 @@
             <div class="price-container">
                 
                 <div class="price-grid" id="price-grid-container">
-                    <!-- DUMMY DATA SEBELUM FIREBASE LOAD -->
-                    <div class="price-card reveal-up delay-1">
-                        <div class="price-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1632823471565-3cefedebef26?q=80&w=800&auto=format&fit=crop" alt="Xpander" class="price-img">
-                        </div>
-                        <div class="price-body">
-                            <h2 class="price-car-name">Xpander</h2>
-                            
-                            <ul class="price-list">
-                                <li class="price-list-item">
-                                    <span class="variant-name">Ultimate CVT</span>
-                                    <span class="variant-price">Rp 315.900.000</span>
-                                </li>
-                                <li class="price-list-item">
-                                    <span class="variant-name">Sport CVT</span>
-                                    <span class="variant-price">Rp 309.500.000</span>
-                                </li>
-                                <li class="price-list-item">
-                                    <span class="variant-name">Exceed CVT</span>
-                                    <span class="variant-price">Rp 280.700.000</span>
-                                </li>
-                            </ul>
-
-                            <div class="card-actions">
-                                <a href="detail.html" class="btn-card btn-card-full">Spesifikasi Selengkapnya</a>
-                                <a href="katalog.html" class="btn-card btn-card-outline">Katalog Mobil Lainnya</a>
-                                <a href="#" target="_blank" class="btn-card btn-card-primary link-wa-global">Pesan Sekarang</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="price-card reveal-up delay-2">
-                        <div class="price-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=800&auto=format&fit=crop" alt="Pajero Sport" class="price-img">
-                        </div>
-                        <div class="price-body">
-                            <h2 class="price-car-name">Pajero Sport</h2>
-                            
-                            <ul class="price-list">
-                                <li class="price-list-item">
-                                    <span class="variant-name">Dakar Ultimate 4x4 AT</span>
-                                    <span class="variant-price">Rp 740.600.000</span>
-                                </li>
-                                <li class="price-list-item">
-                                    <span class="variant-name">Dakar Ultimate 4x2 AT</span>
-                                    <span class="variant-price">Rp 680.600.000</span>
-                                </li>
-                                <li class="price-list-item">
-                                    <span class="variant-name">Dakar 4x2 AT</span>
-                                    <span class="variant-price">Rp 630.900.000</span>
-                                </li>
-                            </ul>
-
-                            <div class="card-actions">
-                                <a href="detail.html" class="btn-card btn-card-full">Spesifikasi Selengkapnya</a>
-                                <a href="katalog.html" class="btn-card btn-card-outline">Katalog Mobil Lainnya</a>
-                                <a href="#" target="_blank" class="btn-card btn-card-primary link-wa-global">Pesan Sekarang</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="price-card reveal-up delay-1">
-                        <div class="price-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1563720360172-67b8f3dce741?q=80&w=800&auto=format&fit=crop" alt="XForce" class="price-img">
-                        </div>
-                        <div class="price-body">
-                            <h2 class="price-car-name">XForce</h2>
-                            
-                            <ul class="price-list">
-                                <li class="price-list-item">
-                                    <span class="variant-name">Ultimate CVT</span>
-                                    <span class="variant-price">Rp 419.100.000</span>
-                                </li>
-                                <li class="price-list-item">
-                                    <span class="variant-name">Exceed CVT</span>
-                                    <span class="variant-price">Rp 382.500.000</span>
-                                </li>
-                            </ul>
-
-                            <div class="card-actions">
-                                <a href="detail.html" class="btn-card btn-card-full">Spesifikasi Selengkapnya</a>
-                                <a href="katalog.html" class="btn-card btn-card-outline">Katalog Mobil Lainnya</a>
-                                <a href="#" target="_blank" class="btn-card btn-card-primary link-wa-global">Pesan Sekarang</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="price-card reveal-up delay-2">
-                        <div class="price-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?q=80&w=800&auto=format&fit=crop" alt="Xpander Cross" class="price-img">
-                        </div>
-                        <div class="price-body">
-                            <h2 class="price-car-name">Xpander Cross</h2>
-                            
-                            <ul class="price-list">
-                                <li class="price-list-item">
-                                    <span class="variant-name">Premium CVT</span>
-                                    <span class="variant-price">Rp 342.650.000</span>
-                                </li>
-                                <li class="price-list-item">
-                                    <span class="variant-name">MT</span>
-                                    <span class="variant-price">Rp 316.750.000</span>
-                                </li>
-                            </ul>
-
-                            <div class="card-actions">
-                                <a href="detail.html" class="btn-card btn-card-full">Spesifikasi Selengkapnya</a>
-                                <a href="katalog.html" class="btn-card btn-card-outline">Katalog Mobil Lainnya</a>
-                                <a href="#" target="_blank" class="btn-card btn-card-primary link-wa-global">Pesan Sekarang</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div> 
+                    </div> 
                 
                 <div class="bottom-nav-action-wrapper reveal-up delay-1">
                     <a href="index.html" class="btn-outline">Kembali</a>
@@ -635,15 +522,21 @@
                     const spec = spesifikasiData[mobilId];
                     if (!spec.varian) continue; 
 
+                    // FILTER STRUKTURAL: Cek apakah ID mobil ada di visual_harga
+                    const visualSnap = await db.ref(`visual_harga/${mobilId}`).once('value');
+
+                    // JIKA TIDAK ADA, BUANG / JANGAN DICETAK
+                    if (!visualSnap.exists()) {
+                        continue; 
+                    }
+
+                    const visualData = visualSnap.val() || {};
+
                     const katalogSnap = await db.ref(`katalog_mobil/${mobilId}`).once('value');
                     const katalogData = katalogSnap.val() || {};
                     
-                    // PERBAIKAN: Hapus default "Kendaraan Mitsubishi", biarkan kosong jika tidak ada data
                     const defaultName = katalogData.nama_mobil || ''; 
 
-                    const visualSnap = await db.ref(`visual_harga/${mobilId}`).once('value');
-                    const visualData = visualSnap.val() || {};
-                    
                     const imgMobil = visualData.imgMobilUrl || katalogData.imgUrl || 'https://images.unsplash.com/photo-1632823471565-3cefedebef26?q=80&w=800&auto=format&fit=crop';
 
                     let titleHtml = '';
@@ -665,7 +558,6 @@
                         </li>`;
                     }
 
-                    // PERBAIKAN: Tombol Pesan Sekarang kini membawa attribut data-mobil dan class link-wa-global
                     htmlContent += `
                     <div class="price-card reveal-up active" style="opacity:1; transform:translateY(0);">
                         <div class="price-img-wrapper">
@@ -687,7 +579,7 @@
                 
                 if(htmlContent !== '') {
                     container.innerHTML = htmlContent;
-                    updateAllWaLinks(); // Eksekusi update link WA setelah kartu selesai dibuat
+                    updateAllWaLinks(); 
                 }
             }
         });
