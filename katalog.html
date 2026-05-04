@@ -59,24 +59,31 @@
         @keyframes pulseGlow { 0% { transform: scale(0.95); opacity: 0.8; filter: drop-shadow(0 0 15px rgba(230,0,0,0.4)); } 100% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 35px rgba(230,0,0,0.8)); } }
 
         /* =========================================
-           NAVBAR (ADAPTED FOR INNER PAGE)
+           NAVBAR (PERBAIKAN TRANSISI TRANSPARAN -> PUTIH)
            ========================================= */
-        .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 16px 0; z-index: 1000; transition: var(--transition-smooth); background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: var(--shadow-premium); }
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 24px 0; z-index: 1000; transition: var(--transition-smooth); background: transparent; box-shadow: none; }
+        .navbar.scrolled { padding: 16px 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: var(--shadow-premium); }
         .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
-        .brand-logo-img { height: 44px; width: auto; object-fit: contain; }
+        
+        .brand-logo-img { height: 44px; width: auto; object-fit: contain; filter: brightness(0) invert(1); transition: var(--transition-smooth); }
+        .navbar.scrolled .brand-logo-img { filter: none; }
         
         .nav-links { display: none; gap: 40px; }
-        .nav-links a { font-weight: 500; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--color-secondary); position: relative; transition: var(--transition-smooth); }
+        .nav-links a { font-weight: 500; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--color-primary); position: relative; transition: var(--transition-smooth); text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .navbar.scrolled .nav-links a { color: var(--color-secondary); text-shadow: none; }
+        
         .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: var(--color-accent); transition: var(--transition-smooth); }
         .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-        .nav-links a.active { color: var(--color-accent); font-weight: 700; }
+        .nav-links a.active { color: var(--color-accent); font-weight: 700; text-shadow: none; }
 
         .btn-primary { display: inline-block; padding: 14px 32px; border-radius: 4px; font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition-smooth); text-align: center; background: var(--color-accent); color: var(--color-primary) !important; border: 1px solid var(--color-accent); }
         .btn-primary:hover { background: transparent; color: var(--color-accent) !important; }
 
         /* MOBILE MENU & OVERLAY */
         .menu-toggle { display: flex; flex-direction: column; gap: 6px; z-index: 1001; padding: 4px; }
-        .menu-toggle span { display: block; width: 28px; height: 2px; background: var(--color-secondary); transition: var(--transition-smooth); }
+        .menu-toggle span { display: block; width: 28px; height: 2px; background: var(--color-primary); transition: var(--transition-smooth); box-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+        .navbar.scrolled .menu-toggle span { background: var(--color-secondary); box-shadow: none; }
+        
         .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.7s ease; }
         .menu-overlay.active { opacity: 1; visibility: visible; }
         .mobile-menu { position: fixed; top: 0; right: 0; width: 85%; max-width: 380px; height: 100vh; background: var(--color-primary); z-index: 1000; padding: 40px 32px 100px; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: -10px 0 40px rgba(0,0,0,0.15); overflow-y: auto; }
@@ -85,7 +92,7 @@
         .mobile-menu.active > * { opacity: 1; transform: translateY(0); }
         .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--color-border); }
         .sidebar-title { font-family: var(--font-heading); font-weight: 800; font-size: 1.2rem; }
-        .btn-close-menu { font-size: 2rem; color: var(--color-secondary); line-height: 1; transition: var(--transition-smooth); }
+        .btn-close-menu { font-size: 2rem; color: var(--color-secondary); line-height: 1; transition: var(--transition-smooth); font-weight: 300; }
         .btn-close-menu:hover { color: var(--color-accent); transform: scale(1.1); }
         .menu-item { display: block; color: var(--color-secondary); font-weight: 600; font-size: 1.2rem; font-family: var(--font-heading); padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
 
@@ -93,10 +100,10 @@
            INNER PAGE HEADER
            ========================================= */
         .inner-header { position: relative; padding: 160px 24px 80px; background: #050505; color: var(--color-primary); text-align: center; overflow: hidden; }
-        .inner-header-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; filter: grayscale(0.5); }
+        .inner-header-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; filter: grayscale(0.2); }
         .inner-header-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
-        .inner-title { font-size: clamp(2.5rem, 6vw, 4rem); text-transform: uppercase; letter-spacing: -1px; margin-bottom: 16px; font-family: var(--font-heading); }
-        .inner-subtitle { font-size: 1.1rem; color: #ccc; font-weight: 300; }
+        .inner-title { font-size: clamp(2.5rem, 6vw, 4rem); text-transform: uppercase; letter-spacing: -1px; margin-bottom: 16px; font-family: var(--font-heading); text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .inner-subtitle { font-size: 1.1rem; color: #EAEAEA; font-weight: 400; line-height: 1.6; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
 
         /* =========================================
            SEARCH BAR & FILTERS
@@ -122,15 +129,17 @@
         .car-card { background: var(--color-primary); border-radius: 24px; overflow: hidden; border: 1px solid var(--color-border); box-shadow: 0 20px 40px rgba(0,0,0,0.04); transition: var(--transition-smooth); display: flex; flex-direction: column; }
         .car-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.1); border-color: rgba(230,0,0,0.2); }
         
-        .car-img-wrapper { width: 100%; height: 240px; background: linear-gradient(180deg, #FFFFFF 0%, #F0F0F0 100%); position: relative; padding: 20px; display: flex; align-items: center; justify-content: center; }
+        .car-img-wrapper { width: 100%; height: 240px; background: linear-gradient(180deg, #FFFFFF 0%, #F0F0F0 100%); position: relative; padding: 20px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); }
         .car-img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.8s ease; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); }
         .car-card:hover .car-img { transform: scale(1.08); }
         .car-badge { position: absolute; top: 20px; left: 20px; background: var(--color-accent); color: white; padding: 6px 14px; font-size: 0.7rem; font-weight: 800; border-radius: 30px; text-transform: uppercase; letter-spacing: 1.5px; z-index: 2; box-shadow: 0 5px 15px rgba(230,0,0,0.3); }
         
         .car-info { padding: 32px; display: flex; flex-direction: column; flex-grow: 1; }
         .car-name-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-        .car-name { font-size: 1.6rem; font-weight: 800; color: var(--color-secondary); text-transform: uppercase; letter-spacing: -0.5px; line-height: 1.2; }
-        .car-price { color: var(--color-accent); font-weight: 800; font-size: 1.2rem; font-family: var(--font-heading); margin-bottom: 24px; display: inline-block; padding: 4px 0; border-bottom: 2px solid var(--color-border); }
+        
+        /* PERBAIKAN: TIPOGRAFI NAMA & HARGA MOBIL */
+        .car-name { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.3; margin-bottom: 4px; }
+        .car-price { font-family: var(--font-body); color: var(--color-accent); font-weight: 800; font-size: 1.15rem; margin-bottom: 24px; display: inline-block; padding-bottom: 6px; border-bottom: 2px dashed var(--color-border); letter-spacing: 0px; }
         
         .car-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
         .spec-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: #666; font-weight: 500; }
@@ -234,8 +243,11 @@
             .car-badge { top: 8px; left: 8px; font-size: 0.55rem; padding: 3px 8px; }
             .car-info { padding: 12px; }
             .car-name-row { margin-bottom: 4px; }
-            .car-name { font-size: 1rem; }
-            .car-price { font-size: 0.8rem; margin-bottom: 12px; border-width: 1px; padding-bottom: 2px; }
+            
+            /* TIPOGRAFI MOBILE */
+            .car-name { font-size: 1.15rem; letter-spacing: 0; line-height: 1.2; }
+            .car-price { font-size: 0.95rem; margin-bottom: 16px; border-bottom: 1px dashed var(--color-border); padding-bottom: 4px; }
+            
             .car-specs { grid-template-columns: 1fr; gap: 4px; margin-bottom: 12px; }
             .spec-item { font-size: 0.65rem; }
             .spec-icon { width: 12px; height: 12px; }
@@ -265,7 +277,8 @@
         <header class="navbar" id="navbar">
             <div class="nav-container">
                 <a href="index.html" class="nav-logo">
-                    <img src="https://i.ibb.co.com/84Ss5Bjy/IMG-3284.png" alt="Mitsubishi Motors" class="brand-logo-img" style="filter: none;">
+                    <!-- CLASS BRAND LOGO IMG DIKEMBALIKAN TANPA INLINE FILTER AGAR CSS BERFUNGSI -->
+                    <img src="https://i.ibb.co.com/84Ss5Bjy/IMG-3284.png" alt="Mitsubishi Motors" class="brand-logo-img">
                 </a>
                 
                 <nav class="nav-links">
@@ -276,11 +289,12 @@
                 </nav>
 
                 <div class="nav-actions">
-                    <a href="https://wa.me/628123456789" target="_blank" class="btn-primary">Pesan Sekarang</a>
+                    <!-- KELAS LINK WA GLOBAL DITAMBAHKAN -->
+                    <a href="#" target="_blank" class="btn-primary link-wa-global">Pesan Sekarang</a>
                     <button class="menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu">
-                        <span style="background: var(--color-secondary);"></span>
-                        <span style="background: var(--color-secondary);"></span>
-                        <span style="background: var(--color-secondary);"></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </button>
                 </div>
             </div>
@@ -302,7 +316,8 @@
                 <a href="index.html#lokasi" class="menu-item">Lokasi Dealer</a>
                 <a href="#kontak" class="menu-item">Kontak</a>
 
-                <a href="https://wa.me/628123456789" target="_blank" class="btn-primary" style="margin-top: auto; text-align: center; width: 100%;">Hubungi Sales</a>
+                <!-- KELAS LINK WA GLOBAL DITAMBAHKAN -->
+                <a href="#" target="_blank" class="btn-primary link-wa-global" style="margin-top: auto; text-align: center; width: 100%;">Hubungi Sales</a>
             </div>
         </header>
 
@@ -330,34 +345,9 @@
             <div class="scroll-hint reveal-up delay-1">← Geser untuk kategori lainnya →</div>
 
             <div id="katalog-grid-container" class="katalog-grid reveal-up delay-2">
-                
-                <div class="car-card" data-category="passenger">
-                    <div class="car-img-wrapper">
-                        <span class="car-badge">NEW SUV</span>
-                        <img src="https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?q=80&w=800&auto=format&fit=crop" alt="XFORCE" class="car-img">
-                    </div>
-                    <div class="car-info">
-                        <div class="car-name-row">
-                            <h3 class="car-name">Mitsubishi<br>XFORCE</h3>
-                        </div>
-                        <div class="car-price">Mulai Rp 379.900.000</div>
-                        
-                        <div class="car-specs">
-                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><circle cx="12" cy="12" r="3"/></svg>1.499 cc</div>
-                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>5 Penumpang</div>
-                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M19.77 7.23l.01-.01-3.72-3.72L15 4.56l2.11 2.11C16.17 7 15.5 7.93 15.5 9a3 3 0 003 3c1.07 0 2-.67 2.33-1.61l2.11 2.11 1.06-1.06-3.72-3.72c-.01-.01-.01-.02-.01-.03v.03zM16.5 10c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zM14 5H3v14h11v-4h4v-7h-4V5zm-2 12H5V7h7v10z"/></svg>CVT</div>
-                            <div class="spec-item"><svg class="spec-icon" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>FWD</div>
-                        </div>
-
-                        <div class="car-actions">
-                            <a href="harga.html" class="btn-outline">Spesifikasi</a>
-                            <a href="https://wa.me/628123456789" target="_blank" class="btn-fill">Pesan</a>
-                        </div>
-                    </div>
-                </div>
-                </div>
+                <!-- DATA KARTU DI DALAM SINI AKAN DIGANTIKAN OTOMATIS OLEH FIREBASE -->
+            </div>
         </section>
-
         <section class="reveal-up delay-2">
             <div class="brochure-banner">
                 <div class="brochure-content">
@@ -377,16 +367,17 @@
                     <img src="https://i.ibb.co.com/84Ss5Bjy/IMG-3284.png" alt="Mitsubishi Motors" class="footer-logo">
                     <p>Dealer Resmi Mitsubishi Batam. Menghadirkan layanan premium dan pengalaman berkendara kelas dunia untuk Anda dan keluarga.</p>
                     <div class="footer-socials">
-                        <a href="https://facebook.com" target="_blank" class="social-link-icon" aria-label="Facebook">
+                        <!-- CLASS GLOBAL DITAMBAHKAN UNTUK SINKRONISASI -->
+                        <a href="#" target="_blank" class="social-link-icon link-fb-global" aria-label="Facebook">
                             <svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
                         </a>
-                        <a href="https://instagram.com" target="_blank" class="social-link-icon" aria-label="Instagram">
+                        <a href="#" target="_blank" class="social-link-icon link-ig-global" aria-label="Instagram">
                             <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                         </a>
-                        <a href="https://wa.me/628123456789" target="_blank" class="social-link-icon" aria-label="WhatsApp">
+                        <a href="#" target="_blank" class="social-link-icon link-wa-global" aria-label="WhatsApp">
                             <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                         </a>
-                        <a href="mailto:info@mitsubishi.com" class="social-link-icon" aria-label="Email">
+                        <a href="#" class="social-link-icon link-email-global" aria-label="Email">
                             <svg viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg>
                         </a>
                     </div>
@@ -407,26 +398,27 @@
                     <ul>
                         <li><a href="index.html#layanan">Purna Jual</a></li>
                         <li><a href="katalog.html">Daftar Harga</a></li>
-                        <li><a href="index.html#test-drive">Test Drive</a></li>
+                        <li><a href="#" class="wa-test-drive">Test Drive</a></li>
                         <li><a href="index.html#lokasi">Lokasi Dealer</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-contact">
                     <h4>Kontak Kami</h4>
-                    <p>
+                    <!-- ID GLOBAL DITAMBAHKAN -->
+                    <p id="footer-alamat-text">
                         <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> 
-                        Jl. Raden Patah, Lubuk Baja, Kota Batam, Kepulauan Riau
+                        Memuat alamat...
                     </p>
-                    <p>
+                    <p id="footer-telepon-text">
                         <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> 
-                        +62 812-3456-7890
+                        Memuat telepon...
                     </p>
                 </div>
             </div>
 
             <div class="footer-bottom reveal-up delay-2">
-                <div class="footer-copy">©2026. Official Mitsubishi motors Batam Aldiansyah Sales</div>
+                <div class="footer-copy">©2026. Official Mitsubishi motors Batam <span class="nama-sales-global">Sales</span></div>
                 <div class="footer-dev">Developed by @zee_radhan</div>
             </div>
         </footer>
@@ -437,12 +429,12 @@
                 <span class="bottom-nav-label">Harga</span>
             </a>
             
-            <a href="tel:+6281234567890" class="bottom-nav-item" aria-label="Telepon Sales">
+            <a href="#" class="bottom-nav-item link-telp-global" aria-label="Telepon Sales">
                 <svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
                 <span class="bottom-nav-label">Telepon</span>
             </a>
             
-            <a href="https://wa.me/628123456789" target="_blank" class="bottom-nav-item" aria-label="Chat WhatsApp">
+            <a href="#" target="_blank" class="bottom-nav-item link-wa-global" aria-label="Chat WhatsApp">
                 <svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 <span class="bottom-nav-label">WhatsApp</span>
             </a>
@@ -466,13 +458,92 @@
         if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
         const db = firebase.database();
 
-        /* =========================================
-           2. SINKRONISASI DATA DARI FIREBASE
-           ========================================= */
-        
         function formatRupiah(angka) {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka).replace('Rp', 'Rp ');
         }
+
+        /* =========================================
+           SINKRONISASI DATA GLOBAL (Biodata, Kontak & Alamat)
+           ========================================= */
+        let globalWaNumber = ''; 
+
+        function cleanNumber(num) {
+            if(!num) return "";
+            let cleaned = num.toString().replace(/\D/g, ''); 
+            if (cleaned.startsWith('0')) cleaned = '62' + cleaned.substring(1); 
+            return cleaned;
+        }
+
+        // FUNGSI UPDATE WHATSAPP OTOMATIS (Sama Persis Index & Harga)
+        function updateWhatsAppLinks(nomorWa) {
+            if(!nomorWa) return;
+            const cleanWa = cleanNumber(nomorWa);
+            
+            // 1. Template Umum (Navbar, Sidebar, Footer, Mobile Nav)
+            const teksUmum = encodeURIComponent("Halo Kak, saya tertarik dengan informasi Mitsubishi Motors dari website. Boleh minta informasinya lebih lanjut?");
+            document.querySelectorAll('.link-wa-global').forEach(link => {
+                if(!link.hasAttribute('data-mobil')) {
+                    link.href = `https://wa.me/${cleanWa}?text=${teksUmum}`;
+                }
+            });
+
+            // 2. Template Test Drive (Footer)
+            const teksTestDrive = encodeURIComponent("Halo Kak, saya tertarik dengan salah satu mobil di dealer, boleh minta informasi lebih detail untuk jadwal test drive mobilnya Kak?");
+            document.querySelectorAll('.wa-test-drive').forEach(link => {
+                link.href = `https://wa.me/${cleanWa}?text=${teksTestDrive}`;
+            });
+
+            // 3. Template Pesan Mobil Spesifik (Katalog Card)
+            document.querySelectorAll('.link-wa-global[data-mobil]').forEach(link => {
+                const namaMobil = link.getAttribute('data-mobil') || "Mobil Mitsubishi";
+                const teksPesanMobil = encodeURIComponent(`Halo Kak, saya tertarik dengan mobil "${namaMobil}". Boleh minta informasinya lebih lanjut Kak?`);
+                link.href = `https://wa.me/${cleanWa}?text=${teksPesanMobil}`;
+            });
+        }
+
+        function loadGlobalData() {
+            db.ref('global_data/biodata').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if(data) {
+                    if(data.fb_link) {
+                        document.querySelectorAll('.link-fb-global').forEach(link => link.href = data.fb_link);
+                    }
+                    if(data.ig) {
+                        const igUrl = data.ig.includes('http') ? data.ig : `https://instagram.com/${data.ig.replace('@', '')}`;
+                        document.querySelectorAll('.link-ig-global').forEach(link => link.href = igUrl);
+                    }
+                    if(data.email) {
+                        document.querySelectorAll('.link-email-global').forEach(link => link.href = `mailto:${data.email}`);
+                    }
+                    if(data.nama) {
+                        document.querySelectorAll('.nama-sales-global').forEach(el => el.textContent = data.nama);
+                    }
+                    if(data.telp) {
+                        const telpClean = cleanNumber(data.telp);
+                        document.querySelectorAll('.link-telp-global').forEach(link => link.href = `tel:+${telpClean}`);
+                        
+                        const teksTelp = document.getElementById('footer-telepon-text');
+                        if(teksTelp) teksTelp.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> ${data.telp}`;
+                    }
+                    if(data.wa) {
+                        globalWaNumber = data.wa;
+                        updateWhatsAppLinks(globalWaNumber); 
+                    }
+                }
+            });
+
+            db.ref('global_data/alamat').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if(data && data.teks_alamat) {
+                    const footerAlamat = document.getElementById('footer-alamat-text');
+                    if(footerAlamat) footerAlamat.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> ${data.teks_alamat}`;
+                }
+            });
+        }
+
+        /* =========================================
+           2. SINKRONISASI DATA DARI FIREBASE (Hero, Filter, List)
+           ========================================= */
 
         // A. Sinkronisasi Hero Katalog
         db.ref('halaman/katalog/hero').on('value', snap => {
@@ -488,14 +559,11 @@
         db.ref('katalog_kategori').on('value', snap => {
             const container = document.getElementById('katalog-filters-container');
             if(snap.exists()) {
-                // Hapus data dummy, timpa dengan data dari database
                 container.innerHTML = '<button class="filter-btn active" data-filter="all">Semua Model</button>';
                 snap.forEach(child => {
                     const data = child.val();
-                    // Gunakan nama kategori sebagai filter value
                     container.innerHTML += `<button class="filter-btn" data-filter="${data.nama}">${data.nama}</button>`;
                 });
-                // Inisialisasi ulang fungsi klik filter
                 initFilterLogic();
             }
         });
@@ -504,24 +572,25 @@
         db.ref('katalog_mobil').on('value', snap => {
             const container = document.getElementById('katalog-grid-container');
             if(snap.exists()) {
-                container.innerHTML = ''; // Hapus Dummy XFORCE dkk
+                container.innerHTML = ''; 
                 
                 snap.forEach(child => {
                     const data = child.val();
                     const hargaFormat = data.harga ? `Mulai ${formatRupiah(data.harga)}` : 'Harga Hubungi Sales';
                     const imgUrl = data.imgUrl || 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?q=80&w=800&auto=format&fit=crop';
                     const badgeHtml = data.label_promo ? `<span class="car-badge">${data.label_promo}</span>` : '';
+                    const defaultName = data.nama_mobil || 'Kendaraan Mitsubishi';
                     
-                    // Template Kartu Mobil Terhubung ke Database (Link Spesifikasi diperbaiki ke detail.html)
+                    // PERUBAHAN: Kelas car-name, car-price diperbarui dan ditambahkan data-mobil dan link-wa-global di tombol Pesan
                     container.innerHTML += `
                     <div class="car-card reveal-up" data-category="${data.kategori || 'Umum'}">
                         <div class="car-img-wrapper">
                             ${badgeHtml}
-                            <img src="${imgUrl}" alt="${data.nama_mobil}" class="car-img" loading="lazy">
+                            <img src="${imgUrl}" alt="${defaultName}" class="car-img" loading="lazy">
                         </div>
                         <div class="car-info">
                             <div class="car-name-row">
-                                <h3 class="car-name">${data.nama_mobil || 'Kendaraan Mitsubishi'}</h3>
+                                <h3 class="car-name">${defaultName}</h3>
                             </div>
                             <div class="car-price">${hargaFormat}</div>
                             
@@ -534,13 +603,14 @@
 
                             <div class="car-actions">
                                 <a href="detail.html?id=${child.key}" class="btn-outline">Spesifikasi</a>
-                                <a href="https://wa.me/628123456789?text=Halo%20Mitsubishi%20Batam,%20saya%20tertarik%20dengan%20mobil%20${encodeURIComponent(data.nama_mobil)}.%20Bisa%20minta%20info%20lebih%20lanjut?" target="_blank" class="btn-fill">Pesan</a>
+                                <a href="#" target="_blank" data-mobil="${defaultName}" class="btn-fill link-wa-global">Pesan</a>
                             </div>
                         </div>
                     </div>`;
                 });
                 
-                // Re-trigger animasi reveal untuk kartu yang baru dibuat
+                // Segera panggil sinkronisasi link WA untuk kartu-kartu baru
+                if(globalWaNumber) updateWhatsAppLinks(globalWaNumber);
                 setTimeout(() => { window.dispatchEvent(new Event('scroll')); }, 100);
             }
         });
@@ -564,7 +634,7 @@
         const preloader = document.getElementById('preloader');
         window.addEventListener('load', () => { setTimeout(() => { preloader.classList.add('hide'); }, 1000); });
 
-        // Navbar Scroll Effect
+        // Navbar Scroll Effect (Mulus Transparan -> Putih)
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) navbar.classList.add('scrolled');
@@ -598,14 +668,13 @@
             link.addEventListener('click', () => { if(isMenuOpen) toggleMenu(); }); 
         });
 
-        // Logika Pencarian (Search Bar Real-Time)
+        // Logika Pencarian
         const searchInput = document.getElementById('search-input');
         
         searchInput.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
-            const carCards = document.querySelectorAll('.car-card'); // Ambil elemen terbaru
+            const carCards = document.querySelectorAll('.car-card'); 
             
-            // Auto reset filter ke "Semua Model" saat mengetik
             if(searchTerm.length > 0) {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 const btnAll = document.querySelector('[data-filter="all"]');
@@ -613,27 +682,24 @@
             }
 
             carCards.forEach(card => {
-                const cardText = card.innerText.toLowerCase(); // Tangkap semua teks di dalam kartu
-                
+                const cardText = card.innerText.toLowerCase(); 
                 if(cardText.includes(searchTerm)) {
                     card.style.display = 'flex';
                     setTimeout(() => { card.style.transform = 'scale(1)'; card.style.opacity = '1'; }, 50);
                 } else {
                     card.style.transform = 'scale(0.95)'; card.style.opacity = '0';
-                    setTimeout(() => { card.style.display = 'none'; }, 300); // Tunggu transisi selesai
+                    setTimeout(() => { card.style.display = 'none'; }, 300); 
                 }
             });
         });
 
-        // Logika Filter Katalog Tombol Kategori
+        // Logika Filter Katalog
         function initFilterLogic() {
             const filterBtns = document.querySelectorAll('.filter-btn');
             
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    const carCards = document.querySelectorAll('.car-card'); // Ambil elemen terbaru
-                    
-                    // Hapus teks pencarian jika menggunakan tombol filter
+                    const carCards = document.querySelectorAll('.car-card'); 
                     searchInput.value = ''; 
 
                     filterBtns.forEach(b => b.classList.remove('active')); 
@@ -656,8 +722,6 @@
                 });
             });
         }
-        
-        // Panggil fungsi filter untuk inisialisasi data bawaan sebelum Firebase load
         initFilterLogic();
 
         // Animasi Scroll Reveal
@@ -675,11 +739,11 @@
             revealElements.forEach(el => revealOnScroll.observe(el));
         }
 
-        // Jalankan observer setiap kali DOM berpotensi berubah (akibat Firebase load)
         const observerMutation = new MutationObserver(observeRevealElements);
         observerMutation.observe(document.body, { childList: true, subtree: true });
 
-        // Trigger awal
+        // Jalankan Fungsi Sinkronisasi Data Global Saat Load
+        loadGlobalData();
         observeRevealElements();
         window.dispatchEvent(new Event('scroll'));
 
