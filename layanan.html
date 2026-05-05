@@ -307,7 +307,8 @@
             </nav>
 
             <div class="nav-actions">
-                <a href="https://wa.me/628123456789" target="_blank" class="btn-primary" id="wa-header">Pesan Sekarang</a>
+                <!-- CLASS link-wa-global DITAMBAHKAN DI SINI -->
+                <a href="https://wa.me/628123456789" target="_blank" class="btn-primary link-wa-global" id="wa-header">Pesan Sekarang</a>
                 <button class="menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu">
                     <span></span><span></span><span></span>
                 </button>
@@ -331,7 +332,8 @@
         <a href="layanan.html" class="menu-item active">Layanan Purna Jual</a>
         <a href="index.html#lokasi" class="menu-item">Lokasi Dealer</a>
 
-        <a href="https://wa.me/628123456789" target="_blank" class="btn-primary" id="wa-sidebar" style="margin-top: auto; text-align: center; width: 100%;">Hubungi Sales</a>
+        <!-- CLASS link-wa-global DITAMBAHKAN DI SINI -->
+        <a href="https://wa.me/628123456789" target="_blank" class="btn-primary link-wa-global" id="wa-sidebar" style="margin-top: auto; text-align: center; width: 100%;">Hubungi Sales</a>
     </div>
 
     <main class="app-wrapper">
@@ -454,7 +456,8 @@
                             </div>
                         </div>
 
-                        <div class="luxury-card reveal-up delay-1" style="grid-column: 1 / -1; max-width: 600px; margin: 0 auto;">
+                        <!-- PERBAIKAN: Menghapus inline style (grid-column: 1 / -1) agar posisi Bodi & Cat otomatis teratur mengikuti grid CSS -->
+                        <div class="luxury-card reveal-up delay-1">
                             <div class="luxury-img-wrapper">
                                 <img src="https://i.ibb.co.com/WNt0JHgf/IMG-3319.webp" alt="Bodi & Cat" class="luxury-img" id="f5-img">
                             </div>
@@ -521,10 +524,11 @@
                     <img src="https://i.ibb.co.com/84Ss5Bjy/IMG-3284.png" alt="Mitsubishi Motors" class="footer-logo">
                     <p>Dealer Resmi Mitsubishi Batam. Menghadirkan layanan premium dan pengalaman berkendara kelas dunia untuk Anda dan keluarga.</p>
                     <div class="footer-socials">
-                        <a href="https://facebook.com" target="_blank" class="social-link-icon" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
-                        <a href="https://instagram.com" target="_blank" class="social-link-icon" aria-label="Instagram" id="footer-ig"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-                        <a href="https://wa.me/628123456789" target="_blank" class="social-link-icon" aria-label="WhatsApp" id="footer-wa"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
-                        <a href="mailto:info@mitsubishi.com" class="social-link-icon" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg></a>
+                        <!-- CLASS GLOBAL DITAMBAHKAN PADA SELURUH ICON SOSMED BAWAH -->
+                        <a href="https://facebook.com" target="_blank" class="social-link-icon link-fb-global" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
+                        <a href="https://instagram.com" target="_blank" class="social-link-icon link-ig-global" aria-label="Instagram" id="footer-ig"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                        <a href="https://wa.me/628123456789" target="_blank" class="social-link-icon link-wa-global" aria-label="WhatsApp" id="footer-wa"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+                        <a href="mailto:info@mitsubishi.com" class="social-link-icon link-email-global" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg></a>
                     </div>
                 </div>
                 <div class="footer-col">
@@ -539,7 +543,7 @@
                     <h4>Layanan</h4>
                     <ul>
                         <li><a href="index.html#layanan">Purna Jual</a></li>
-                        <li><a href="https://wa.me/628123456789">Test Drive</a></li>
+                        <li><a href="https://wa.me/628123456789" class="link-wa-global">Test Drive</a></li>
                         <li><a href="index.html#lokasi">Lokasi Dealer</a></li>
                     </ul>
                 </div>
@@ -550,15 +554,15 @@
                 </div>
             </div>
             <div class="footer-bottom reveal-up delay-2">
-                <div class="footer-copy">©2026. Official Mitsubishi motors Batam Aldiansyah Sales</div>
+                <div class="footer-copy">©2026. Official Mitsubishi motors Batam <span class="nama-sales-global">Aldiansyah Sales</span></div>
                 <div class="footer-dev">Developed by @zee_radhan</div>
             </div>
         </footer>
 
         <nav class="mobile-bottom-nav">
             <a href="harga.html" class="bottom-nav-item" aria-label="Daftar Harga"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.41l9 9c.36.36.86.59 1.41.59s1.05-.22 1.41-.59l7-7c.36-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg><span class="bottom-nav-label">Harga</span></a>
-            <a href="tel:+6281234567890" class="bottom-nav-item" aria-label="Telepon Sales" id="bottom-nav-telp"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span class="bottom-nav-label">Telepon</span></a>
-            <a href="https://wa.me/628123456789" target="_blank" class="bottom-nav-item" aria-label="Chat WhatsApp" id="bottom-nav-wa"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span class="bottom-nav-label">WhatsApp</span></a>
+            <a href="tel:+6281234567890" class="bottom-nav-item link-telp-global" aria-label="Telepon Sales" id="bottom-nav-telp"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span class="bottom-nav-label">Telepon</span></a>
+            <a href="https://wa.me/628123456789" target="_blank" class="bottom-nav-item link-wa-global" aria-label="Chat WhatsApp" id="bottom-nav-wa"><svg class="bottom-nav-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span class="bottom-nav-label">WhatsApp</span></a>
         </nav>
 
     </main>
@@ -642,7 +646,28 @@
         };
 
         /* =========================================
-           5. SINKRONISASI DATA LAYANAN DARI FIREBASE
+           5. FUNGSI PEMBERSIH NOMOR & UPDATE WA
+           ========================================= */
+        function cleanNumber(num) {
+            if(!num) return "";
+            let cleaned = num.toString().replace(/\D/g, ''); 
+            if (cleaned.startsWith('0')) cleaned = '62' + cleaned.substring(1); 
+            return cleaned;
+        }
+
+        function updateWhatsAppLinks(nomorWa, customPesan) {
+            if(!nomorWa) return;
+            const cleanWa = cleanNumber(nomorWa);
+            // Memberikan pesan default jika pesan dari admin kosong
+            const pesanDefault = customPesan ? encodeURIComponent(customPesan) : encodeURIComponent("Halo Kak, saya tertarik dengan layanan purna jual dan servis dari Mitsubishi Motors. Boleh minta informasinya lebih lanjut?");
+            
+            document.querySelectorAll('.link-wa-global').forEach(link => {
+                link.href = `https://wa.me/${cleanWa}?text=${pesanDefault}`;
+            });
+        }
+
+        /* =========================================
+           6. SINKRONISASI DATA DARI FIREBASE
            ========================================= */
         document.addEventListener('DOMContentLoaded', () => {
 
@@ -659,24 +684,22 @@
             // [B] KARTU LAYANAN DASAR (C1-C4)
             db.ref('halaman/layanan/dasar').on('value', snap => {
                 if(snap.exists()) {
-                    // Jika data ada di database, kita proses 1-4
                     for(let i=1; i<=4; i++) {
                         const data = snap.val()[`item${i}`];
-                        const cardElement = document.getElementById(`c${i}-img`).closest('.luxury-card');
+                        const imgEl = document.getElementById(`c${i}-img`);
+                        if(!imgEl) continue; // Mencegah error jika ID tidak ditemukan
+                        const cardElement = imgEl.closest('.luxury-card');
                         
-                        // Jika admin mengosongkan item ini, sembunyikan kartunya
                         if(data && (data.atas || data.bawah || data.imgUrl)) {
                             cardElement.style.display = 'flex'; 
                             if(data.atas) document.getElementById(`c${i}-title`).innerText = data.atas;
                             if(data.bawah) document.getElementById(`c${i}-desc`).innerText = data.bawah;
-                            if(data.imgUrl) document.getElementById(`c${i}-img`).src = data.imgUrl;
+                            if(data.imgUrl) imgEl.src = data.imgUrl;
                         } else {
                             cardElement.style.display = 'none'; 
                         }
                     }
                 }
-                // Jika snap.exists() false (misal karena di-reset/hapus default), 
-                // kode akan mengabaikannya sehingga data dummy bawaan HTML tetap tampil.
             });
 
             // [C] PELAYANAN TERBAIK KAMI (SPA)
@@ -684,16 +707,13 @@
                 if(snap.exists()) {
                     const data = snap.val();
                     
-                    // Tampilan Awal
                     if(data.atas) document.getElementById('spa-title').innerText = data.atas;
                     if(data.bawah) document.getElementById('spa-desc').innerText = data.bawah;
                     if(data.tombol) document.getElementById('spa-btn').innerText = data.tombol;
                     if(data.imgUrl) document.getElementById('spa-img').src = data.imgUrl;
 
-                    // Tampilan Pop-Up (SPA)
                     if(data.judul_pop) document.getElementById('spa-pop-title').innerText = data.judul_pop;
                     if(data.info_pop) {
-                        // Render info_pop dengan format paragraf (mengubah enter menjadi <br> atau <p>)
                         const formattedInfo = data.info_pop.split('\n').map(p => `<p>${p}</p>`).join('');
                         document.getElementById('spa-pop-info').innerHTML = formattedInfo;
                     }
@@ -706,14 +726,15 @@
                 if(snap.exists()) {
                     for(let i=1; i<=5; i++) {
                         const data = snap.val()[`item${i}`];
-                        const cardElement = document.getElementById(`f${i}-img`).closest('.luxury-card');
+                        const imgEl = document.getElementById(`f${i}-img`);
+                        if(!imgEl) continue;
+                        const cardElement = imgEl.closest('.luxury-card');
                         
-                        // Sistem Proteksi: Sembunyikan jika kosong
                         if(data && (data.atas || data.bawah || data.imgUrl)) {
                             cardElement.style.display = 'flex'; 
                             if(data.atas) document.getElementById(`f${i}-title`).innerText = data.atas;
                             if(data.bawah) document.getElementById(`f${i}-desc`).innerText = data.bawah;
-                            if(data.imgUrl) document.getElementById(`f${i}-img`).src = data.imgUrl;
+                            if(data.imgUrl) imgEl.src = data.imgUrl;
                         } else {
                             cardElement.style.display = 'none';
                         }
@@ -721,44 +742,59 @@
                 }
             });
 
-            // [E] GLOBAL DATA (KONTAK & BIODATA)
-            db.ref('global_data').on('value', snap => {
+            // [E] GLOBAL DATA (SINKRONISASI PENUH BIODATA & ALAMAT)
+            db.ref('global_data/biodata').on('value', snap => {
                 if(snap.exists()) {
-                    const global = snap.val();
+                    const data = snap.val();
                     
-                    // Update Nomor WhatsApp (Otomatis memformat awalan 0 menjadi 62)
-                    if(global.biodata && global.biodata.wa) {
-                        let waNumber = global.biodata.wa.replace(/[^0-9]/g, '');
-                        if(waNumber.startsWith('0')) waNumber = '62' + waNumber.substring(1);
-                        
-                        let pesanWa = global.biodata.pesan ? encodeURIComponent(global.biodata.pesan) : encodeURIComponent("Halo, saya tertarik dengan layanan purna jual Mitsubishi.");
-                        let waLink = `https://wa.me/${waNumber}?text=${pesanWa}`;
-                        
-                        document.getElementById('wa-header').href = waLink;
-                        document.getElementById('wa-sidebar').href = waLink;
-                        document.getElementById('footer-wa').href = waLink;
-                        document.getElementById('bottom-nav-wa').href = waLink;
+                    // Update Facebook
+                    if(data.fb_link) {
+                        document.querySelectorAll('.link-fb-global').forEach(link => link.href = data.fb_link);
                     }
-
-                    // Update Link Telepon
-                    if(global.biodata && global.biodata.telp) {
-                        let telpText = global.biodata.telp;
-                        let telpLink = `tel:${telpText.replace(/[^0-9+]/g, '')}`;
-                        document.getElementById('footer-telp-text').innerText = telpText;
-                        document.getElementById('bottom-nav-telp').href = telpLink;
-                    }
-
+                    
                     // Update Instagram
-                    if(global.biodata && global.biodata.ig) {
-                        document.getElementById('footer-ig').href = global.biodata.ig;
+                    if(data.ig) {
+                        const igUrl = data.ig.includes('http') ? data.ig : `https://instagram.com/${data.ig.replace('@', '')}`;
+                        document.querySelectorAll('.link-ig-global').forEach(link => link.href = igUrl);
+                    }
+                    
+                    // Update Email
+                    if(data.email) {
+                        document.querySelectorAll('.link-email-global').forEach(link => link.href = `mailto:${data.email}`);
                     }
 
-                    // Update Alamat Footer
-                    if(global.alamat && global.alamat.teks_alamat) {
-                        document.getElementById('footer-alamat-text').innerText = global.alamat.teks_alamat;
-                        if(global.alamat.gmaps) {
-                            document.getElementById('footer-alamat-container').style.cursor = 'pointer';
-                            document.getElementById('footer-alamat-container').onclick = () => window.open(global.alamat.gmaps, '_blank');
+                    // Update Telepon & Label Bawahnya
+                    if(data.telp) {
+                        const telpClean = cleanNumber(data.telp);
+                        document.querySelectorAll('.link-telp-global').forEach(link => link.href = `tel:+${telpClean}`);
+                        
+                        const teksTelpFooter = document.getElementById('footer-telp-text');
+                        if(teksTelpFooter) teksTelpFooter.innerText = data.telp;
+                    }
+
+                    // Update WhatsApp
+                    if(data.wa) {
+                        updateWhatsAppLinks(data.wa, data.pesan);
+                    }
+
+                    // Update Nama Sales di Footer
+                    if(data.nama) {
+                        document.querySelectorAll('.nama-sales-global').forEach(el => el.textContent = data.nama + " Sales");
+                    }
+                }
+            });
+
+            db.ref('global_data/alamat').on('value', snap => {
+                if(snap.exists()) {
+                    const data = snap.val();
+                    if(data.teks_alamat) {
+                        document.getElementById('footer-alamat-text').innerText = data.teks_alamat;
+                        if(data.gmaps) {
+                            const alamatContainer = document.getElementById('footer-alamat-container');
+                            if (alamatContainer) {
+                                alamatContainer.style.cursor = 'pointer';
+                                alamatContainer.onclick = () => window.open(data.gmaps, '_blank');
+                            }
                         }
                     }
                 }
