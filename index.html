@@ -950,6 +950,10 @@
                     if(data.fb_link) {
                         document.querySelectorAll('.link-fb-global').forEach(link => link.href = data.fb_link);
                     }
+                    // Tambahan Sinkronisasi Email
+                    if(data.email) {
+                        document.querySelectorAll('.link-email-global').forEach(link => link.href = `mailto:${data.email}`);
+                    }
                     if(data.telp) {
                         const cleanTelp = data.telp.replace(/\D/g, '');
                         document.getElementById('bottom-nav-telp').href = `tel:+${cleanTelp}`;
@@ -1106,7 +1110,7 @@
                 }
             });
 
-            // F. Sinkronisasi Data Mobil (PERBAIKAN: Kategori dinamis dan Batas 6 Katalog per kategori)
+            // F. Sinkronisasi Data Mobil (PERBAIKAN: Kategori dinamis dan Batas 4 Katalog per kategori)
             db.ref('katalog_mobil').on('value', (snapshot) => {
                 const data = snapshot.val();
                 const katalogGrid = document.getElementById('katalog-grid-container');
@@ -1127,8 +1131,8 @@
                         if(!categoryCounts[kategoriId]) categoryCounts[kategoriId] = 0;
                         if(!categoriesHTML[kategoriRaw]) categoriesHTML[kategoriRaw] = '';
 
-                        // Perbaikan Batas: Cuma menampilkan 6 pertama di Beranda untuk tiap kategori
-                        if(categoryCounts[kategoriId] < 6) {
+                        // Perbaikan Batas: Cuma menampilkan 4 pertama di Beranda untuk tiap kategori agar pas 2 baris
+                        if(categoryCounts[kategoriId] < 4) {
                             let badgeHTML = '';
                             if(mobil.label_promo) badgeHTML = `<span class="car-badge">${mobil.label_promo}</span>`;
 
@@ -1193,14 +1197,15 @@
                 }
             });
 
-            // G. Sinkronisasi Data Berita & Acara (PERBAIKAN SIARAN PERS)
+            // G. Sinkronisasi Data Berita & Acara (PERBAIKAN: Batas maksimal 3 berita)
             db.ref('berita_list').on('value', (snapshot) => {
                 const data = snapshot.val();
                 if(data) {
                     const newsGrid = document.getElementById('news-grid-container');
                     if(newsGrid) {
                         let newsHTML = '';
-                        const keys = Object.keys(data).reverse().slice(0, 6); 
+                        // Dibatasi slice(0, 3) agar scroll tidak terlalu panjang
+                        const keys = Object.keys(data).reverse().slice(0, 3); 
                         keys.forEach(key => {
                             const berita = data[key];
                             const rawKategori = berita.kategori || 'Berita';
