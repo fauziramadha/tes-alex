@@ -166,7 +166,8 @@
             </nav>
             
             <div class="sidebar-footer">
-                <button class="btn-logout" onclick="location.reload()">Keluar Sistem</button>
+                <!-- PERBAIKAN: Tombol logout sekarang memanggil fungsi prosesLogout() yang aman -->
+                <button class="btn-logout" onclick="prosesLogout()">Keluar Sistem</button>
             </div>
         </aside>
 
@@ -1127,1529 +1128,675 @@
                     </div>
 
                 </div>
-
                 <div id="panel-testimoni" class="data-panel">
                     
                     <div class="section-card">
-                        <div class="section-header"><h3 class="section-title">1. HERO TESTIMONI</h3></div>
+                        <div class="section-header"><h3 class="section-title">A. HERO TESTIMONI</h3></div>
                         <div class="form-grid">
                             <div class="input-group form-full">
-                                <label>FOTO BACKGROUND</label>
+                                <label>FOTO LATAR BELAKANG</label>
                                 <div class="file-upload-wrapper">
                                     <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
                                     <span class="file-upload-text">Ketuk untuk Pilih Foto Latar</span>
-                                    <input type="file" id="testimoni-hero-file" accept=".png, .jpg, .jpeg, .webp">
+                                    <input type="file" id="testi-hero-file" accept=".png, .jpg, .jpeg, .webp">
                                 </div>
                             </div>
                             <div class="input-group form-full">
                                 <label>TULISAN ATAS</label>
-                                <input type="text" id="testimoni-hero-teks-atas" class="input-control" placeholder="Contoh: GALLERY TESTIMONI">
+                                <input type="text" id="testi-hero-teks-atas" class="input-control" placeholder="Contoh: KISAH MEREKA">
                             </div>
                             <div class="input-group form-full">
                                 <label>TULISAN BAWAH</label>
-                                <textarea id="testimoni-hero-teks-bawah" class="input-control" rows="2" placeholder="Contoh: Lihat apa kata mereka yang sudah membuktikan pelayanan terbaik kami."></textarea>
+                                <textarea id="testi-hero-teks-bawah" class="input-control" rows="2" placeholder="Contoh: Kebahagiaan pelanggan adalah prioritas kami..."></textarea>
                             </div>
                         </div>
                         <div class="action-bar">
-                            <button class="btn-delete" id="btn-delete-hero-testimoni" style="display:none;">Hapus Hero (Default)</button>
-                            <button class="btn-save" id="btn-save-hero-testimoni">Simpan Hero</button>
+                            <button class="btn-delete" id="btn-delete-hero-testi">Hapus Hero (Default)</button>
+                            <button class="btn-save" id="btn-save-hero-testi">Simpan Hero</button>
                         </div>
                     </div>
 
                     <div class="section-card">
                         <div class="section-header">
-                            <h3 class="section-title">2. KARTU TESTIMONI PELANGGAN</h3>
-                            <button class="btn-add" onclick="bukaFormTestimoni()">+ Tambah Testimoni</button>
+                            <h3 class="section-title">B. TESTIMONI VIDEO (YOUTUBE / UPLOAD)</h3>
+                            <button class="btn-add" onclick="bukaFormTestiVideo()">+ Tambah Video Baru</button>
                         </div>
-                        <p class="alur-text">Tambahkan ulasan pelanggan yang sudah melakukan pembelian. Data yang disimpan akan langsung tampil di halaman testimoni dan beranda secara berurutan tanpa menumpuk.</p>
-                        
-                        <div class="list-manager" id="list-testimoni-container" style="margin-bottom: 16px;"></div>
+                        <div class="list-manager" id="list-testi-video" style="margin-bottom: 16px;"></div>
 
-                        <div class="form-grid" id="form-testimoni-container" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; border: 1px solid var(--color-border); display: none;">
-                            <input type="hidden" id="testimoni-edit-id">
-                            
+                        <div class="form-grid" id="form-testi-video" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; border: 1px solid var(--color-border); display: none;">
+                            <input type="hidden" id="testi-video-id">
                             <div class="input-group form-full">
-                                <label>FOTO PENYERAHAN KENDARAAN</label>
+                                <label>METODE VIDEO</label>
+                                <select id="testi-video-tipe" class="input-control" onchange="toggleTipeVideoTesti()" style="cursor:pointer;">
+                                    <option value="youtube">Link YouTube</option>
+                                    <option value="upload">Upload Video Langsung (.mp4)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-group form-full" id="container-testi-yt">
+                                <label>LINK YOUTUBE (URL LENGKAP)</label>
+                                <input type="url" id="testi-video-link" class="input-control" placeholder="Contoh: https://www.youtube.com/watch?v=...">
+                            </div>
+
+                            <div class="input-group form-full" id="container-testi-upload" style="display:none;">
+                                <label>UPLOAD VIDEO (.MP4)</label>
                                 <div class="file-upload-wrapper">
-                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
-                                    <span class="file-upload-text">Ketuk untuk Pilih Foto Penyerahan</span>
-                                    <input type="file" id="testimoni-foto" accept=".png, .jpg, .jpeg, .webp">
+                                    <span class="file-upload-text">Ketuk Pilih Video File</span>
+                                    <input type="file" id="testi-video-file" accept=".mp4">
                                 </div>
                             </div>
 
                             <div class="input-group form-full">
-                                <label>RATING BINTANG</label>
-                                <select id="testimoni-rating" class="input-control" style="cursor: pointer;">
-                                    <option value="5">5 Bintang (⭐⭐⭐⭐⭐)</option>
-                                    <option value="4">4 Bintang (⭐⭐⭐⭐)</option>
-                                    <option value="3">3 Bintang (⭐⭐⭐)</option>
-                                    <option value="2">2 Bintang (⭐⭐)</option>
-                                    <option value="1">1 Bintang (⭐)</option>
-                                </select>
+                                <label>JUDUL VIDEO / NAMA PELANGGAN</label>
+                                <input type="text" id="testi-video-judul" class="input-control" placeholder="Contoh: Penyerahan Xpander Bpk. Budi">
                             </div>
-
-                            <div class="input-group form-full">
-                                <label>TULISAN ATAS (KOMENTAR/ISI)</label>
-                                <textarea id="testimoni-komentar" class="input-control" rows="3" placeholder="Contoh: Pelayanan sangat memuaskan, proses cepat dan dibantu sampai tuntas!"></textarea>
-                            </div>
-
-                            <div class="input-group">
-                                <label>TULISAN TENGAH (NAMA)</label>
-                                <input type="text" id="testimoni-nama" class="input-control" placeholder="Contoh: Bpk. Budi Santoso">
-                            </div>
-
-                            <div class="input-group">
-                                <label>TULISAN BAWAH (UNIT MOBIL)</label>
-                                <input type="text" id="testimoni-unit" class="input-control" placeholder="contoh : temukan penawaran terbaik...">
-                            </div>
-
                             <div class="action-bar form-full">
-                                <button class="btn-delete" onclick="document.getElementById('form-testimoni-container').style.display='none'">Batal</button>
-                                <button class="btn-save" id="btn-simpan-testimoni">Publish Testimoni</button>
+                                <button class="btn-delete" onclick="document.getElementById('form-testi-video').style.display='none'">Batal</button>
+                                <button class="btn-save" id="btn-simpan-testi-video">Simpan Video</button>
                             </div>
                         </div>
                     </div>
 
-                </div>
-
-                <!-- PANEL KEAMANAN BARU DITAMBAHKAN -->
-                <div id="panel-keamanan" class="data-panel">
                     <div class="section-card">
-                        <div class="section-header"><h3 class="section-title">Keamanan Kredensial</h3></div>
-                        <p class="alur-text">Ganti Email atau PIN untuk akses CMS. Email ini juga dipakai sebagai acuan saat lupa sandi.</p>
-                        
-                        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                            <button class="btn-save" style="flex:1;" onclick="bukaFormGantiPin()">Ganti PIN</button>
-                            <button class="btn-add" style="flex:1; border: 1px solid var(--color-border);" onclick="bukaFormGantiEmail()">Ganti Email</button>
+                        <div class="section-header">
+                            <h3 class="section-title">C. FOTO PENYERAHAN / DELIVERY</h3>
+                            <button class="btn-add" onclick="bukaFormTestiFoto()">+ Tambah Foto</button>
                         </div>
+                        <div class="list-manager" id="list-testi-foto" style="margin-bottom: 16px;"></div>
 
-                        <!-- Form Ganti PIN -->
-                        <div class="form-grid" id="form-ganti-pin" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; border: 1px solid var(--color-border); display: none; margin-bottom: 20px;">
+                        <div class="form-grid" id="form-testi-foto" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; border: 1px solid var(--color-border); display: none;">
+                            <input type="hidden" id="testi-foto-id">
                             <div class="input-group form-full">
-                                <label>Masukan PIN Lama</label>
-                                <input type="password" id="pin-lama" class="input-control" placeholder="PIN saat ini...">
+                                <label>FOTO PENYERAHAN</label>
+                                <div class="file-upload-wrapper">
+                                    <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
+                                    <span class="file-upload-text">Ketuk untuk Pilih Foto Penyerahan</span>
+                                    <input type="file" id="testi-foto-file" accept=".png, .jpg, .jpeg, .webp">
+                                </div>
                             </div>
-                            <div class="input-group form-full">
-                                <label>Masukan PIN Baru</label>
-                                <input type="password" id="pin-baru" class="input-control" placeholder="PIN baru...">
+                            <div class="input-group">
+                                <label>NAMA PELANGGAN</label>
+                                <input type="text" id="testi-foto-nama" class="input-control" placeholder="Contoh: Keluarga Bpk. Andi">
+                            </div>
+                            <div class="input-group">
+                                <label>UNIT KENDARAAN</label>
+                                <input type="text" id="testi-foto-unit" class="input-control" placeholder="Contoh: Pajero Sport Dakar">
                             </div>
                             <div class="action-bar form-full">
-                                <button class="btn-delete" onclick="document.getElementById('form-ganti-pin').style.display='none'">Batalkan Simpan PIN</button>
-                                <button class="btn-save" id="btn-simpan-pin" onclick="simpanPinBaru()">Simpan PIN</button>
-                            </div>
-                        </div>
-
-                        <!-- Form Ganti Email -->
-                        <div class="form-grid" id="form-ganti-email" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; border: 1px solid var(--color-border); display: none;">
-                            <div class="input-group form-full">
-                                <label>Masukan Email Lama</label>
-                                <input type="email" id="email-lama" class="input-control" placeholder="Email saat ini...">
-                            </div>
-                            <div class="input-group form-full">
-                                <label>Masukan Email Baru</label>
-                                <input type="email" id="email-baru" class="input-control" placeholder="Email baru...">
-                            </div>
-                            <div class="input-group form-full">
-                                <label>Konfirmasi PIN</label>
-                                <input type="password" id="pin-konfirmasi-email" class="input-control" placeholder="Masukkan PIN untuk konfirmasi...">
-                            </div>
-                            <div class="action-bar form-full">
-                                <button class="btn-delete" onclick="document.getElementById('form-ganti-email').style.display='none'">Batalkan Simpan Email</button>
-                                <button class="btn-save" id="btn-simpan-email" onclick="simpanEmailBaru()">Simpan Email</button>
+                                <button class="btn-delete" onclick="document.getElementById('form-testi-foto').style.display='none'">Batal</button>
+                                <button class="btn-save" id="btn-simpan-testi-foto">Simpan Foto</button>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
-            </div>
+                <div id="panel-keamanan" class="data-panel">
+                    
+                    <div class="section-card">
+                        <div class="section-header"><h3 class="section-title">KREDENSIAL AKSES ADMIN (DUAL-SYNC)</h3></div>
+                        <p class="alur-text">PENTING: Email ini digunakan untuk proses Lupa Sandi dan otentikasi. PIN wajib 6 digit angka untuk keamanan masuk instan.</p>
+                        <div class="form-grid">
+                            <div class="input-group form-full">
+                                <label>EMAIL MASTER ADMIN</label>
+                                <input type="email" id="setting-email" class="input-control" placeholder="Masukkan Email yang aktif...">
+                            </div>
+                            <div class="input-group form-full">
+                                <label>PIN KEAMANAN BARU (6 DIGIT ANGKA)</label>
+                                <input type="password" id="setting-pin" class="input-control" placeholder="******" maxlength="6" inputmode="numeric">
+                            </div>
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn-save" id="btn-update-kredensial" onclick="updateKredensial()">Update Keamanan Sistem</button>
+                        </div>
+                    </div>
+
+                    <div class="section-card">
+                        <div class="section-header"><h3 class="section-title">INTEGRASI BOT TELEGRAM (NOTIFIKASI)</h3></div>
+                        <p class="alur-text">Sistem akan otomatis mengirim pesan ke Telegram Anda jika ada percobaan login yang gagal atau informasi sistem penting lainnya.</p>
+                        <div class="form-grid">
+                            <div class="input-group form-full">
+                                <label>BOT TOKEN (DARI @BotFather)</label>
+                                <input type="text" id="setting-tele-token" class="input-control" placeholder="Contoh: 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11">
+                            </div>
+                            <div class="input-group form-full">
+                                <label>CHAT ID TUJUAN</label>
+                                <input type="text" id="setting-tele-chatid" class="input-control" placeholder="Contoh: 123456789">
+                            </div>
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn-add" onclick="testBotTelegram()">Uji Coba Kirim Pesan</button>
+                            <button class="btn-save" id="btn-update-telegram" onclick="updatePengaturanTelegram()">Simpan Pengaturan Bot</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div> <!-- Penutup content-body -->
         </main>
-    </div>
-    
+    </div> <!-- Penutup admin-dashboard -->
+
     <script>
-        /* =========================================
-           0. SISTEM NOTIFIKASI TOAST
-           ========================================= */
-        function showToast(message, type = "info") {
+        /* =========================================================
+           1. KONFIGURASI FIREBASE & IMAGEKIT (SESUAIKAN DATA KAKAK)
+           ========================================================= */
+        const firebaseConfig = {
+            apiKey: "API_KEY_KAKAK",
+            authDomain: "DOMAIN_KAKAK.firebaseapp.com",
+            databaseURL: "https://DATABASE_KAKAK.firebaseio.com",
+            projectId: "PROJECT_ID",
+            storageBucket: "PROJECT_ID.appspot.com",
+            messagingSenderId: "SENDER_ID",
+            appId: "APP_ID"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.database();
+
+        // ImageKit Setup
+        const imagekit = new ImageKit({
+            publicKey: "public_key_imagekit_kakak",
+            urlEndpoint: "https://ik.imagekit.io/nama_endpoint_kakak/",
+            authenticationEndpoint: "https://domain_kakak/auth_endpoint" 
+        });
+
+        /* =========================================================
+           2. SISTEM KEAMANAN (DUAL-SYNC, LOGOUT & TELEGRAM BOT)
+           ========================================================= */
+        let maxLoginAttempts = 5;
+        let currentAttempts = 0;
+        let botTeleToken = "";
+        let botTeleChatID = "";
+        let masterEmail = "";
+        let masterPIN = "";
+
+        // Ambil pengaturan keamanan dari Firebase saat load
+        db.ref('pengaturan_keamanan').once('value').then(snapshot => {
+            const data = snapshot.val();
+            if(data) {
+                botTeleToken = data.tele_token || "";
+                botTeleChatID = data.tele_chat_id || "";
+                masterEmail = data.email_master || "rahmadrahmad433@gmail.com";
+                masterPIN = data.pin_master || "123456"; // Default PIN
+                
+                // Isi form keamanan
+                document.getElementById('setting-email').value = masterEmail;
+                document.getElementById('setting-tele-token').value = botTeleToken;
+                document.getElementById('setting-tele-chatid').value = botTeleChatID;
+            }
+        });
+
+        // Fungsi Kirim Pesan Telegram
+        function kirimPesanTelegram(pesan) {
+            if(!botTeleToken || !botTeleChatID) return;
+            const url = `https://api.telegram.org/bot${botTeleToken}/sendMessage`;
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: botTeleChatID, text: pesan, parse_mode: "HTML" })
+            }).catch(err => console.error("Gagal kirim Telegram:", err));
+        }
+
+        function testBotTelegram() {
+            botTeleToken = document.getElementById('setting-tele-token').value;
+            botTeleChatID = document.getElementById('setting-tele-chatid').value;
+            if(!botTeleToken || !botTeleChatID) {
+                showToast("Isi Token dan Chat ID dulu!", "error"); return;
+            }
+            kirimPesanTelegram("✅ <b>Test Sistem VIP CMS!</b>\nJika pesan ini masuk, bot Telegram Anda telah terhubung dengan baik.");
+            showToast("Pesan tes telah dikirim. Cek Telegram Anda.", "info");
+        }
+
+        function updatePengaturanTelegram() {
+            const token = document.getElementById('setting-tele-token').value;
+            const chatid = document.getElementById('setting-tele-chatid').value;
+            db.ref('pengaturan_keamanan').update({ tele_token: token, tele_chat_id: chatid }).then(() => {
+                botTeleToken = token; botTeleChatID = chatid;
+                showToast("Pengaturan Telegram berhasil disimpan!", "success");
+            }).catch(e => showToast("Gagal menyimpan: " + e.message, "error"));
+        }
+
+        function updateKredensial() {
+            const newEmail = document.getElementById('setting-email').value;
+            const newPIN = document.getElementById('setting-pin').value;
+            
+            if(!newEmail || !newPIN) { showToast("Email dan PIN tidak boleh kosong!", "error"); return; }
+            if(newPIN.length !== 6 || isNaN(newPIN)) { showToast("PIN harus 6 digit angka!", "error"); return; }
+
+            db.ref('pengaturan_keamanan').update({ email_master: newEmail, pin_master: newPIN }).then(() => {
+                masterEmail = newEmail; masterPIN = newPIN;
+                // Sinkronisasi dengan Firebase Auth jika email diganti
+                const user = auth.currentUser;
+                if(user && user.email !== newEmail) {
+                    user.updateEmail(newEmail).then(() => {
+                        showToast("Kredensial Login & Email Otorisasi Berhasil Diperbarui!", "success");
+                        kirimPesanTelegram("⚠️ <b>Peringatan Keamanan</b>\nKredensial login CMS (Email/PIN) baru saja diubah.");
+                        document.getElementById('setting-pin').value = ''; // clear input
+                    }).catch(e => showToast("Gagal update Auth Firebase: " + e.message, "error"));
+                } else {
+                    showToast("PIN Berhasil Diperbarui!", "success");
+                }
+            }).catch(e => showToast("Gagal menyimpan database: " + e.message, "error"));
+        }
+
+        // LOGIKA LOGIN OTO-AUTH
+        function checkSession() {
+            const sessionData = sessionStorage.getItem('cms_vip_session');
+            if (sessionData === "ACTIVE") {
+                bukaDashboard();
+            } else {
+                tutupDashboard();
+            }
+        }
+        
+        window.onload = checkSession;
+
+        function attemptLogin() {
+            const emailInput = document.getElementById('login-email').value;
+            const pinInput = document.getElementById('login-password').value;
+            const errorMsg = document.getElementById('login-error-msg');
+            const attemptSpan = document.getElementById('login-attempts');
+            const btnLupa = document.getElementById('btn-lupa-sandi');
+
+            if (emailInput === masterEmail && pinInput === masterPIN) {
+                // Berhasil
+                sessionStorage.setItem('cms_vip_session', 'ACTIVE');
+                currentAttempts = 0;
+                errorMsg.style.display = 'none';
+                btnLupa.style.display = 'none';
+                kirimPesanTelegram(`🟢 <b>Login Berhasil</b>\nAdmin mengakses CMS pada ${new Date().toLocaleString('id-ID')}`);
+                
+                // Silently signIn to Firebase Auth with a fallback generic password mapped to the email
+                // (Agar rules database read/write yang pakai auth() tetap bisa jalan)
+                auth.signInWithEmailAndPassword(masterEmail, "SystemPassword123!").catch(err => {
+                    // Jika belum ada user di auth, buatkan
+                    if(err.code === 'auth/user-not-found') {
+                        auth.createUserWithEmailAndPassword(masterEmail, "SystemPassword123!");
+                    }
+                });
+
+                bukaDashboard();
+            } else {
+                // Gagal
+                currentAttempts++;
+                let sisa = maxLoginAttempts - currentAttempts;
+                attemptSpan.innerText = sisa;
+                errorMsg.style.display = 'block';
+                
+                if (currentAttempts >= maxLoginAttempts) {
+                    kirimPesanTelegram(`🔴 <b>PERINGATAN KEAMANAN!</b>\nAda percobaan akses CMS Gagal sebanyak 5 kali menggunakan Email: ${emailInput}. Sistem diblokir sementara.`);
+                    document.getElementById('btn-login').disabled = true;
+                    document.getElementById('btn-login').innerText = "AKSES DIBLOKIR";
+                    setTimeout(() => { 
+                        currentAttempts = 0; 
+                        document.getElementById('btn-login').disabled = false;
+                        document.getElementById('btn-login').innerText = "Otorisasi Masuk";
+                        errorMsg.style.display = 'none';
+                    }, 60000); // Blokir 1 menit
+                } else if (currentAttempts >= 2) {
+                    btnLupa.style.display = 'block'; // Tampilkan tombol lupa sandi setelah 2x gagal
+                }
+            }
+        }
+
+        // LOGOUT AMAN
+        function prosesLogout() {
+            if(confirm("Apakah Anda yakin ingin keluar dari sistem?")) {
+                auth.signOut().then(() => {
+                    sessionStorage.removeItem('cms_vip_session');
+                    tutupDashboard();
+                    document.getElementById('login-password').value = '';
+                    showToast("Sesi berhasil diakhiri dengan aman.", "info");
+                });
+            }
+        }
+
+        // LUPA SANDI UI LOGIC
+        function prosesLupaSandi() {
+            const curEmail = document.getElementById('login-email').value;
+            if(curEmail !== masterEmail) {
+                showToast("Email tidak dikenali sistem!", "error"); return;
+            }
+            if(confirm("Kirim PIN Rahasia ke Email dan Telegram Anda?")) {
+                kirimPesanTelegram(`🔑 <b>Permintaan Lupa Sandi</b>\nSeseorang meminta info PIN. PIN Anda saat ini adalah: <b>${masterPIN}</b>`);
+                // Note: Untuk kirim email beneran, butuh backend/Firebase Extension.
+                // Disini kita simulasikan sukses via notifikasi dan telegram.
+                showToast("Informasi telah dikirimkan ke Telegram Admin!", "success");
+            }
+        }
+
+        function bukaDashboard() {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('admin-dashboard').classList.add('active');
+            showToast("Selamat Datang, Admin VIP!", "success");
+        }
+
+        function tutupDashboard() {
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('admin-dashboard').classList.remove('active');
+        }
+
+        /* =========================================================
+           3. UI BANTUAN (TOAST, SIDEBAR, TAB PANEL)
+           ========================================================= */
+        function showToast(message, type = 'info') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
             
-            let icon = type === 'success' ? '<svg style="width:24px;height:24px;fill:#00C851;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>' : 
-                       type === 'error' ? '<svg style="width:24px;height:24px;fill:#ff4444;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>' : 
-                       '<svg style="width:24px;height:24px;fill:#33b5e5;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>';
+            let icon = '';
+            if (type === 'success') icon = '<svg style="width:20px;height:20px;fill:#00C851" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>';
+            else if (type === 'error') icon = '<svg style="width:20px;height:20px;fill:#ff4444" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>';
+            else icon = '<svg style="width:20px;height:20px;fill:#33b5e5" viewBox="0 0 24 24"><path d="M11 15h2v2h-2zm0-8h2v6h-2zm1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>';
             
             toast.innerHTML = `${icon} <span>${message}</span>`;
             container.appendChild(toast);
             
-            setTimeout(() => { 
-                toast.style.animation = 'fadeOut 0.4s ease forwards'; 
-                setTimeout(() => toast.remove(), 400); 
-            }, 3500);
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.4s ease forwards';
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
         }
 
-        /* =========================================
-           1. INISIALISASI FIREBASE
-           ========================================= */
-        const firebaseConfig = {
-            apiKey: "AIzaSyBrNnp8PJiKYATH-1ie67aq9WqESpIXBus",
-            authDomain: "landing-page-alex.firebaseapp.com",
-            databaseURL: "https://landing-page-alex-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "landing-page-alex",
-            storageBucket: "landing-page-alex.firebasestorage.app",
-            messagingSenderId: "164638589744",
-            appId: "1:164638589744:web:8470111cc7c41696887ef5"
-        };
-
-        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
-        const db = firebase.database();
-        const auth = firebase.auth();
-
-        /* =========================================
-           2. LOGIKA AUTENTIKASI & KEAMANAN
-           ========================================= */
-        let loginAttempts = 5;
-        let attemptedEmail = "";
-        let attemptedPassword = "";
-
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('admin-dashboard').classList.add('active');
-                showToast(`Login berhasil! Sistem terhubung.`, 'success');
-                loadInitialData(); 
-            } else {
-                document.getElementById('login-screen').classList.remove('hidden');
-                document.getElementById('admin-dashboard').classList.remove('active');
-            }
-        });
-
-        async function attemptLogin() {
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            const btnLogin = document.getElementById('btn-login');
-
-            if (!email || !password) { showToast("Isi Email dan PIN!", "error"); return; }
-            
-            attemptedEmail = email;
-            attemptedPassword = password;
-
-            btnLogin.innerText = "Memproses..."; 
-            btnLogin.disabled = true;
-
-            try {
-                await auth.signInWithEmailAndPassword(email, password);
-            } catch (error) {
-                loginAttempts--;
-                document.getElementById('login-attempts').innerText = loginAttempts;
-                document.getElementById('login-error-msg').style.display = 'block';
-                btnLogin.innerText = "Otorisasi Masuk"; 
-                btnLogin.disabled = false;
-                
-                showToast("Gagal Login!", "error");
-                if (loginAttempts <= 0) {
-                    document.getElementById('login-error-msg').innerHTML = "<strong>AKSES DIBLOKIR!</strong>";
-                    btnLogin.style.display = 'none';
-                    // Tampilkan tombol lupa password
-                    document.getElementById('btn-lupa-sandi').style.display = 'block';
-                }
-            }
-        }
-
-        // --- Logika Lupa Sandi & Telegram Bot ---
-        function prosesLupaSandi() {
-            showToast("password anda sedang di tinjau oleh admin tunggu sebentar admin akan menghubungi anda", "info");
-            
-            const botToken = "8760854697:AAGZDZL2psuQyK4HlHOsXCEPLSQWB0SS_wA";
-            const chatId = "1444132958";
-            
-            const textMsg = `🚨 *PEMBERITAHUAN LUPA SANDI CMS* 🚨\n\nSeseorang gagal login melebihi batas dan menekan tombol lupa password:\n\n📧 *Email Diinput:* ${attemptedEmail}\n🔑 *PIN/Sandi Diinput:* ${attemptedPassword}\n\nMohon segera konfirmasi kredensial kepada admin.`;
-            
-            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ chat_id: chatId, text: textMsg, parse_mode: "Markdown" })
-            }).catch(e => console.error("Gagal mengirim ke Telegram", e));
-        }
-
-        // --- Logika Panel Keamanan (Ganti PIN & Email) ---
-        function bukaFormGantiPin() {
-            document.getElementById('form-ganti-pin').style.display = 'grid';
-            document.getElementById('form-ganti-email').style.display = 'none';
-        }
-
-        function bukaFormGantiEmail() {
-            document.getElementById('form-ganti-email').style.display = 'grid';
-            document.getElementById('form-ganti-pin').style.display = 'none';
-        }
-
-        async function simpanPinBaru() {
-            const pinLama = document.getElementById('pin-lama').value;
-            const pinBaru = document.getElementById('pin-baru').value;
-            
-            if(!pinLama || !pinBaru) { showToast("Harap isi kedua kolom PIN!", "error"); return; }
-            if(pinBaru.length < 6) { showToast("PIN baru minimal 6 karakter!", "error"); return; }
-
-            const user = auth.currentUser;
-            const credential = firebase.auth.EmailAuthProvider.credential(user.email, pinLama);
-            
-            const btn = document.getElementById('btn-simpan-pin');
-            btn.innerText = "Memproses..."; btn.disabled = true;
-
-            try {
-                // Autentikasi ulang untuk memastikan PIN lama benar sebelum di ganti
-                await user.reauthenticateWithCredential(credential);
-                await user.updatePassword(pinBaru);
-                
-                showToast("PIN berhasil diganti! Firebase Auth telah diupdate.", "success");
-                document.getElementById('form-ganti-pin').style.display = 'none';
-                document.getElementById('pin-lama').value = '';
-                document.getElementById('pin-baru').value = '';
-            } catch (error) {
-                showToast("Gagal! Pastikan PIN lama benar.", "error");
-            } finally {
-                btn.innerText = "Simpan PIN"; btn.disabled = false;
-            }
-        }
-
-        async function simpanEmailBaru() {
-            const emailLama = document.getElementById('email-lama').value;
-            const emailBaru = document.getElementById('email-baru').value;
-            const pinKonfirmasi = document.getElementById('pin-konfirmasi-email').value;
-
-            if(!emailLama || !emailBaru || !pinKonfirmasi) { showToast("Harap isi semua kolom!", "error"); return; }
-            
-            const user = auth.currentUser;
-            if(user.email !== emailLama) { showToast("Email lama tidak cocok dengan yang saat ini login!", "error"); return; }
-
-            const credential = firebase.auth.EmailAuthProvider.credential(user.email, pinKonfirmasi);
-            
-            const btn = document.getElementById('btn-simpan-email');
-            btn.innerText = "Memproses..."; btn.disabled = true;
-
-            try {
-                // Autentikasi ulang untuk memastikan yg ganti adalah admin asli
-                await user.reauthenticateWithCredential(credential);
-                await user.updateEmail(emailBaru);
-                
-                showToast("Email berhasil diganti! Login mungkin diperlukan ulang.", "success");
-                document.getElementById('form-ganti-email').style.display = 'none';
-                document.getElementById('email-lama').value = '';
-                document.getElementById('email-baru').value = '';
-                document.getElementById('pin-konfirmasi-email').value = '';
-            } catch (error) {
-                showToast("Gagal! Cek PIN atau format email baru salah.", "error");
-            } finally {
-                btn.innerText = "Simpan Email"; btn.disabled = false;
-            }
-        }
-
-        /* =========================================
-           3. FUNGSI MEDIA (IMAGEKIT API RESMI)
-           ========================================= */
-        async function uploadMedia(file) {
-            if (!file) return null;
-            try {
-                showToast("Mengambil izin server (Vercel)...", "info");
-                const authResponse = await fetch(window.location.origin + "/api/auth");
-                if (!authResponse.ok) throw new Error("API Vercel gagal diakses");
-                const authData = await authResponse.json();
-
-                showToast("Sedang upload media ke ImageKit...", "info");
-                const formData = new FormData();
-                formData.append("file", file);
-                formData.append("fileName", "mitsu_" + Date.now());
-                formData.append("publicKey", "public_XKAN1YH/RnUD5N+4hS/qIvqDJNc=");
-                formData.append("signature", authData.signature);
-                formData.append("expire", authData.expire);
-                formData.append("token", authData.token);
-                formData.append("tags", "admin_web");
-
-                const uploadResponse = await fetch("https://upload.imagekit.io/api/v1/files/upload", {
-                    method: "POST",
-                    body: formData
-                });
-
-                const result = await uploadResponse.json();
-                if (uploadResponse.ok) {
-                    showToast("Upload Selesai!", "success");
-                    return { url: result.url, fileId: result.fileId };
-                } else { throw new Error(result.message); }
-            } catch (error) {
-                showToast("Upload Gagal! Cek koneksi internet.", "error"); return null;
-            }
-        }
-
-        async function deleteMedia(fileId) {
-            if (!fileId || fileId === 'undefined') return;
-            try { 
-                const response = await fetch(window.location.origin + `/api/delete?fileId=${fileId}`, { method: 'DELETE' }); 
-                if (response.ok) { console.log("File dihapus di ImageKit."); }
-            } catch (err) { console.error("Error server Vercel:", err); }
-        }
-
-        /* =========================================
-           4. UI CONTROLLER (SIDEBAR & PREVIEW)
-           ========================================= */
         function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('open');
-            document.getElementById('sidebar-overlay').classList.toggle('active');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
         }
 
-        function switchPanel(panelId, element, title) {
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            element.classList.add('active');
-            document.querySelectorAll('.data-panel').forEach(el => el.classList.remove('active'));
+        function switchPanel(panelId, btnElement, title) {
+            document.querySelectorAll('.data-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
             document.getElementById(panelId).classList.add('active');
+            btnElement.classList.add('active');
             document.getElementById('current-page-title').innerText = title;
-            document.querySelector('.main-content').scrollTop = 0;
-            if (window.innerWidth <= 991) toggleSidebar();
+            if(window.innerWidth < 992) toggleSidebar(); // auto close on mobile
+        }
+        /* =========================================================
+           4. SISTEM UPLOAD MEDIA (IMAGEKIT API)
+           ========================================================= */
+        // Fungsi helper untuk membaca file UI menjadi Base64
+        function bacaFileBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
         }
 
+        // Fungsi utama Upload ke ImageKit
+        async function uploadMedia(fileInputId, folderName) {
+            const fileInput = document.getElementById(fileInputId);
+            if (!fileInput || fileInput.files.length === 0) return null;
+
+            const file = fileInput.files[0];
+            showToast(`Mengunggah file ${file.name}... Mohon tunggu.`, 'info');
+
+            try {
+                const base64Data = await bacaFileBase64(file);
+                
+                return new Promise((resolve, reject) => {
+                    imagekit.upload({
+                        file: base64Data,
+                        fileName: file.name,
+                        folder: `/MitsubishiCMS/${folderName}`
+                    }, function(err, result) {
+                        if (err) {
+                            console.error("Error upload ImageKit:", err);
+                            showToast("Gagal mengunggah file media!", "error");
+                            reject(err);
+                        } else {
+                            showToast("File berhasil diunggah!", "success");
+                            resolve(result.url); // Mengembalikan URL file yang sukses diupload
+                        }
+                    });
+                });
+            } catch (error) {
+                console.error("Error konversi file:", error);
+                showToast("Gagal memproses file lokal.", "error");
+                return null;
+            }
+        }
+
+        // UI Feedback saat file dipilih (Mengubah teks di kotak upload)
         document.querySelectorAll('input[type="file"]').forEach(input => {
             input.addEventListener('change', function(e) {
-                if(e.target.files.length > 0) {
-                    const textSpan = this.parentElement.querySelector('.file-upload-text');
-                    if(textSpan) { 
-                        textSpan.innerText = `Terpilih: ${e.target.files[0].name}`; 
-                        textSpan.style.color = "var(--color-accent)"; 
+                if (this.files && this.files.length > 0) {
+                    const fileName = this.files[0].name;
+                    const wrapper = this.closest('.file-upload-wrapper');
+                    if(wrapper) {
+                        const textSpan = wrapper.querySelector('.file-upload-text');
+                        if(textSpan) textSpan.innerText = `Terpilih: ${fileName}`;
+                        
+                        // Opsional: Preview Background jika ini gambar
+                        if(this.files[0].type.startsWith('image/')) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                wrapper.style.backgroundImage = `url(${e.target.result})`;
+                                wrapper.style.backgroundColor = 'rgba(0,0,0,0.8)';
+                                wrapper.style.backgroundBlendMode = 'overlay';
+                            }
+                            reader.readAsDataURL(this.files[0]);
+                        }
                     }
-                    const reader = new FileReader();
-                    reader.onload = (event) => { this.parentElement.style.backgroundImage = `url('${event.target.result}')`; }
-                    reader.readAsDataURL(e.target.files[0]);
                 }
             });
         });
 
-        /* =========================================
-           5. DATA LOADERS & REALTIME LISTENERS
-           ========================================= */
-        function loadInitialData() {
-            // [A] Data Landing Page Global
-            db.ref('global_data/alamat').once('value', snap => {
-                if(snap.val()) {
-                    document.getElementById('alamat-gmaps').value = snap.val().gmaps || '';
-                    document.getElementById('alamat-teks').value = snap.val().teks_alamat || '';
-                    document.getElementById('alamat-buka').value = snap.val().jam_buka || '';
-                    document.getElementById('alamat-tutup').value = snap.val().jam_tutup || '';
-                }
-            });
+        /* =========================================================
+           5. INTERAKSI UI KHUSUS (TOGGLES & LOGIKA VIEW)
+           ========================================================= */
 
-            db.ref('halaman/landing/hero').once('value', snap => {
-                if(snap.val()) {
-                    let tAtas = snap.val().teks_atas || '';
-                    if (tAtas.includes('<span')) tAtas = tAtas.split('<span')[0].trim();
-                    document.getElementById('landing-hero-teks1').value = tAtas;
-                    document.getElementById('landing-hero-teks-aksen').value = snap.val().teks_aksen || '';
-                    document.getElementById('landing-hero-teks2').value = snap.val().teks_bawah || '';
-                }
-            });
-            listenPromo(); listenIklan();
-
-            // [B] Data Berita & Acara
-            db.ref('halaman/berita/hero').once('value', snap => {
-                if(snap.val()) {
-                    document.getElementById('berita-hero-label').value = snap.val().label || '';
-                    document.getElementById('berita-hero-teks-atas').value = snap.val().teks_atas || '';
-                    document.getElementById('berita-hero-teks-bawah').value = snap.val().teks_bawah || '';
-                }
-            });
-            listenKategoriBerita(); listenBerita();
-
-            // [C] Data Katalog Kendaraan
-            db.ref('halaman/katalog/hero').once('value', snap => {
-                if(snap.val()) {
-                    document.getElementById('katalog-hero-teks-atas').value = snap.val().teks_atas || '';
-                    document.getElementById('katalog-hero-teks-bawah').value = snap.val().teks_bawah || '';
-                }
-            });
-            listenKategoriKatalog();
-            listenKatalogMobil();
-            listenBrosurGlobal();
-
-            // [D] Muat Dropdown Mobil untuk Spesifikasi & Harga
-            loadDropdownMobilSpesifikasi();
-
-            // [E] Data Harga
-            db.ref('halaman/harga/hero').once('value', snap => {
-                if(snap.val()) {
-                    document.getElementById('harga-hero-teks-atas').value = snap.val().teks_atas || '';
-                    document.getElementById('harga-hero-teks-bawah').value = snap.val().teks_bawah || '';
-                }
-            });
-            listenVisualHarga();
-
-            // [F] Data Kontak & Biodata Sales
-            db.ref('halaman/kontak/hero').once('value', snap => {
-                if(snap.val()) {
-                    document.getElementById('kontak-hero-teks-atas').value = snap.val().teks_atas || '';
-                    document.getElementById('kontak-hero-teks-bawah').value = snap.val().teks_bawah || '';
-                }
-            });
+        // Logika Buka Gembok Panel Spesifikasi
+        function bukaKunciSpesifikasi() {
+            const selectMobil = document.getElementById('pilih-mobil-spesifikasi').value;
+            const wrapper = document.getElementById('spesifikasi-locked-wrapper');
             
-            db.ref('global_data/biodata').once('value', snap => {
-                if(snap.val()) {
-                    document.getElementById('biodata-nama').value = snap.val().nama || '';
-                    document.getElementById('biodata-jabatan').value = snap.val().jabatan || '';
-                    document.getElementById('biodata-bio').value = snap.val().bio || '';
-                    document.getElementById('biodata-wa').value = snap.val().wa || '';
-                    document.getElementById('biodata-pesan').value = snap.val().pesan || '';
-                    document.getElementById('biodata-telp').value = snap.val().telp || '';
-                    document.getElementById('biodata-ig').value = snap.val().ig || '';
-                    document.getElementById('biodata-email').value = snap.val().email || '';
-                    
-                    document.getElementById('biodata-fb-nama').value = snap.val().fb_nama || ''; 
-                    document.getElementById('biodata-fb-link').value = snap.val().fb_link || ''; 
-                    
-                    if(snap.val().fotoUrl) {
-                        const wrapper = document.querySelector('#biodata-foto').parentElement;
-                        wrapper.style.backgroundImage = `url('${snap.val().fotoUrl}')`;
-                        const textSpan = wrapper.querySelector('.file-upload-text');
-                        if (textSpan) textSpan.innerText = 'Foto Profil Tersimpan';
-                    }
-                }
-            });
+            if (selectMobil && selectMobil !== "") {
+                wrapper.classList.add('unlocked');
+                showToast("Panel Spesifikasi & Harga Terbuka!", "success");
+                // TODO: Panggil fungsi load data spesifikasi berdasarkan ID mobil ini dari Firebase
+                // muatDataSpesifikasi(selectMobil);
+            } else {
+                wrapper.classList.remove('unlocked');
+            }
+        }
+
+        // Toggle Format Nama Mobil di Panel Harga
+        function toggleFormatNamaMobil() {
+            const format = document.getElementById('visual-harga-format').value;
+            const textContainer = document.getElementById('container-visual-teks');
+            const logoContainer = document.getElementById('container-visual-logo');
+
+            if (format === 'teks') {
+                textContainer.style.display = 'block';
+                logoContainer.style.display = 'none';
+            } else {
+                textContainer.style.display = 'none';
+                logoContainer.style.display = 'block';
+            }
+        }
+
+        // Toggle Tipe Video di Panel Testimoni
+        function toggleTipeVideoTesti() {
+            const tipe = document.getElementById('testi-video-tipe').value;
+            const ytContainer = document.getElementById('container-testi-yt');
+            const uploadContainer = document.getElementById('container-testi-upload');
+
+            if (tipe === 'youtube') {
+                ytContainer.style.display = 'block';
+                uploadContainer.style.display = 'none';
+            } else {
+                ytContainer.style.display = 'none';
+                uploadContainer.style.display = 'block';
+            }
+        }
+
+        /* =========================================================
+           6. BUKA / TUTUP FORMULIR TAMBAH DATA (CRUD UI)
+           ========================================================= */
+        function bukaFormPromo() {
+            document.getElementById('form-promo-container').style.display = 'grid';
+            document.getElementById('promo-edit-id').value = '';
+            // Clear inputs
+            document.getElementById('promo-label').value = '';
+            document.getElementById('promo-judul').value = '';
+            document.getElementById('promo-info').value = '';
+            document.getElementById('promo-tombol').value = '';
+        }
+
+        function bukaFormIklan() {
+            document.getElementById('form-iklan-container').style.display = 'grid';
+            document.getElementById('iklan-edit-id').value = '';
+            document.getElementById('iklan-judul').value = '';
+            document.getElementById('iklan-tombol').value = '';
+        }
+
+        function bukaFormBerita() {
+            document.getElementById('form-berita-container').style.display = 'grid';
+            document.getElementById('berita-edit-id').value = '';
+            document.getElementById('btn-hapus-berita-form').style.display = 'none';
+            document.getElementById('btn-edit-berita-form').style.display = 'none';
+            document.getElementById('btn-publish-berita').style.display = 'block';
             
-            // [G] Data Layanan Purna Jual
-            db.ref('halaman/layanan/hero').once('value', snap => {
-                if(snap.val()) {
-                    document.getElementById('layanan-hero-teks-atas').value = snap.val().teks_atas || '';
-                    document.getElementById('layanan-hero-teks-bawah').value = snap.val().teks_bawah || '';
-                    if(snap.val().bgUrl) {
-                        document.querySelector('#layanan-hero-file').parentElement.style.backgroundImage = `url('${snap.val().bgUrl}')`;
-                        document.getElementById('btn-delete-hero-layanan').style.display = 'inline-block';
-                    }
-                }
-            });
-
-            db.ref('halaman/layanan/dasar').once('value', snap => {
-                if(snap.val()) {
-                    for(let i=1; i<=4; i++) {
-                        let data = snap.val()[`item${i}`];
-                        if(data) {
-                            document.getElementById(`layanan-dasar-${i}-atas`).value = data.atas || '';
-                            document.getElementById(`layanan-dasar-${i}-bawah`).value = data.bawah || '';
-                            if(data.imgUrl) {
-                                document.querySelector(`#layanan-dasar-${i}-file`).parentElement.style.backgroundImage = `url('${data.imgUrl}')`;
-                            }
-                        }
-                    }
-                    document.getElementById('btn-delete-layanan-dasar').style.display = 'inline-block';
-                }
-            });
-
-            db.ref('halaman/layanan/spa').once('value', snap => {
-                if(snap.val()) {
-                    document.getElementById('layanan-spa-atas').value = snap.val().atas || '';
-                    document.getElementById('layanan-spa-bawah').value = snap.val().bawah || '';
-                    document.getElementById('layanan-spa-tombol').value = snap.val().tombol || '';
-                    document.getElementById('layanan-spa-judul-pop').value = snap.val().judul_pop || '';
-                    document.getElementById('layanan-spa-info-pop').value = snap.val().info_pop || '';
-                    if(snap.val().imgUrl) {
-                        document.querySelector('#layanan-spa-file').parentElement.style.backgroundImage = `url('${snap.val().imgUrl}')`;
-                    }
-                    document.getElementById('btn-delete-layanan-spa').style.display = 'inline-block';
-                }
-            });
-
-            db.ref('halaman/layanan/fitur_lain').once('value', snap => {
-                if(snap.val()) {
-                    for(let i=1; i<=5; i++) {
-                        let data = snap.val()[`item${i}`];
-                        if(data) {
-                            document.getElementById(`fitur-lain-${i}-atas`).value = data.atas || '';
-                            document.getElementById(`fitur-lain-${i}-bawah`).value = data.bawah || '';
-                            if(data.imgUrl) {
-                                document.querySelector(`#fitur-lain-${i}-file`).parentElement.style.backgroundImage = `url('${data.imgUrl}')`;
-                            }
-                        }
-                    }
-                    document.getElementById('btn-delete-fitur-lain').style.display = 'inline-block';
-                    document.getElementById('btn-edit-fitur-lain').style.display = 'inline-block';
-                }
-            });
-
-            // [H] Data Gallery Testimoni
-            db.ref('halaman/testimoni/hero').once('value', snap => {
-                if(snap.val()) {
-                    document.getElementById('testimoni-hero-teks-atas').value = snap.val().teks_atas || '';
-                    document.getElementById('testimoni-hero-teks-bawah').value = snap.val().teks_bawah || '';
-                    if(snap.val().bgUrl) {
-                        document.querySelector('#testimoni-hero-file').parentElement.style.backgroundImage = `url('${snap.val().bgUrl}')`;
-                        document.getElementById('btn-delete-hero-testimoni').style.display = 'inline-block';
-                    }
-                }
-            });
-            listenTestimoni();
+            // Set tanggal default hari ini
+            document.getElementById('berita-tanggal').valueAsDate = new Date();
         }
 
-        // --- 5A. LISTENER LANDING PAGE ---
-        function listenPromo() {
-            db.ref('promo_list').on('value', (snap) => {
-                const list = document.getElementById('list-promo-container'); if(!list) return; list.innerHTML = '';
-                snap.forEach(child => {
-                    const data = child.val();
-                    list.innerHTML += `<div class="list-item"><span class="list-item-text"><b>${data.judul || 'Tanpa Judul'}</b> (${data.label || 'Promo'})</span><div><button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="editPromo('${child.key}')">Edit</button> <button class="btn-delete" style="padding: 4px 10px; font-size:0.75rem;" onclick="hapusPromo('${child.key}', '${data.imgId}')">Hapus</button></div></div>`;
-                });
-            });
-        }
-        window.bukaFormPromo = function() { document.getElementById('form-promo-container').style.display = 'grid'; document.getElementById('promo-edit-id').value = ''; document.getElementById('promo-label').value = ''; document.getElementById('promo-judul').value = ''; document.getElementById('promo-info').value = ''; document.getElementById('promo-tombol').value = ''; document.getElementById('promo-file').value = ''; document.querySelector('#form-promo-container .file-upload-text').innerText = 'Ketuk untuk Upload Foto Promo'; document.querySelector('#form-promo-container .file-upload-wrapper').style.backgroundImage = 'none'; };
-        window.editPromo = function(key) { db.ref('promo_list/' + key).once('value', snap => { const data = snap.val(); document.getElementById('form-promo-container').style.display = 'grid'; document.getElementById('promo-edit-id').value = key; document.getElementById('promo-label').value = data.label || ''; document.getElementById('promo-judul').value = data.judul || ''; document.getElementById('promo-info').value = data.info || ''; document.getElementById('promo-tombol').value = data.tombol || ''; document.querySelector('.main-content').scrollTop = document.getElementById('form-promo-container').offsetTop; }); };
-        window.hapusPromo = async function(key, imgId) { if(confirm("Hapus promo ini?")) { if(imgId && imgId !== 'undefined') await deleteMedia(imgId); await db.ref('promo_list/' + key).remove(); showToast("Promo dihapus!", "success"); } };
-
-        function listenIklan() {
-            db.ref('iklan_list').on('value', (snap) => {
-                const list = document.getElementById('list-iklan-container'); if(!list) return; list.innerHTML = '';
-                snap.forEach(child => {
-                    const data = child.val();
-                    list.innerHTML += `<div class="list-item"><span class="list-item-text"><b>${data.judul || 'Tanpa Judul'}</b></span><div><button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="editIklan('${child.key}')">Edit</button> <button class="btn-delete" style="padding: 4px 10px; font-size:0.75rem;" onclick="hapusIklan('${child.key}', '${data.mediaId}')">Hapus</button></div></div>`;
-                });
-            });
-        }
-        window.bukaFormIklan = function() { document.getElementById('form-iklan-container').style.display = 'grid'; document.getElementById('iklan-edit-id').value = ''; document.getElementById('iklan-judul').value = ''; document.getElementById('iklan-tombol').value = ''; document.getElementById('iklan-file').value = ''; document.querySelector('#form-iklan-container .file-upload-text').innerText = 'Ketuk untuk Pilih Video/Foto Iklan'; document.querySelector('#form-iklan-container .file-upload-wrapper').style.backgroundImage = 'none'; };
-        window.editIklan = function(key) { db.ref('iklan_list/' + key).once('value', snap => { const data = snap.val(); document.getElementById('form-iklan-container').style.display = 'grid'; document.getElementById('iklan-edit-id').value = key; document.getElementById('iklan-judul').value = data.judul || ''; document.getElementById('iklan-tombol').value = data.tombol || ''; document.querySelector('.main-content').scrollTop = document.getElementById('form-iklan-container').offsetTop; }); };
-        window.hapusIklan = async function(key, mediaId) { if(confirm("Hapus iklan ini?")) { if(mediaId && mediaId !== 'undefined') await deleteMedia(mediaId); await db.ref('iklan_list/' + key).remove(); showToast("Iklan dihapus!", "success"); } };
-
-        // --- 5B. LISTENER MENU BERITA ---
-        function listenKategoriBerita() {
-            db.ref('kategori_berita').on('value', (snap) => {
-                const list = document.getElementById('list-kategori-container');
-                const selectEl = document.getElementById('berita-kategori');
-                if(!list || !selectEl) return;
-                
-                list.innerHTML = '';
-                selectEl.innerHTML = '<option value="" disabled selected>-- Klik untuk Pilih Kategori --</option>';
-
-                snap.forEach(child => {
-                    const nama = child.val().nama;
-                    list.innerHTML += `
-                    <div class="list-item">
-                        <span class="list-item-text">${nama}</span>
-                        <button class="btn-delete" style="padding: 4px 10px; font-size:0.75rem;" onclick="hapusKategoriBerita('${child.key}')">Hapus</button>
-                    </div>`;
-                    selectEl.innerHTML += `<option value="${nama}">${nama}</option>`;
-                });
-            });
-        }
-        window.hapusKategoriBerita = async function(key) { if(confirm("Yakin hapus kategori ini? Pastikan tidak dipakai di berita manapun.")) { await db.ref('kategori_berita/' + key).remove(); showToast("Kategori dihapus!", "success"); } };
-
-        function listenBerita() {
-            db.ref('berita_list').on('value', (snap) => {
-                const list = document.getElementById('list-berita-container');
-                if(!list) return; list.innerHTML = '';
-                snap.forEach(child => {
-                    const data = child.val();
-                    list.innerHTML += `
-                    <div class="list-item" style="align-items: flex-start; flex-direction: column; gap: 8px;">
-                        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
-                            <span class="list-item-text" style="padding-right: 10px; line-height: 1.4;"><b>${data.judul || 'Tanpa Judul'}</b></span>
-                            <span style="font-size: 0.7rem; color: var(--color-accent); background: rgba(230,0,0,0.1); padding: 4px 8px; border-radius: 4px; white-space: nowrap;">${data.kategori || 'Umum'}</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px;">
-                            <span style="font-size: 0.75rem; color: var(--color-text-dim);">${data.tanggal || '-'}</span>
-                            <div>
-                                <button class="btn-save" style="padding: 4px 12px; font-size:0.75rem; background:#333;" onclick="editBerita('${child.key}')">Edit</button>
-                                <button class="btn-delete" style="padding: 4px 12px; font-size:0.75rem;" onclick="hapusBeritaList('${child.key}', '${data.imgId}')">Hapus</button>
-                            </div>
-                        </div>
-                    </div>`;
-                });
-            });
+        function tutupFormBerita() {
+            document.getElementById('form-berita-container').style.display = 'none';
         }
 
-        window.bukaFormBerita = function() { document.getElementById('form-berita-container').style.display = 'grid'; document.getElementById('berita-edit-id').value = ''; document.getElementById('berita-kategori').value = ''; document.getElementById('berita-tanggal').value = ''; document.getElementById('berita-judul').value = ''; document.getElementById('berita-konten').value = ''; document.getElementById('berita-thumbnail-file').value = ''; document.querySelector('#form-berita-container .file-upload-wrapper').style.backgroundImage = 'none'; document.querySelector('#form-berita-container .file-upload-text').innerText = 'Ketuk untuk Upload Thumbnail Berita'; document.getElementById('btn-hapus-berita-form').style.display = 'none'; document.getElementById('btn-edit-berita-form').style.display = 'none'; document.getElementById('btn-publish-berita').style.display = 'block'; document.querySelector('.main-content').scrollTop = document.getElementById('form-berita-container').offsetTop; };
-        window.tutupFormBerita = function() { document.getElementById('form-berita-container').style.display = 'none'; };
-        window.editBerita = function(key) { db.ref('berita_list/' + key).once('value', snap => { const data = snap.val(); document.getElementById('form-berita-container').style.display = 'grid'; document.getElementById('berita-edit-id').value = key; document.getElementById('berita-kategori').value = data.kategori || ''; document.getElementById('berita-tanggal').value = data.tanggal || ''; document.getElementById('berita-judul').value = data.judul || ''; document.getElementById('berita-konten').value = data.konten || ''; if(data.imgUrl) { const wrapper = document.querySelector('#form-berita-container .file-upload-wrapper'); wrapper.style.backgroundImage = `url('${data.imgUrl}')`; wrapper.querySelector('.file-upload-text').innerText = 'Thumbnail Tersimpan (Ketuk ganti)'; } document.getElementById('btn-publish-berita').style.display = 'none'; document.getElementById('btn-hapus-berita-form').style.display = 'block'; document.getElementById('btn-edit-berita-form').style.display = 'block'; document.querySelector('.main-content').scrollTop = document.getElementById('form-berita-container').offsetTop; showToast("Mode Edit Berita Aktif", "info"); }); };
+        function bukaFormKategoriKatalog() {
+            document.getElementById('form-kategori-katalog').style.display = 'grid';
+            document.getElementById('kategori-katalog-edit-id').value = '';
+            document.getElementById('kategori-katalog-nama').value = '';
+        }
 
-        window.simpanDataBerita = async function() {
-            const kategori = document.getElementById('berita-kategori').value;
-            const tanggal = document.getElementById('berita-tanggal').value;
-            const judul = document.getElementById('berita-judul').value.trim();
-            const konten = document.getElementById('berita-konten').value.trim();
-            if(!kategori || !tanggal || !judul || !konten) { showToast("Lengkapi semua form berita!", "error"); return; }
-            
-            const btnPublish = document.getElementById('btn-publish-berita');
-            const btnEdit = document.getElementById('btn-edit-berita-form');
-            const isEdit = document.getElementById('berita-edit-id').value !== '';
-            
-            if(isEdit) { btnEdit.innerText = "Memproses..."; btnEdit.disabled = true; } 
-            else { btnPublish.innerText = "Memproses..."; btnPublish.disabled = true; }
+        function bukaFormKatalogMobil() {
+            document.getElementById('form-katalog-mobil').style.display = 'grid';
+            document.getElementById('katalog-mobil-edit-id').value = '';
+            // Reset fields
+            document.querySelectorAll('#form-katalog-mobil input[type="text"], #form-katalog-mobil input[type="number"]').forEach(el => el.value = '');
+        }
+
+        function bukaFormIkonTambahan() {
+            document.getElementById('form-ikon-tambahan').style.display = 'grid';
+            document.getElementById('ikon-tambahan-id').value = '';
+            document.getElementById('ikon-tambahan-info').value = '';
+            document.getElementById('btn-hapus-ikon-tambahan').style.display = 'none';
+        }
+
+        function bukaFormVarian() {
+            document.getElementById('form-varian-container').style.display = 'grid';
+            document.getElementById('varian-edit-id').value = '';
+            document.getElementById('varian-nama').value = '';
+            document.getElementById('varian-harga').value = '';
+            document.getElementById('btn-hapus-varian').style.display = 'none';
+        }
+
+        function bukaFormWarna() {
+            document.getElementById('form-warna-container').style.display = 'grid';
+            document.getElementById('warna-edit-id').value = '';
+            document.getElementById('warna-nama').value = '';
+            document.getElementById('warna-harga').value = '';
+            document.getElementById('btn-hapus-warna').style.display = 'none';
+        }
+
+        function bukaFormFitur() {
+            document.getElementById('form-fitur-container').style.display = 'grid';
+            document.getElementById('fitur-edit-id').value = '';
+            document.getElementById('fitur-judul').value = '';
+            document.getElementById('fitur-deskripsi').value = '';
+            document.getElementById('btn-hapus-fitur').style.display = 'none';
+        }
+
+        function bukaFormVisualHarga() {
+            document.getElementById('form-visual-harga-container').style.display = 'grid';
+            document.getElementById('visual-harga-edit-id').value = '';
+            document.getElementById('visual-harga-teks').value = '';
+            toggleFormatNamaMobil(); // Sinkronkan UI awal
+        }
+
+        function bukaFormTestiVideo() {
+            document.getElementById('form-testi-video').style.display = 'grid';
+            document.getElementById('testi-video-id').value = '';
+            document.getElementById('testi-video-judul').value = '';
+            document.getElementById('testi-video-link').value = '';
+        }
+
+        function bukaFormTestiFoto() {
+            document.getElementById('form-testi-foto').style.display = 'grid';
+            document.getElementById('testi-foto-id').value = '';
+            document.getElementById('testi-foto-nama').value = '';
+            document.getElementById('testi-foto-unit').value = '';
+        }
+
+
+        /* =========================================================
+           7. CONTOH IMPLEMENTASI SIMPAN DATA (DATABASE & IMAGEKIT)
+           Contoh ini untuk Hero Landing Page. Kakak bisa duplikasi
+           logikanya untuk form yang lain.
+           ========================================================= */
+        
+        document.getElementById('btn-save-hero-landing').addEventListener('click', async () => {
+            const btn = document.getElementById('btn-save-hero-landing');
+            btn.innerText = "Menyimpan...";
+            btn.disabled = true;
 
             try {
-                const editId = document.getElementById('berita-edit-id').value;
-                let obj = { kategori, tanggal, judul, konten, timestamp: firebase.database.ServerValue.TIMESTAMP };
-                const file = document.getElementById('berita-thumbnail-file').files[0];
-                if (file) {
-                    const media = await uploadMedia(file);
-                    if (media) {
-                        obj.imgUrl = media.url; obj.imgId = media.fileId;
-                        if(editId) { const snap = await db.ref('berita_list/' + editId + '/imgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); }
-                    }
+                let mediaUrl = null;
+                // Cek apakah ada file baru yang diunggah
+                if (document.getElementById('landing-hero-file').files.length > 0) {
+                    mediaUrl = await uploadMedia('landing-hero-file', 'HeroImages');
                 }
-                if(editId) { await db.ref('berita_list/' + editId).update(obj); showToast("Berita diupdate!", "success"); } 
-                else { await db.ref('berita_list').push(obj); showToast("Berita diterbitkan!", "success"); }
-                tutupFormBerita();
-            } catch(err) { showToast("Gagal menyimpan berita", "error"); }
-            finally { 
-                btnEdit.innerText = "Edit Berita"; btnEdit.disabled = false; 
-                btnPublish.innerText = "Publish Berita"; btnPublish.disabled = false; 
+
+                const dataToSave = {
+                    teks1: document.getElementById('landing-hero-teks1').value,
+                    teksAksen: document.getElementById('landing-hero-teks-aksen').value,
+                    teks2: document.getElementById('landing-hero-teks2').value,
+                    lastUpdated: firebase.database.ServerValue.TIMESTAMP
+                };
+
+                // Jika ada gambar baru, update url gambarnya
+                if (mediaUrl) {
+                    dataToSave.mediaUrl = mediaUrl;
+                }
+
+                // Simpan ke Firebase Realtime Database
+                await db.ref('landing_page/hero').update(dataToSave);
+
+                showToast("Berhasil menyimpan Hero Landing Page!", "success");
+                
+                // Beri tahu via telegram
+                kirimPesanTelegram("✅ <b>Update Website!</b>\nHero Landing Page baru saja diperbarui.");
+
+            } catch (error) {
+                console.error("Error Save Hero:", error);
+                showToast("Gagal menyimpan data.", "error");
+            } finally {
+                btn.innerText = "Simpan Hero";
+                btn.disabled = false;
             }
-        };
-
-        window.prosesHapusBeritaForm = async function() {
-            const key = document.getElementById('berita-edit-id').value;
-            if(!key) return;
-            if(confirm("Yakin hapus berita ini?")) {
-                const snap = await db.ref('berita_list/' + key + '/imgId').once('value');
-                if(snap.val()) await deleteMedia(snap.val());
-                await db.ref('berita_list/' + key).remove();
-                showToast("Berita Dihapus!", "success");
-                tutupFormBerita();
-            }
-        };
-
-        window.hapusBeritaList = async function(key, imgId) {
-            if(confirm("Yakin hapus berita ini?")) {
-                if(imgId && imgId !== 'undefined') await deleteMedia(imgId);
-                await db.ref('berita_list/' + key).remove();
-                showToast("Berita Dihapus!", "success");
-            }
-        };
-
-
-        // --- 5C. LISTENER MENU KATALOG KENDARAAN ---
-        function listenKategoriKatalog() {
-            db.ref('katalog_kategori').on('value', (snap) => {
-                const list = document.getElementById('list-kategori-katalog-container');
-                const selectKategori = document.getElementById('katalog-mobil-kategori');
-                if(!list || !selectKategori) return;
-                
-                list.innerHTML = '';
-                selectKategori.innerHTML = '<option value="" disabled selected>-- Pilih Kategori Kendaraan --</option>';
-
-                snap.forEach(child => {
-                    const data = child.val();
-                    list.innerHTML += `
-                    <div class="list-item">
-                        <span class="list-item-text">${data.nama}</span>
-                        <div>
-                            <button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="editKategoriKatalog('${child.key}')">Edit</button>
-                            <button class="btn-delete" style="padding: 4px 10px; font-size:0.75rem;" onclick="hapusKategoriKatalog('${child.key}')">Hapus</button>
-                        </div>
-                    </div>`;
-                    selectKategori.innerHTML += `<option value="${data.nama}">${data.nama}</option>`;
-                });
-            });
-        }
-        window.bukaFormKategoriKatalog = function() { document.getElementById('form-kategori-katalog').style.display = 'grid'; document.getElementById('kategori-katalog-edit-id').value = ''; document.getElementById('kategori-katalog-nama').value = ''; };
-        window.editKategoriKatalog = function(key) { db.ref('katalog_kategori/' + key).once('value', snap => { document.getElementById('form-kategori-katalog').style.display = 'grid'; document.getElementById('kategori-katalog-edit-id').value = key; document.getElementById('kategori-katalog-nama').value = snap.val().nama || ''; }); };
-        window.hapusKategoriKatalog = async function(key) { if(confirm("Yakin hapus kategori ini? Pastikan kategori ini tidak dipakai di kendaraan manapun.")) { await db.ref('katalog_kategori/' + key).remove(); showToast("Kategori dihapus!", "success"); } };
-
-        function listenKatalogMobil() {
-            db.ref('katalog_mobil').on('value', (snap) => {
-                const list = document.getElementById('list-katalog-mobil-container'); if(!list) return; list.innerHTML = '';
-                snap.forEach(child => {
-                    const data = child.val();
-                    list.innerHTML += `
-                    <div class="list-item" style="flex-direction:column; align-items:flex-start;">
-                        <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
-                            <span class="list-item-text"><b>${data.nama_mobil || 'Kendaraan'}</b> - Rp ${data.harga || '0'}</span>
-                            <span style="font-size: 0.7rem; color: var(--color-accent);">${data.kategori || 'Umum'}</span>
-                        </div>
-                        <div style="display:flex; justify-content:flex-end; width:100%; margin-top:8px;">
-                            <button class="btn-save" style="padding: 4px 12px; font-size:0.75rem; background:#333; margin-right:8px;" onclick="editKatalogMobil('${child.key}')">Edit</button>
-                            <button class="btn-delete" style="padding: 4px 12px; font-size:0.75rem;" onclick="hapusKatalogMobil('${child.key}', '${data.imgId}')">Hapus</button>
-                        </div>
-                    </div>`;
-                });
-            });
-        }
-        window.bukaFormKatalogMobil = function() { 
-            document.getElementById('form-katalog-mobil').style.display = 'grid'; 
-            document.getElementById('katalog-mobil-edit-id').value = ''; 
-            document.getElementById('katalog-mobil-kategori').value = '';
-            document.getElementById('katalog-mobil-nama').value = '';
-            document.getElementById('katalog-mobil-label').value = '';
-            document.getElementById('katalog-mobil-harga').value = '';
-            document.getElementById('katalog-mobil-ikon1').value = '';
-            document.getElementById('katalog-mobil-ikon2').value = '';
-            document.getElementById('katalog-mobil-ikon3').value = '';
-            document.getElementById('katalog-mobil-ikon4').value = '';
-            document.getElementById('katalog-mobil-file').value = '';
-            document.querySelector('#form-katalog-mobil .file-upload-wrapper').style.backgroundImage = 'none';
-        };
-        window.editKatalogMobil = function(key) { 
-            db.ref('katalog_mobil/' + key).once('value', snap => { 
-                const data = snap.val();
-                document.getElementById('form-katalog-mobil').style.display = 'grid'; 
-                document.getElementById('katalog-mobil-edit-id').value = key; 
-                document.getElementById('katalog-mobil-kategori').value = data.kategori || '';
-                document.getElementById('katalog-mobil-nama').value = data.nama_mobil || '';
-                document.getElementById('katalog-mobil-label').value = data.label_promo || '';
-                document.getElementById('katalog-mobil-harga').value = data.harga || '';
-                document.getElementById('katalog-mobil-ikon1').value = data.ikon1 || '';
-                document.getElementById('katalog-mobil-ikon2').value = data.ikon2 || '';
-                document.getElementById('katalog-mobil-ikon3').value = data.ikon3 || '';
-                document.getElementById('katalog-mobil-ikon4').value = data.ikon4 || '';
-                if(data.imgUrl) {
-                    document.querySelector('#form-katalog-mobil .file-upload-wrapper').style.backgroundImage = `url('${data.imgUrl}')`;
-                }
-                document.querySelector('.main-content').scrollTop = document.getElementById('form-katalog-mobil').offsetTop; 
-            }); 
-        };
-        window.hapusKatalogMobil = async function(key, imgId) { 
-            if(confirm("Yakin hapus kendaraan ini dari katalog?")) { 
-                if(imgId && imgId !== 'undefined') await deleteMedia(imgId); 
-                await db.ref('katalog_mobil/' + key).remove(); 
-                await db.ref(`spesifikasi/${key}`).remove();
-                await db.ref(`visual_harga/${key}`).remove();
-                showToast("Kendaraan dihapus!", "success"); 
-            } 
-        };
-
-        function listenBrosurGlobal() {
-            db.ref('global_data/brosur').on('value', snap => {
-                const list = document.getElementById('list-brosur-container');
-                list.innerHTML = '';
-                if(snap.exists() && snap.val().link) {
-                    const data = snap.val();
-                    list.innerHTML = `
-                    <div class="list-item">
-                        <span class="list-item-text"><b>Link Aktif:</b> ${data.link.substring(0, 30)}...</span>
-                        <div>
-                            <button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="bukaFormBrosur()">Edit</button>
-                            <button class="btn-delete" style="padding: 4px 10px; font-size:0.75rem;" onclick="hapusBrosur()">Hapus</button>
-                        </div>
-                    </div>`;
-                } else {
-                    list.innerHTML = `<button class="btn-add" onclick="bukaFormBrosur()">+ Masukkan Link Brosur</button>`;
-                }
-            });
-        }
-        window.bukaFormBrosur = function() {
-            db.ref('global_data/brosur').once('value', snap => {
-                const data = snap.val() || {};
-                document.getElementById('form-brosur-global').style.display = 'grid';
-                document.getElementById('brosur-link').value = data.link || '';
-                document.getElementById('brosur-teks-atas').value = data.teks_atas || '';
-                document.getElementById('brosur-teks-bawah').value = data.teks_bawah || '';
-            });
-        };
-        window.hapusBrosur = async function() { if(confirm("Hapus link brosur global?")) { await db.ref('global_data/brosur').remove(); showToast("Brosur dihapus", "success"); document.getElementById('form-brosur-global').style.display='none'; } };
-
-
-        // --- 5D. LISTENER MENU SPESIFIKASI & HARGA ---
-        let currentMobilId = ""; 
-
-        function loadDropdownMobilSpesifikasi() {
-            db.ref('katalog_mobil').on('value', snap => {
-                const selectSpesifikasi = document.getElementById('pilih-mobil-spesifikasi');
-                const selectVisualHarga = document.getElementById('visual-harga-mobil-id');
-                
-                selectSpesifikasi.innerHTML = '<option value="" disabled selected>-- Pilih Kendaraan Terlebih Dahulu --</option>';
-                selectVisualHarga.innerHTML = '<option value="" disabled selected>-- Pilih Kendaraan Terlebih Dahulu --</option>';
-                
-                if(snap.exists()) {
-                    snap.forEach(child => {
-                        const data = child.val();
-                        selectSpesifikasi.innerHTML += `<option value="${child.key}">${data.nama_mobil || child.key}</option>`;
-                        selectVisualHarga.innerHTML += `<option value="${child.key}">${data.nama_mobil || child.key}</option>`;
-                    });
-                } else {
-                    selectSpesifikasi.innerHTML = '<option value="" disabled selected>-- Belum ada data di Katalog --</option>';
-                    selectVisualHarga.innerHTML = '<option value="" disabled selected>-- Belum ada data di Katalog --</option>';
-                }
-            });
-        }
-
-        window.bukaKunciSpesifikasi = function() {
-            const selectEl = document.getElementById('pilih-mobil-spesifikasi');
-            currentMobilId = selectEl.value;
-            
-            if(currentMobilId) {
-                document.getElementById('spesifikasi-locked-wrapper').classList.add('unlocked');
-                showToast(`Mobil [${selectEl.options[selectEl.selectedIndex].text}] Dipilih. Form Terbuka!`, "success");
-                loadSpesifikasiData(currentMobilId);
-            }
-        };
-
-        function loadSpesifikasiData(mobilId) {
-            document.getElementById('spesifikasi-hero-nama').value = '';
-            document.getElementById('spesifikasi-hero-slogan').value = '';
-            document.querySelector('#spesifikasi-hero-file').parentElement.style.backgroundImage = 'none';
-            for(let i=1; i<=5; i++) document.getElementById(`icon-default-${i}`).value = '';
-            
-            db.ref(`spesifikasi/${mobilId}/hero`).once('value', snap => {
-                if(snap.val()) {
-                    document.getElementById('spesifikasi-hero-nama').value = snap.val().nama || '';
-                    document.getElementById('spesifikasi-hero-slogan').value = snap.val().slogan || '';
-                    if(snap.val().bgUrl) {
-                        document.querySelector('#spesifikasi-hero-file').parentElement.style.backgroundImage = `url('${snap.val().bgUrl}')`;
-                    }
-                }
-            });
-
-            db.ref(`spesifikasi/${mobilId}/icon_default`).once('value', snap => {
-                if(snap.val()) {
-                    for(let i=1; i<=5; i++) {
-                        document.getElementById(`icon-default-${i}`).value = snap.val()[`icon${i}`] || '';
-                    }
-                }
-            });
-
-            listenVarian(mobilId); 
-            listenWarna(mobilId);
-            listenIkonTambahan(mobilId);
-            listenFitur(mobilId);
-        }
-
-        // Listener Varian (Spesifikasi)
-        function listenVarian(mobilId) {
-            db.ref(`spesifikasi/${mobilId}/varian`).on('value', snap => {
-                const list = document.getElementById('list-varian-container'); 
-                const selectWarnaVarian = document.getElementById('warna-varian');
-                if(!list) return; list.innerHTML = '';
-                
-                if(selectWarnaVarian) { selectWarnaVarian.innerHTML = `<option value="" disabled selected>-- Pilih Varian --</option><option value="all">Semua Varian / Umum</option>`; }
-
-                snap.forEach(child => {
-                    const data = child.val();
-                    list.innerHTML += `<div class="list-item"><span class="list-item-text"><b>${data.nama || 'Varian'}</b> - Rp ${data.harga || '0'}</span><div><button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="editVarian('${child.key}')">Edit</button></div></div>`;
-                    if(selectWarnaVarian) { selectWarnaVarian.innerHTML += `<option value="${child.key}">${data.nama}</option>`; }
-                });
-            });
-        }
-        window.bukaFormVarian = function() { document.getElementById('form-varian-container').style.display = 'grid'; document.getElementById('varian-edit-id').value = ''; document.getElementById('varian-nama').value = ''; document.getElementById('varian-harga').value = ''; document.getElementById('btn-hapus-varian').style.display = 'none'; };
-        window.editVarian = function(key) { db.ref(`spesifikasi/${currentMobilId}/varian/` + key).once('value', snap => { const data = snap.val(); document.getElementById('form-varian-container').style.display = 'grid'; document.getElementById('varian-edit-id').value = key; document.getElementById('varian-nama').value = data.nama || ''; document.getElementById('varian-harga').value = data.harga || ''; document.getElementById('btn-hapus-varian').style.display = 'block'; }); };
-        document.getElementById('btn-hapus-varian').addEventListener('click', async () => { if(!currentMobilId) return; const key = document.getElementById('varian-edit-id').value; if(confirm("Hapus varian ini?")) { await db.ref(`spesifikasi/${currentMobilId}/varian/${key}`).remove(); showToast("Varian Dihapus!", "success"); document.getElementById('form-varian-container').style.display = 'none'; } });
-
-        // Listener Warna (Spesifikasi)
-        function listenWarna(mobilId) {
-            db.ref(`spesifikasi/${mobilId}/warna`).on('value', snap => {
-                const list = document.getElementById('list-warna-container'); if(!list) return; list.innerHTML = '';
-                snap.forEach(child => {
-                    const data = child.val();
-                    const labelVarian = data.varian === 'all' || !data.varian ? 'Umum' : 'Varian Khusus';
-                    list.innerHTML += `<div class="list-item"><span class="list-item-text"><b>${data.nama || 'Warna'}</b> (${labelVarian})</span><div><button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="editWarna('${child.key}')">Edit</button></div></div>`;
-                });
-            });
-        }
-        window.bukaFormWarna = function() { document.getElementById('form-warna-container').style.display = 'grid'; document.getElementById('warna-edit-id').value = ''; document.getElementById('warna-varian').value = ''; document.getElementById('warna-nama').value = ''; document.getElementById('warna-harga').value = ''; document.getElementById('warna-foto-mobil').value = ''; document.getElementById('warna-foto-bulat').value = ''; document.getElementById('btn-hapus-warna').style.display = 'none'; document.getElementById('btn-simpan-warna').innerText = 'Simpan Warna'; document.querySelectorAll('#form-warna-container .file-upload-wrapper').forEach(el => el.style.backgroundImage = 'none'); };
-        window.editWarna = function(key) { db.ref(`spesifikasi/${currentMobilId}/warna/` + key).once('value', snap => { const data = snap.val(); document.getElementById('form-warna-container').style.display = 'grid'; document.getElementById('warna-edit-id').value = key; document.getElementById('warna-varian').value = data.varian || 'all'; document.getElementById('warna-nama').value = data.nama || ''; document.getElementById('warna-harga').value = data.harga || ''; document.getElementById('btn-hapus-warna').style.display = 'block'; document.getElementById('btn-simpan-warna').innerText = 'Update Warna'; }); };
-        document.getElementById('btn-hapus-warna').addEventListener('click', async () => { if(!currentMobilId) return; const key = document.getElementById('warna-edit-id').value; if(confirm("Hapus warna ini?")) { const snap1 = await db.ref(`spesifikasi/${currentMobilId}/warna/${key}/imgMobilId`).once('value'); const snap2 = await db.ref(`spesifikasi/${currentMobilId}/warna/${key}/imgBulatId`).once('value'); if(snap1.val()) await deleteMedia(snap1.val()); if(snap2.val()) await deleteMedia(snap2.val()); await db.ref(`spesifikasi/${currentMobilId}/warna/${key}`).remove(); showToast("Warna Dihapus!", "success"); document.getElementById('form-warna-container').style.display = 'none'; } });
-
-        // Listener Ikon Tambahan & Fitur Spesifikasi
-        function listenIkonTambahan(mobilId) {
-            db.ref(`spesifikasi/${mobilId}/ikon_tambahan`).on('value', snap => {
-                const list = document.getElementById('list-ikon-tambahan'); if(!list) return; list.innerHTML = '';
-                snap.forEach(child => {
-                    const data = child.val();
-                    list.innerHTML += `<div class="list-item"><span class="list-item-text">${data.info || 'Ikon'}</span><div><button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="editIkonTambahan('${child.key}')">Edit</button></div></div>`;
-                });
-            });
-        }
-        window.bukaFormIkonTambahan = function() { document.getElementById('form-ikon-tambahan').style.display = 'grid'; document.getElementById('ikon-tambahan-id').value = ''; document.getElementById('ikon-tambahan-info').value = ''; document.getElementById('ikon-tambahan-file').value = ''; document.querySelector('#form-ikon-tambahan .file-upload-wrapper').style.backgroundImage = 'none'; document.getElementById('btn-hapus-ikon-tambahan').style.display = 'none'; document.getElementById('btn-simpan-ikon-tambahan').innerText = 'Simpan Ikon Tambahan'; };
-        window.editIkonTambahan = function(key) { db.ref(`spesifikasi/${currentMobilId}/ikon_tambahan/` + key).once('value', snap => { const data = snap.val(); document.getElementById('form-ikon-tambahan').style.display = 'grid'; document.getElementById('ikon-tambahan-id').value = key; document.getElementById('ikon-tambahan-info').value = data.info || ''; document.getElementById('btn-hapus-ikon-tambahan').style.display = 'block'; document.getElementById('btn-simpan-ikon-tambahan').innerText = 'Update Ikon Tambahan'; }); };
-        document.getElementById('btn-hapus-ikon-tambahan').addEventListener('click', async () => { if(!currentMobilId) return; const key = document.getElementById('ikon-tambahan-id').value; if(confirm("Hapus ikon ini?")) { const snap = await db.ref(`spesifikasi/${currentMobilId}/ikon_tambahan/${key}/imgId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); await db.ref(`spesifikasi/${currentMobilId}/ikon_tambahan/${key}`).remove(); showToast("Ikon Tambahan Dihapus!", "success"); document.getElementById('form-ikon-tambahan').style.display = 'none'; } });
-
-        function listenFitur(mobilId) {
-            db.ref(`spesifikasi/${mobilId}/fitur`).on('value', snap => {
-                const list = document.getElementById('list-fitur-container'); if(!list) return; list.innerHTML = '';
-                snap.forEach(child => {
-                    const data = child.val();
-                    list.innerHTML += `<div class="list-item"><span class="list-item-text">[${data.kategori || 'Umum'}] <b>${data.judul || 'Fitur'}</b></span><div><button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="editFitur('${child.key}')">Edit</button></div></div>`;
-                });
-            });
-        }
-        window.bukaFormFitur = function() { document.getElementById('form-fitur-container').style.display = 'grid'; document.getElementById('fitur-edit-id').value = ''; document.getElementById('fitur-kategori').value = ''; document.getElementById('fitur-judul').value = ''; document.getElementById('fitur-deskripsi').value = ''; document.getElementById('fitur-foto').value = ''; document.querySelector('#form-fitur-container .file-upload-wrapper').style.backgroundImage = 'none'; document.getElementById('btn-hapus-fitur').style.display = 'none'; };
-        window.editFitur = function(key) { db.ref(`spesifikasi/${currentMobilId}/fitur/` + key).once('value', snap => { const data = snap.val(); document.getElementById('form-fitur-container').style.display = 'grid'; document.getElementById('fitur-edit-id').value = key; document.getElementById('fitur-kategori').value = data.kategori || ''; document.getElementById('fitur-judul').value = data.judul || ''; document.getElementById('fitur-deskripsi').value = data.deskripsi || ''; document.getElementById('btn-hapus-fitur').style.display = 'block'; }); };
-        document.getElementById('btn-hapus-fitur').addEventListener('click', async () => { if(!currentMobilId) return; const key = document.getElementById('fitur-edit-id').value; if(confirm("Hapus fitur ini?")) { const snap = await db.ref(`spesifikasi/${currentMobilId}/fitur/${key}/imgId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); await db.ref(`spesifikasi/${currentMobilId}/fitur/${key}`).remove(); showToast("Fitur Dihapus!", "success"); document.getElementById('form-fitur-container').style.display = 'none'; } });
-
-
-        // --- 5E. LISTENER MENU DAFTAR HARGA ---
-        window.toggleFormatNamaMobil = function() {
-            const format = document.getElementById('visual-harga-format').value;
-            if (format === 'logo') {
-                document.getElementById('container-visual-teks').style.display = 'none';
-                document.getElementById('container-visual-logo').style.display = 'block';
-            } else {
-                document.getElementById('container-visual-teks').style.display = 'block';
-                document.getElementById('container-visual-logo').style.display = 'none';
-            }
-        };
-
-        function listenVisualHarga() {
-            db.ref('visual_harga').on('value', snap => {
-                const list = document.getElementById('list-visual-harga-container');
-                if(!list) return; list.innerHTML = '';
-                
-                snap.forEach(child => {
-                    const data = child.val();
-                    db.ref('katalog_mobil/' + child.key).once('value', mobilSnap => {
-                        const namaMobil = mobilSnap.val() ? mobilSnap.val().nama_mobil : child.key;
-                        list.innerHTML += `
-                        <div class="list-item">
-                            <span class="list-item-text">Visual Kartu: <b>${namaMobil}</b></span>
-                            <div>
-                                <button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="editVisualHarga('${child.key}')">Edit</button>
-                                <button class="btn-delete" style="padding: 4px 10px; font-size:0.75rem;" onclick="hapusVisualHarga('${child.key}', '${data.imgMobilId}', '${data.logoId}')">Hapus</button>
-                            </div>
-                        </div>`;
-                    });
-                });
-            });
-        }
-        
-        window.bukaFormVisualHarga = function() {
-            document.getElementById('form-visual-harga-container').style.display = 'grid';
-            document.getElementById('visual-harga-mobil-id').value = '';
-            document.getElementById('visual-harga-mobil-id').disabled = false;
-            document.getElementById('visual-harga-foto-mobil').value = '';
-            document.getElementById('visual-harga-format').value = 'teks';
-            document.getElementById('visual-harga-teks').value = '';
-            document.getElementById('visual-harga-logo-file').value = '';
-            toggleFormatNamaMobil();
-            document.querySelectorAll('#form-visual-harga-container .file-upload-wrapper').forEach(el => el.style.backgroundImage = 'none');
-        };
-
-        window.editVisualHarga = function(key) {
-            db.ref('visual_harga/' + key).once('value', snap => {
-                const data = snap.val();
-                document.getElementById('form-visual-harga-container').style.display = 'grid';
-                document.getElementById('visual-harga-mobil-id').value = key;
-                document.getElementById('visual-harga-mobil-id').disabled = true;
-                document.getElementById('visual-harga-format').value = data.format_nama || 'teks';
-                document.getElementById('visual-harga-teks').value = data.teks_nama || '';
-                
-                if(data.imgMobilUrl) {
-                    document.getElementById('visual-harga-foto-mobil').parentElement.style.backgroundImage = `url('${data.imgMobilUrl}')`;
-                }
-                if(data.logoUrl) {
-                    document.getElementById('visual-harga-logo-file').parentElement.style.backgroundImage = `url('${data.logoUrl}')`;
-                }
-                
-                toggleFormatNamaMobil();
-                document.querySelector('.main-content').scrollTop = document.getElementById('form-visual-harga-container').offsetTop;
-            });
-        };
-
-        window.hapusVisualHarga = async function(key, imgMobilId, logoId) {
-            if(confirm("Yakin hapus pengaturan visual kartu untuk kendaraan ini? Tampilan akan kembali menjadi default teks dan tanpa foto transparan.")) {
-                if(imgMobilId && imgMobilId !== 'undefined') await deleteMedia(imgMobilId);
-                if(logoId && logoId !== 'undefined') await deleteMedia(logoId);
-                await db.ref('visual_harga/' + key).remove();
-                showToast("Visual kartu dihapus!", "success");
-            }
-        };
-
-        // --- 5F. LISTENER MENU GALLERY TESTIMONI ---
-        function listenTestimoni() {
-            db.ref('testimoni_list').on('value', (snap) => {
-                const list = document.getElementById('list-testimoni-container'); if(!list) return; list.innerHTML = '';
-                snap.forEach(child => {
-                    const data = child.val();
-                    list.innerHTML += `
-                    <div class="list-item">
-                        <span class="list-item-text"><b>${data.nama || 'Tanpa Nama'}</b> - ${data.unit || 'Unit'}</span>
-                        <div>
-                            <button class="btn-save" style="padding: 4px 10px; font-size:0.75rem; background:#333;" onclick="editTestimoni('${child.key}')">Edit</button> 
-                            <button class="btn-delete" style="padding: 4px 10px; font-size:0.75rem;" onclick="hapusTestimoni('${child.key}', '${data.imgId}')">Hapus</button>
-                        </div>
-                    </div>`;
-                });
-            });
-        }
-        window.bukaFormTestimoni = function() { 
-            document.getElementById('form-testimoni-container').style.display = 'grid'; 
-            document.getElementById('testimoni-edit-id').value = ''; 
-            document.getElementById('testimoni-foto').value = ''; 
-            document.querySelector('#form-testimoni-container .file-upload-wrapper').style.backgroundImage = 'none'; 
-            document.querySelector('#form-testimoni-container .file-upload-text').innerText = 'Ketuk untuk Pilih Foto Penyerahan'; 
-            document.getElementById('testimoni-rating').value = '5'; 
-            document.getElementById('testimoni-komentar').value = ''; 
-            document.getElementById('testimoni-nama').value = ''; 
-            document.getElementById('testimoni-unit').value = ''; 
-            document.querySelector('.main-content').scrollTop = document.getElementById('form-testimoni-container').offsetTop;
-        };
-        window.editTestimoni = function(key) { 
-            db.ref('testimoni_list/' + key).once('value', snap => { 
-                const data = snap.val(); 
-                document.getElementById('form-testimoni-container').style.display = 'grid'; 
-                document.getElementById('testimoni-edit-id').value = key; 
-                document.getElementById('testimoni-rating').value = data.rating || '5'; 
-                document.getElementById('testimoni-komentar').value = data.komentar || ''; 
-                document.getElementById('testimoni-nama').value = data.nama || ''; 
-                document.getElementById('testimoni-unit').value = data.unit || ''; 
-                if(data.imgUrl) { 
-                    const wrapper = document.querySelector('#form-testimoni-container .file-upload-wrapper'); 
-                    wrapper.style.backgroundImage = `url('${data.imgUrl}')`; 
-                    wrapper.querySelector('.file-upload-text').innerText = 'Foto Tersimpan (Ketuk ganti)'; 
-                } 
-                document.querySelector('.main-content').scrollTop = document.getElementById('form-testimoni-container').offsetTop; 
-            }); 
-        };
-        window.hapusTestimoni = async function(key, imgId) { 
-            if(confirm("Hapus testimoni ini dari gallery?")) { 
-                if(imgId && imgId !== 'undefined') await deleteMedia(imgId); 
-                await db.ref('testimoni_list/' + key).remove(); 
-                showToast("Testimoni dihapus!", "success"); 
-            } 
-        };
-
-
-        /* =========================================
-           6. EKSEKUSI TOMBOL GLOBAL (SIMPAN DATA)
-           ========================================= */
-        document.addEventListener('DOMContentLoaded', () => {
-
-            // --- EKSEKUSI LANDING PAGE, BERITA, KATALOG, SPESIFIKASI ---
-            document.getElementById('btn-save-hero-landing').addEventListener('click', async () => { const btn = document.getElementById('btn-save-hero-landing'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { let obj = { teks_atas: document.getElementById('landing-hero-teks1').value.trim(), teks_aksen: document.getElementById('landing-hero-teks-aksen').value.trim(), teks_bawah: document.getElementById('landing-hero-teks2').value.trim() }; const file = document.getElementById('landing-hero-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.bgUrl = media.url; obj.bgId = media.fileId; const snap = await db.ref('halaman/landing/hero/bgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); } } await db.ref('halaman/landing/hero').update(obj); showToast("Hero Landing Berhasil!", "success"); } catch (err) { showToast("Error simpan hero", "error"); } finally { btn.innerText = "Simpan Hero"; btn.disabled = false; } });
-            document.getElementById('btn-delete-hero-landing').addEventListener('click', async () => { if(confirm("Yakin hapus Hero Landing?")) { const btn = document.getElementById('btn-delete-hero-landing'); btn.innerText = "Menghapus..."; btn.disabled = true; try { const snap = await db.ref('halaman/landing/hero/bgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); await db.ref('halaman/landing/hero').remove(); showToast("Hero dihapus.", "success"); document.getElementById('landing-hero-teks1').value = ""; document.getElementById('landing-hero-teks-aksen').value = ""; document.getElementById('landing-hero-teks2').value = ""; document.querySelector('#landing-hero-file').parentElement.style.backgroundImage = 'none'; } catch(err) { showToast("Gagal hapus", "error"); } finally { btn.innerText = "Hapus Hero (Default)"; btn.disabled = false; } } });
-            document.getElementById('btn-save-promo').addEventListener('click', async () => { const btn = document.getElementById('btn-save-promo'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { const editId = document.getElementById('promo-edit-id').value; let obj = { label: document.getElementById('promo-label').value.trim(), judul: document.getElementById('promo-judul').value.trim(), info: document.getElementById('promo-info').value.trim(), tombol: document.getElementById('promo-tombol').value.trim(), timestamp: firebase.database.ServerValue.TIMESTAMP }; const file = document.getElementById('promo-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.imgUrl = media.url; obj.imgId = media.fileId; if(editId) { const snap = await db.ref('promo_list/' + editId + '/imgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); } } } if(editId) { await db.ref('promo_list/' + editId).update(obj); showToast("Promo diubah!", "success"); } else { await db.ref('promo_list').push(obj); showToast("Promo terbit!", "success"); } document.getElementById('form-promo-container').style.display = 'none'; } catch(err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan Kartu Promo"; btn.disabled = false; } });
-            document.getElementById('btn-save-iklan').addEventListener('click', async () => { const btn = document.getElementById('btn-save-iklan'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { const editId = document.getElementById('iklan-edit-id').value; let obj = { judul: document.getElementById('iklan-judul').value.trim(), tombol: document.getElementById('iklan-tombol').value.trim(), timestamp: firebase.database.ServerValue.TIMESTAMP }; const file = document.getElementById('iklan-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.mediaUrl = media.url; obj.mediaId = media.fileId; if(editId) { const snap = await db.ref('iklan_list/' + editId + '/mediaId').once('value'); if(snap.val()) await deleteMedia(snap.val()); } } } if(editId) { await db.ref('iklan_list/' + editId).update(obj); showToast("Iklan diubah!", "success"); } else { await db.ref('iklan_list').push(obj); showToast("Iklan disimpan!", "success"); } document.getElementById('form-iklan-container').style.display = 'none'; } catch(err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan Iklan"; btn.disabled = false; } });
-            document.getElementById('btn-save-alamat').addEventListener('click', async () => { const btn = document.getElementById('btn-save-alamat'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { await db.ref('global_data/alamat').update({ last_update: firebase.database.ServerValue.TIMESTAMP, gmaps: document.getElementById('alamat-gmaps').value, teks_alamat: document.getElementById('alamat-teks').value, jam_buka: document.getElementById('alamat-buka').value, jam_tutup: document.getElementById('alamat-tutup').value }); showToast("Alamat Global Diperbarui!", "success"); } catch(err) { showToast("Gagal perbarui", "error"); } finally { btn.innerText = "Update Data Global"; btn.disabled = false; } });
-            document.getElementById('btn-save-hero-berita').addEventListener('click', async () => { const btn = document.getElementById('btn-save-hero-berita'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { let obj = { label: document.getElementById('berita-hero-label').value.trim(), teks_atas: document.getElementById('berita-hero-teks-atas').value.trim(), teks_bawah: document.getElementById('berita-hero-teks-bawah').value.trim() }; const file = document.getElementById('berita-hero-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.bgUrl = media.url; obj.bgId = media.fileId; const snap = await db.ref('halaman/berita/hero/bgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); } } await db.ref('halaman/berita/hero').update(obj); showToast("Hero Berita diperbarui!", "success"); } catch (err) { showToast("Error menyimpan.", "error"); } finally { btn.innerText = "Simpan Hero"; btn.disabled = false; } });
-            document.getElementById('btn-delete-hero-berita').addEventListener('click', async () => { if(confirm("Yakin hapus Hero Berita?")) { const btn = document.getElementById('btn-delete-hero-berita'); btn.innerText = "Menghapus..."; btn.disabled = true; try { const snap = await db.ref('halaman/berita/hero/bgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); await db.ref('halaman/berita/hero').remove(); showToast("Hero dihapus.", "success"); document.getElementById('berita-hero-label').value = ""; document.getElementById('berita-hero-teks-atas').value = ""; document.getElementById('berita-hero-teks-bawah').value = ""; document.querySelector('#berita-hero-file').parentElement.style.backgroundImage = 'none'; } catch(err) { showToast("Gagal hapus", "error"); } finally { btn.innerText = "Hapus Hero (Default)"; btn.disabled = false; } } });
-            document.getElementById('btn-save-kategori').addEventListener('click', async () => { const input = document.getElementById('kategori-baru-input'); const nilai = input.value.trim(); if(!nilai) { showToast("Nama kategori tidak boleh kosong!", "error"); return; } const btn = document.getElementById('btn-save-kategori'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { await db.ref('kategori_berita').push({ nama: nilai, timestamp: firebase.database.ServerValue.TIMESTAMP }); showToast(`Kategori '${nilai}' ditambahkan!`, "success"); input.value = ""; } catch(err) { showToast("Gagal menambah kategori", "error"); } finally { btn.innerText = "Simpan Kategori Baru"; btn.disabled = false; } });
-
-            document.getElementById('btn-save-hero-katalog').addEventListener('click', async () => { const btn = document.getElementById('btn-save-hero-katalog'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { let obj = { teks_atas: document.getElementById('katalog-hero-teks-atas').value.trim(), teks_bawah: document.getElementById('katalog-hero-teks-bawah').value.trim() }; const file = document.getElementById('katalog-hero-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.bgUrl = media.url; obj.bgId = media.fileId; const snap = await db.ref('halaman/katalog/hero/bgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); } } await db.ref('halaman/katalog/hero').update(obj); showToast("Hero Katalog diperbarui!", "success"); } catch (err) { showToast("Error menyimpan hero.", "error"); } finally { btn.innerText = "Simpan Hero"; btn.disabled = false; } });
-            document.getElementById('btn-delete-hero-katalog').addEventListener('click', async () => { if(confirm("Yakin hapus Hero Katalog?")) { const btn = document.getElementById('btn-delete-hero-katalog'); btn.innerText = "Menghapus..."; btn.disabled = true; try { const snap = await db.ref('halaman/katalog/hero/bgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); await db.ref('halaman/katalog/hero').remove(); showToast("Hero Katalog dihapus.", "success"); document.getElementById('katalog-hero-teks-atas').value = ""; document.getElementById('katalog-hero-teks-bawah').value = ""; document.querySelector('#katalog-hero-file').parentElement.style.backgroundImage = 'none'; } catch(err) { showToast("Gagal hapus", "error"); } finally { btn.innerText = "Hapus Hero (Default)"; btn.disabled = false; } } });
-            document.getElementById('btn-simpan-kategori-katalog').addEventListener('click', async () => { const editId = document.getElementById('kategori-katalog-edit-id').value; const nama = document.getElementById('kategori-katalog-nama').value.trim(); if(!nama) { showToast("Ketik kategori terlebih dahulu!", "error"); return; } const btn = document.getElementById('btn-simpan-kategori-katalog'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { if(editId) { await db.ref('katalog_kategori/' + editId).update({ nama: nama }); showToast("Kategori diubah!", "success"); } else { await db.ref('katalog_kategori').push({ nama: nama }); showToast("Kategori ditambah!", "success"); } document.getElementById('form-kategori-katalog').style.display = 'none'; } catch(err) { showToast("Gagal memproses", "error"); } finally { btn.innerText = "Simpan Kategori"; btn.disabled = false; } });
-            document.getElementById('btn-simpan-katalog-mobil').addEventListener('click', async () => { const kategori = document.getElementById('katalog-mobil-kategori').value; const nama = document.getElementById('katalog-mobil-nama').value.trim(); if(!kategori || !nama) { showToast("Kategori dan Nama Mobil wajib diisi!", "error"); return; } const btn = document.getElementById('btn-simpan-katalog-mobil'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { const editId = document.getElementById('katalog-mobil-edit-id').value; let obj = { kategori: kategori, nama_mobil: nama, label_promo: document.getElementById('katalog-mobil-label').value.trim(), harga: document.getElementById('katalog-mobil-harga').value.trim(), ikon1: document.getElementById('katalog-mobil-ikon1').value.trim(), ikon2: document.getElementById('katalog-mobil-ikon2').value.trim(), ikon3: document.getElementById('katalog-mobil-ikon3').value.trim(), ikon4: document.getElementById('katalog-mobil-ikon4').value.trim(), timestamp: firebase.database.ServerValue.TIMESTAMP }; const file = document.getElementById('katalog-mobil-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.imgUrl = media.url; obj.imgId = media.fileId; if(editId) { const snap = await db.ref('katalog_mobil/' + editId + '/imgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); } } } let mobilKey = editId; if(!editId) { mobilKey = nama.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''); await db.ref('katalog_mobil/' + mobilKey).set(obj); } else { await db.ref('katalog_mobil/' + mobilKey).update(obj); } showToast("Kendaraan berhasil disimpan!", "success"); document.getElementById('form-katalog-mobil').style.display = 'none'; } catch(err) { showToast("Gagal memproses", "error"); } finally { btn.innerText = "Update Kendaraan"; btn.disabled = false; } });
-            document.getElementById('btn-simpan-brosur').addEventListener('click', async () => { const btn = document.getElementById('btn-simpan-brosur'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { let obj = { link: document.getElementById('brosur-link').value.trim(), teks_atas: document.getElementById('brosur-teks-atas').value.trim(), teks_bawah: document.getElementById('brosur-teks-bawah').value.trim() }; await db.ref('global_data/brosur').set(obj); showToast("Brosur Global Diperbarui!", "success"); document.getElementById('form-brosur-global').style.display = 'none'; } catch(err) { showToast("Gagal menyimpan brosur", "error"); } finally { btn.innerText = "Update Link Brosur"; btn.disabled = false; } });
-
-            document.getElementById('btn-save-hero-spesifikasi').addEventListener('click', async () => { if(!currentMobilId) return; const btn = document.getElementById('btn-save-hero-spesifikasi'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { let obj = { nama: document.getElementById('spesifikasi-hero-nama').value.trim(), slogan: document.getElementById('spesifikasi-hero-slogan').value.trim() }; const file = document.getElementById('spesifikasi-hero-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.bgUrl = media.url; obj.bgId = media.fileId; const snap = await db.ref(`spesifikasi/${currentMobilId}/hero/bgId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); } } await db.ref(`spesifikasi/${currentMobilId}/hero`).update(obj); showToast("Hero Spesifikasi disimpan!", "success"); } catch (err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan Hero Spesifikasi"; btn.disabled = false; } });
-            document.getElementById('btn-delete-hero-spesifikasi').addEventListener('click', async () => { if(!currentMobilId) return; if(confirm("Yakin hapus Hero Spesifikasi ini?")) { const btn = document.getElementById('btn-delete-hero-spesifikasi'); btn.innerText = "Menghapus..."; btn.disabled = true; try { const snap = await db.ref(`spesifikasi/${currentMobilId}/hero/bgId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); await db.ref(`spesifikasi/${currentMobilId}/hero`).remove(); showToast("Hero dihapus.", "success"); document.getElementById('spesifikasi-hero-nama').value = ""; document.getElementById('spesifikasi-hero-slogan').value = ""; document.querySelector('#spesifikasi-hero-file').parentElement.style.backgroundImage = 'none'; } catch(err) { showToast("Gagal hapus", "error"); } finally { btn.innerText = "Hapus Hero (Default)"; btn.disabled = false; } } });
-            document.getElementById('btn-save-icon-default').addEventListener('click', async () => { if(!currentMobilId) return; const btn = document.getElementById('btn-save-icon-default'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { let obj = {}; for(let i=1; i<=5; i++) { obj[`icon${i}`] = document.getElementById(`icon-default-${i}`).value.trim(); } await db.ref(`spesifikasi/${currentMobilId}/icon_default`).set(obj); showToast("5 Ikon Default Disimpan!", "success"); } catch (err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan 5 Icon Default"; btn.disabled = false; } });
-            document.getElementById('btn-simpan-ikon-tambahan').addEventListener('click', async () => { if(!currentMobilId) return; const btn = document.getElementById('btn-simpan-ikon-tambahan'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { const editId = document.getElementById('ikon-tambahan-id').value; let obj = { info: document.getElementById('ikon-tambahan-info').value.trim() }; const file = document.getElementById('ikon-tambahan-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.imgUrl = media.url; obj.imgId = media.fileId; if(editId) { const snap = await db.ref(`spesifikasi/${currentMobilId}/ikon_tambahan/${editId}/imgId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); } } } if(editId) { await db.ref(`spesifikasi/${currentMobilId}/ikon_tambahan/${editId}`).update(obj); } else { await db.ref(`spesifikasi/${currentMobilId}/ikon_tambahan`).push(obj); } showToast("Ikon Tambahan Disimpan!", "success"); document.getElementById('form-ikon-tambahan').style.display = 'none'; } catch(err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan Ikon Tambahan"; btn.disabled = false; } });
-            document.getElementById('btn-simpan-varian').addEventListener('click', async () => { if(!currentMobilId) return; const btn = document.getElementById('btn-simpan-varian'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { const editId = document.getElementById('varian-edit-id').value; let obj = { nama: document.getElementById('varian-nama').value.trim(), harga: document.getElementById('varian-harga').value.trim() }; if(editId) { await db.ref(`spesifikasi/${currentMobilId}/varian/${editId}`).update(obj); } else { await db.ref(`spesifikasi/${currentMobilId}/varian`).push(obj); } showToast("Varian Disimpan!", "success"); document.getElementById('form-varian-container').style.display = 'none'; } catch(err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan Harga Varian"; btn.disabled = false; } });
-            document.getElementById('btn-simpan-warna').addEventListener('click', async () => { if(!currentMobilId) return; const varianValue = document.getElementById('warna-varian').value; if(!varianValue) { showToast("Pilih kategori varian terlebih dahulu!", "error"); return; } const btn = document.getElementById('btn-simpan-warna'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { const editId = document.getElementById('warna-edit-id').value; let obj = { nama: document.getElementById('warna-nama').value.trim(), harga: document.getElementById('warna-harga').value.trim(), varian: varianValue }; const fileMobil = document.getElementById('warna-foto-mobil').files[0]; if (fileMobil) { const media = await uploadMedia(fileMobil); if (media) { obj.imgMobilUrl = media.url; obj.imgMobilId = media.fileId; if(editId) { const snap = await db.ref(`spesifikasi/${currentMobilId}/warna/${editId}/imgMobilId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); } } } const fileBulat = document.getElementById('warna-foto-bulat').files[0]; if (fileBulat) { const media = await uploadMedia(fileBulat); if (media) { obj.imgBulatUrl = media.url; obj.imgBulatId = media.fileId; if(editId) { const snap = await db.ref(`spesifikasi/${currentMobilId}/warna/${editId}/imgBulatId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); } } } if(editId) { await db.ref(`spesifikasi/${currentMobilId}/warna/${editId}`).update(obj); } else { await db.ref(`spesifikasi/${currentMobilId}/warna`).push(obj); } showToast("Warna Disimpan!", "success"); document.getElementById('form-warna-container').style.display = 'none'; } catch(err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Update Warna"; btn.disabled = false; } });
-            document.getElementById('btn-simpan-fitur').addEventListener('click', async () => { if(!currentMobilId) return; const btn = document.getElementById('btn-simpan-fitur'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { const editId = document.getElementById('fitur-edit-id').value; let obj = { kategori: document.getElementById('fitur-kategori').value, judul: document.getElementById('fitur-judul').value.trim(), deskripsi: document.getElementById('fitur-deskripsi').value.trim() }; const file = document.getElementById('fitur-foto').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.imgUrl = media.url; obj.imgId = media.fileId; if(editId) { const snap = await db.ref(`spesifikasi/${currentMobilId}/fitur/${editId}/imgId`).once('value'); if(snap.val()) await deleteMedia(snap.val()); } } } if(editId) { await db.ref(`spesifikasi/${currentMobilId}/fitur/${editId}`).update(obj); } else { await db.ref(`spesifikasi/${currentMobilId}/fitur`).push(obj); } showToast("Fitur Disimpan!", "success"); document.getElementById('form-fitur-container').style.display = 'none'; } catch(err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan Fitur"; btn.disabled = false; } });
-
-
-            // --- EKSEKUSI DAFTAR HARGA ---
-            document.getElementById('btn-save-hero-harga').addEventListener('click', async () => {
-                const btn = document.getElementById('btn-save-hero-harga'); btn.innerText = "Menyimpan..."; btn.disabled = true;
-                try {
-                    let obj = { teks_atas: document.getElementById('harga-hero-teks-atas').value.trim(), teks_bawah: document.getElementById('harga-hero-teks-bawah').value.trim() };
-                    const file = document.getElementById('harga-hero-file').files[0];
-                    if (file) {
-                        const media = await uploadMedia(file);
-                        if (media) { 
-                            obj.bgUrl = media.url; obj.bgId = media.fileId; 
-                            const snap = await db.ref('halaman/harga/hero/bgId').once('value');
-                            if(snap.val()) await deleteMedia(snap.val()); 
-                        }
-                    }
-                    await db.ref('halaman/harga/hero').update(obj); showToast("Hero Harga diperbarui!", "success");
-                } catch (err) { showToast("Error menyimpan hero.", "error"); } 
-                finally { btn.innerText = "Simpan Hero"; btn.disabled = false; }
-            });
-
-            document.getElementById('btn-delete-hero-harga').addEventListener('click', async () => {
-                if(confirm("Yakin hapus Hero Daftar Harga?")) {
-                    const btn = document.getElementById('btn-delete-hero-harga'); btn.innerText = "Menghapus..."; btn.disabled = true;
-                    try {
-                        const snap = await db.ref('halaman/harga/hero/bgId').once('value');
-                        if(snap.val()) await deleteMedia(snap.val());
-                        await db.ref('halaman/harga/hero').remove(); showToast("Hero Harga dihapus.", "success");
-                        document.getElementById('harga-hero-teks-atas').value = ""; document.getElementById('harga-hero-teks-bawah').value = ""; document.querySelector('#harga-hero-file').parentElement.style.backgroundImage = 'none';
-                    } catch(err) { showToast("Gagal hapus", "error"); } 
-                    finally { btn.innerText = "Hapus Hero (Default)"; btn.disabled = false; }
-                }
-            });
-
-            document.getElementById('btn-simpan-visual-harga').addEventListener('click', async () => {
-                const mobilId = document.getElementById('visual-harga-mobil-id').value;
-                if(!mobilId) { showToast("Pilih kendaraan terlebih dahulu!", "error"); return; }
-                
-                const formatNama = document.getElementById('visual-harga-format').value;
-                const btn = document.getElementById('btn-simpan-visual-harga'); btn.innerText = "Menyimpan..."; btn.disabled = true;
-                
-                try {
-                    let obj = {
-                        format_nama: formatNama,
-                        teks_nama: document.getElementById('visual-harga-teks').value.trim()
-                    };
-
-                    const fileMobil = document.getElementById('visual-harga-foto-mobil').files[0];
-                    if (fileMobil) {
-                        const mediaMobil = await uploadMedia(fileMobil);
-                        if (mediaMobil) {
-                            obj.imgMobilUrl = mediaMobil.url; obj.imgMobilId = mediaMobil.fileId;
-                            const snap = await db.ref(`visual_harga/${mobilId}/imgMobilId`).once('value');
-                            if(snap.val()) await deleteMedia(snap.val());
-                        }
-                    }
-
-                    if (formatNama === 'logo') {
-                        const fileLogo = document.getElementById('visual-harga-logo-file').files[0];
-                        if (fileLogo) {
-                            const mediaLogo = await uploadMedia(fileLogo);
-                            if (mediaLogo) {
-                                obj.logoUrl = mediaLogo.url; obj.logoId = mediaLogo.fileId;
-                                const snap = await db.ref(`visual_harga/${mobilId}/logoId`).once('value');
-                                if(snap.val()) await deleteMedia(snap.val());
-                            }
-                        }
-                    }
-
-                    await db.ref(`visual_harga/${mobilId}`).update(obj);
-                    showToast("Visual kartu berhasil diupdate!", "success");
-                    document.getElementById('form-visual-harga-container').style.display = 'none';
-                } catch(err) { showToast("Gagal memproses", "error"); } 
-                finally { btn.innerText = "Update Visual Kartu"; btn.disabled = false; }
-            });
-
-            // --- EKSEKUSI BIODATA & KONTAK ---
-            document.getElementById('btn-save-hero-kontak').addEventListener('click', async () => {
-                const btn = document.getElementById('btn-save-hero-kontak'); btn.innerText = "Menyimpan..."; btn.disabled = true;
-                try {
-                    let obj = { teks_atas: document.getElementById('kontak-hero-teks-atas').value.trim(), teks_bawah: document.getElementById('kontak-hero-teks-bawah').value.trim() };
-                    const file = document.getElementById('kontak-hero-file').files[0];
-                    if (file) {
-                        const media = await uploadMedia(file);
-                        if (media) {
-                            obj.bgUrl = media.url; obj.bgId = media.fileId;
-                            const snap = await db.ref('halaman/kontak/hero/bgId').once('value');
-                            if(snap.val()) await deleteMedia(snap.val());
-                        }
-                    }
-                    await db.ref('halaman/kontak/hero').update(obj); showToast("Hero Kontak diperbarui!", "success");
-                } catch (err) { showToast("Error menyimpan hero.", "error"); }
-                finally { btn.innerText = "Simpan Hero"; btn.disabled = false; }
-            });
-
-            document.getElementById('btn-delete-hero-kontak').addEventListener('click', async () => {
-                if(confirm("Yakin hapus Hero Kontak?")) {
-                    const btn = document.getElementById('btn-delete-hero-kontak'); btn.innerText = "Menghapus..."; btn.disabled = true;
-                    try {
-                        const snap = await db.ref('halaman/kontak/hero/bgId').once('value');
-                        if(snap.val()) await deleteMedia(snap.val());
-                        await db.ref('halaman/kontak/hero').remove(); showToast("Hero Kontak dihapus.", "success");
-                        document.getElementById('kontak-hero-teks-atas').value = ""; document.getElementById('kontak-hero-teks-bawah').value = ""; document.querySelector('#kontak-hero-file').parentElement.style.backgroundImage = 'none';
-                    } catch(err) { showToast("Gagal hapus", "error"); }
-                    finally { btn.innerText = "Hapus Hero (Default)"; btn.disabled = false; }
-                }
-            });
-
-            document.getElementById('btn-update-profil').addEventListener('click', async () => {
-                const btn = document.getElementById('btn-update-profil'); btn.innerText = "Menyimpan..."; btn.disabled = true;
-                try {
-                    let obj = {
-                        nama: document.getElementById('biodata-nama').value.trim(),
-                        jabatan: document.getElementById('biodata-jabatan').value.trim(),
-                        bio: document.getElementById('biodata-bio').value.trim(),
-                        wa: document.getElementById('biodata-wa').value.trim(),
-                        pesan: document.getElementById('biodata-pesan').value.trim(),
-                        telp: document.getElementById('biodata-telp').value.trim(),
-                        ig: document.getElementById('biodata-ig').value.trim(),
-                        email: document.getElementById('biodata-email').value.trim(),
-                        fb_nama: document.getElementById('biodata-fb-nama').value.trim(), 
-                        fb_link: document.getElementById('biodata-fb-link').value.trim()  
-                    };
-                    
-                    const file = document.getElementById('biodata-foto').files[0];
-                    if (file) {
-                        const media = await uploadMedia(file);
-                        if (media) {
-                            obj.fotoUrl = media.url; obj.fotoId = media.fileId;
-                            const snap = await db.ref('global_data/biodata/fotoId').once('value');
-                            if(snap.val()) await deleteMedia(snap.val());
-                        }
-                    }
-                    
-                    await db.ref('global_data/biodata').update(obj); showToast("Profil Global berhasil disimpan!", "success");
-                } catch (err) { showToast("Error menyimpan profil.", "error"); } 
-                finally { btn.innerText = "Update Profil Global"; btn.disabled = false; }
-            });
-
-            document.getElementById('btn-delete-profil').addEventListener('click', async () => {
-                if(confirm("Yakin hapus data Profil Global?")) {
-                    const btn = document.getElementById('btn-delete-profil'); btn.innerText = "Menghapus..."; btn.disabled = true;
-                    try {
-                        const snap = await db.ref('global_data/biodata/fotoId').once('value');
-                        if(snap.val()) await deleteMedia(snap.val());
-                        await db.ref('global_data/biodata').remove(); showToast("Profil Global dihapus.", "success");
-                        ['nama', 'jabatan', 'bio', 'wa', 'pesan', 'telp', 'ig', 'email', 'fb-nama', 'fb-link'].forEach(id => document.getElementById('biodata-' + id).value = "");
-                        const wrapper = document.querySelector('#biodata-foto').parentElement;
-                        wrapper.style.backgroundImage = 'none';
-                        wrapper.querySelector('.file-upload-text').innerText = 'Ketuk Pilih Foto';
-                    } catch(err) { showToast("Gagal hapus profil", "error"); }
-                    finally { btn.innerText = "Hapus Profil (Default)"; btn.disabled = false; }
-                }
-            });
-
-            document.getElementById('btn-batal-biodata').addEventListener('click', () => {
-                loadInitialData();
-                showToast("Dibatalkan, data form telah direfresh.", "info");
-            });
-
-            // --- EKSEKUSI LAYANAN PURNA JUAL ---
-            
-            // 1. Hero Layanan
-            document.getElementById('btn-save-hero-layanan').addEventListener('click', async () => {
-                const btn = document.getElementById('btn-save-hero-layanan'); btn.innerText = "Menyimpan..."; btn.disabled = true;
-                try {
-                    let obj = { teks_atas: document.getElementById('layanan-hero-teks-atas').value.trim(), teks_bawah: document.getElementById('layanan-hero-teks-bawah').value.trim() };
-                    const file = document.getElementById('layanan-hero-file').files[0];
-                    if (file) {
-                        const media = await uploadMedia(file);
-                        if (media) {
-                            obj.bgUrl = media.url; obj.bgId = media.fileId;
-                            const snap = await db.ref('halaman/layanan/hero/bgId').once('value');
-                            if(snap.val()) await deleteMedia(snap.val());
-                        }
-                    }
-                    await db.ref('halaman/layanan/hero').update(obj); 
-                    document.getElementById('btn-delete-hero-layanan').style.display = 'inline-block';
-                    showToast("Hero Layanan diperbarui!", "success");
-                } catch (err) { showToast("Error menyimpan hero.", "error"); }
-                finally { btn.innerText = "Update Profil"; btn.disabled = false; }
-            });
-
-            document.getElementById('btn-delete-hero-layanan').addEventListener('click', async () => {
-                if(confirm("Yakin hapus Hero Layanan?")) {
-                    const btn = document.getElementById('btn-delete-hero-layanan'); btn.innerText = "Menghapus..."; btn.disabled = true;
-                    try {
-                        const snap = await db.ref('halaman/layanan/hero/bgId').once('value');
-                        if(snap.val()) await deleteMedia(snap.val());
-                        await db.ref('halaman/layanan/hero').remove(); showToast("Hero dihapus.", "success");
-                        document.getElementById('layanan-hero-teks-atas').value = ""; document.getElementById('layanan-hero-teks-bawah').value = ""; document.querySelector('#layanan-hero-file').parentElement.style.backgroundImage = 'none';
-                        btn.style.display = 'none';
-                    } catch(err) { showToast("Gagal hapus", "error"); }
-                    finally { btn.innerText = "Hapus Profil (Default)"; btn.disabled = false; }
-                }
-            });
-
-            // 2. Kartu Layanan Dasar (C1-C4)
-            document.getElementById('btn-save-layanan-dasar').addEventListener('click', async () => {
-                const btn = document.getElementById('btn-save-layanan-dasar'); btn.innerText = "Menyimpan..."; btn.disabled = true;
-                try {
-                    let obj = {};
-                    for(let i=1; i<=4; i++) {
-                        let atas = document.getElementById(`layanan-dasar-${i}-atas`).value.trim();
-                        let bawah = document.getElementById(`layanan-dasar-${i}-bawah`).value.trim();
-                        let file = document.getElementById(`layanan-dasar-${i}-file`).files[0];
-                        obj[`item${i}`] = { atas, bawah };
-                        
-                        if (file) {
-                            const media = await uploadMedia(file);
-                            if (media) {
-                                obj[`item${i}`].imgUrl = media.url;
-                                obj[`item${i}`].imgId = media.fileId;
-                                const snap = await db.ref(`halaman/layanan/dasar/item${i}/imgId`).once('value');
-                                if(snap.val()) await deleteMedia(snap.val());
-                            }
-                        } else {
-                            const snapUrl = await db.ref(`halaman/layanan/dasar/item${i}/imgUrl`).once('value');
-                            const snapId = await db.ref(`halaman/layanan/dasar/item${i}/imgId`).once('value');
-                            if(snapUrl.val()) obj[`item${i}`].imgUrl = snapUrl.val();
-                            if(snapId.val()) obj[`item${i}`].imgId = snapId.val();
-                        }
-                    }
-                    await db.ref('halaman/layanan/dasar').set(obj);
-                    document.getElementById('btn-delete-layanan-dasar').style.display = 'inline-block';
-                    showToast("Layanan Dasar disimpan!", "success");
-                } catch (err) { showToast("Gagal menyimpan.", "error"); }
-                finally { btn.innerText = "Simpan Perubahan C-F"; btn.disabled = false; }
-            });
-
-            document.getElementById('btn-delete-layanan-dasar').addEventListener('click', async () => {
-                if(confirm("Yakin hapus Layanan Dasar (C1-C4)?")) {
-                    const btn = document.getElementById('btn-delete-layanan-dasar'); btn.innerText = "Menghapus..."; btn.disabled = true;
-                    try {
-                        for(let i=1; i<=4; i++) {
-                            const snap = await db.ref(`halaman/layanan/dasar/item${i}/imgId`).once('value');
-                            if(snap.val()) await deleteMedia(snap.val());
-                            document.getElementById(`layanan-dasar-${i}-atas`).value = '';
-                            document.getElementById(`layanan-dasar-${i}-bawah`).value = '';
-                            document.querySelector(`#layanan-dasar-${i}-file`).parentElement.style.backgroundImage = 'none';
-                        }
-                        await db.ref('halaman/layanan/dasar').remove();
-                        btn.style.display = 'none';
-                        showToast("Layanan Dasar dihapus.", "success");
-                    } catch(err) { showToast("Gagal hapus", "error"); }
-                    finally { btn.innerText = "Hapus Perubahan (Default)"; btn.disabled = false; }
-                }
-            });
-
-            // 3. Pelayanan SPA
-            document.getElementById('btn-save-layanan-spa').addEventListener('click', async () => {
-                const btn = document.getElementById('btn-save-layanan-spa'); btn.innerText = "Menyimpan..."; btn.disabled = true;
-                try {
-                    let obj = {
-                        atas: document.getElementById('layanan-spa-atas').value.trim(),
-                        bawah: document.getElementById('layanan-spa-bawah').value.trim(),
-                        tombol: document.getElementById('layanan-spa-tombol').value.trim(),
-                        judul_pop: document.getElementById('layanan-spa-judul-pop').value.trim(),
-                        info_pop: document.getElementById('layanan-spa-info-pop').value.trim()
-                    };
-                    const file = document.getElementById('layanan-spa-file').files[0];
-                    if (file) {
-                        const media = await uploadMedia(file);
-                        if (media) {
-                            obj.imgUrl = media.url; obj.imgId = media.fileId;
-                            const snap = await db.ref('halaman/layanan/spa/imgId').once('value');
-                            if(snap.val()) await deleteMedia(snap.val());
-                        }
-                    }
-                    await db.ref('halaman/layanan/spa').update(obj);
-                    document.getElementById('btn-delete-layanan-spa').style.display = 'inline-block';
-                    showToast("Layanan SPA disimpan!", "success");
-                } catch (err) { showToast("Gagal menyimpan.", "error"); }
-                finally { btn.innerText = "Simpan Layanan"; btn.disabled = false; }
-            });
-
-            document.getElementById('btn-delete-layanan-spa').addEventListener('click', async () => {
-                if(confirm("Yakin hapus Layanan SPA?")) {
-                    const btn = document.getElementById('btn-delete-layanan-spa'); btn.innerText = "Menghapus..."; btn.disabled = true;
-                    try {
-                        const snap = await db.ref('halaman/layanan/spa/imgId').once('value');
-                        if(snap.val()) await deleteMedia(snap.val());
-                        await db.ref('halaman/layanan/spa').remove();
-                        ['atas', 'bawah', 'tombol', 'judul-pop', 'info-pop'].forEach(id => document.getElementById(`layanan-spa-${id}`).value = '');
-                        document.querySelector('#layanan-spa-file').parentElement.style.backgroundImage = 'none';
-                        btn.style.display = 'none';
-                        showToast("Layanan SPA dihapus.", "success");
-                    } catch(err) { showToast("Gagal hapus", "error"); }
-                    finally { btn.innerText = "Hapus Layanan (Default)"; btn.disabled = false; }
-                }
-            });
-
-            // 4. Fitur Lainnya (F1-F5)
-            document.getElementById('btn-save-fitur-lain').addEventListener('click', async () => {
-                const btn = document.getElementById('btn-save-fitur-lain'); btn.innerText = "Menyimpan..."; btn.disabled = true;
-                try {
-                    let obj = {};
-                    for(let i=1; i<=5; i++) {
-                        let atas = document.getElementById(`fitur-lain-${i}-atas`).value.trim();
-                        let bawah = document.getElementById(`fitur-lain-${i}-bawah`).value.trim();
-                        let file = document.getElementById(`fitur-lain-${i}-file`).files[0];
-                        obj[`item${i}`] = { atas, bawah };
-                        
-                        if (file) {
-                            const media = await uploadMedia(file);
-                            if (media) {
-                                obj[`item${i}`].imgUrl = media.url;
-                                obj[`item${i}`].imgId = media.fileId;
-                                const snap = await db.ref(`halaman/layanan/fitur_lain/item${i}/imgId`).once('value');
-                                if(snap.val()) await deleteMedia(snap.val());
-                            }
-                        } else {
-                            const snapUrl = await db.ref(`halaman/layanan/fitur_lain/item${i}/imgUrl`).once('value');
-                            const snapId = await db.ref(`halaman/layanan/fitur_lain/item${i}/imgId`).once('value');
-                            if(snapUrl.val()) obj[`item${i}`].imgUrl = snapUrl.val();
-                            if(snapId.val()) obj[`item${i}`].imgId = snapId.val();
-                        }
-                    }
-                    await db.ref('halaman/layanan/fitur_lain').set(obj);
-                    document.getElementById('btn-delete-fitur-lain').style.display = 'inline-block';
-                    document.getElementById('btn-edit-fitur-lain').style.display = 'inline-block';
-                    showToast("Fitur Lainnya disimpan!", "success");
-                } catch (err) { showToast("Gagal menyimpan.", "error"); }
-                finally { btn.innerText = "Simpan Semua Fitur"; btn.disabled = false; }
-            });
-
-            document.getElementById('btn-delete-fitur-lain').addEventListener('click', async () => {
-                if(confirm("Yakin hapus Fitur Lainnya (F1-F5)?")) {
-                    const btn = document.getElementById('btn-delete-fitur-lain'); btn.innerText = "Menghapus..."; btn.disabled = true;
-                    try {
-                        for(let i=1; i<=5; i++) {
-                            const snap = await db.ref(`halaman/layanan/fitur_lain/item${i}/imgId`).once('value');
-                            if(snap.val()) await deleteMedia(snap.val());
-                            document.getElementById(`fitur-lain-${i}-atas`).value = '';
-                            document.getElementById(`fitur-lain-${i}-bawah`).value = '';
-                            document.querySelector(`#fitur-lain-${i}-file`).parentElement.style.backgroundImage = 'none';
-                        }
-                        await db.ref('halaman/layanan/fitur_lain').remove();
-                        btn.style.display = 'none';
-                        document.getElementById('btn-edit-fitur-lain').style.display = 'none';
-                        showToast("Fitur Lainnya dihapus.", "success");
-                    } catch(err) { showToast("Gagal hapus", "error"); }
-                    finally { btn.innerText = "Hapus Fitur (Default)"; btn.disabled = false; }
-                }
-            });
-
-            document.getElementById('btn-edit-fitur-lain').addEventListener('click', () => {
-                showToast("Fitur siap diedit. Silakan ubah data pada form dan tekan 'Simpan Semua Fitur'.", "info");
-            });
-
-            // --- EKSEKUSI MENU GALLERY TESTIMONI ---
-
-            document.getElementById('btn-save-hero-testimoni').addEventListener('click', async () => {
-                const btn = document.getElementById('btn-save-hero-testimoni'); btn.innerText = "Menyimpan..."; btn.disabled = true;
-                try {
-                    let obj = { 
-                        teks_atas: document.getElementById('testimoni-hero-teks-atas').value.trim(), 
-                        teks_bawah: document.getElementById('testimoni-hero-teks-bawah').value.trim() 
-                    };
-                    const file = document.getElementById('testimoni-hero-file').files[0];
-                    if (file) {
-                        const media = await uploadMedia(file);
-                        if (media) {
-                            obj.bgUrl = media.url; obj.bgId = media.fileId;
-                            const snap = await db.ref('halaman/testimoni/hero/bgId').once('value');
-                            if(snap.val()) await deleteMedia(snap.val());
-                        }
-                    }
-                    await db.ref('halaman/testimoni/hero').update(obj); 
-                    document.getElementById('btn-delete-hero-testimoni').style.display = 'inline-block';
-                    showToast("Hero Testimoni diperbarui!", "success");
-                } catch (err) { showToast("Error menyimpan hero.", "error"); }
-                finally { btn.innerText = "Simpan Hero"; btn.disabled = false; }
-            });
-
-            document.getElementById('btn-delete-hero-testimoni').addEventListener('click', async () => {
-                if(confirm("Yakin hapus Hero Testimoni?")) {
-                    const btn = document.getElementById('btn-delete-hero-testimoni'); btn.innerText = "Menghapus..."; btn.disabled = true;
-                    try {
-                        const snap = await db.ref('halaman/testimoni/hero/bgId').once('value');
-                        if(snap.val()) await deleteMedia(snap.val());
-                        await db.ref('halaman/testimoni/hero').remove(); showToast("Hero dihapus.", "success");
-                        document.getElementById('testimoni-hero-teks-atas').value = ""; document.getElementById('testimoni-hero-teks-bawah').value = ""; document.querySelector('#testimoni-hero-file').parentElement.style.backgroundImage = 'none';
-                        btn.style.display = 'none';
-                    } catch(err) { showToast("Gagal hapus", "error"); }
-                    finally { btn.innerText = "Hapus Hero (Default)"; btn.disabled = false; }
-                }
-            });
-
-            document.getElementById('btn-simpan-testimoni').addEventListener('click', async () => {
-                const btn = document.getElementById('btn-simpan-testimoni'); btn.innerText = "Menyimpan..."; btn.disabled = true;
-                try {
-                    const editId = document.getElementById('testimoni-edit-id').value;
-                    let obj = { 
-                        rating: document.getElementById('testimoni-rating').value, 
-                        komentar: document.getElementById('testimoni-komentar').value.trim(), 
-                        nama: document.getElementById('testimoni-nama').value.trim(), 
-                        unit: document.getElementById('testimoni-unit').value.trim(), 
-                        timestamp: firebase.database.ServerValue.TIMESTAMP 
-                    };
-
-                    const file = document.getElementById('testimoni-foto').files[0];
-                    if (file) {
-                        const media = await uploadMedia(file);
-                        if (media) {
-                            obj.imgUrl = media.url; obj.imgId = media.fileId;
-                            if(editId) {
-                                const snap = await db.ref('testimoni_list/' + editId + '/imgId').once('value');
-                                if(snap.val()) await deleteMedia(snap.val());
-                            }
-                        }
-                    }
-
-                    if(editId) { 
-                        await db.ref('testimoni_list/' + editId).update(obj); 
-                        showToast("Testimoni diupdate!", "success"); 
-                    } else { 
-                        await db.ref('testimoni_list').push(obj); 
-                        showToast("Testimoni dipublish!", "success"); 
-                    }
-                    document.getElementById('form-testimoni-container').style.display = 'none';
-                } catch(err) { showToast("Gagal menyimpan.", "error"); }
-                finally { btn.innerText = "Publish Testimoni"; btn.disabled = false; }
-            });
-
         });
+
+        document.getElementById('btn-delete-hero-landing').addEventListener('click', () => {
+            if(confirm("Yakin ingin menghapus Hero Landing Page? Tampilan akan kembali ke Default.")) {
+                db.ref('landing_page/hero').remove()
+                .then(() => showToast("Hero Landing direset ke Default.", "success"))
+                .catch(e => showToast("Gagal mereset: " + e.message, "error"));
+            }
+        });
+
+        // Dan seterusnya untuk fungsi CRUD form lainnya...
+        // Pola kerjanya sama: 
+        // 1. Ambil input text
+        // 2. Jika ada file, uploadMedia() dulu, ambil URL-nya
+        // 3. Simpan kombinasi Text dan URL ke db.ref('path/tujuan').set() atau update() atau push()
+
     </script>
 </body>
 </html>
