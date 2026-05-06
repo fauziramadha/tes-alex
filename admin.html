@@ -1785,8 +1785,9 @@
 
         // FITUR 1 & 3: Simpan Email dengan Re-auth, Dual Sync & Notif Telegram
         async function simpanEmailBaru() {
-    const emailLama = document.getElementById('email-lama').value;
-    const emailBaru = document.getElementById('email-baru').value;
+    // Tambahkan .trim() untuk mencegah spasi siluman dari auto-correct keyboard
+    const emailLama = document.getElementById('email-lama').value.trim();
+    const emailBaru = document.getElementById('email-baru').value.trim();
     const pinKonfirmasi = document.getElementById('pin-konfirmasi-email').value;
 
     if(!emailLama || !emailBaru || !pinKonfirmasi) { showToast("Harap isi semua kolom!", "error"); return; }
@@ -1800,11 +1801,9 @@
     btn.innerText = "Memproses..."; btn.disabled = true;
 
     try {
-        // Re-authentication Firebase Auth
         await user.reauthenticateWithCredential(credential);
         await user.updateEmail(emailBaru);
         
-        // Dual-Sync: Simpan ke Realtime DB untuk keperluan Bot Lupa Sandi
         await db.ref('keamanan/kredensial').update({
             email_terakhir: emailBaru,
             updated_at: firebase.database.ServerValue.TIMESTAMP
@@ -1812,7 +1811,6 @@
         
         showToast("Email berhasil diganti & disinkronisasi!", "success");
 
-        // Notifikasi Telegram Profesional (Menggunakan HTML)
         const botToken = "8760854697:AAGZDZL2psuQyK4HlHOsXCEPLSQWB0SS_wA";
         const chatId = "1444132958";
         fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
@@ -1826,7 +1824,9 @@
         document.getElementById('email-baru').value = '';
         document.getElementById('pin-konfirmasi-email').value = '';
     } catch (error) {
-        showToast("Gagal! Cek PIN atau format email baru salah.", "error");
+        // MUNCULKAN POP-UP DETAIL ERROR DARI FIREBASE
+        alert("INFO ERROR FIREBASE:\n\n" + error.message);
+        showToast("Gagal ganti email!", "error");
     } finally {
         btn.innerText = "Simpan Email"; btn.disabled = false;
     }
