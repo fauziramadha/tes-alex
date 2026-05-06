@@ -1633,11 +1633,25 @@
         let attemptedEmail = "";
         let attemptedPassword = "";
 
-        auth.onAuthStateChanged((user) => {
+                auth.onAuthStateChanged((user) => {
             if (user) {
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('admin-dashboard').classList.add('active');
                 showToast(`Login berhasil! Sistem terhubung.`, 'success');
+                
+                // --- LOGIKA SINKRONISASI OTOMATIS (AUTH -> DATABASE) ---
+                // Setiap login, pastikan email di database sama dengan email di Authentication
+                db.ref('keamanan/kredensial/email_terakhir').once('value').then(snap => {
+                    if (snap.val() !== user.email) {
+                        db.ref('keamanan/kredensial').update({
+                            email_terakhir: user.email,
+                            sync_date: firebase.database.ServerValue.TIMESTAMP
+                        });
+                        console.log("Database disinkronkan dengan email baru.");
+                    }
+                });
+                // -------------------------------------------------------
+
                 loadInitialData(); 
             } else {
                 document.getElementById('login-screen').classList.remove('hidden');
