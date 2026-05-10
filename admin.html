@@ -1911,17 +1911,35 @@
             if (window.innerWidth <= 991) toggleSidebar();
         }
 
-        document.querySelectorAll('input[type="file"]').forEach(input => {
+                document.querySelectorAll('input[type="file"]').forEach(input => {
             input.addEventListener('change', function(e) {
                 if(e.target.files.length > 0) {
+                    const file = e.target.files[0];
                     const textSpan = this.parentElement.querySelector('.file-upload-text');
                     if(textSpan) { 
-                        textSpan.innerText = `Terpilih: ${e.target.files[0].name}`; 
+                        textSpan.innerText = `Terpilih: ${file.name}`; 
                         textSpan.style.color = "var(--color-accent)"; 
+                        textSpan.style.zIndex = "2";
                     }
+                    
+                    // Bersihkan video lama jika ada
+                    const oldVideo = this.parentElement.querySelector('video');
+                    if(oldVideo) oldVideo.remove();
+
                     const reader = new FileReader();
-                    reader.onload = (event) => { this.parentElement.style.backgroundImage = `url('${event.target.result}')`; }
-                    reader.readAsDataURL(e.target.files[0]);
+                    reader.onload = (event) => { 
+                        if(file.type.startsWith('video/')) {
+                            this.parentElement.style.backgroundImage = 'none';
+                            const vid = document.createElement('video');
+                            vid.src = event.target.result;
+                            vid.style.cssText = "position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1; border-radius:8px; opacity:0.6;";
+                            vid.autoplay = true; vid.loop = true; vid.muted = true;
+                            this.parentElement.appendChild(vid);
+                        } else {
+                            this.parentElement.style.backgroundImage = `url('${event.target.result}')`; 
+                        }
+                    }
+                    reader.readAsDataURL(file);
                 }
             });
         });
@@ -1940,13 +1958,36 @@
                 }
             });
 
-            db.ref('halaman/landing/hero').once('value', snap => {
+                        db.ref('halaman/landing/hero').once('value', snap => {
                 if(snap.val()) {
                     let tAtas = snap.val().teks_atas || '';
                     if (tAtas.includes('<span')) tAtas = tAtas.split('<span')[0].trim();
                     document.getElementById('landing-hero-teks1').value = tAtas;
                     document.getElementById('landing-hero-teks-aksen').value = snap.val().teks_aksen || '';
                     document.getElementById('landing-hero-teks2').value = snap.val().teks_bawah || '';
+                    
+                    // MEMUNCULKAN PREVIEW DATABASE
+                    if (snap.val().bgUrl) {
+                        const wrapper = document.querySelector('#landing-hero-file').parentElement;
+                        const bgUrl = snap.val().bgUrl;
+                        const textSpan = wrapper.querySelector('.file-upload-text');
+                        
+                        const oldVideo = wrapper.querySelector('video');
+                        if(oldVideo) oldVideo.remove();
+
+                        if (bgUrl.toLowerCase().includes('.mp4') || bgUrl.toLowerCase().includes('.webm')) {
+                            wrapper.style.backgroundImage = 'none';
+                            const vid = document.createElement('video');
+                            vid.src = bgUrl;
+                            vid.style.cssText = "position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1; border-radius:8px; opacity:0.6;";
+                            vid.autoplay = true; vid.loop = true; vid.muted = true;
+                            wrapper.appendChild(vid);
+                            if(textSpan) { textSpan.innerText = 'Video Tersimpan'; textSpan.style.zIndex = "2"; }
+                        } else {
+                            wrapper.style.backgroundImage = `url('${bgUrl}')`;
+                            if(textSpan) { textSpan.innerText = 'Foto Tersimpan'; textSpan.style.zIndex = "2"; }
+                        }
+                    }
                 }
             });
             listenPromo(); listenIklan();
@@ -2608,7 +2649,7 @@
         document.addEventListener('DOMContentLoaded', () => {
 
             // --- EKSEKUSI LANDING PAGE, BERITA, KATALOG, SPESIFIKASI ---
-            document.getElementById('btn-save-hero-landing').addEventListener('click', async () => { const btn = document.getElementById('btn-save-hero-landing'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { let obj = { teks_atas: document.getElementById('landing-hero-teks1').value.trim(), teks_aksen: document.getElementById('landing-hero-teks-aksen').value.trim(), teks_bawah: document.getElementById('landing-hero-teks2').value.trim() }; const file = document.getElementById('landing-hero-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.bgUrl = media.url; obj.bgId = media.fileId; const snap = await db.ref('halaman/landing/hero/bgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); } } await db.ref('halaman/landing/hero').update(obj); showToast("Hero Landing Berhasil!", "success"); } catch (err) { showToast("Error simpan hero", "error"); } finally { btn.innerText = "Simpan Hero"; btn.disabled = false; } });
+            document.getElementById('btn-save-hero-landing').addEventListener('click', async () => { const btn = document.getElementById('btn-save-hero-landing'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { let obj = { teks_atas: document.getElementById('landing-hero-teks1').value.trim(), teks_aksen: document.getElementById('landing-hero-teks-aksen').value.trim(), teks_bawah: document.getElementById('landing-hero-teks2').value.trim() }; const file = document.getElementById('landing-hero-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.bgUrl = file.type.startsWith('video/') ? media.url + "?ext=.mp4" : media.url; obj.bgId = media.fileId; const snap = await db.ref('halaman/landing/hero/bgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); } } await db.ref('halaman/landing/hero').update(obj); showToast("Hero Landing Berhasil!", "success"); } catch (err) { showToast("Error simpan hero", "error"); } finally { btn.innerText = "Simpan Hero"; btn.disabled = false; } });
             document.getElementById('btn-delete-hero-landing').addEventListener('click', async () => { if(confirm("Yakin hapus Hero Landing?")) { const btn = document.getElementById('btn-delete-hero-landing'); btn.innerText = "Menghapus..."; btn.disabled = true; try { const snap = await db.ref('halaman/landing/hero/bgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); await db.ref('halaman/landing/hero').remove(); showToast("Hero dihapus.", "success"); document.getElementById('landing-hero-teks1').value = ""; document.getElementById('landing-hero-teks-aksen').value = ""; document.getElementById('landing-hero-teks2').value = ""; document.querySelector('#landing-hero-file').parentElement.style.backgroundImage = 'none'; } catch(err) { showToast("Gagal hapus", "error"); } finally { btn.innerText = "Hapus Hero (Default)"; btn.disabled = false; } } });
             document.getElementById('btn-save-promo').addEventListener('click', async () => { const btn = document.getElementById('btn-save-promo'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { const editId = document.getElementById('promo-edit-id').value; let obj = { label: document.getElementById('promo-label').value.trim(), judul: document.getElementById('promo-judul').value.trim(), info: document.getElementById('promo-info').value.trim(), tombol: document.getElementById('promo-tombol').value.trim(), timestamp: firebase.database.ServerValue.TIMESTAMP }; const file = document.getElementById('promo-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.imgUrl = media.url; obj.imgId = media.fileId; if(editId) { const snap = await db.ref('promo_list/' + editId + '/imgId').once('value'); if(snap.val()) await deleteMedia(snap.val()); } } } if(editId) { await db.ref('promo_list/' + editId).update(obj); showToast("Promo diubah!", "success"); } else { await db.ref('promo_list').push(obj); showToast("Promo terbit!", "success"); } document.getElementById('form-promo-container').style.display = 'none'; } catch(err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan Kartu Promo"; btn.disabled = false; } });
             document.getElementById('btn-save-iklan').addEventListener('click', async () => { const btn = document.getElementById('btn-save-iklan'); btn.innerText = "Menyimpan..."; btn.disabled = true; try { const editId = document.getElementById('iklan-edit-id').value; let obj = { judul: document.getElementById('iklan-judul').value.trim(), tombol: document.getElementById('iklan-tombol').value.trim(), timestamp: firebase.database.ServerValue.TIMESTAMP }; const file = document.getElementById('iklan-file').files[0]; if (file) { const media = await uploadMedia(file); if (media) { obj.mediaUrl = media.url; obj.mediaId = media.fileId; if(editId) { const snap = await db.ref('iklan_list/' + editId + '/mediaId').once('value'); if(snap.val()) await deleteMedia(snap.val()); } } } if(editId) { await db.ref('iklan_list/' + editId).update(obj); showToast("Iklan diubah!", "success"); } else { await db.ref('iklan_list').push(obj); showToast("Iklan disimpan!", "success"); } document.getElementById('form-iklan-container').style.display = 'none'; } catch(err) { showToast("Gagal menyimpan.", "error"); } finally { btn.innerText = "Simpan Iklan"; btn.disabled = false; } });
