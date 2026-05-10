@@ -1024,7 +1024,7 @@
 
                     if(bgUrl) {
                         const heroBgContainer = document.getElementById('hero-bg-container');
-                        if (bgUrl.match(/\.(mp4|webm)$/i)) {
+                        if (bgUrl.toLowerCase().includes('.mp4') || bgUrl.toLowerCase().includes('.webm')) {
                             heroBgContainer.innerHTML = `<video id="hero-video-bg" class="hero-img" autoplay loop muted playsinline webkit-playsinline><source src="${bgUrl}" type="video/mp4"></video><div class="hero-overlay"></div>`;
                             // Force play after injection
                             setTimeout(() => {
