@@ -3,108 +3,102 @@
   
   <url>
     <loc>https://promomitsubishi-batam.com/index.html</loc>
-    <lastmod>2026-05-18</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://promomitsubishi-batam.com/harga.html</loc>
-    <lastmod>2026-05-18</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://promomitsubishi-batam.com/berita</loc>
-    <lastmod>2026-05-18</lastmod>
+    <loc>https://promomitsubishi-batam.com/berita.html</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://promomitsubishi-batam.com/testimoni</loc>
-    <lastmod>2026-05-18</lastmod>
+    <loc>https://promomitsubishi-batam.com/testimoni.html</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://promomitsubishi-batam.com/kontak</loc>
-    <lastmod>2026-05-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://promomitsubishi-batam.com/katalog</loc>
-    <lastmod>2026-05-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://promomitsubishi-batam.com/detail?id=new-xpander</loc>
+    <loc>https://promomitsubishi-batam.com/kontak.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://promomitsubishi-batam.com/detail?id=new-xpander-cross</loc>
+    <loc>https://promomitsubishi-batam.com/katalog.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://promomitsubishi-batam.com/detail?id=new-pajero-sport</loc>
+    <loc>https://promomitsubishi-batam.com/layanan.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://promomitsubishi-batam.com/detail?id=xforce</loc>
+    <loc>https://promomitsubishi-batam.com/detail.html?id=new-xpander</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://promomitsubishi-batam.com/detail?id=new-triton</loc>
+    <loc>https://promomitsubishi-batam.com/detail.html?id=new-xpander-cross</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://promomitsubishi-batam.com/detail?id=colt-l300</loc>
+    <loc>https://promomitsubishi-batam.com/detail.html?id=new-pajero-sport</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://promomitsubishi-batam.com/detail?id=destinator</loc>
+    <loc>https://promomitsubishi-batam.com/detail.html?id=xforce</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://promomitsubishi-batam.com/detail?id=fuso-light-duty</loc>
+    <loc>https://promomitsubishi-batam.com/detail.html?id=new-triton</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://promomitsubishi-batam.com/detail?id=fuso-medium-duty</loc>
+    <loc>https://promomitsubishi-batam.com/detail.html?id=colt-l300</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://promomitsubishi-batam.com/detail?id=fuso-tractor-head</loc>
+    <loc>https://promomitsubishi-batam.com/detail.html?id=destinator</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://promomitsubishi-batam.com/layanan</loc>
+    <loc>https://promomitsubishi-batam.com/detail.html?id=fuso-light-duty</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://promomitsubishi-batam.com/detail.html?id=fuso-medium-duty</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://promomitsubishi-batam.com/detail.html?id=fuso-tractor-head</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
